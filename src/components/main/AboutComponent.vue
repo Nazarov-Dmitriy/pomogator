@@ -131,12 +131,23 @@ onUnmounted(() => {
   position: relative;
   overflow: hidden;
 
+  @media (max-width: 950px) {
+    padding: 60px 30px;
+  }
   @media (max-width: 768px) {
     padding: 40px;
   }
 
   @media (max-width: 378px) {
     padding: 32px 16px;
+  }
+
+  @media (max-width: 640px) {
+    padding: 20px;
+  }
+
+  @media (max-width: 420px) {
+    padding: 20px 15px;
   }
 }
 
@@ -155,9 +166,6 @@ onUnmounted(() => {
 }
 
 .webinar__wrapper {
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
@@ -172,6 +180,7 @@ onUnmounted(() => {
 
   @media (max-width: 768px) {
     align-items: flex-start;
+    margin-bottom: 10px;
   }
 }
 
@@ -232,7 +241,7 @@ onUnmounted(() => {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 
-  @media (max-width: 378px) {
+  @media (max-width: 400px) {
     grid-template-columns: repeat(1, 1fr);
     gap: 10px;
     margin-bottom: 24px;
@@ -291,7 +300,7 @@ onUnmounted(() => {
   cursor: pointer;
   text-align: center;
 
-  @media (max-width: 378px) {
+  @media (max-width: 400px) {
     width: 100%;
   }
 }
