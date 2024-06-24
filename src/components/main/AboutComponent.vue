@@ -269,7 +269,8 @@ onUnmounted(() => {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-
+  position: relative;
+  z-index: 5;
   @media (max-width: 378px) {
     justify-content: center;
   }
@@ -299,5 +300,6 @@ onUnmounted(() => {
   position: absolute;
   bottom: 0;
   right: 0;
+  z-index: 2;
 }
 </style>
