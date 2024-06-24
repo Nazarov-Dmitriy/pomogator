@@ -66,7 +66,7 @@ onUnmounted(() => {
             </div>
           </div>
           <div v-show="!visibleCards" class="webinar__info-button-wrap">
-            <button class="webinar__info-button">Регистрация</button>
+            <button class="webinar__info-button info-button">Регистрация</button>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ onUnmounted(() => {
         </div>
       </div>
       <div v-show="visibleCards" class="webinar__info-button-wrap">
-        <button class="webinar__info-button">Регистрация</button>
+        <button class="webinar__info-button info-button">Регистрация</button>
       </div>
     </div>
     <div class="webinar__background-svg">
@@ -285,7 +285,7 @@ onUnmounted(() => {
   }
 }
 
-.webinar__info-button {
+.info-button {
   border-radius: 32px;
   padding: 12px 24px;
   width: 152px;
