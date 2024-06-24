@@ -9,8 +9,6 @@ import HeaderComponent from '@/components/main/HeaderComponent.vue'
 </script>
 <style scoped lang="scss">
 .main-page {
-    background: $gradient-background;
-    font-family: "Kreadon-Demi";
-    font-weight: 600;
+    min-height: 100vh;
 }
 </style>
