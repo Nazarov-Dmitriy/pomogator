@@ -218,7 +218,7 @@
   box-sizing: border-box;
 
   @media (max-width: 991px) {
-    padding: 40px;
+    padding: 40px 20px;
   }
 
   @media (max-width: 576px) {
