@@ -1,10 +1,9 @@
 <template>
     <button class="btn-gradient">
         <span class="btn-gradient__text">
-            <slot></slot>
+            <slot />
         </span>
     </button>
-
 </template>
 <script setup>
 
@@ -19,6 +18,9 @@
     background: none;
     cursor: pointer;
     height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &::before {
         content: "";
