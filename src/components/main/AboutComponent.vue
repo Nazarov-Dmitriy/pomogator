@@ -213,12 +213,13 @@
 
 .webinar {
   border: 2px solid #f84343;
-  padding: 60px 30px;
+  padding: 60px 80px;
   background: #5b94ea;
   box-sizing: border-box;
+  position: relative;
 
   @media (max-width: 991px) {
-    padding: 40px 20px;
+    padding: 40px ;
   }
 
   @media (max-width: 576px) {
@@ -227,8 +228,9 @@
 }
 
 .webinar__container {
-  max-width: 1400px;
+  max-width: 1440px;
   margin: 0 auto;
+  box-sizing: border-box;
 
   @media (max-width: 991px) {
     max-width: 673px;
@@ -347,17 +349,21 @@
   justify-content: flex-end;
 }
 .webinar__info-button {
-  line-height: 150%;
-  color: $white;
+  border-radius: 32px;
+  border: none;
   padding: 12px 24px;
   background: #f84343;
-  border: none;
-  border-radius: 32px;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center; 
+  color: #fff;
   cursor: pointer;
+  margin-right: 39px;
 
   @media (max-width: 576px) {
     width: 100%;
     text-align: center;
+    margin: 0;
   }
 }
 
