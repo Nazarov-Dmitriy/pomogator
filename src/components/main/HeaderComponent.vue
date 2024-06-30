@@ -107,7 +107,7 @@ function mainLink () {
 <style lang="scss">
 .header__contaner {
     background: $gradient-background;
-}
+ }
 
 .header__wrapper {
     max-width: 1440px;
@@ -188,6 +188,8 @@ function mainLink () {
         display: grid;
         padding: 20px 40px;
         box-sizing: border-box;
+        z-index: 9999;
+        border-bottom: 2px solid $blue;
     }
 
     @media (max-width: $sm) {
@@ -343,7 +345,7 @@ function mainLink () {
     background: $white;
     display: flex;
     gap: 2px;
-
+    
     @media (max-width: $lg) {
         left: -40px;
         width: calc(100% + 80px);
@@ -374,6 +376,7 @@ function mainLink () {
     justify-content: center;
     color: $white;
     cursor: pointer;
+    flex-basis: 319px;
 
     @media (max-width: $sm) {
         flex: 1 0 235px;

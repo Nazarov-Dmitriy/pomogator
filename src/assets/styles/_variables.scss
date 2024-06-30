@@ -1,3 +1,13 @@
+//     $white
+//     $primary-red
+//     $blue
+//     $black
+//     $gradient1
+//     $blue-primary
+//     $secondary
+//     $gradient
+//     $gradient-background
+
 $white: #FFF;
 $primary-red:#F84343;
 $blue:#5B94EA;
@@ -5,7 +15,7 @@ $black:#060C1F;
 $gradient1:linear-gradient(#F12424, #1E4DF1);
 $blue-primary: #4360F8;
 $secondary: #A0B1ED;
-$gradient:linear-gradient(130deg, #F12424, #1E4DF1);
+$gradient:linear-gradient(130deg, #F84343, #4360F8);
 $gradient-background:linear-gradient(130deg, #DAEBFF, #EDF5FF);
 
 $sm: 576px;
