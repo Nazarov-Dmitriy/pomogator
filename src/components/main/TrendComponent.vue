@@ -167,24 +167,24 @@ import BtnGradient from '../btns/BtnGradient.vue';
     height: 100%;
     align-items:center;
 }
+// Переделать под классы
+// ul {
+//     padding-bottom: 10px;
+//     padding-left: 20px;
+// }
 
-ul {
-    padding-bottom: 10px;
-    padding-left: 20px;
-}
-
-li {
-    list-style-type: disc;
-    width: 100%;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+// li {
+//     list-style-type: disc;
+//     width: 100%;
+//     font-weight: 400;
+//     font-size: 16px;
+//     line-height: 24px;
     
-    @media (max-width: $lg) {
-        font-size: 14px;
-        line-height: 20px;
-    }
-}
+//     @media (max-width: $lg) {
+//         font-size: 14px;
+//         line-height: 20px;
+//     }
+// }
 
 .btn__trends-card {
     width: 100%;
