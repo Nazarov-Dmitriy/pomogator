@@ -16,9 +16,9 @@
                             <li>Моделирование химических процессов</li>
                             <li>Проекты и исследования</li>
                         </ul>
-                        <BtnGradient class="btn__trends-card">
+                        <BtnBackgroud class="btn__trends-card">
                             Подробнее
-                        </BtnGradient>
+                        </BtnBackgroud>
                     </div>
                 </div>
                 <div class="trends__card">
@@ -32,9 +32,9 @@
                             <li>Электронные таблицы и графики</li>
                             <li>Наглядное представление результатов экспериментов</li>
                         </ul>
-                        <BtnGradient class="btn__trends-card">
+                        <BtnBackgroud class="btn__trends-card">
                             Подробнее
-                        </BtnGradient>
+                        </BtnBackgroud>
                     </div>
                 </div>
                 <div class="trends__card">
@@ -48,9 +48,9 @@
                             <li>Предметные тестирования и диагностики</li>
                             <li>Проекты и исследования</li>
                         </ul>
-                        <BtnGradient class="btn__trends-card">
+                        <BtnBackgroud class="btn__trends-card">
                             Подробнее
-                        </BtnGradient>
+                        </BtnBackgroud>
                     </div>
                 </div>
                 <div class="trends__card">
@@ -64,9 +64,9 @@
                             <li>3D-моделирование</li>
                             <li>Научно-техническое творчество</li>
                         </ul>
-                        <BtnGradient class="btn__trends-card">
+                        <BtnBackgroud class="btn__trends-card">
                             Подробнее
-                        </BtnGradient>
+                        </BtnBackgroud>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,9 @@
 </template>
 
 <script setup>
+import BtnBackgroud from '../btns/BtnBackgroud.vue';
 import BtnGradient from '../btns/BtnGradient.vue';
+
 </script>
 <script>
 </script>
@@ -97,7 +99,7 @@ import BtnGradient from '../btns/BtnGradient.vue';
     padding: 60px 80px 60px 80px;
 
     @media (max-width: $lg) {
-        padding: 40px 40px 40px 40px;
+        padding:40px;
     }
 
     @media (max-width: $sm) {
@@ -106,7 +108,7 @@ import BtnGradient from '../btns/BtnGradient.vue';
 }
 
 .trends__header{
-    font-weight: 600;
+    font-family: "Kreadon-Demi";
     font-size: 36px;
     line-height: 43px;
     color: $blue-primary;
@@ -149,7 +151,7 @@ import BtnGradient from '../btns/BtnGradient.vue';
     font-weight: 500;
     font-size: 24px;
 
-    @media (max-width: $xl) {
+    @media (max-width: $lg) {
         font-size: 20px;
         line-height: 24px;
     }
@@ -163,6 +165,7 @@ import BtnGradient from '../btns/BtnGradient.vue';
     background: $gradient-background;
     border-radius: 0 0 32px 32px;
     height: 100%;
+    align-items:center;
 }
 
 ul {
@@ -177,7 +180,7 @@ li {
     font-size: 16px;
     line-height: 24px;
     
-    @media (max-width: $xl) {
+    @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
     }
@@ -185,6 +188,11 @@ li {
 
 .btn__trends-card {
     width: 100%;
+    max-width: 304px;
+    
+    @media (max-width: $lg) {
+        max-width: 256px;
+    }
 }
 
 .trends__proposal{

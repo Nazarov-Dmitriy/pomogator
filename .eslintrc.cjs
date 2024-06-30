@@ -13,7 +13,6 @@ module.exports = {
         ecmaVersion: 'latest'
     },
     rules: {
-        'max-len': [1, { 'code': 255, 'tabWidth': 4, 'ignorePattern': 'd="([\\s\\S]*?)"' }],
         'no-param-reassign': 0,
         'import/first': 0,
         'import/extensions': 0,
