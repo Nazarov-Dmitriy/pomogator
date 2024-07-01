@@ -10,11 +10,19 @@
                         Химия
                     </div>
                     <div class="trends__card-info">
-                        <ul>
-                            <li>Виртуальные практикумы и лабораторные работы</li>
-                            <li>Демонстрационные эксперименты</li>
-                            <li>Моделирование химических процессов</li>
-                            <li>Проекты и исследования</li>
+                        <ul class="trends__card-list">
+                            <li class="trends__card-item">
+                                Виртуальные практикумы и лабораторные работы
+                            </li>
+                            <li class="trends__card-item">
+                                Демонстрационные эксперименты
+                            </li>
+                            <li class="trends__card-item">
+                                Моделирование химических процессов
+                            </li>
+                            <li class="trends__card-item">
+                                Проекты и исследования
+                            </li>
                         </ul>
                         <BtnBackgroud class="btn__trends-card">
                             Подробнее
@@ -26,11 +34,19 @@
                         Физика
                     </div>
                     <div class="trends__card-info">
-                        <ul>
-                            <li>Виртуальные практикумы и лабораторные работы</li>
-                            <li>Демонстрационные эксперименты</li>
-                            <li>Электронные таблицы и графики</li>
-                            <li>Наглядное представление результатов экспериментов</li>
+                        <ul class="trends__card-list">
+                            <li class="trends__card-item">
+                                Виртуальные практикумы и лабораторные работы
+                            </li>
+                            <li class="trends__card-item">
+                                Демонстрационные эксперименты
+                            </li>
+                            <li class="trends__card-item">
+                                Электронные таблицы и графики
+                            </li>
+                            <li class="trends__card-item">
+                                Наглядное представление результатов экспериментов
+                            </li>
                         </ul>
                         <BtnBackgroud class="btn__trends-card">
                             Подробнее
@@ -42,11 +58,19 @@
                         Биология
                     </div>
                     <div class="trends__card-info">
-                        <ul>
-                            <li>Виртуальные практикумы и лабораторные работы</li>
-                            <li>Демонстрационные эксперименты</li>
-                            <li>Предметные тестирования и диагностики</li>
-                            <li>Проекты и исследования</li>
+                        <ul class="trends__card-list">
+                            <li class="trends__card-item">
+                                Виртуальные практикумы и лабораторные работы
+                            </li>
+                            <li class="trends__card-item">
+                                Демонстрационные эксперименты
+                            </li>
+                            <li class="trends__card-item">
+                                Предметные тестирования и диагностики
+                            </li>
+                            <li class="trends__card-item">
+                                Проекты и исследования
+                            </li>
                         </ul>
                         <BtnBackgroud class="btn__trends-card">
                             Подробнее
@@ -58,11 +82,19 @@
                         Робототехника
                     </div>
                     <div class="trends__card-info">
-                        <ul>
-                            <li>Конструирование и программирование роботов</li>
-                            <li>VR-очки в проектах и исследованиях</li>
-                            <li>3D-моделирование</li>
-                            <li>Научно-техническое творчество</li>
+                        <ul class="trends__card-list">
+                            <li class="trends__card-item">
+                                Конструирование и программирование роботов
+                            </li>
+                            <li class="trends__card-item">
+                                VR-очки в проектах и исследованиях
+                            </li>
+                            <li class="trends__card-item">
+                                3D-моделирование
+                            </li>
+                            <li class="trends__card-item">
+                                Научно-техническое творчество
+                            </li>
                         </ul>
                         <BtnBackgroud class="btn__trends-card">
                             Подробнее
@@ -167,24 +199,24 @@ import BtnGradient from '../btns/BtnGradient.vue';
     height: 100%;
     align-items:center;
 }
-// Переделать под классы
-// ul {
-//     padding-bottom: 10px;
-//     padding-left: 20px;
-// }
 
-// li {
-//     list-style-type: disc;
-//     width: 100%;
-//     font-weight: 400;
-//     font-size: 16px;
-//     line-height: 24px;
+.trends__card-list {
+    padding-bottom: 10px;
+    padding-left: 20px;
+}
+
+.trends__card-item {
+    list-style-type: disc;
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
     
-//     @media (max-width: $lg) {
-//         font-size: 14px;
-//         line-height: 20px;
-//     }
-// }
+    @media (max-width: $lg) {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
 
 .btn__trends-card {
     width: 100%;
