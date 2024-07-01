@@ -58,7 +58,7 @@
             </div>
         </div>
         <img
-            src="@/assets/images/faq/bg-line.svg"
+            src="@/assets/images/main/faq/bg-line.svg"
             alt="bg-image"
             class="faq__bg-line"
         >

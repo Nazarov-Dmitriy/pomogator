@@ -16,24 +16,24 @@
                 </BtnBackgroud>
             </div>
             <img
-                src="@/assets/images/objective/img1.svg"
+                src="@/assets/images/main/objective/img1.svg"
                 alt="img-decor"
                 class="objective__image"
             >
             <img
-                src="@/assets/images/objective/img2.svg"
+                src="@/assets/images/main/objective/img2.svg"
                 alt="img-decor"
                 class="objective__image"
             >
             <img
-                src="@/assets/images/objective/bg-line.svg"
+                src="@/assets/images/main/objective/bg-line.svg"
                 alt="bg-image"
                 class="objective__bg-line objective__bg-line--mobile"
             >
         </div>
 
         <img
-            src="@/assets/images/objective/bg-line.svg"
+            src="@/assets/images/main/objective/bg-line.svg"
             alt="bg-image"
             class="objective__bg-line"
         >
