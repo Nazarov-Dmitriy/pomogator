@@ -1,11 +1,26 @@
 <template>
-    <button class="btn-bg">
+    <button
+        class="btn-bg"
+        @click="submitEmiit"
+    >
         <span class="btn-bg__text">
             <slot />
         </span>
     </button>
 </template>
 <script setup>
+const props = defineProps({
+    emitName: {
+        type: String,
+        default: null
+    },
+})
+const emit = defineEmits(['form-submit'])
+
+
+function submitEmiit (){
+    emit(props.emitName)
+}
 
 </script>
 <style lang="scss">
