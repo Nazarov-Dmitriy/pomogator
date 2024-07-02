@@ -1,5 +1,5 @@
 <template>
-    <div class="main-page">
+    <div class="page">
         <HeaderComponent />
         <AboutComponent />
         <ObjectiveProjectComponent />
@@ -12,7 +12,7 @@
     </div>
 </template>
 <script setup>
-import HeaderComponent from '@/components/main/HeaderComponent.vue'
+import HeaderComponent from '@/components/HeaderComponent.vue'
 import AboutComponent from '../components/main/AboutComponent.vue';
 import ObjectiveProjectComponent from '../components/main/ObjectiveProjectComponent.vue';
 import FaqComponent from '../components/main/FaqComponent.vue';
@@ -24,8 +24,10 @@ import FooterComponent from '../components/main/FooterComponent.vue';
 
 </script>
 <style scoped lang="scss">
-.main-page {
+.page {
     min-height: 100vh;
     overflow: hidden;
+    max-width: 1440px;
+    margin: 0 auto;
 }
 </style>

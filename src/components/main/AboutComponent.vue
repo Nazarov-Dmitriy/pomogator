@@ -18,27 +18,27 @@
                 </div>
                 <div class="about__images">
                     <img
-                        src="@/assets/images/about/about-all.png"
+                        src="@/assets/images/main/about/about-all.png"
                         alt="icon-card"
                         class="about__image-full"
                     >
                     <img
-                        src="@/assets/images/about/img1.svg"
+                        src="@/assets/images/main/about/img1.svg"
                         alt="icon-card"
                         class="about__image-one"
                     >
                     <img
-                        src="@/assets/images/about/img2.svg"
+                        src="@/assets/images/main/about/img2.svg"
                         alt="icon-card"
                         class="about__image-one"
                     >
                     <img
-                        src="@/assets/images/about/img3.svg"
+                        src="@/assets/images/main/about/img3.svg"
                         alt="icon-card"
                         class="about__image-one"
                     >
                     <img
-                        src="@/assets/images/about/img4.svg"
+                        src="@/assets/images/main/about/img4.svg"
                         alt="icon-card"
                         class="about__image-one"
                     >
@@ -47,7 +47,7 @@
             <div class="about__cards">
                 <div class="about__card">
                     <img
-                        src="@/assets/images/about/practicum.svg"
+                        src="@/assets/images/main/about/practicum.svg"
                         alt="icon-card"
                         class="about__card-img"
                     >
@@ -57,7 +57,7 @@
                 </div>
                 <div class="about__card">
                     <img
-                        src="@/assets/images/about/certificate.svg"
+                        src="@/assets/images/main/about/certificate.svg"
                         alt="icon-card"
                         class="about__card-img"
                     >
@@ -67,7 +67,7 @@
                 </div>
                 <div class="about__card">
                     <img
-                        src="@/assets/images/about/video-materials.svg"
+                        src="@/assets/images/main/about/video-materials.svg"
                         alt="icon-card"
                         class="about__card-img"
                     >
@@ -77,7 +77,7 @@
                 </div>
                 <div class="about__card">
                     <img
-                        src="@/assets/images/about/news.svg"
+                        src="@/assets/images/main/about/news.svg"
                         alt="icon-card"
                         class="about__card-img"
                     >

@@ -58,7 +58,7 @@
             </div>
         </div>
         <img
-            src="@/assets/images/faq/bg-line.svg"
+            src="@/assets/images/main/faq/bg-line.svg"
             alt="bg-image"
             class="faq__bg-line"
         >
@@ -163,7 +163,7 @@ function getCount (ind) {
     padding: 8px;
     width: 35px;
     height: 35px;
-    background-image: url(../../assets/icons/faq/curle.svg);
+    background-image: url(../../assets/icons/main/faq/curle.svg);
     background-repeat: no-repeat;
     box-sizing: border-box;
     background-size: 35px 35px;
