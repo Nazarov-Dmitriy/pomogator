@@ -67,18 +67,30 @@
                 </div>
                 <div class="header__trend">
                     <div class="header__trend-decor" />
-                    <div class="header__trend-item">
+                    <router-link
+                        to="/trend/chemistry"
+                        class="header__trend-item"
+                    >
                         Химия
-                    </div>
-                    <div class="header__trend-item">
+                    </router-link>
+                    <router-link
+                        to="/trend/physics"
+                        class="header__trend-item"
+                    >
                         Физика
-                    </div>
-                    <div class="header__trend-item">
+                    </router-link>
+                    <router-link
+                        to="/trend/biology"
+                        class="header__trend-item"
+                    >
                         Биология
-                    </div>
-                    <div class="header__trend-item">
+                    </router-link>
+                    <router-link
+                        to="/trend/robotics"
+                        class="header__trend-item"
+                    >
                         Робототехника
-                    </div>
+                    </router-link>
                     <div class="header__trend-decor" />
                 </div>
             </div>
@@ -87,7 +99,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
-import BtnGradient from '../btns/BtnGradient.vue'
+import BtnGradient from './btns/BtnGradient.vue'
 import { ref } from 'vue'
 
 const btnMenu = ref(false)
@@ -380,6 +392,10 @@ function mainLink () {
 
     @media (max-width: $sm) {
         flex: 1 0 235px;
+    }
+
+    &.router-link-active {
+        background: $blue-primary;
     }
 }
 
