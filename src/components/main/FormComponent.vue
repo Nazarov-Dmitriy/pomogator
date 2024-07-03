@@ -383,8 +383,6 @@ function validateForm () {
     align-content: flex-start;
 }
 
-.form-item--name {}
-
 .form-main__label {
     flex: 1 1 100%;
     font-size: 16px;
