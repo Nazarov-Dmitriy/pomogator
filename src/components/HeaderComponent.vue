@@ -32,7 +32,7 @@
                 <ul class="header__nav">
                     <li class="header__item">
                         <router-link
-                            to="/"
+                            to="/about"
                             class="header__link"
                         >
                             О нас
