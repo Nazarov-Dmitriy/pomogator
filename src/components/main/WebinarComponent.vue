@@ -8,7 +8,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
             <div class="webinar__wrapper">
                 <div class="webinar__hero">
                     <img
-                        src="../../assets/images/webinarComponent/webinar-hero.png"
+                        src="../../assets/images/main/webinar/webinar-hero.png"
                         alt="webinar hero"
                         class="webinar__hero-img"
                     />
@@ -24,7 +24,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                             <div class="webinar__info-card">
                                 <div class="webinar__info-card-icon">
                                     <img
-                                        src="../../assets/images/webinarComponent/webinar-example.png"
+                                        src="../../assets/images/main/webinar/webinar-example.png"
                                         alt=""
                                     />
                                 </div>
@@ -35,7 +35,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                             <div class="webinar__info-card">
                                 <div class="webinar__info-card-icon">
                                     <img
-                                        src="../../assets/images/webinarComponent/webinar-topic.png"
+                                        src="../../assets/images/main/webinar/webinar-topic.png"
                                         alt=""
                                     />
                                 </div>
@@ -46,7 +46,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                             <div class="webinar__info-card">
                                 <div class="webinar__info-card-icon">
                                     <img
-                                        src="../../assets/images/webinarComponent/webinar-login.png"
+                                        src="../../assets/images/main/webinar/webinar-login.png"
                                         alt=""
                                     />
                                 </div>
@@ -64,7 +64,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
         </div>
 
         <div class="webinar__background-svg">
-            <img src="../../assets/images/webinarComponent/webinar-lines.png" alt="" />
+            <img src="../../assets/images/main/webinar/webinar-lines.png" alt="" />
         </div>
     </section>
 </template>
@@ -210,16 +210,6 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     justify-content: flex-end;
 }
 .webinar__info-button {
-    // border-radius: 32px;
-    // border: none;
-    // padding: 12px 24px;
-    // background: #f84343;
-    // font-size: 16px;
-    // line-height: 150%;
-    // text-align: center;
-    // color: #fff;
-    // cursor: pointer;
-    // margin-right: 39px;
 
     @media (max-width: 576px) {
         width: 100%;

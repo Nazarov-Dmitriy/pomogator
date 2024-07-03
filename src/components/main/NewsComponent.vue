@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import BtnGradient from '../btns/BtnGradient.vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
 const query = ref('')
@@ -8,20 +9,23 @@ const toggleInfoBlock = ref(false)
 const showDangerBlock = ref(false)
 const cards = ref([
     {
-        img: '/src/assets/images/NewsComponent/card-image1.png',
-        tag: '#статья #химия',
+        img: '/src/assets/images/main/news/card-image1.png',
+        tag1: '#статья ',
+        tag2: '#химия',
         title: 'Новые IT технологии в химии',
         date: '01.05.2024'
     },
     {
-        img: '/src/assets/images/NewsComponent/card-image2.png',
-        tag: '#статья #физика',
+        img: '/src/assets/images/main/news/card-image2.png',
+        tag1: '#статья ',
+        tag2: '#физика',
         title: 'Новые горизонты исследований',
         date: '01.05.2024'
     },
     {
-        img: '/src/assets/images/NewsComponent/card-image3.png',
-        tag: '#статья #биология',
+        img: '/src/assets/images/main/news/card-image3.png',
+        tag1: '#статья ',
+        tag2: '#биология',
         title: 'Возможности для исследований в биологии',
         date: '01.05.2024'
     }
@@ -54,7 +58,11 @@ const validateEmail = (email) => {
                         </div>
                     </div>
                     <div class="news__card-body">
-                        <span>{{ item.tag }}</span>
+                        <div class="news__card-body-tags">
+                            <span>{{ item.tag1 }}</span>
+                            <span>{{ item.tag2 }}</span>
+                        </div>
+
                         <p class="news__text news__card-text">{{ item.title }}</p>
                         <span>{{ item.date }}</span>
                     </div>
@@ -64,7 +72,7 @@ const validateEmail = (email) => {
                         <p class="news__text news__card-text news__card-text--empty">
                             Переходите в блог, чтобы выбрать подходящую для вас информацию
                         </p>
-                        <button class="news__card-button">Подробнее</button>
+                        <BtnGradient class="news__card-button">Подробнее</BtnGradient>
                         <div class="news__card-bg">
                             <img src="../../assets/images/NewsComponent/news-card-bg.png" alt="" />
                         </div>
@@ -93,7 +101,7 @@ const validateEmail = (email) => {
                                 <div v-if="showDangerBlock" class="validate-danger">
                                     <div class="validate-svg">
                                         <img
-                                            src="../../assets/icons/NewsComponent/validate.svg"
+                                            src="../../assets/icons/main/news/validate.svg"
                                             alt=""
                                         />
                                     </div>
@@ -114,7 +122,7 @@ const validateEmail = (email) => {
                     <div class="news__success-wrapper">
                         <h2 class="news__success-title">Ваши данные приняты</h2>
                         <div class="news__success-svg">
-                            <img src="../../assets/images/NewsComponent/success.svg" alt="" />
+                            <img src="../../assets/images/main/news/success.svg" alt="" />
                         </div>
                     </div>
                 </div>
@@ -195,10 +203,7 @@ const validateEmail = (email) => {
     flex-direction: column;
     gap: 20px;
     overflow: hidden;
-
-    &:not(:last-child) {
-        cursor: pointer;
-    }
+    cursor: pointer;
 
     span {
         color: $blue;
@@ -208,7 +213,11 @@ const validateEmail = (email) => {
         border-color: $blue-primary;
     }
 
-    &:hover:not(:last-child) .news__text {
+    &:hover .news__text {
+        color: $blue-primary;
+    }
+
+    &:hover .news__card-body span {
         color: $blue-primary;
     }
 }
@@ -239,6 +248,11 @@ const validateEmail = (email) => {
     }
 }
 
+.news__card-body-tags {
+    display: flex;
+    gap: 16px;
+}
+
 .news__card-img {
     width: 100%;
     aspect-ratio: 3 / 1;
@@ -253,12 +267,6 @@ const validateEmail = (email) => {
 
 .news__card-button {
     box-sizing: border-box;
-    border: 2px solid $primary-red;
-    border-radius: 32px;
-    padding: 12px 24px;
-    line-height: 150%;
-    color: $primary-red;
-    background: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
     width: max-content;
     cursor: pointer;
     position: relative;
@@ -363,7 +371,7 @@ const validateEmail = (email) => {
     background: $white;
     color: $blue-primary;
     transition: 0.2s;
-    background: url('/src/assets/icons/NewsComponent/mail.svg');
+    background: url('/src/assets/icons/main/news/mail.svg');
     background-repeat: no-repeat;
     background-position: right 16px top 10px;
 
@@ -377,7 +385,7 @@ const validateEmail = (email) => {
 
     &:hover {
         border: 2px solid $blue-primary;
-        background: url('/src/assets/icons/NewsComponent/mail-hover.svg');
+        background: url('/src/assets/icons/main/news/mail-hover.svg');
         background-repeat: no-repeat;
         background-position: right 16px top 10px;
     }
@@ -385,7 +393,7 @@ const validateEmail = (email) => {
     &:active,
     &:focus {
         border: 2px solid $blue-primary;
-        background: url('/src/assets/icons/NewsComponent/mail-hover.svg');
+        background: url('/src/assets/icons/main/news/mail-hover.svg');
         background-repeat: no-repeat;
         background-position: right 16px top 10px;
 
