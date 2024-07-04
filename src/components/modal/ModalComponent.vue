@@ -1,12 +1,16 @@
-
 <template>
     <Transition name="modal">
         <div
             v-if="props.show"
             class="modal-mask"
         >
-            <div class="modal-container">
-                <FormMaterial />
+            <div
+                v-esc="()=>$emit('close')"
+                class="modal-container"
+            >
+                <FormMaterial 
+                    @close="$emit('close')"
+                />
             </div>
         </div>
     </Transition>
@@ -19,6 +23,8 @@ FormMaterial
 const props = defineProps({
     show: Boolean,
 })
+defineEmits(['close'])
+
 </script>
 
 <style lang="scss" scoped>
@@ -46,6 +52,18 @@ const props = defineProps({
   border: 2px solid $blue-primary;
   overflow: hidden;
   width: 100%;
+
+  @media (max-width: $xxl) {
+    margin: auto 80px;
+  }
+
+  @media (max-width: $lg) {
+    margin: auto 40px;
+  }
+
+  @media (max-width: $sm) {
+    margin: auto 16px;
+  }
 }
 
 

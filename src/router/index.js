@@ -18,10 +18,19 @@ const router = createRouter({
         },
         {
             path: '/about',
-            name: 'trend',
+            name: 'about',
             component: AboutPage
         }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return {
+                top: 0, behavior: 'smooth',
+            }
+        }
+    }
 })
 
 export default router

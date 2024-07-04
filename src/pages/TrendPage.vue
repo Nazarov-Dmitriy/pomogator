@@ -13,6 +13,7 @@
                 </h2>
             </template>
         </ListArticle>
+        <OtherTrend />
     </div>
 </template>
 
@@ -21,11 +22,14 @@ import HeaderComponent from '@/components/HeaderComponent.vue'
 import TrendAbout from '../components/trend/TrendAbout.vue';
 import SearchPanel from '../components/searchPanel/SearchPanel.vue';
 import ListArticle from '../components/article/ListArticle.vue';
+import OtherTrend from '../components/trend/OtherTrend.vue';
 import { ref } from 'vue';
+
+
 
 const data = ref([
     {
-        title: 'Роль информационных технологий в науке',
+        title: 'Роль информационных технологий в науке 0',
         img: '../../assets/images/test/image.png',
         tags: ['статья', 'химия'],
         publication_date: '01.05.2024',
@@ -34,7 +38,7 @@ const data = ref([
         id: 1
     },
     {
-        title: 'IT-технологии в физике: новые горизонты исследований IT-технологии в физике: новые горизонты исследований',
+        title: 'IT-технологии в физике: новые горизонты исследований IT-технологии в физике: новые горизонты исследований 1',
         img: '../../assets/images/test/image2.png',
         tags: ['статья', 'химия'],
         publication_date: '01.05.2024',
@@ -123,6 +127,8 @@ const data = ref([
         like:22, id:12
     },
 ])
+
+
 
 </script>
 <style scoped lang="scss">

@@ -3,7 +3,7 @@
         <slot name="header" />
         <div class="list-article">
             <div
-                v-for="item in props.data"
+                v-for="item in renderList"
                 :key="item.id"
                 class="card"
             >
@@ -58,10 +58,17 @@
             </div>
         </div>
         <OfferMaterial />
+        <PaginationComponent
+            :perpage="11"
+            :data="props.data"
+            @set-list="getRenderList"
+        />
     </div>
 </template>
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
+import PaginationComponent from '../pagination/PaginationComponent.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
     data: {
@@ -70,10 +77,15 @@ const props = defineProps({
     },
 })
 
+const renderList = ref([])
+
 function getUrl (url) {
     return new URL(url, import.meta.url).href
 }
 
+function getRenderList ( list){
+    renderList.value = list
+}
 
 </script>
 <style lang="scss">

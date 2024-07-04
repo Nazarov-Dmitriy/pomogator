@@ -68,25 +68,25 @@
                 <div class="header__trend">
                     <div class="header__trend-decor" />
                     <router-link
-                        to="/trend/chemistry"
+                        to="/trend/khimiya"
                         class="header__trend-item"
                     >
                         Химия
                     </router-link>
                     <router-link
-                        to="/trend/physics"
+                        to="/trend/fizika"
                         class="header__trend-item"
                     >
                         Физика
                     </router-link>
                     <router-link
-                        to="/trend/biology"
+                        to="/trend/biologiya"
                         class="header__trend-item"
                     >
                         Биология
                     </router-link>
                     <router-link
-                        to="/trend/robotics"
+                        to="/trend/robototekhnika"
                         class="header__trend-item"
                     >
                         Робототехника
