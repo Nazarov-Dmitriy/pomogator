@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import BtnGradient from '../btns/BtnGradient.vue'
+import BtnGradient from '../btns/BtnComponent.vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
 const query = ref('')

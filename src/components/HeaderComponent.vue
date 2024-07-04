@@ -40,7 +40,7 @@
                     </li>
                     <li class="header__item">
                         <router-link
-                            to="/"
+                            to="/blog"
                             class="header__link"
                         >
                             Блог
@@ -48,7 +48,7 @@
                     </li>
                     <li class="header__item">
                         <router-link
-                            to="/"
+                            to="/webinar"
                             class="header__link"
                         >
                             Вебинар
@@ -61,9 +61,9 @@
                         class="header__search"
                         placeholder="Подсказка"
                     >
-                    <BtnGradient class="btn__header">
+                    <BtnComponent class="btn__header">
                         Войти
-                    </BtnGradient>
+                    </BtnComponent>
                 </div>
                 <div class="header__trend">
                     <div class="header__trend-decor" />
@@ -99,7 +99,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
-import BtnGradient from './btns/BtnGradient.vue'
+import BtnComponent from './btns/BtnComponent.vue'
 import { ref } from 'vue'
 
 const btnMenu = ref(false)
@@ -290,6 +290,13 @@ function mainLink () {
     }
 
     &:active {
+        color: $black;
+        text-decoration: underline;
+        text-decoration-color: $black;
+        text-underline-offset: 5px;
+    }
+
+    &.router-link-active {
         color: $black;
         text-decoration: underline;
         text-decoration-color: $black;

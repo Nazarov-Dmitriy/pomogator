@@ -2,8 +2,14 @@
     <div class="page">
         <HeaderComponent />
         <TrendAbout />
-        <SearchPanel class="trend__search-panel" />
+
+        <SearchPanel
+            v-model="searchValue"
+            class="trend__search-panel"
+            @search="search()"
+        />
         <ListArticle
+            v-if="data.length > 0"
             class="trend__article-header"
             :data="data"
         >
@@ -23,11 +29,11 @@ import TrendAbout from '../components/trend/TrendAbout.vue';
 import SearchPanel from '../components/searchPanel/SearchPanel.vue';
 import ListArticle from '../components/article/ListArticle.vue';
 import OtherTrend from '../components/trend/OtherTrend.vue';
-import { ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
+const searchValue = ref('')
 
-
-const data = ref([
+const dataAll = ref([
     {
         title: 'Роль информационных технологий в науке 0',
         img: '../../assets/images/test/image.png',
@@ -55,7 +61,7 @@ const data = ref([
         like:22, id:3
     },
     {
-        title: 'Роль информационных технологий в науке 3',
+        title: 'Робототехника: будущее уже здесь 3',
         img: '../../assets/images/test/image2.png',
         tags: ['статья', 'химия'],
         publication_date: '01.05.2024',
@@ -128,7 +134,28 @@ const data = ref([
     },
 ])
 
+const data = ref([])
 
+function search (){
+    data.value  = dataAll.value.filter(el => {
+        return  (el.title).toLocaleLowerCase().includes((searchValue.value).toLocaleLowerCase())
+    })
+}
+
+onMounted(()=>{
+    data.value = dataAll.value
+    console.log(data);
+})
+
+watch(searchValue , (newVal)=>{
+    if(newVal.trim() == ''){
+        data.value = dataAll.value
+    }
+})
+
+// watch(data , ()=>{
+//     console.log(3);
+// }, {deep: true})
 
 </script>
 <style scoped lang="scss">

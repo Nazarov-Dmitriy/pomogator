@@ -6,16 +6,18 @@
                 class="search-panel__input-wraper"
             >
                 <input
-                    v-model="search"
+                    :value="modelValue"
                     type="text"
                     class="search-panel__input"
                     placeholder="Поиск"
+                    @input="$emit('update:modelValue', $event.target.value)"
+                    @keypress.enter="$emit('search')"
                 >
             </div>
             <div class="search-panel__block">
                 <button
                     class="search-panel__btn"
-                    @click=" searchActive = !searchActive"
+                    @click=" showSearch()"
                 >
                     <svg
                         width="24"
@@ -70,9 +72,17 @@
     </div>
 </template>
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-const search = ref('');
+defineProps({
+    modelValue:{ 
+        type:String,
+        default: '',
+    }
+})
+
+const emit =defineEmits(['update:modelValue', 'search'])
+
 const searchActive = ref(false);
 const activeTags = ref([])
 
@@ -94,9 +104,10 @@ function setActiveTags (id) {
     }
 }
 
-watch(searchActive, () => {
-    search.value = ''
-})
+function showSearch (){
+    searchActive.value = !searchActive.value
+    emit('update:modelValue', '')
+}
 
 const hashtagData = ref([
     {

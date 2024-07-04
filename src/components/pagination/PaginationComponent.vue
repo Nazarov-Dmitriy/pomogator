@@ -206,7 +206,10 @@ watch(() => params.content, () => {
     getListPage();
 }, { deep: true })
 
-
+watch(()=> props.data, ()=>{
+    getRangeCountPage();
+    getContentPage()
+})
 </script>
 <style lang="scss">
 .pagination__container {

@@ -68,7 +68,7 @@
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     data: {
@@ -84,8 +84,13 @@ function getUrl (url) {
 }
 
 function getRenderList ( list){
+    console.log(list);
     renderList.value = list
 }
+
+watch(()=> props.data, ()=>{
+    console.log(props.data);
+})
 
 </script>
 <style lang="scss">
