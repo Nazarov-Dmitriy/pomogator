@@ -1,3 +1,5 @@
+<script setup></script>
+
 <template>
     <section class="about__section">
         <div class="about">
