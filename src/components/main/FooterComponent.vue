@@ -268,7 +268,7 @@
         padding-bottom: 80px;
     }
     @media (max-width: $sm) {
-        padding-bottom: 32px;
+        padding-bottom: 16px;
     }
 
 }
@@ -302,6 +302,9 @@
     line-height: 24px;
     color: $blue;
     padding-bottom: 24px;
+    @media (max-width: $sm) {
+        padding-top: 16px;
+    }
 }
 
 .footer__list {
