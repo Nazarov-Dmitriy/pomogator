@@ -153,7 +153,7 @@
                         class="footer__geo"
                         @click="some"
                     >
-                    <address class="footer__link">
+                    <address class="footer__address">
                         641310, Курганская область, Кетовский муниципальный округ, с.Кетово, ул.Космонавтов,49А
                     </address>
                 </div>
@@ -332,6 +332,16 @@
         font-size: 14px;
         line-height: 20px;
     }
+    &:hover {
+        color: $blue-primary;
+    }
+
+    &:active {
+        color: $black;
+        text-decoration: underline;
+        text-decoration-color: $black;
+        text-underline-offset: 5px;
+    }
 }
 
 .footer__contacts {
@@ -437,6 +447,20 @@
         padding-right: 0px;
     }
 }
+
+.footer__address {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: $black;
+    @media (max-width: $lg) {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+
 .footer__line {
     margin: 0;
     border: 1px solid $blue;
