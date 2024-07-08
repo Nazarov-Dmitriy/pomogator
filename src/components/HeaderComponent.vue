@@ -32,7 +32,7 @@
                 <ul class="header__nav">
                     <li class="header__item">
                         <router-link
-                            to="/"
+                            to="/about"
                             class="header__link"
                         >
                             О нас
@@ -40,7 +40,7 @@
                     </li>
                     <li class="header__item">
                         <router-link
-                            to="/"
+                            to="/blog"
                             class="header__link"
                         >
                             Блог
@@ -48,7 +48,7 @@
                     </li>
                     <li class="header__item">
                         <router-link
-                            to="/"
+                            to="/webinar"
                             class="header__link"
                         >
                             Вебинар
@@ -61,24 +61,40 @@
                         class="header__search"
                         placeholder="Подсказка"
                     >
-                    <BtnGradient class="btn__header">
+                    <BtnComponent class="btn__header">
                         Войти
-                    </BtnGradient>
+                    </BtnComponent>
                 </div>
                 <div class="header__trend">
                     <div class="header__trend-decor" />
-                    <div class="header__trend-item">
+                    <router-link
+                        to="/trend/khimiya/"
+                        class="header__trend-item"
+                        active-class="active"
+                    >
                         Химия
-                    </div>
-                    <div class="header__trend-item">
+                    </router-link>
+                    <router-link
+                        to="/trend/fizika"
+                        class="header__trend-item"
+                        active-class="active"
+                    >
                         Физика
-                    </div>
-                    <div class="header__trend-item">
+                    </router-link>
+                    <router-link
+                        to="/trend/biologiya"
+                        class="header__trend-item"
+                        active-class="active"
+                    >
                         Биология
-                    </div>
-                    <div class="header__trend-item">
+                    </router-link>
+                    <router-link
+                        to="/trend/robototekhnika"
+                        class="header__trend-item"
+                        active-class="active"
+                    >
                         Робототехника
-                    </div>
+                    </router-link>
                     <div class="header__trend-decor" />
                 </div>
             </div>
@@ -87,7 +103,7 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
-import BtnGradient from '../btns/BtnGradient.vue'
+import BtnComponent from './btns/BtnComponent.vue'
 import { ref } from 'vue'
 
 const btnMenu = ref(false)
@@ -107,6 +123,8 @@ function mainLink () {
 <style lang="scss">
 .header__contaner {
     background: $gradient-background;
+    position: relative;
+    z-index: 9000;
  }
 
 .header__wrapper {
@@ -283,6 +301,13 @@ function mainLink () {
         text-decoration-color: $black;
         text-underline-offset: 5px;
     }
+
+    &.router-link-active {
+        color: $black;
+        text-decoration: underline;
+        text-decoration-color: $black;
+        text-underline-offset: 5px;
+    }
 }
 
 .header__block {
@@ -380,6 +405,10 @@ function mainLink () {
 
     @media (max-width: $sm) {
         flex: 1 0 235px;
+    }
+
+    &.active, &.router-link-exact-path-active {
+        background: $blue-primary;
     }
 }
 

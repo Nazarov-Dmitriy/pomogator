@@ -114,7 +114,7 @@
 
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import BtnGradient from '../btns/BtnGradient.vue';
+import BtnGradient from '../btns/BtnComponent.vue';
 
 </script>
 <script>

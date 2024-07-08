@@ -7,20 +7,27 @@
             <p class="form-main-text">
                 Нам важно ваше мнение! Мы заинтересованы в качестве представленной на сайте информации.
             </p>
-            <form class="form-main">
+            <form
+                class="form-main"
+                @submit.prevent
+                @keypress.enter.prevent
+            >
                 <div class="form-main__column-left">
-                    <div class="form-item form-item--name">
+                    <div class="form-item ">
                         <label
                             for="name"
                             class="form-main__label"
-                        >Как вас зовут?</label>
+                            :class="{ 'error': formField.nameError }"
+                        >Как вас
+                            зовут?</label>
                         <div class="form-item__group">
                             <input
                                 id="name"
-                                v-model="name"
+                                v-model="formField.name"
                                 type="text"
                                 placeholder="Мария Иванова"
                                 class="form-main-input"
+                                @keypress.enter="validateField($event, 'event', 'name')"
                             >
                             <span class="form-item__icon">
                                 <svg
@@ -41,19 +48,34 @@
                                 </svg>
                             </span>
                         </div>
+                        <div
+                            v-if="formField.nameError"
+                            class="form-main__error"
+                        >
+                            <img
+                                src="@/assets/icons/error.svg"
+                                alt="icon"
+                            >
+                            <p class="form-main__error-text">
+                                Поле заполненно некорректно
+                            </p>
+                        </div>
                     </div>
-                    <div class="form-item form-item--phone">
+                    <div class="form-item">
                         <label
                             for="phone"
                             class="form-main__label"
+                            :class="{ 'error': formField.phoneError }"
                         >Телефон</label>
                         <div class="form-item__group">
                             <input
                                 id="phone"
-                                v-model="phone"
+                                v-model="formField.phone"
                                 type="text"
                                 placeholder="+7 (922) 123 45 67"
                                 class="form-main-input"
+                                @input="changePhone($event)"
+                                @keypress.enter="validateField($event, 'event', 'phone')"
                             >
                             <span class="form-item__icon">
                                 <svg
@@ -70,19 +92,34 @@
                                 </svg>
                             </span>
                         </div>
+                        <div
+                            v-if="formField.phoneError"
+                            class="form-main__error"
+                        >
+                            <img
+                                src="@/assets/icons/error.svg"
+                                alt="icon"
+                            >
+                            <p class="form-main__error-text">
+                                Поле заполненно некорректно
+                            </p>
+                        </div>
                     </div>
                     <div class="form-item form-item--email">
                         <label
                             for="email"
                             class="form-main__label"
+                            :class="{ 'error': formField.emailError }"
                         >E-mail</label>
                         <div class="form-item__group">
                             <input
                                 id="email"
-                                v-model="email"
+                                v-model="formField.email"
                                 type="text"
                                 placeholder="mariaivanova@mail.ru"
                                 class="form-main-input"
+                                @input="changeEmail($event)"
+                                @keypress.enter="validateField($event, 'event', 'email')"
                             >
                             <span class="form-item__icon">
                                 <svg
@@ -104,6 +141,18 @@
 
                             </span>
                         </div>
+                        <div
+                            v-if="formField.emailError"
+                            class="form-main__error"
+                        >
+                            <img
+                                src="@/assets/icons/error.svg"
+                                alt="icon"
+                            >
+                            <p class="form-main__error-text">
+                                Поле заполненно некорректно
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="form-main__column-right">
@@ -111,21 +160,40 @@
                         <label
                             for="textarea"
                             class="form-main__label"
-                        >Ваши вопросы и предложения</label>
+                            :class="{ 'error': formField.textareaError }"
+                        >Ваши
+                            вопросы и предложения</label>
                         <textarea
                             id="textarea"
-                            v-model="textarea"
+                            v-model="formField.textarea"
                             type="text"
                             placeholder="Напишите ваш вопрос или ваше предложение."
                             class="form-main-textearea"
+                            @input="changeTextarea($event)"
                         />
+                        <div
+                            v-if="formField.textareaError"
+                            class="form-main__error"
+                        >
+                            <img
+                                src="@/assets/icons/error.svg"
+                                alt="icon"
+                            >
+                            <p class="form-main__error-text">
+                                Поле заполненно некорректно
+                            </p>
+                        </div>
                     </div>
                     <div class="form-main__submit">
                         <p class="form-item__policy">
                             Нажимая на кнопку «Отправить», я соглашаюсь с <span class="form-main__policy-link">политикой
                                 обработки персональных данных</span>
                         </p>
-                        <BtnBackgroud class="form-main__btn">
+                        <BtnBackgroud
+                            class="form-main__btn"
+                            emit-name="form-submit"
+                            @form-submit="validateForm()"
+                        >
                             Отправить
                         </BtnBackgroud>
                     </div>
@@ -145,7 +213,75 @@
     </section>
 </template>
 <script setup>
+import { reactive } from 'vue';
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
+
+const formField = reactive({
+    name: '',
+    phone: '',
+    email: '',
+    textarea: '',
+    nameError: false,
+    phoneError: false,
+    emailError: false,
+    textareaError: false,
+    falidateForm: false,
+})
+
+function validateField (param, event, nameParam) {
+    let target;
+    if (event === 'event') {
+        target = param.target.value.trim();
+    }else{
+        target = param.trim()
+    }
+
+    if (nameParam === 'name') {
+        target.length < 3 ? formField.nameError = true : formField.nameError = false;
+    }
+    if (nameParam === 'phone') {
+        target.length < 18 ? formField.phoneError = true : formField.phoneError = false;
+    }
+    if (nameParam === 'email') {
+        let email_regexp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        !email_regexp.test(String(target).toLowerCase()) ? formField.emailError = true : formField.emailError = false;
+    }
+    if (nameParam === 'textarea') {
+        target.length < 3 ? formField.textareaError = true : formField.textareaError = false;
+    }
+};
+
+function changePhone (event) {
+    let target = event.target;
+    let x = target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+    x[1] = '+7';
+    target.value = !x[3] ? x[1] + '-(' + x[2] : x[1] + '-(' + x[2] + ')-' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
+    formField.phone = target.value;
+};
+
+function changeEmail (event) {
+    let target = event.target;
+    let x = target.value.match(/([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/);
+    target.value = x ? (x[1] + x[2] + x[3] + x[4] + x[5] + x[6]) : '';
+    formField.email = target.value;
+};
+
+function changeTextarea (event) {
+    let target = event.target;
+    event.target.scrollBy(target.scrollHeight, 100)
+
+    if (formField.textareaError && target.value.length > 3) {
+        formField.textareaError = false
+    }
+}
+
+function validateForm () {
+    let validateFeildArr = ['name', 'phone', 'email', 'textarea'];
+
+    validateFeildArr.forEach(item =>{
+        validateField(formField[item], 'validate', item)
+    })
+}
 
 </script>
 <style lang="scss">
@@ -193,7 +329,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     display: flex;
     justify-content: space-between;
     gap: 24px;
-    background:$gradient-background;
+    background: $gradient-background;
     padding: 32px;
     border-radius: 24px;
     border: 2px solid $blue;
@@ -206,8 +342,8 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     }
 
     @media (max-width: $sm) {
-        padding: 24px 16px ;
-        width:calc(100%) ;
+        padding: 24px 16px;
+        width: calc(100%);
         left: -18px;
         border-radius: 0;
     }
@@ -246,14 +382,16 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     align-content: flex-start;
 }
 
-.form-item--name {}
-
 .form-main__label {
     flex: 1 1 100%;
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
     color: $black;
+
+    &.error {
+        color: $primary-red
+    }
 }
 
 .form-item__group {
@@ -261,13 +399,14 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     position: relative;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .form-main-input {
     flex: 1 1 100%;
     border-radius: 32px;
     border: 2px solid $secondary;
-    padding:12px 16px;
+    padding: 12px 16px;
     color: $secondary;
     font-size: 16px;
     line-height: 1.5;
@@ -280,14 +419,9 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
 .form-item__icon {
     position: absolute;
     right: 16px;
+    top: 13px;
 }
 
-.form-item--phone {}
-
-.form-item--email {}
-
-
-.form-item--textarea {}
 
 .form-main-textearea {
     flex: 1 1 100%;
@@ -324,13 +458,13 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     height: 48px;
 
     @media (max-width: $lg) {
-       flex: 1 1 100%;
+        flex: 1 1 100%;
     }
 
     @media (max-width: $sm) {
-      flex-wrap: wrap;
-      height: auto;
-      justify-content: center;
+        flex-wrap: wrap;
+        height: auto;
+        justify-content: center;
     }
 }
 
@@ -342,7 +476,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     color: $blue-primary;
 
     @media (max-width: $sm) {
-       flex: 1 1 100%;
+        flex: 1 1 100%;
     }
 }
 
@@ -351,7 +485,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     cursor: pointer;
 }
 
-.form-main__bg-line{
+.form-main__bg-line {
     position: absolute;
     width: 869px;
     height: 277px;
@@ -365,13 +499,13 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     }
 }
 
-.form-main__bg-line-tablet{
+.form-main__bg-line-tablet {
     display: none;
 
     @media (max-width: $lg) {
         position: absolute;
         display: block;
-    bottom: -142px;
+        bottom: -142px;
         left: -273px;
         rotate: 13deg;
     }
@@ -381,10 +515,22 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     }
 }
 
-.form-main__btn{
+.form-main__btn {
     @media (max-width: $sm) {
-       width: 288px;
-    } 
+        width: 288px;
+    }
 }
 
+.form-main__error {
+    flex: 1 1 100%;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.form-main__error-text {
+    font-size: 16px;
+    line-height: 24px;
+    color: $primary-red
+}
 </style>
