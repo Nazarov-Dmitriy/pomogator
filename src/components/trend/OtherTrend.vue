@@ -66,7 +66,6 @@ watch(
     () => {
         currenTrend.value = route.params.name
         getCurrentList()
-        console.log(route.params.name);
     }
 )
 </script>

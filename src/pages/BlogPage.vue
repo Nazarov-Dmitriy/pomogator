@@ -1,8 +1,7 @@
-<!-- eslint-disable vue/html-self-closing -->
 <template>
     <div class="page">
         <HeaderComponent />
-        <TrendAbout />
+        <TaskMaterial />
 
         <SearchPanel
             v-model="searchValue"
@@ -20,46 +19,42 @@
                 </h2>
             </template>
         </ListArticle>
-        <OtherTrend />
+        <SubscrideComponent />
     </div>
 </template>
 
 <script setup>
 import HeaderComponent from '@/components/HeaderComponent.vue'
-import TrendAbout from '../components/trend/TrendAbout.vue';
+import TaskMaterial from '../components/blog/TaskMaterial.vue';
 import SearchPanel from '../components/searchPanel/SearchPanel.vue';
 import ListArticle from '../components/article/ListArticle.vue';
-import OtherTrend from '../components/trend/OtherTrend.vue';
+import SubscrideComponent from '../components/blog/SubscrideComponent.vue';
 import { onMounted, ref, watch } from 'vue';
-import { getTrend } from '../db/db.js';
-import { useRoute } from 'vue-router';
+import  {getAll}  from '../db/db.js';   
 
-const route = useRoute();
+
 const searchValue = ref('')
-const dataTrend = ref([])
+
+const dataAll = ref([])
+
 const data = ref([])
 
-function search () {
-    data.value = dataTrend.value.filter(el => {
-        return (el.title).toLocaleLowerCase().includes((searchValue.value).toLocaleLowerCase())
+function search (){
+    data.value  = dataAll.value.filter(el => {
+        return  (el.title).toLocaleLowerCase().includes((searchValue.value).toLocaleLowerCase())
     })
 }
 
-onMounted(() => {
-    dataTrend.value = getTrend(route.params.name);
-    data.value = dataTrend.value
+onMounted(()=>{
+    dataAll.value = [...getAll()]
+    data.value = dataAll.value
 })
 
-watch(searchValue, (newVal) => {
-    if (newVal.trim() == '') {
-        data.value = dataTrend.value
+watch(searchValue , (newVal)=>{
+    if(newVal.trim() == ''){
+        data.value = dataAll.value
     }
 })
-
-watch(() => route.params.name, (newVal) => {
-    dataTrend.value = getTrend(newVal);
-    data.value = dataTrend.value ;
-}, { deep: true })
 
 </script>
 <style scoped lang="scss">

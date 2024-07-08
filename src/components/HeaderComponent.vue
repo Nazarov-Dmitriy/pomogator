@@ -68,26 +68,30 @@
                 <div class="header__trend">
                     <div class="header__trend-decor" />
                     <router-link
-                        to="/trend/khimiya"
+                        to="/trend/khimiya/"
                         class="header__trend-item"
+                        active-class="active"
                     >
                         Химия
                     </router-link>
                     <router-link
                         to="/trend/fizika"
                         class="header__trend-item"
+                        active-class="active"
                     >
                         Физика
                     </router-link>
                     <router-link
                         to="/trend/biologiya"
                         class="header__trend-item"
+                        active-class="active"
                     >
                         Биология
                     </router-link>
                     <router-link
                         to="/trend/robototekhnika"
                         class="header__trend-item"
+                        active-class="active"
                     >
                         Робототехника
                     </router-link>
@@ -119,6 +123,8 @@ function mainLink () {
 <style lang="scss">
 .header__contaner {
     background: $gradient-background;
+    position: relative;
+    z-index: 9000;
  }
 
 .header__wrapper {
@@ -401,7 +407,7 @@ function mainLink () {
         flex: 1 0 235px;
     }
 
-    &.router-link-active {
+    &.active, &.router-link-exact-path-active {
         background: $blue-primary;
     }
 }

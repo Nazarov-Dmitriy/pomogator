@@ -6,6 +6,7 @@
                 v-for="item in renderList"
                 :key="item.id"
                 class="card"
+                @click="linkArticle(item.id, item.trend)"
             >
                 <img
                     :src="getUrl(item.img)"
@@ -68,6 +69,7 @@
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue';
+import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue';
 
 const props = defineProps({
@@ -77,19 +79,29 @@ const props = defineProps({
     },
 })
 
+const route = useRoute()
+const router = useRouter()
+
 const renderList = ref([])
 
 function getUrl (url) {
     return new URL(url, import.meta.url).href
 }
 
-function getRenderList ( list){
-    console.log(list);
+function getRenderList (list) {
     renderList.value = list
 }
 
-watch(()=> props.data, ()=>{
-    console.log(props.data);
+
+function linkArticle (id, trend) {
+    if (route.name === 'trend-page') {
+        router.push(`/trend/${route.params.name}/${id}`)
+    } else if (route.name === 'blog') {
+        router.push(`/trend/${trend}/${id}`)
+    }
+}
+
+watch(() => props.data, () => {
 })
 
 </script>
@@ -144,6 +156,7 @@ watch(()=> props.data, ()=>{
 .card-img {
     width: 100%;
     aspect-ratio: 2.9 / 1;
+    object-fit: cover;
 }
 
 .card-body {

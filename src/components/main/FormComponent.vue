@@ -267,7 +267,6 @@ function changeEmail (event) {
 };
 
 function changeTextarea (event) {
-    console.log(222);
     let target = event.target;
     event.target.scrollBy(target.scrollHeight, 100)
 
@@ -420,14 +419,9 @@ function validateForm () {
 .form-item__icon {
     position: absolute;
     right: 16px;
+    top: 13px;
 }
 
-.form-item--phone {}
-
-.form-item--email {}
-
-
-.form-item--textarea {}
 
 .form-main-textearea {
     flex: 1 1 100%;

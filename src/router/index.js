@@ -1,7 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { h } from 'vue'
+import { RouterView } from 'vue-router'
 import MainPage from '@/pages/MainPage.vue'
 import TrendPage from '@/pages/TrendPage.vue'
 import AboutPage from '../pages/AboutPage.vue'
+import BlogPage from '../pages/BlogPage.vue'
+import ArticlePage from '../pages/ArticlePage.vue'
+
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -12,14 +18,38 @@ const router = createRouter({
             component: MainPage
         },
         {
-            path: '/trend/:name',
+            path: '/trend',
             name: 'trend',
-            component: TrendPage
+            component: { render: () => h(RouterView) },
+            children: [
+                {
+                    path: ':name/:id',
+                    name: 'trend-article',               
+                    component: ArticlePage,
+                },
+                {
+                    path: ':name',
+                    name: 'trend-page',               
+                    component: TrendPage,
+                },
+            ]
         },
         {
             path: '/about',
             name: 'about',
-            component: AboutPage
+            component: AboutPage,
+        },
+        {
+            path: '/blog',
+            name: 'blog',
+            component: BlogPage,
+            children: [
+                {
+                    path: '/:id',
+                    name: 'blog-article',                    
+                    component: ArticlePage,
+                },
+            ]
         }
     ],
     scrollBehavior (to, from, savedPosition) {

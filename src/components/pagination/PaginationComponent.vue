@@ -111,7 +111,6 @@ const showRightDots = computed(() => {
 })
 
 const showPrev = computed(() => {
-    console.log(222);
     return params.currentPage == 1 ? true : false
 })
 
@@ -207,6 +206,7 @@ watch(() => params.content, () => {
 }, { deep: true })
 
 watch(()=> props.data, ()=>{
+    getTotalPage ()
     getRangeCountPage();
     getContentPage()
 })

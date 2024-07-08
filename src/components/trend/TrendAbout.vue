@@ -37,10 +37,6 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
 <style lang="scss">
 .section-trend-about {
     position: relative;
-
-    // background-image: url('../../assets/images/trend/description/bg.svg');
-    //     background-repeat: no-repeat;
-    //     // background-size:101% 100%;
     background:$gradient-background;
 }
 

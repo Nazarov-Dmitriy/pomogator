@@ -317,7 +317,6 @@ function changeEmail (event) {
 };
 
 function changeTextarea (event) {
-    console.log(222);
     let target = event.target;
     event.target.scrollBy(target.scrollHeight, 100)
 
