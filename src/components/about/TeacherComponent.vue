@@ -55,12 +55,12 @@
                             <div class="teacher__info-slider-btn">
                                 <img
                                     class="teacher__info-slider-btn teacher__info-slider-btn--left"
-                                    src="@/assets/images/about/slider-button.svg"
+                                    src="@/assets/images/about/teacher/slider-button.svg"
                                     alt="slider button"
                                 />
                                 <img
                                     class="teacher__info-slider-btn teacher__info-slider-btn--right"
-                                    src="@/assets/images/about/slider-button.svg"
+                                    src="@/assets/images/about/teacher/slider-button.svg"
                                     alt="slider button"
                                 />
                             </div>
@@ -114,7 +114,7 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: '/src/assets/images/about/teacher-hero.png'
+        image: '/src/assets/images/about/teacher/teacher-hero.png'
     },
     {
         name: 'Иванов Иван Дмитриевич',
@@ -127,7 +127,7 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: '/src/assets/images/about/teacher-hero.png'
+        image: '/src/assets/images/about/teacher/teacher-hero.png'
     }
 ])
 const activeIndex = ref(0)
@@ -409,4 +409,4 @@ function updateActiveIndex(swiper) {
         }
     }
 }
-</style>
+</style> 

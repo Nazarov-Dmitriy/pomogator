@@ -2,13 +2,14 @@
     <div class="page">
         <HeaderComponent />
         <TeacherComponent />
+         <EquipmentComponent/>
     </div>
 </template>
 
 <script setup>
 import HeaderComponent from '@/components/HeaderComponent.vue'
 import TeacherComponent from '../components/about/TeacherComponent.vue';
-
+import EquipmentComponent from "../components/about/EquipmentComponent.vue"
 
 </script>
 <style scoped lang="scss">
