@@ -27,6 +27,7 @@
                                 type="text"
                                 placeholder="Мария Иванова"
                                 class="form-main-input"
+                                :class="{ 'error': formField.nameError }"
                                 @keypress.enter="validateField($event, 'event', 'name')"
                             >
                             <span class="form-item__icon">
@@ -74,6 +75,7 @@
                                 type="text"
                                 placeholder="+7 (922) 123 45 67"
                                 class="form-main-input"
+                                :class="{ 'error': formField.phoneError }"
                                 @input="changePhone($event)"
                                 @keypress.enter="validateField($event, 'event', 'phone')"
                             >
@@ -118,6 +120,7 @@
                                 type="text"
                                 placeholder="mariaivanova@mail.ru"
                                 class="form-main-input"
+                                :class="{ 'error': formField.emailError }"
                                 @input="changeEmail($event)"
                                 @keypress.enter="validateField($event, 'event', 'email')"
                             >
@@ -169,6 +172,7 @@
                             type="text"
                             placeholder="Напишите ваш вопрос или ваше предложение."
                             class="form-main-textearea"
+                            :class="{ 'error': formField.textareaError }"
                             @input="changeTextarea($event)"
                         />
                         <div
@@ -414,6 +418,10 @@ function validateForm () {
     &::placeholder {
         color: $secondary;
     }
+
+    &.error{
+        border: 2px solid $primary-red; 
+    }
 }
 
 .form-item__icon {
@@ -447,6 +455,10 @@ function validateForm () {
     @media (max-width: $sm) {
         height: auto;
         min-height: 116px;
+    }
+
+    &.error{
+        border: 2px solid $primary-red; 
     }
 }
 

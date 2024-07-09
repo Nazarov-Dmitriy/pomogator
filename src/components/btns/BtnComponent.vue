@@ -1,11 +1,26 @@
 <template>
-    <button class="btn-gradient">
+    <button
+        class="btn-gradient"
+        @click="submitEmit"
+    >
         <span class="btn-gradient__text">
             <slot />
         </span>
     </button>
 </template>
 <script setup>
+const props = defineProps({
+    emitName: {
+        type: String,
+        default: null
+    },
+})
+const emit = defineEmits(['form-submit', 'offer'])
+
+
+function submitEmit (){
+    emit(props.emitName)
+}
 
 </script>
 <style lang="scss">

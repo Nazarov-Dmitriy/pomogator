@@ -11,7 +11,11 @@
                     различных форм наставничества, коучинга, нетворкинга, методического и информационного сопровождения
                     участников с публикацией лучшего опыта.
                 </p>
-                <BtnBackgroud class="objective__btn">
+                <BtnBackgroud
+                    class="objective__btn"
+                    emit-name="link"
+                    @link="$router.push('/about')"
+                >
                     Подробнее
                 </BtnBackgroud>
             </div>

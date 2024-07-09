@@ -17,57 +17,71 @@
                     <div class="article__header">
                         <div class="article__header-block">
                             <h1 class="article__title">
-                                IT-технологии в химии: новые возможности для исследований
+                                {{ article.title }}
                             </h1>
-                            <div class="article__line" />
-                            <p class="article__subtitle">
-                                Статья посвящена применению информационных технологий в биологии, которые открывают
-                                новые горизонты для исследований, диагностики и лечения заболеваний, а также
-                                способствуют развитию персонализированной медицины.
-                            </p>
+                            <div class="article__tags">
+                                <div
+                                    v-for="item in article.tags"
+                                    :key="item.id"
+                                    class="article__tag-item"
+                                >
+                                    <span class="article__tag-symbol">#</span>
+                                    <p class="article__tag-text">
+                                        {{ item }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="article__tags">
-                            sss
-                        </div>
+                        <div
+                            v-if="page === 'blog'"
+                            class="article__line"
+                        />
+                        <p class="article__subtitle">
+                            Статья посвящена применению информационных технологий в биологии, которые открывают
+                            новые горизонты для исследований, диагностики и лечения заболеваний, а также
+                            способствуют развитию персонализированной медицины.
+                        </p>
                     </div>
-                    <div class="article__avtor">
+                    <div
+                        v-if="page === 'trend'"
+                        class="article__avtor"
+                    >
                         <div class="article__avatar">
                             <img
-                                src=""
-                                alt=""
+                                v-if="article.avtor.avatar"
+                                :src="article.avtor.avatar"
+                                alt="avatar"
+                                class="article__avatar-img"
+                            >
+                            <img
+                                v-else
+                                src="../../assets/icons/article/avatar.svg"
+                                alt="avatar"
                                 class="article__avatar-img"
                             >
                         </div>
                         <div class="article__avtor-info">
                             <p class="article__avtor-article">
-                                <span class="article__avtor-field">Автор статьи: </span>Иванов Михаил Александрович
+                                <span class="article__avtor-field">Автор статьи: </span>{{ article.avtor.fullname }}
                             </p>
                             <p class="article__avtor-work">
-                                <span class="article__avtor-field">Место работы: </span>Институт Информационных
-                                Технологий
+                                <span class="article__avtor-field">Место работы: </span>{{ article.avtor.place_work }}
                             </p>
                             <p>
                                 <span class="article__avtor-field">Источник: </span> <a
-                                    href="#"
+                                    :href="article.source"
                                     class="article__avtor-link"
-                                >ссылка_на_райт.ру</a>
+                                >{{ article.source__text }}</a>
                             </p>
                         </div>
                         <p class="article__avtor-publication">
-                            Дата публикации 01.05.2024
+                            Дата публикации {{ article.publication_date }}
                         </p>
                     </div>
-                    <div class="article__contnent">
-                        <p class="article__text">
-                            Информационные технологии играют значительную роль в повышении качества образования в области химии. Они предоставляют новые возможности для обучения, развивают личность учащихся и интенсифицируют процесс обучения.
-                        </p>
-                        <p class="article__text">
-                            Использование обучающих дисков и компьютерных технологий позволяет студентам осваивать сложные темы, такие как химическая связь и электролиз. Демонстрационный химический эксперимент остаётся важным средством для поддержания интереса к предмету, однако некоторые опасные опыты невозможно провести в аудитории.
-                        </p>
-                        <p class="article__text">
-                            Компьютерные технологии особенно полезны при изучении взрыво- и пожароопасных процессов, реакций с участием токсичных веществ. Электронные издания, такие как «Химия для всех XXI. Химические опыты со взрывами и без», позволяют демонстрировать химические эксперименты с опасными веществами.
-                        </p>
-                    </div>
+                    <div
+                        class="article__contnent"
+                        v-html="getContnent"
+                    />
                     <div class="article__footer">
                         <div class="article__btns">
                             <div class="article__raiting">
@@ -76,27 +90,48 @@
                                     alt="up"
                                     class="article__btns-icon"
                                 >
-                                100
+                                {{ article.show }}
                                 <img
                                     src="@/assets/icons/article/down.svg"
                                     alt="down"
                                     class="article__btns-icon"
                                 >
                             </div>
-                            <div class="article__share">
-                                Поделиться
-                                <img
-                                    src="@/assets/icons/article/share.svg"
-                                    alt="share"
-                                    class="article__btns-icon"
-                                >
-                            </div>
+                            <ShareComponent
+                                :article="article"
+                                class="article__share"
+                            />
                             <div class="article__favorites">
-                                Добавить в избранное
-                                <img
-                                    src="@/assets/icons/article/favorites.svg"
-                                    alt="favorites"
+                                <p class="article__favorites-text">
+                                    Добавить в избранное
+                                </p>
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
                                 >
+                                    <defs>
+                                        <linearGradient
+                                            id="myGradient"
+                                            gradientTransform="rotate(45)"
+                                        >
+                                            <stop
+                                                offset="20%"
+                                                stop-color="#F12424"
+                                            />
+                                            <stop
+                                                offset="100%"
+                                                stop-color="#4360F8"
+                                            />
+                                        </linearGradient>
+                                    </defs>
+                                    <path
+                                        d="M5.84912 0.464844C4.74455 0.464844 3.84912 1.36028 3.84912 2.46485V19.1215C3.84912 20.8309 5.85469 21.7524 7.15176 20.6391L10.6973 17.5958C11.4467 16.9526 12.5533 16.9526 13.3027 17.5959L16.8526 20.6434C18.1496 21.7568 20.1553 20.8352 20.1553 19.1258V2.46484C20.1553 1.36027 19.2599 0.464844 18.1553 0.464844H5.84912Z"
+                                        fill="#5B94EA"
+                                    />
+                                </svg>
                             </div>
                         </div>
                         <div class="article__download">
@@ -123,10 +158,14 @@
                             </p>
                         </div>
                     </div>
-                    <OtherArticle :other-atricle="otherAtricle" />
-                    <div class="article__trend">
-                        sss
-                    </div>
+                    <OtherArticle
+                        v-if="page === 'trend'"
+                        :other-atricle="otherAtricle"
+                    />
+                    <OtherTrend
+                        v-if="page === 'blog'"
+                        position="sidebar"
+                    />
                 </div>
             </div>
         </div>
@@ -136,7 +175,10 @@
 import { useRouter } from 'vue-router'
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
 import OtherArticle from '../article/OtherArticle.vue';
-import { watch } from 'vue';
+import OtherTrend from '../trend/OtherTrend.vue';
+
+import { computed, watch } from 'vue';
+import ShareComponent from './ShareComponent.vue';
 
 const router = useRouter()
 
@@ -149,10 +191,24 @@ const props = defineProps({
         type: String,
         default: ''
     },
-    otherAtricle:{
+    otherAtricle: {
         type: Array,
         default: () => []
+    },
+    page: {
+        type: String,
+        default: ''
     }
+})
+
+const getContnent = computed(() => {
+    let content = '';
+    if (props.article?.content) {
+        props.article?.content.forEach(el => {
+            content += el
+        });
+    }
+    return content
 })
 
 watch(() => props.data, () => {
@@ -176,6 +232,16 @@ watch(() => props.data, () => {
     flex-wrap: wrap;
     padding: 15px 80px 60px 80px;
     gap: 21px;
+
+    @media (max-width: $lg) {
+        gap: 40px;
+        padding: 50px 40px 40px 40px;
+    }
+
+    @media (max-width: $sm) {
+        gap: 28px;
+        padding: 16px 16px 32px 16px;
+    }
 }
 
 .article__back {
@@ -183,6 +249,11 @@ watch(() => props.data, () => {
     font-size: 16px;
     line-height: 24px;
     color: $blue;
+
+    @media (max-width: $lg) {
+        font-size: 14px;
+        line-height: 20px;
+    }
 }
 
 .article__main {
@@ -197,20 +268,44 @@ watch(() => props.data, () => {
     flex: 0 1 848px;
     display: flex;
     flex-wrap: wrap;
+
+    @media (max-width: $xl) {
+        flex: 0 1 100%;
+    }
 }
 
 .article__header {
     flex: 1 1 100%;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
 
     & .article__tags {
         display: none;
+
+        @media (max-width: $xl) {
+            display: flex;
+        }
+    }
+
+    @media (max-width: $lg) {
+        gap: 24px;
     }
 }
 
 .article__header-block {
     display: flex;
-    gap: 32px;
-    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    width: 100%;
+
+    .article__tags {
+        flex: none;
+    }
+
+    @media (max-width: $sm) {
+        flex-direction: column;
+    }
 }
 
 .article__title {
@@ -219,6 +314,11 @@ watch(() => props.data, () => {
     font-size: 48px;
     line-height: 56px;
     color: $blue-primary;
+
+    @media (max-width: $lg) {
+        font-size: 32px;
+        line-height: 40px;
+    }
 }
 
 .article__subtitle {
@@ -226,6 +326,11 @@ watch(() => props.data, () => {
     font-size: 16px;
     line-height: 24px;
     color: $blue-primary;
+
+    @media (max-width: $lg) {
+        font-size: 14px;
+        line-height: 20px;
+    }
 }
 
 .article__line {
@@ -245,14 +350,17 @@ watch(() => props.data, () => {
     justify-content: space-between;
     gap: 16px;
     align-items: flex-start;
+
+    @media (max-width: $md) {
+        flex-wrap: wrap;
+    }
 }
 
 .article__avatar {
     width: 72px;
     height: 72px;
-    border: 1px solid $blue-primary;
     border-radius: 50%;
-    background: $blue;
+    flex-shrink: 0;
 }
 
 .article__avatar-img {
@@ -265,6 +373,14 @@ watch(() => props.data, () => {
     line-height: 24px;
     font-weight: 500;
     flex: 0 1 576px;
+
+    @media (max-width: $xl) {
+        flex: 1 1 576px;
+    }
+
+    @media (max-width: $md) {
+        order: 1;
+    }
 }
 
 .article__avtor-article {
@@ -293,6 +409,14 @@ watch(() => props.data, () => {
     flex-wrap: wrap;
     flex: 0 0 136px;
     color: $blue;
+    text-align: end;
+    font-size: 16px;
+    line-height: 24px;
+
+    @media (max-width: $lg) {
+        font-size: 14px;
+        line-height: 20px;
+    }
 }
 
 .article__contnent {
@@ -304,7 +428,7 @@ watch(() => props.data, () => {
     margin-top: 40px;
 }
 
-.article__text {
+.article__contnent p {
     text-indent: 30px;
     text-align: justify;
 }
@@ -314,16 +438,23 @@ watch(() => props.data, () => {
     display: flex;
     flex-wrap: wrap;
     gap: 80px;
+
+    @media (max-width: $lg) {
+        margin-top: 32px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 40px;
+    }
 }
 
 .article__btns {
     flex: 1 1 100%;
     display: flex;
     gap: 40px;
-    align-items:center;
+    align-items: center;
 }
 
-.article__btns-icon{
+.article__btns-icon {
     width: 24px;
     height: 24px;
     cursor: pointer;
@@ -331,7 +462,7 @@ watch(() => props.data, () => {
 
 .article__raiting {
     display: flex;
-    align-items:center;
+    align-items: center;
     gap: 14px;
     font-size: 24px;
     line-height: 32px;
@@ -339,28 +470,49 @@ watch(() => props.data, () => {
     color: $black;
 }
 
-.article__share {
-    display: flex;
-    gap: 16px;
-    align-items:center;
-    flex: 1 1 100%;
-    align-self: flex-start;
-    font-size: 16px;
-    line-height: 24px;
-    color: $black;
-    cursor: pointer;
-}
-
 .article__favorites {
     display: flex;
     gap: 16px;
-    align-items:center;
+    align-items: center;
     flex: 0 0 218px;
     font-size: 16px;
     line-height: 24px;
     font-weight: 500;
     color: $blue;
     cursor: pointer;
+
+    @media (max-width: $sm) {
+        flex: 0 0 auto;
+    }
+
+    &:hover{
+        color:$blue-primary;
+
+        & svg path{
+            fill: $blue-primary;
+        }
+    }
+
+    &:active{
+        color:$blue;
+
+        & svg path{
+            fill: url(#myGradient);
+        }
+    }
+}
+
+.article__share {
+    @media (max-width: $sm) {
+        margin-left: auto;
+        flex: 0 0 auto;
+    }
+}
+
+.article__favorites-text {
+    @media (max-width: $sm) {
+        display: none;
+    }
 }
 
 .article__download {
@@ -368,6 +520,12 @@ watch(() => props.data, () => {
     align-items: center;
     justify-content: space-between;
     flex: 1 1 100%;
+
+    @media (max-width: $sm) {
+        flex-direction: column;
+        gap: 16px;
+        align-items: start;
+    }
 }
 
 .article__download-text {
@@ -376,25 +534,36 @@ watch(() => props.data, () => {
     color: $blue;
 }
 
-.article__btn{
+.article__btn {
     width: 200px;
+
+    @media (max-width: $sm) {
+        width: 100%;
+    }
 }
 
 .article__sidebar {
     display: flex;
-    gap: 80px;    
+    gap: 40px;
     flex: 0 1 308px;
     flex-wrap: wrap;
     align-content: flex-start;
+
+    @media (max-width: $xl) {
+        display: none;
+    }
 }
 
-.article__tags{
+.article__tags {
     display: flex;
     flex-direction: column;
     gap: 16px;
     flex: 0 0 100%;
-    align-items:flex-end;
+    align-items: flex-end;
 
+    @media (max-width: $sm) {
+        flex-direction: row;
+    }
 }
 
 .article__tag-item {
@@ -403,35 +572,34 @@ watch(() => props.data, () => {
     gap: 8px;
     padding: 0 8px;
     cursor: pointer;
-    
+
     &:hover {
         .article__tag-symbol {
             color: $blue-primary;
             -webkit-text-fill-color: unset;
         }
 
-        .article__tag-text  {
+        .article__tag-text {
             color: $blue-primary;
         }
     }
 
-    &:active{
+    &:active {
         .article__tag-symbol {
             color: transparent;
             -webkit-text-fill-color: transparent;
         }
 
-        .article__tag-text  {
+        .article__tag-text {
             color: $blue-primary;
         }
     }
-
 }
 
 .article__tag-symbol {
     font-family: "Kreadon-Demi";
-    font-size: 36px;
-    line-height: 42px;
+    font-size: 30px;
+    line-height: 30px;
     background: $gradient;
     background-clip: text;
     -webkit-background-clip: text;
@@ -449,8 +617,4 @@ watch(() => props.data, () => {
         line-height: 20px;
     }
 }
-
-.article__other {}
-
-.article__trend {}
 </style>

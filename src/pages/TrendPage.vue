@@ -10,12 +10,15 @@
             @search="search()"
         />
         <ListArticle
-            v-if="data.length > 0"
             class="trend__article-header"
             :data="data"
+            :search="searchValue"
         >
             <template #header>
-                <h2 class="list-article__title">
+                <h2
+                    v-if="data.length > 0"
+                    class="list-article__title"
+                >
                     Содержание
                 </h2>
             </template>

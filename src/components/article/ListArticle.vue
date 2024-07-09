@@ -1,12 +1,15 @@
 <template>
     <div class="list-article__container">
         <slot name="header" />
-        <div class="list-article">
+        <div
+            v-if="renderList.length > 0"
+            class="list-article"
+        >
             <div
                 v-for="item in renderList"
                 :key="item.id"
                 class="card"
-                @click="linkArticle(item.id, item.trend)"
+                @click="linkArticle(item.id)"
             >
                 <img
                     :src="getUrl(item.img)"
@@ -58,6 +61,11 @@
                 </div>
             </div>
         </div>
+        <div v-else>
+            <h2 class="no-result">
+                По запросу {{ search }} ничего не найдено.
+            </h2>
+        </div>
         <OfferMaterial />
         <PaginationComponent
             :perpage="11"
@@ -77,6 +85,10 @@ const props = defineProps({
         type: Array,
         default: () => []
     },
+    search: {
+        type: String,
+        default: ''
+    },
 })
 
 const route = useRoute()
@@ -93,11 +105,11 @@ function getRenderList (list) {
 }
 
 
-function linkArticle (id, trend) {
+function linkArticle (id) {
     if (route.name === 'trend-page') {
         router.push(`/trend/${route.params.name}/${id}`)
-    } else if (route.name === 'blog') {
-        router.push(`/trend/${trend}/${id}`)
+    } else if (route.name === 'blog-page') {
+        router.push(`blog/article/${id}`)
     }
 }
 
@@ -110,6 +122,13 @@ watch(() => props.data, () => {
     display: flex;
     flex-direction: column;
     gap: 32px;
+
+    .no-result {
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 500;
+        color: $black;
+    }
 }
 
 .list-article {

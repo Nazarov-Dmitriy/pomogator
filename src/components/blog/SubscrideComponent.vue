@@ -78,8 +78,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
 const formField = reactive({
     email: '',
     emailError: false,
-    textareaError: false,
-    falidateSubscribe: false,
+    validateSubscribe: false,
 })
 
 

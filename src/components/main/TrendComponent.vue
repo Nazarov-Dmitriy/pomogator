@@ -20,11 +20,17 @@
                             <li class="trends__card-item">
                                 Моделирование химических процессов
                             </li>
-                            <li class="trends__card-item">
+                            <li
+                                class="trends__card-item"
+                            >
                                 Проекты и исследования
                             </li>
                         </ul>
-                        <BtnBackgroud class="btn__trends-card">
+                        <BtnBackgroud
+                            class="btn__trends-card"
+                            emit-name="link"
+                            @link="$router.push('/trend/khimiya/')"
+                        >
                             Подробнее
                         </BtnBackgroud>
                     </div>
@@ -48,7 +54,11 @@
                                 Наглядное представление результатов экспериментов
                             </li>
                         </ul>
-                        <BtnBackgroud class="btn__trends-card">
+                        <BtnBackgroud
+                            class="btn__trends-card"
+                            emit-name="link"
+                            @link="$router.push('/trend/fizika')"
+                        >
                             Подробнее
                         </BtnBackgroud>
                     </div>
@@ -72,7 +82,11 @@
                                 Проекты и исследования
                             </li>
                         </ul>
-                        <BtnBackgroud class="btn__trends-card">
+                        <BtnBackgroud
+                            class="btn__trends-card"
+                            emit-name="link"
+                            @link="$router.push('/trend/biologiya')"
+                        >
                             Подробнее
                         </BtnBackgroud>
                     </div>
@@ -96,7 +110,11 @@
                                 Научно-техническое творчество
                             </li>
                         </ul>
-                        <BtnBackgroud class="btn__trends-card">
+                        <BtnBackgroud
+                            class="btn__trends-card"
+                            emit-name="link"
+                            @link="$router.push('/trend/robototekhnika')"
+                        >
                             Подробнее
                         </BtnBackgroud>
                     </div>
@@ -105,16 +123,30 @@
             <div class="trends__proposal">
                 Если не нашли на нашем сайте нужный материал, предложите свою тему по направлению или задайте вопрос
             </div>
-            <BtnGradient class="btn__proposal">
+            <BtnGradient
+                class="btn__proposal"
+                emit-name="offer"
+                @offer="modalShow = true"
+            >
                 Предложить материал
             </BtnGradient>
         </div>
+        <Teleport to="body">
+            <ModalComponent
+                :show="modalShow"
+                @close="modalShow = false"
+            />
+        </Teleport>
     </section>
 </template>
 
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
 import BtnGradient from '../btns/BtnComponent.vue';
+import ModalComponent from '../modal/ModalComponent.vue';
+import { ref } from 'vue';
+
+const modalShow= ref(false)
 
 </script>
 <script>

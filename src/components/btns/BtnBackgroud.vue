@@ -1,7 +1,7 @@
 <template>
     <button
         class="btn-bg"
-        @click="submitEmiit"
+        @click="submitEmit"
     >
         <span class="btn-bg__text">
             <slot />
@@ -15,10 +15,10 @@ const props = defineProps({
         default: null
     },
 })
-const emit = defineEmits(['form-submit', 'offer'])
+const emit = defineEmits(['form-submit', 'offer', 'link'])
 
 
-function submitEmiit (){
+function submitEmit (){
     emit(props.emitName)
 }
 
