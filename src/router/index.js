@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { h } from 'vue'
-import { RouterView } from 'vue-router'
 import MainPage from '@/pages/MainPage.vue'
 import TrendPage from '@/pages/TrendPage.vue'
 import AboutPage from '../pages/AboutPage.vue'
@@ -19,8 +17,7 @@ const router = createRouter({
         },
         {
             path: '/trend',
-            name: 'trend',
-            component: { render: () => h(RouterView) },
+            name: 'trend',            
             children: [
                 {
                     path: ':name/:id',
@@ -42,10 +39,14 @@ const router = createRouter({
         {
             path: '/blog',
             name: 'blog',
-            component: BlogPage,
-            children: [
+            children: [              
                 {
-                    path: '/:id',
+                    path: '',
+                    name: 'blog-page',                    
+                    component: BlogPage,
+                },
+                {
+                    path: 'article/:id',
                     name: 'blog-article',                    
                     component: ArticlePage,
                 },

@@ -1,70 +1,36 @@
-<script setup>
-import { ref } from 'vue'
-import BtnGradient from '../btns/BtnComponent.vue'
-import BtnBackgroud from '../btns/BtnBackgroud.vue'
-
-const query = ref('')
-
-const toggleInfoBlock = ref(false)
-const showDangerBlock = ref(false)
-const cards = ref([
-    {
-        img: '/src/assets/images/main/news/card-image1.png',
-        tag1: '#статья ',
-        tag2: '#химия',
-        title: 'Новые IT технологии в химии',
-        date: '01.05.2024'
-    },
-    {
-        img: '/src/assets/images/main/news/card-image2.png',
-        tag1: '#статья ',
-        tag2: '#физика',
-        title: 'Новые горизонты исследований',
-        date: '01.05.2024'
-    },
-    {
-        img: '/src/assets/images/main/news/card-image3.png',
-        tag1: '#статья ',
-        tag2: '#биология',
-        title: 'Возможности для исследований в биологии',
-        date: '01.05.2024'
-    }
-])
-
-const sendMail = () => {
-    if (validateEmail(query.value)) {
-        showDangerBlock.value = false
-        toggleInfoBlock.value = true
-        query.value = ''
-    } else {
-        showDangerBlock.value = true
-    }
-}
-
-const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return re.test(email)
-}
-</script>
 <template>
     <section class="news">
         <div>
-            <h2 class="news__title news__container">Актуальные новости</h2>
+            <h2 class="news__title news__container">
+                Актуальные новости
+            </h2>
             <div class="news__cards news__container">
-                <div v-for="(item, index) in cards" :key="index" class="news__card">
+                <div
+                    v-for="item in atricleData"
+                    :key="item.id"
+                    class="news__card"
+                    @click="linkArticle(item.id, item.trend)"
+                >
                     <div class="news__card-header">
                         <div class="news__card-img-wrapper">
-                            <img :src="item.img" alt="card img" class="news__card-img" />
+                            <img
+                                :src="item.img"
+                                alt="card img"
+                                class="news__card-img"
+                            >
                         </div>
                     </div>
                     <div class="news__card-body">
                         <div class="news__card-body-tags">
-                            <span>{{ item.tag1 }}</span>
-                            <span>{{ item.tag2 }}</span>
+                            <span
+                                v-for="(el, ind) in item.tags"
+                                :key="ind"
+                            >#{{ el }}</span>
                         </div>
-
-                        <p class="news__text news__card-text">{{ item.title }}</p>
-                        <span>{{ item.date }}</span>
+                        <p class="news__text news__card-text">
+                            {{ item.title }}
+                        </p>
+                        <span>{{ item.publication_date }}</span>
                     </div>
                 </div>
                 <div class="news__card">
@@ -72,9 +38,18 @@ const validateEmail = (email) => {
                         <p class="news__text news__card-text news__card-text--empty">
                             Переходите в блог, чтобы выбрать подходящую для вас информацию
                         </p>
-                        <BtnGradient class="news__card-button">Подробнее</BtnGradient>
+                        <BtnGradient
+                            class="news__card-button"
+                            emit-name="link"
+                            @link="$router.push('/blog')"
+                        >
+                            Подробнее
+                        </BtnGradient>
                         <div class="news__card-bg">
-                            <img src="../../assets/images/NewsComponent/news-card-bg.png" alt="" />
+                            <img
+                                src="../../assets/images/NewsComponent/news-card-bg.png"
+                                alt=""
+                            >
                         </div>
                     </div>
                 </div>
@@ -85,44 +60,62 @@ const validateEmail = (email) => {
                         Подпишитесь на рассылку, чтобы не пропустить актуальный для вас вебинар или
                         новость дня
                     </div>
-                    <form class="news__form news__container" @submit.prevent="sendMail">
-                        <label :class="{ 'invalid-text': showDangerBlock }" for="news__input-id"
-                            >E-mail</label
-                        >
+                    <form
+                        class="news__form news__container"
+                        @submit.prevent="sendMail"
+                    >
+                        <label
+                            :class="{ 'invalid-text': formField.emailError }"
+                            for="news__input-id"
+                        >E-mail</label>
                         <div class="news__input-wrapper">
                             <div class="input-wrapper">
                                 <input
                                     id="news__input-id"
-                                    v-model="query"
-                                    :class="{ 'invalid-form': showDangerBlock }"
+                                    v-model="formField.emai"
+                                    :class="{ 'invalid-form': formField.emailError }"
                                     class="news__form-input"
                                     placeholder="mariaivanova@mail.ru"
-                                />
-                                <div v-if="showDangerBlock" class="validate-danger">
+                                    @input="changeEmail($event)"
+                                    @keypress.enter="validateField($event, 'event')"
+                                >
+                                <div
+                                    v-if="formField.emailError"
+                                    class="validate-danger"
+                                >
                                     <div class="validate-svg">
                                         <img
                                             src="../../assets/icons/main/news/validate.svg"
                                             alt=""
-                                        />
+                                        >
                                     </div>
                                     <span>Поле заполненно некорректно</span>
                                 </div>
                             </div>
-                            <BtnBackgroud class="news__form-button">Отправить</BtnBackgroud>
+                            <BtnBackgroud class="news__form-button">
+                                Отправить
+                            </BtnBackgroud>
                             <p class="news__text news__form-text">
                                 Нажимая кнопку “Подписаться” вы соглашаетесь с
                                 <a href="#">
-                                    <span>политикой обработки персональных данных</span></a
-                                >
+                                    <span>политикой обработки персональных данных</span></a>
                             </p>
                         </div>
                     </form>
                 </div>
-                <div v-if="toggleInfoBlock" class="news__success news__container">
+                <div
+                    v-if="formField.validateSubscribe"
+                    class="news__success news__container"
+                >
                     <div class="news__success-wrapper">
-                        <h2 class="news__success-title">Ваши данные приняты</h2>
+                        <h2 class="news__success-title">
+                            Ваши данные приняты
+                        </h2>
                         <div class="news__success-svg">
-                            <img src="../../assets/images/main/news/success.svg" alt="" />
+                            <img
+                                src="../../assets/images/main/news/success.svg"
+                                alt=""
+                            >
                         </div>
                     </div>
                 </div>
@@ -130,9 +123,71 @@ const validateEmail = (email) => {
         </div>
     </section>
 </template>
-<style scoped lang="scss">
-@import '@/assets/styles/_variables.scss';
 
+<script setup>
+import { onMounted, reactive, ref } from 'vue'
+import BtnGradient from '../btns/BtnComponent.vue'
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import { randomArticle } from '../../db/db.js';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const atricleData = ref([])
+
+const formField = reactive({
+    email: '',
+    emailError: false,
+    validateSubscribe: false,
+})
+
+onMounted(() => {
+    atricle()
+    console.log(atricleData);
+})
+
+function atricle () {
+    atricleData.value = randomArticle(null, 3);
+}
+
+const sendMail = () => {
+    validateForm()
+}
+
+function linkArticle (id, trend) {
+    router.push({ path: `/trend/${trend}/${id}` })
+}
+
+function validateField (param, event) {
+    formField.validateSubscribe = false
+    let target;
+    if (event === 'event') {
+        target = param.target.value.trim();
+    } else {
+        target = param.trim()
+    }
+    let email_regexp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+
+    !email_regexp.test(String(target).toLowerCase()) ? formField.emailError = true : formField.emailError = false;
+
+    if (!formField.emailError) {
+        formField.validateSubscribe = true
+    }
+};
+
+function changeEmail (event) {
+    let target = event.target;
+    let x = target.value.match(/([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/);
+    target.value = x ? (x[1] + x[2] + x[3] + x[4] + x[5] + x[6]) : '';
+    formField.email = target.value;
+};
+
+
+function validateForm () {
+    validateField(formField.email, 'validate')
+}
+</script>
+
+<style scoped lang="scss">
 .invalid-form {
     border: 2px solid #f84343 !important;
 }
@@ -148,14 +203,17 @@ const validateEmail = (email) => {
     @media (max-width: 992px) {
         padding: 40px 0;
     }
+
     @media (max-width: 576px) {
         padding: 32px 0;
     }
 }
+
 .news__container {
     max-width: 1440px;
     margin: 0 auto;
 }
+
 .news__title {
     font-size: 36px;
     line-height: 117%;
@@ -173,6 +231,7 @@ const validateEmail = (email) => {
         padding: 0 16px;
     }
 }
+
 .news__cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -190,11 +249,13 @@ const validateEmail = (email) => {
         grid-template-rows: repeat(2, 1fr);
         padding: 0 40px;
     }
+
     @media (max-width: 576px) {
         grid-template-columns: repeat(1, 1fr);
         padding: 0 16px;
     }
 }
+
 .news__card {
     border: 2px solid $blue;
     border-radius: 32px;
@@ -224,10 +285,6 @@ const validateEmail = (email) => {
 
 .news__card-img-wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    object-fit: cover;
 }
 
 .news__card-body {
@@ -256,7 +313,9 @@ const validateEmail = (email) => {
 .news__card-img {
     width: 100%;
     aspect-ratio: 3 / 1;
+    object-fit: cover;
 }
+
 .news__card-text {
     margin: 20px 0;
 
@@ -294,6 +353,7 @@ const validateEmail = (email) => {
     @media (max-width: 992px) {
         padding: 45px 40px;
     }
+
     @media (max-width: 576px) {
         padding: 16px;
     }
@@ -324,8 +384,7 @@ const validateEmail = (email) => {
         line-height: 120%;
     }
 
-    @media (max-width: $lg) {
-    }
+    @media (max-width: $lg) {}
 }
 
 .news__card-text--empty {
@@ -361,6 +420,7 @@ const validateEmail = (email) => {
         max-width: 100%;
     }
 }
+
 .news__form-input {
     border: 2px solid #a0b1ed;
     color: #a0b1ed;
@@ -401,6 +461,7 @@ const validateEmail = (email) => {
             color: $blue-primary;
         }
     }
+
     &:hover::placeholder {
         color: $blue-primary;
     }
@@ -450,6 +511,7 @@ const validateEmail = (email) => {
 .news__form-button {
     height: max-content;
 }
+
 .news__form-text {
     font-size: 12px;
     line-height: 150%;
@@ -464,13 +526,13 @@ const validateEmail = (email) => {
     a {
         color: $black;
     }
+
     span {
         text-decoration: underline;
         text-decoration-skip-ink: none;
     }
 
-    @media (max-width: $sm) {
-    }
+    @media (max-width: $sm) {}
 }
 
 .news__success {
@@ -479,6 +541,7 @@ const validateEmail = (email) => {
     @media (max-width: $lg) {
         padding: 24px 0;
     }
+
     @media (max-width: $sm) {
         padding: 24px 0;
     }
@@ -492,11 +555,13 @@ const validateEmail = (email) => {
     border: 2px solid $blue-primary;
     border-radius: 32px;
     padding: 24px 0;
+
     @media (max-width: $sm) {
         gap: 10px;
         padding: 24px;
     }
 }
+
 .news__success-title {
     font-size: 24px;
     line-height: 133%;
