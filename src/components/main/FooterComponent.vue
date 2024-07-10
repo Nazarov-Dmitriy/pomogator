@@ -10,101 +10,104 @@
                         @click="mainLink()"
                     >
                     <p class="footer__header-text">
-                        Повышение профессиональных компетенций учителей с применением цифровых технологий в образовательном процессе
+                        Повышение профессиональных компетенций учителей с применением цифровых технологий в
+                        образовательном процессе
                     </p>
                 </div>
-                <div class="footer__trend">
-                    <p class="footer__list-header">
-                        Направления
-                    </p>
-                    <ul class="footer__list">
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Робототехника
-                            </router-link>
-                        </li>
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Химия
-                            </router-link>
-                        </li>
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Физика
-                            </router-link>
-                        </li>
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Биология
-                            </router-link>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer__sections">
-                    <p class="footer__list-header">
-                        Разделы
-                    </p>
-                    <ul class="footer__list">
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                О нас
-                            </router-link>
-                        </li>
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Блог
-                            </router-link>
-                        </li>
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Вебинар
-                            </router-link>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer__documents">
-                    <p class="footer__list-header">
-                        Документы
-                    </p>
-                    <ul class="footer__list">
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Политика конфеденциальности
-                            </router-link>
-                        </li>
-                        <li class="footer__list-item">
-                            <router-link
-                                to="/"
-                                class="footer__link"
-                            >
-                                Пользовательское соглашение
-                            </router-link>
-                        </li>
-                    </ul>
+                <div class="footer__items-container">
+                    <div class="footer__section">
+                        <p class="footer__list-header">
+                            Направления
+                        </p>
+                        <ul class="footer__list">
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Робототехника
+                                </router-link>
+                            </li>
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Химия
+                                </router-link>
+                            </li>
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Физика
+                                </router-link>
+                            </li>
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Биология
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer__section">
+                        <p class="footer__list-header">
+                            Разделы
+                        </p>
+                        <ul class="footer__list">
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    О нас
+                                </router-link>
+                            </li>
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Блог
+                                </router-link>
+                            </li>
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Вебинар
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="footer__section document">
+                        <p class="footer__list-header">
+                            Документы
+                        </p>
+                        <ul class="footer__list">
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Политика конфеденциальности
+                                </router-link>
+                            </li>
+                            <li class="footer__list-item">
+                                <router-link
+                                    to="/"
+                                    class="footer__link"
+                                >
+                                    Пользовательское соглашение
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="footer__contacts">
@@ -122,29 +125,31 @@
                         @click="some"
                     >
                 </div>
-                <div class="footer__contacts-phone">
-                    <img
-                        src="@/assets/icons/footer/phone.svg"
-                        alt="phone"
-                        class="footer__phone"
-                        @click="some"
-                    >
-                    <a 
-                        class="footer__link" 
-                        href="tel:+7 (352 31) 6 51 90"
-                    >+7 (352 31) 6 51 90</a>
-                </div>
-                <div class="footer__contacts-mail">
-                    <img
-                        src="@/assets/icons/footer/mail.svg"
-                        alt="mail"
-                        class="footer__mail"
-                        @click="some"
-                    >
-                    <a 
-                        class="footer__link"
-                        href="mailto:it-pomogator@mail.ru"
-                    >it-pomogator@mail.ru</a>
+                <div class="footer__contact">
+                    <div class="footer__contacts-phone">
+                        <img
+                            src="@/assets/icons/footer/phone.svg"
+                            alt="phone"
+                            class="footer__phone"
+                            @click="some"
+                        >
+                        <a 
+                            class="footer__link" 
+                            href="tel:+7 (352 31) 6 51 90"
+                        >+7 (352 31) 6 51 90</a>
+                    </div>
+                    <div class="footer__contacts-mail">
+                        <img
+                            src="@/assets/icons/footer/mail.svg"
+                            alt="mail"
+                            class="footer__mail"
+                            @click="some"
+                        >
+                        <a 
+                            class="footer__link"
+                            href="mailto:it-pomogator@mail.ru"
+                        >it-pomogator@mail.ru</a>
+                    </div>
                 </div>
                 <div class="footer__contacts-geo">
                     <img
@@ -158,9 +163,13 @@
                     </address>
                 </div>
             </div>
-            <hr class="footer__line">
-            <div class="footer__copyright">
-                <div class="footer__copyright-cot">
+            <!-- <hr class="footer__line">
+            <div class="footer__copyright">               
+                <a
+                    href=" https://grant.obr.so/"
+                    target="_blank"
+                    class="footer__copyright-cot"
+                >                
                     <img
                         src="@/assets/icons/footer/cot.svg"
                         alt="cot"
@@ -175,8 +184,13 @@
                             Номинация: «Особые образовательные потребности»
                         </p>
                     </div>
-                </div>
-                <div class="footer__copyright-madein">
+                </a>
+
+                <a
+                    href="https://bitwizarts.smartspecs.nl/"
+                    target="_blank"
+                    class="footer__copyright-madein"
+                >
                     <p class="footer__madein-text">
                         Сделано в:
                     </p>
@@ -192,8 +206,8 @@
                         class="footer__logobwa"
                         @click="some"
                     >
-                </div>
-            </div>
+                </a>
+            </div> -->
         </div>
     </section>
 </template>
@@ -211,10 +225,15 @@
     margin: 0 auto;
     padding: 142px 80px 80px 80px;
     background-image: url("@/assets/icons/footer/background.svg");
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
     @media (max-width: $lg) {
         padding: 159px 40px 40px 40px;
 
     }
+
     @media (max-width: $sm) {
         padding: 217px 16px 40px 16px;
     }
@@ -223,76 +242,102 @@
 .footer__items {
     width: 100%;
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    padding-bottom: 30px;
-    @media (max-width: $lg) {
-        grid-template-columns: 1fr 1fr 1fr;
-        padding-bottom: 24px;
+    grid-template-columns: 442px minmax(300px, 768px);
+    justify-content: space-between;
+    // grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 24px;
+
+    @media (max-width: $xl) {
+        grid-template-columns: 1fr;
+        gap: 80px;
     }
+
     @media (max-width: $sm) {
-        display: inline;
+        gap: 32px;
+    }
+}
+
+.footer__items-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+
+    @media (max-width: $sm) {
+        flex-wrap: wrap;
+        gap: 32px;
     }
 }
 
 .footer__header {
-    padding-right: 80px;
-    @media (max-width: $lg) {
-        grid-column: 1/4;
-        grid-row: 1;
-        padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    @media (max-width: $xl) {
+        gap: 32px;
+        width: 100%;
     }
+
     @media (max-width: $sm) {
+        gap: 24px;
     }
 }
 
 .footer__logo {
-    padding-bottom: 41px;
     width: 161px;
     height: 37px;
     cursor: pointer;
-    @media (max-width: $sm) {
-        padding-bottom: 24px;
-    }
 }
 
-.footer__header-text{
+.footer__header-text {
     font-family: "Inter";
     font-style: normal;
     font-weight: 500;
     font-size: 24px;
     line-height: 32px;
     color: $black;
+
     @media (max-width: $lg) {
         font-size: 20px;
         line-height: 24px;
-        padding-bottom: 80px;
     }
+
+    @media (max-width: $sm) {}
+
+}
+
+// .footer__trend {
+
+//     @media (max-width: $lg) {
+//         grid-column: 1;
+//         grid-row: 2;
+//     }
+// }
+
+.footer__section {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    // @media (max-width: $lg) {
+    //     grid-column: 2;
+    //     grid-row: 2;
+    // }
+    .document {
+        width: 249px;
+    }
+
     @media (max-width: $sm) {
-        padding-bottom: 16px;
-    }
-
-}
-
-.footer__trend {
-    @media (max-width: $lg) {
-        grid-column: 1;
-        grid-row: 2;
+        flex: 1 1 100%;
     }
 }
 
-.footer__sections {
-    @media (max-width: $lg) {
-        grid-column: 2;
-        grid-row: 2;
-    }
-}
-
-.footer__documents {
-    @media (max-width: $lg) {
-        grid-column: 3;
-        grid-row: 2;
-    }
-}
+// .footer__documents {
+//     @media (max-width: $lg) {
+//         grid-column: 3;
+//         grid-row: 2;
+//     }
+// }
 
 .footer__list-header {
     font-family: "Inter";
@@ -301,10 +346,7 @@
     font-size: 20px;
     line-height: 24px;
     color: $blue;
-    padding-bottom: 24px;
-    @media (max-width: $sm) {
-        padding-top: 16px;
-    }
+
 }
 
 .footer__list {
@@ -314,15 +356,11 @@
     font-size: 16px;
     line-height: 24px;
     color: $black;
-    padding-bottom: 16px;
-    @media (max-width: $lg) {
-        padding: 0;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.footer__list-item {
-    padding-bottom: 16px;
-}
 
 .footer__link {
     font-family: "Inter";
@@ -331,10 +369,12 @@
     font-size: 16px;
     line-height: 24px;
     color: $black;
+
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
     }
+
     &:hover {
         color: $blue-primary;
     }
@@ -349,14 +389,18 @@
 
 .footer__contacts {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 80px 1fr;
     grid-template-rows: auto;
-    gap: 32px;
-    padding-bottom: 32px;
+    gap: 32px 16px;
+    grid-template-areas: 
+    '. contact'
+    'social adress';
+
     @media (max-width: $lg) {
         grid-template-columns: repeat(10, 1fr);
         gap: 0;
     }
+
     @media (max-width: $sm) {
         padding-top: 24px;
         display: flex;
@@ -365,16 +409,24 @@
     }
 }
 
+.footer__contact{
+    grid-area: contact;
+    display: flex;
+    gap: 32px;
+    justify-content: flex-end;
+}
+
 .footer__contacts-phone {
-    grid-column: 1/6;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 8px;
+
     @media (max-width: $lg) {
         grid-column: 5/8;
         grid-row: 1;
     }
+
     @media (max-width: $sm) {
         justify-content: flex-start;
     }
@@ -389,10 +441,12 @@
     justify-content: flex-end;
     align-items: center;
     gap: 8px;
+
     @media (max-width: $lg) {
         grid-column: 8/11;
         grid-row: 1;
     }
+
     @media (max-width: $sm) {
         justify-content: flex-start;
     }
@@ -403,8 +457,10 @@
 }
 
 .footer__contacts-social {
-    grid-column: 1;
-    grid-row: 2;
+   grid-area: social;
+   display: flex;
+   gap: 32px;
+
     @media (max-width: $lg) {
         grid-column: 1/4;
         grid-row: 1;
@@ -412,7 +468,6 @@
 }
 
 .footer__vk {
-    padding-right: 32px;
     cursor: pointer;
 }
 
@@ -425,12 +480,12 @@
 }
 
 .footer__contacts-geo {
+    grid-area: adress;
     display: flex;
     justify-content: flex-end;
-    grid-column: 3/7;
-    grid-row: 2;
-    text-align: right;
     align-items: center;
+    gap: 8px;
+
     @media (max-width: $lg) {
         grid-column: 1/11;
         grid-row: 2;
@@ -438,6 +493,7 @@
         justify-content: flex-start;
         text-align: left
     }
+
     @media (max-width: $sm) {
         padding-top: 0;
         text-align: left;
@@ -446,6 +502,7 @@
 
 .footer__geo {
     padding-right: 8px;
+
     @media (max-width: $lg) {
         padding-right: 0px;
     }
@@ -458,6 +515,7 @@
     font-size: 16px;
     line-height: 24px;
     color: $black;
+
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
@@ -474,6 +532,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
+
     @media (max-width: $sm) {
         flex-direction: column;
     }
@@ -483,20 +542,23 @@
     display: flex;
     justify-content: flex-start;
     width: 100%;
+
     @media (max-width: $md) {
         flex-direction: column;
         padding-bottom: 16px;
     }
 }
 
-.footer__cot{
+.footer__cot {
     width: 71px;
     height: 31px;
     padding-top: 11px;
     cursor: pointer;
+
     @media (max-width: $lg) {
         padding-top: 17px;
     }
+
     @media (max-width: $md) {
         padding: 0px 0px 6px 0px;
     }
@@ -511,10 +573,12 @@
     line-height: 24px;
     color: $blue;
     align-items: center;
+
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
     }
+
     @media (max-width: $md) {
         padding: 0;
     }
@@ -529,10 +593,12 @@
     line-height: 24px;
     color: $blue;
     align-items: center;
+
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
     }
+
     @media (max-width: $md) {
         padding: 0;
     }
@@ -551,6 +617,7 @@
     width: 107px;
     height: 24px;
     cursor: pointer;
+
     @media (max-width: $md) {
         padding: 0px 6px 0px 6px;
         width: 100px;
@@ -564,7 +631,8 @@
     border-left: 1px solid $secondary;
 
     cursor: pointer;
-        @media (max-width: $md) {
+
+    @media (max-width: $md) {
         padding: 0px 0px 0px 6px;
         width: 75px;
     }

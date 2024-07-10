@@ -107,7 +107,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="form-item form-item--email">
+                    <div class="form-item ">
                         <label
                             for="email"
                             class="form-main__label"
