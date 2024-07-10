@@ -50,7 +50,7 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
         top: 170px;
     }
     @media (max-width: $sm) {
-        top: 300px;
+        top: 320px;
     }
 }
 .become__wrapper {

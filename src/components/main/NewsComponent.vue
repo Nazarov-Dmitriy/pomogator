@@ -74,7 +74,7 @@ const validateEmail = (email) => {
                         </p>
                         <BtnGradient class="news__card-button">Подробнее</BtnGradient>
                         <div class="news__card-bg">
-                            <img src="../../assets/images/NewsComponent/news-card-bg.png" alt="" />
+                            <img src="../../assets/images/main/news/news-card-bg.png" alt="" />
                         </div>
                     </div>
                 </div>
@@ -281,6 +281,7 @@ const validateEmail = (email) => {
 
     @media (max-width: $sm) {
         top: 20px;
+        right: -70px;
     }
 }
 
