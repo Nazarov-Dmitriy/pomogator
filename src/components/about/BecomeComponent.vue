@@ -1,5 +1,12 @@
 <template>
     <section class="become">
+        <div class="become__background">
+            <img
+                src="../../assets/images/about/become/become-bg.png"
+                alt=""
+                class="become__background-img"
+            />
+        </div>
         <div class="become__wrapper">
             <h2 class="become__title">
                 Стань частью педагогического сообщества будущего и открой для себя безграничные
@@ -23,12 +30,27 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
 .become {
     padding: 60px 80px;
     background: $blue;
+    position: relative;
+    overflow: hidden;
 
     @media (max-width: $lg) {
         padding: 40px;
     }
     @media (max-width: $sm) {
         padding: 32px 16px;
+    }
+}
+.become__background {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+
+    @media (max-width: $lg) {
+        top: 170px;
+    }
+    @media (max-width: $sm) {
+        top: 300px;
     }
 }
 .become__wrapper {
@@ -45,6 +67,8 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
     text-align: center;
     color: $white;
     text-align: center;
+    position: static;
+    z-index: 2;
 
     @media (max-width: $lg) {
         font-size: 32px;
@@ -57,10 +81,17 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
     text-align: center;
     max-width: 777px;
     width: 100%;
+    position: static;
+    z-index: 2;
 
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 1.4;
     }
+}
+
+.become__button {
+    position: static;
+    z-index: 2;
 }
 </style>
