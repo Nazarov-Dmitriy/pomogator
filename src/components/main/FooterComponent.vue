@@ -133,8 +133,8 @@
                             class="footer__phone"
                             @click="some"
                         >
-                        <a 
-                            class="footer__link" 
+                        <a
+                            class="footer__link"
                             href="tel:+7 (352 31) 6 51 90"
                         >+7 (352 31) 6 51 90</a>
                     </div>
@@ -145,7 +145,7 @@
                             class="footer__mail"
                             @click="some"
                         >
-                        <a 
+                        <a
                             class="footer__link"
                             href="mailto:it-pomogator@mail.ru"
                         >it-pomogator@mail.ru</a>
@@ -163,7 +163,7 @@
                     </address>
                 </div>
             </div>
-            <!-- <hr class="footer__line">
+            <hr class="footer__line">
             <div class="footer__copyright">               
                 <a
                     href=" https://grant.obr.so/"
@@ -207,8 +207,13 @@
                         @click="some"
                     >
                 </a>
-            </div> -->
+            </div>
         </div>
+        <img
+            src="../../assets/images/footer/bg.svg"
+            alt="bg-line"
+            class="footer-bg"
+        >
     </section>
 </template>
 <script setup>
@@ -216,7 +221,9 @@
 </script>
 <style lang="scss">
 .footer__contaner {
-    width: 100%;
+    width: 100%;    
+    position: relative;
+    background: linear-gradient(130deg, #DAEBFF, #EDF5FF);
 }
 
 .footer {
@@ -224,18 +231,21 @@
     height: auto;
     margin: 0 auto;
     padding: 142px 80px 80px 80px;
-    background-image: url("@/assets/icons/footer/background.svg");
     display: flex;
     flex-direction: column;
     gap: 24px;
+    z-index: 1;
+    position: relative;
 
     @media (max-width: $lg) {
-        padding: 159px 40px 40px 40px;
-
+        padding: 100px 40px 40px 40px;
+        gap: 32px;
+        margin-top: 60px;
     }
 
     @media (max-width: $sm) {
-        padding: 217px 16px 40px 16px;
+        padding: 132px 16px 40px 16px;
+        margin-top: 85px;
     }
 }
 
@@ -244,7 +254,6 @@
     display: grid;
     grid-template-columns: 442px minmax(300px, 768px);
     justify-content: space-between;
-    // grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 24px;
 
     @media (max-width: $xl) {
@@ -303,41 +312,22 @@
     }
 
     @media (max-width: $sm) {}
-
 }
-
-// .footer__trend {
-
-//     @media (max-width: $lg) {
-//         grid-column: 1;
-//         grid-row: 2;
-//     }
-// }
 
 .footer__section {
     display: flex;
     flex-direction: column;
     gap: 24px;
-
-    // @media (max-width: $lg) {
-    //     grid-column: 2;
-    //     grid-row: 2;
-    // }
+   
     .document {
         width: 249px;
     }
 
     @media (max-width: $sm) {
-        flex: 1 1 100%;
+        flex: 0 1 200px;
     }
 }
 
-// .footer__documents {
-//     @media (max-width: $lg) {
-//         grid-column: 3;
-//         grid-row: 2;
-//     }
-// }
 
 .footer__list-header {
     font-family: "Inter";
@@ -392,28 +382,39 @@
     grid-template-columns: 80px 1fr;
     grid-template-rows: auto;
     gap: 32px 16px;
-    grid-template-areas: 
-    '. contact'
-    'social adress';
+    grid-template-areas:
+        '. contact'
+        'social adress';
+
+    @media (max-width: $xl) {
+        grid-template-areas:
+            'social contact'
+            'adress adress';
+    }
 
     @media (max-width: $lg) {
-        grid-template-columns: repeat(10, 1fr);
-        gap: 0;
+        margin-top: 8px;
     }
 
     @media (max-width: $sm) {
-        padding-top: 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 32px;
+        grid-template-columns:1fr;
+        grid-template-areas:
+            'social'
+            'contact'
+            'adress';
     }
 }
 
-.footer__contact{
+.footer__contact {
     grid-area: contact;
     display: flex;
     gap: 32px;
     justify-content: flex-end;
+
+    @media (max-width: $sm) {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
 }
 
 .footer__contacts-phone {
@@ -423,7 +424,6 @@
     gap: 8px;
 
     @media (max-width: $lg) {
-        grid-column: 5/8;
         grid-row: 1;
     }
 
@@ -443,7 +443,6 @@
     gap: 8px;
 
     @media (max-width: $lg) {
-        grid-column: 8/11;
         grid-row: 1;
     }
 
@@ -457,13 +456,11 @@
 }
 
 .footer__contacts-social {
-   grid-area: social;
-   display: flex;
-   gap: 32px;
+    grid-area: social;
+    display: flex;
+    gap: 32px;
 
     @media (max-width: $lg) {
-        grid-column: 1/4;
-        grid-row: 1;
     }
 }
 
@@ -487,9 +484,6 @@
     gap: 8px;
 
     @media (max-width: $lg) {
-        grid-column: 1/11;
-        grid-row: 2;
-        padding-top: 32px;
         justify-content: flex-start;
         text-align: left
     }
@@ -502,10 +496,6 @@
 
 .footer__geo {
     padding-right: 8px;
-
-    @media (max-width: $lg) {
-        padding-right: 0px;
-    }
 }
 
 .footer__address {
@@ -528,13 +518,13 @@
 }
 
 .footer__copyright {
-    padding-top: 32px;
     width: 100%;
     display: flex;
     justify-content: space-between;
 
-    @media (max-width: $sm) {
+    @media (max-width: $md) {
         flex-direction: column;
+        gap: 16px;
     }
 }
 
@@ -545,7 +535,6 @@
 
     @media (max-width: $md) {
         flex-direction: column;
-        padding-bottom: 16px;
     }
 }
 
@@ -585,7 +574,6 @@
 }
 
 .footer__madein-text {
-    padding-left: 16px;
     font-family: "Inter";
     font-style: normal;
     font-weight: 500;
@@ -597,11 +585,7 @@
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
-    }
-
-    @media (max-width: $md) {
-        padding: 0;
-    }
+    }   
 }
 
 .footer__copyright-madein {
@@ -610,6 +594,10 @@
     text-align: right;
     align-items: center;
     width: 100%;
+
+    @media (max-width: $md) {
+        justify-content: flex-start;
+    }
 }
 
 .footer__1t {
@@ -636,5 +624,12 @@
         padding: 0px 0px 0px 6px;
         width: 75px;
     }
+}
+
+.footer-bg{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
 }
 </style>

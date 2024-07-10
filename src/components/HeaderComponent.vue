@@ -410,6 +410,10 @@ function mainLink () {
     &.active, &.router-link-exact-path-active {
         background: $blue-primary;
     }
+
+    &:hover{
+        background: #4360F8;
+    }
 }
 
 .btn__header {

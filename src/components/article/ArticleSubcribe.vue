@@ -119,6 +119,7 @@ function validateForm () {
     display: flex;
     gap: 20px;
     flex-direction: column;
+    background: #fff;
 
     .form-main__error-text{
         font-size: 14px;

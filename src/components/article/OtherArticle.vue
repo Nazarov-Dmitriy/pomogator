@@ -83,6 +83,7 @@ function article (id, trend) {
     box-sizing: border-box;
     overflow: hidden;
     cursor: pointer;
+    background: #fff;
 
     &:hover {
         border: 2px solid $blue-primary;

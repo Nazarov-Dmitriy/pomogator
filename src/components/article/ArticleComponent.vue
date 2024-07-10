@@ -5,168 +5,175 @@
             alt="atricle image"
             class="article__img"
         >
-        <div class="article__container">
-            <p
-                class="article__back"
-                @click="router.go(-1)"
-            >
-                &#8592; Вернуться в "Содержание"
-            </p>
-            <div class="article__main">
-                <div class="article__block">
-                    <div class="article__header">
-                        <div class="article__header-block">
-                            <h1 class="article__title">
-                                {{ article.title }}
-                            </h1>
-                            <div class="article__tags">
-                                <div
-                                    v-for="item in article.tags"
-                                    :key="item.id"
-                                    class="article__tag-item"
-                                >
-                                    <span class="article__tag-symbol">#</span>
-                                    <p class="article__tag-text">
-                                        {{ item }}
-                                    </p>
+        <div class="article-layout">
+            <div class="article__container">
+                <p
+                    class="article__back"
+                    @click="router.go(-1)"
+                >
+                    &#8592; Вернуться в "Содержание"
+                </p>
+                <div class="article__main">
+                    <div class="article__block">
+                        <div class="article__header">
+                            <div class="article__header-block">
+                                <h1 class="article__title">
+                                    {{ article.title }}
+                                </h1>
+                                <div class="article__tags">
+                                    <div
+                                        v-for="item in article.tags"
+                                        :key="item.id"
+                                        class="article__tag-item"
+                                    >
+                                        <span class="article__tag-symbol">#</span>
+                                        <p class="article__tag-text">
+                                            {{ item }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div
-                            v-if="page === 'blog'"
-                            class="article__line"
-                        />
-                        <p class="article__subtitle">
-                            Статья посвящена применению информационных технологий в биологии, которые открывают
-                            новые горизонты для исследований, диагностики и лечения заболеваний, а также
-                            способствуют развитию персонализированной медицины.
-                        </p>
-                    </div>
-                    <div
-                        v-if="page === 'trend'"
-                        class="article__avtor"
-                    >
-                        <div class="article__avatar">
-                            <img
-                                v-if="article.avtor.avatar"
-                                :src="article.avtor.avatar"
-                                alt="avatar"
-                                class="article__avatar-img"
-                            >
-                            <img
-                                v-else
-                                src="../../assets/icons/article/avatar.svg"
-                                alt="avatar"
-                                class="article__avatar-img"
-                            >
-                        </div>
-                        <div class="article__avtor-info">
-                            <p class="article__avtor-article">
-                                <span class="article__avtor-field">Автор статьи: </span>{{ article.avtor.fullname }}
-                            </p>
-                            <p class="article__avtor-work">
-                                <span class="article__avtor-field">Место работы: </span>{{ article.avtor.place_work }}
-                            </p>
-                            <p>
-                                <span class="article__avtor-field">Источник: </span> <a
-                                    :href="article.source"
-                                    class="article__avtor-link"
-                                >{{ article.source__text }}</a>
-                            </p>
-                        </div>
-                        <p class="article__avtor-publication">
-                            Дата публикации {{ article.publication_date }}
-                        </p>
-                    </div>
-                    <div
-                        class="article__contnent"
-                        v-html="getContnent"
-                    />
-                    <div class="article__footer">
-                        <div class="article__btns">
-                            <div class="article__raiting">
-                                <img
-                                    src="@/assets/icons/article/up.svg"
-                                    alt="up"
-                                    class="article__btns-icon"
-                                >
-                                {{ article.show }}
-                                <img
-                                    src="@/assets/icons/article/down.svg"
-                                    alt="down"
-                                    class="article__btns-icon"
-                                >
-                            </div>
-                            <ShareComponent
-                                :article="article"
-                                class="article__share"
+                            <div
+                                v-if="page === 'blog'"
+                                class="article__line"
                             />
-                            <div class="article__favorites">
-                                <p class="article__favorites-text">
-                                    Добавить в избранное
-                                </p>
-                                <svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
+                            <p class="article__subtitle">
+                                Статья посвящена применению информационных технологий в биологии, которые открывают
+                                новые горизонты для исследований, диагностики и лечения заболеваний, а также
+                                способствуют развитию персонализированной медицины.
+                            </p>
+                        </div>
+                        <div
+                            v-if="page === 'trend'"
+                            class="article__avtor"
+                        >
+                            <div class="article__avatar">
+                                <img
+                                    v-if="article.avtor.avatar"
+                                    :src="article.avtor.avatar"
+                                    alt="avatar"
+                                    class="article__avatar-img"
                                 >
-                                    <defs>
-                                        <linearGradient
-                                            id="myGradient"
-                                            gradientTransform="rotate(45)"
-                                        >
-                                            <stop
-                                                offset="20%"
-                                                stop-color="#F12424"
-                                            />
-                                            <stop
-                                                offset="100%"
-                                                stop-color="#4360F8"
-                                            />
-                                        </linearGradient>
-                                    </defs>
-                                    <path
-                                        d="M5.84912 0.464844C4.74455 0.464844 3.84912 1.36028 3.84912 2.46485V19.1215C3.84912 20.8309 5.85469 21.7524 7.15176 20.6391L10.6973 17.5958C11.4467 16.9526 12.5533 16.9526 13.3027 17.5959L16.8526 20.6434C18.1496 21.7568 20.1553 20.8352 20.1553 19.1258V2.46484C20.1553 1.36027 19.2599 0.464844 18.1553 0.464844H5.84912Z"
-                                        fill="#5B94EA"
-                                    />
-                                </svg>
+                                <img
+                                    v-else
+                                    src="../../assets/icons/article/avatar.svg"
+                                    alt="avatar"
+                                    class="article__avatar-img"
+                                >
+                            </div>
+                            <div class="article__avtor-info">
+                                <p class="article__avtor-article">
+                                    <span class="article__avtor-field">Автор статьи: </span>{{ article.avtor.fullname }}
+                                </p>
+                                <p class="article__avtor-work">
+                                    <span class="article__avtor-field">Место работы: </span>{{ article.avtor.place_work }}
+                                </p>
+                                <p>
+                                    <span class="article__avtor-field">Источник: </span> <a
+                                        :href="article.source"
+                                        class="article__avtor-link"
+                                    >{{ article.source__text }}</a>
+                                </p>
+                            </div>
+                            <p class="article__avtor-publication">
+                                Дата публикации {{ article.publication_date }}
+                            </p>
+                        </div>
+                        <div
+                            class="article__contnent"
+                            v-html="getContnent"
+                        />
+                        <div class="article__footer">
+                            <div class="article__btns">
+                                <div class="article__raiting">
+                                    <img
+                                        src="@/assets/icons/article/up.svg"
+                                        alt="up"
+                                        class="article__btns-icon"
+                                    >
+                                    {{ article.show }}
+                                    <img
+                                        src="@/assets/icons/article/down.svg"
+                                        alt="down"
+                                        class="article__btns-icon"
+                                    >
+                                </div>
+                                <ShareComponent
+                                    :article="article"
+                                    class="article__share"
+                                />
+                                <div class="article__favorites">
+                                    <p class="article__favorites-text">
+                                        Добавить в избранное
+                                    </p>
+                                    <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <defs>
+                                            <linearGradient
+                                                id="myGradient"
+                                                gradientTransform="rotate(45)"
+                                            >
+                                                <stop
+                                                    offset="20%"
+                                                    stop-color="#F12424"
+                                                />
+                                                <stop
+                                                    offset="100%"
+                                                    stop-color="#4360F8"
+                                                />
+                                            </linearGradient>
+                                        </defs>
+                                        <path
+                                            d="M5.84912 0.464844C4.74455 0.464844 3.84912 1.36028 3.84912 2.46485V19.1215C3.84912 20.8309 5.85469 21.7524 7.15176 20.6391L10.6973 17.5958C11.4467 16.9526 12.5533 16.9526 13.3027 17.5959L16.8526 20.6434C18.1496 21.7568 20.1553 20.8352 20.1553 19.1258V2.46484C20.1553 1.36027 19.2599 0.464844 18.1553 0.464844H5.84912Z"
+                                            fill="#5B94EA"
+                                        />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="article__download">
+                                <p class="article__download-text">
+                                    Зарегестрируйтесь, чтобы скачать материал
+                                </p>
+                                <BtnBackgroud class="article__btn">
+                                    Скачать
+                                </BtnBackgroud>
                             </div>
                         </div>
-                        <div class="article__download">
-                            <p class="article__download-text">
-                                Зарегестрируйтесь, чтобы скачать материал
-                            </p>
-                            <BtnBackgroud class="article__btn">
-                                Скачать
-                            </BtnBackgroud>
-                        </div>
                     </div>
-                </div>
 
-                <div class="article__sidebar">
-                    <div class="article__tags">
-                        <div
-                            v-for="item in article.tags"
-                            :key="item.id"
-                            class="article__tag-item"
-                        >
-                            <span class="article__tag-symbol">#</span>
-                            <p class="article__tag-text">
-                                {{ item }}
-                            </p>
+                    <div class="article__sidebar">
+                        <div class="article__tags">
+                            <div
+                                v-for="item in article.tags"
+                                :key="item.id"
+                                class="article__tag-item"
+                            >
+                                <span class="article__tag-symbol">#</span>
+                                <p class="article__tag-text">
+                                    {{ item }}
+                                </p>
+                            </div>
                         </div>
+                        <OtherArticle
+                            v-if="page === 'trend'"
+                            :other-atricle="otherAtricle"
+                        />
+                        <OtherTrend
+                            v-if="page === 'blog'"
+                            position="sidebar"
+                        />
                     </div>
-                    <OtherArticle
-                        v-if="page === 'trend'"
-                        :other-atricle="otherAtricle"
-                    />
-                    <OtherTrend
-                        v-if="page === 'blog'"
-                        position="sidebar"
-                    />
                 </div>
+                <img
+                    class="article-bg"
+                    src="../../assets/icons/article/bg.svg"
+                    alt="bg-line"
+                >
             </div>
         </div>
     </div>
@@ -262,6 +269,7 @@ watch(() => props.data, () => {
     gap: 24px;
     justify-content: space-between;
     align-items: flex-start;
+    z-index: 1;
 }
 
 .article__block {
@@ -615,6 +623,22 @@ watch(() => props.data, () => {
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
+    }
+}
+
+.article-layout{
+    position: relative;
+    overflow: hidden;
+}
+
+.article-bg{
+    position: absolute;
+    z-index: 0;
+    bottom: 206px;
+    right: -866px;
+
+    @media (max-width: $xl) {
+       display: none;
     }
 }
 </style>

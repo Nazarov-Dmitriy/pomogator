@@ -20,6 +20,7 @@
             </template>
         </ListArticle>
         <SubscrideComponent />
+        <FooterComponent />
     </div>
 </template>
 
@@ -31,6 +32,7 @@ import ListArticle from '../components/article/ListArticle.vue';
 import SubscrideComponent from '../components/blog/SubscrideComponent.vue';
 import { onMounted, ref, watch } from 'vue';
 import  {getAll}  from '../db/db.js';   
+import FooterComponent from '../components/main/FooterComponent.vue';
 
 
 const searchValue = ref('')

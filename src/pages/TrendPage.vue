@@ -24,6 +24,7 @@
             </template>
         </ListArticle>
         <OtherTrend />
+        <FooterComponent />
     </div>
 </template>
 
@@ -36,6 +37,7 @@ import OtherTrend from '../components/trend/OtherTrend.vue';
 import { onMounted, ref, watch } from 'vue';
 import { getTrend } from '../db/db.js';
 import { useRoute } from 'vue-router';
+import FooterComponent from '../components/main/FooterComponent.vue';
 
 const route = useRoute();
 const searchValue = ref('')
