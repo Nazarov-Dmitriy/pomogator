@@ -242,7 +242,7 @@
             </form>
         </div>
 
-        <div class="footer">
+        <div class="form-footer">
             <div class="form-item__submit">
                 <p class="form-item__policy">
                     Нажимая на кнопку «Отправить», я соглашаюсь с <span class="form-item__policy-link">политикой

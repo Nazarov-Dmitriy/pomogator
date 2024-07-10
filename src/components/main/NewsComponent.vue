@@ -47,7 +47,7 @@
                         </BtnGradient>
                         <div class="news__card-bg">
                             <img
-                                src="../../assets/images/NewsComponent/news-card-bg.png"
+                                src="../../assets/images/main/news/news-card-bg.png"
                                 alt=""
                             >
                         </div>
@@ -340,6 +340,7 @@ function validateForm () {
 
     @media (max-width: $sm) {
         top: 20px;
+        right: -70px;
     }
 }
 
