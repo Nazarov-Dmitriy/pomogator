@@ -6,8 +6,8 @@
         <EquipmentComponent />
         <BecomeComponent />
         <ReviewsComponent />
-        <FormComponent/>
-        <FooterComponent/>
+        <FormComponent />
+        <FooterComponent />
     </div>
 </template>
 
@@ -19,7 +19,7 @@ import BecomeComponent from '../components/about/BecomeComponent.vue'
 import EquipmentComponent from '../components/about/EquipmentComponent.vue'
 import ReviewsComponent from '../components/about/ReviewsComponent.vue'
 import FormComponent from '../components/main/FormComponent.vue'
-import FooterComponent from "../components/main/FooterComponent.vue"
+import FooterComponent from '../components/main/FooterComponent.vue'
 </script>
 <style scoped lang="scss">
 .page {

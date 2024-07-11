@@ -1,5 +1,8 @@
 <template>
     <section class="task">
+        <div class="task__bg">
+            <img src="/src/assets/images/trend/description/bg.svg" alt="" />
+        </div>
         <div class="task__wrapper">
             <div class="task__info">
                 <h2 class="task__info-title">Задачи и польза проекта</h2>
@@ -43,10 +46,10 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
 <style lang="scss" setup>
 .task {
-    background: url(../../assets/images/about/tasks/tasks-bg.png) bottom no-repeat;
-    background-size: cover;
     padding: 60px 80px;
     position: relative;
+    background: $gradient-background;
+    overflow: hidden;
 
     @media (max-width: $lg) {
         padding: 40px;
@@ -57,9 +60,20 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     }
 }
 
+.task__bg {
+    img {
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+}
+
 .task__wrapper {
     display: flex;
     justify-content: space-between;
+    z-index: 1;
 
     @media (max-width: $sm) {
         flex-direction: column;
@@ -84,6 +98,8 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     font-size: 36px;
     line-height: 1.17;
     color: $black;
+    position: static;
+    z-index: 1;
 
     @media (max-width: $lg) {
         font-size: 32px;
@@ -93,6 +109,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
 .task__info-list {
     max-width: 741px;
     width: 100%;
+    z-index: 1;
 }
 
 .task__info-list-item {
@@ -100,6 +117,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     color: $black;
     list-style-type: disc;
     margin-left: 20px;
+    z-index: 1;
 
     @media (max-width: $lg) {
         font-size: 14px;
@@ -108,15 +126,20 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
 .task__info-text {
     line-height: 1.5;
     color: $blue-primary;
+    z-index: 1;
 
     @media (max-width: $lg) {
         font-size: 14px;
+    }
+    @media (max-width: $sm) {
+        margin-bottom: -8px;
     }
 }
 .task__info-btn {
     width: max-content;
     box-sizing: border-box;
     padding: 8px 48px;
+    z-index: 1;
 
     @media (max-width: $sm) {
         width: 100%;
@@ -125,6 +148,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
 }
 .task__img-wrapper {
     max-width: 421px;
+    z-index: 1;
 
     @media (max-width: $sm) {
         padding-bottom: 33px;

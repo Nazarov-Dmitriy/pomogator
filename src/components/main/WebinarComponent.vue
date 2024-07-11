@@ -17,7 +17,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                     <h2 class="webinar__info-title">Вебинары онлайн</h2>
                     <div class="webinar__info-wrap">
                         <p class="webinar__info-subtitle">
-                            Для арегистрированных пользователей есть уникальная возможность
+                            Для зарегистрированных пользователей есть уникальная возможность
                             присутствовать на практических онлайн вебинарах с получением сертификата
                         </p>
                         <div class="webinar__info-cards">
