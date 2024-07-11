@@ -3,6 +3,7 @@
         <HeaderComponent />
         <TeacherComponent />
         <PartnersComponent />        
+        <ContactComponent />        
     </div>
 </template>
 
@@ -10,6 +11,7 @@
 import HeaderComponent from '@/components/HeaderComponent.vue'
 import TeacherComponent from '../components/about/TeacherComponent.vue';
 import PartnersComponent from '../components/about/PartnersComponent.vue';
+import ContactComponent from '../components/about/ContactComponent.vue';
 
 </script>
 <style scoped lang="scss">
