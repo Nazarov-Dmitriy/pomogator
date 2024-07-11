@@ -11,13 +11,15 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                         src="../../assets/images/main/webinar/webinar-hero.png"
                         alt="webinar hero"
                         class="webinar__hero-img"
-                    />
+                    >
                 </div>
                 <div class="webinar__info">
-                    <h2 class="webinar__info-title">Вебинары онлайн</h2>
+                    <h2 class="webinar__info-title">
+                        Вебинары онлайн
+                    </h2>
                     <div class="webinar__info-wrap">
                         <p class="webinar__info-subtitle">
-                            Для арегистрированных пользователей есть уникальная возможность
+                            Для зарегистрированных пользователей есть уникальная возможность
                             присутствовать на практических онлайн вебинарах с получением сертификата
                         </p>
                         <div class="webinar__info-cards">
@@ -26,7 +28,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                                     <img
                                         src="../../assets/images/main/webinar/webinar-example.png"
                                         alt=""
-                                    />
+                                    >
                                 </div>
                                 <p class="webinar__info-card-subtitle">
                                     Использование цифровых технологий в обучении
@@ -37,7 +39,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                                     <img
                                         src="../../assets/images/main/webinar/webinar-topic.png"
                                         alt=""
-                                    />
+                                    >
                                 </div>
                                 <p class="webinar__info-card-subtitle">
                                     Возможность задавать вопросы лектору во время эфира
@@ -48,7 +50,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                                     <img
                                         src="../../assets/images/main/webinar/webinar-login.png"
                                         alt=""
-                                    />
+                                    >
                                 </div>
                                 <p class="webinar__info-card-subtitle">
                                     Все зарегистрированные пользователи получают сертификат
@@ -56,7 +58,9 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                             </div>
                         </div>
                         <div class="webinar__info-button-wrap">
-                            <BtnBackgroud class="webinar__info-button">Регистрация </BtnBackgroud>
+                            <BtnBackgroud class="webinar__info-button">
+                                Регистрация
+                            </BtnBackgroud>
                         </div>
                     </div>
                 </div>
@@ -64,7 +68,10 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
         </div>
 
         <div class="webinar__background-svg">
-            <img src="../../assets/images/main/webinar/webinar-lines.png" alt="" />
+            <img
+                src="../../assets/images/main/webinar/webinar-lines.png"
+                alt=""
+            >
         </div>
     </section>
 </template>

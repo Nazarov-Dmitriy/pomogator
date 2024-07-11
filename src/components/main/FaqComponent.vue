@@ -6,14 +6,14 @@
             </h2>
             <div class="faq__content">
                 <div
-                    v-for="(item, index) in data"
+                    v-for="item in data"
                     :key="item.title"
                     class="faq__item"
                 >
                     <div class="faq__question">
                         <div class="faq__count">
                             <p class="faq__count-text">
-                                {{ getCount(index) }}
+                                {{ getCount(item.id) }}
                             </p>
                         </div>
                         <p class="faq__question-text">
@@ -22,8 +22,8 @@
                         <div class="faq__arrow">
                             <button
                                 class="faq__arrow-btn"
-                                :class="{ 'active': id === index }"
-                                @click="id = index"
+                                :class="{ 'active': id === item.id }"
+                                @click="id = item.id"
                             >
                                 <svg
                                     class="faq__arrow-icon"
@@ -46,12 +46,53 @@
                     </div>
                     <div class="faq__answer">
                         <Transition name="fade">
-                            <p
-                                v-if="index === id"
-                                class="faq__answer-text"
-                            >
-                                {{ item.answer }}
-                            </p>
+                            <template v-if="item.id === id">
+                                <div
+                                    v-if="item.id !== 3 && item.id !== 4"
+                                    class="faq__answer-item"
+                                >
+                                    <p
+                                        class="faq__answer-text"
+                                    >
+                                        {{ item.answer }}
+                                    </p>
+                                </div>
+                                <div
+                                    v-else-if="item.id == 3"
+                                    class="faq__answer-item"
+                                >
+                                    <p
+                                       
+                                        class="faq__answer-text"
+                                    >
+                                        {{ item.answer }}
+                                        <BtnBackgroud
+                                            class="webinar__info-button"
+                                            style="margin-top: 10px;"
+                                        >
+                                            Регистрация
+                                        </BtnBackgroud>
+                                    </p>
+                                </div>
+                                <div
+                                    v-else-if="item.id == 4"
+                                    class="faq__answer-item"
+                                >
+                                    <p
+                                        class="faq__answer-text"
+                                    >
+                                        {{ item.answer }}
+                                    </p>
+                                    <BtnGradient
+                                        class="btn__proposal"
+                                        emit-name="offer"
+                                        style="margin-top: 10px;"
+                                        @offer="modalShow = true"
+                                    >
+                                        Предложить материал
+                                    </BtnGradient>
+                                </div>
+                            </template>
                         </Transition>
                     </div>
                 </div>
@@ -62,31 +103,45 @@
             alt="bg-image"
             class="faq__bg-line"
         >
+        <Teleport to="body">
+            <ModalComponent
+                :show="modalShow"
+                @close="modalShow = false"
+            />
+        </Teleport>
     </section>
 </template>
 <script setup>
+import BtnBackgroud from '../btns/BtnBackgroud.vue';
+import BtnGradient from '../btns/BtnComponent.vue';
+import ModalComponent from '../modal/ModalComponent.vue';
 import { ref } from 'vue';
 
 const id = ref(null)
 
 const data = ref([
     {
+        id: 1,
         title: 'Что дает регистрация на сайте?',
         answer: 'После регистрации на сайте вы получаете доступ в личный кабинет, где открываются возможности скачать материал, участвовать в вебинаре и получить сертификат, собирать избранные материалы. '
     },
     {
+        id: 2,
         title: 'Как принять участие в вебинаре и получить сертификат?',
         answer: 'Для участия в вебинаре необходимо пройти регистрацию на сайте. Сертификат появится в вашем личном кабинете автоматически.'
     },
     {
+        id: 3,
         title: 'Можно ли скачать материал?',
-        answer: 'Да, для бесплатного скачивания материалов необходимо пройти регистрацию на сайте. (кнопка Регистрация)'
+        answer: 'Да, для бесплатного скачивания материалов необходимо пройти регистрацию на сайте.'
     },
     {
+        id: 4,
         title: 'Как предложить свой материал?',
-        answer: 'Предложить свой материал или вебинар вы можете тут (кнопка «Предложить материал»)'
+        answer: 'Предложить свой материал или вебинар вы можете тут '
     },
     {
+        id: 5,
         title: 'Если прошел регистрацию на вебинар, но не получилось присоединиться во время трансляции, будет ли возможность посмотреть вебинар в записи?',
         answer: 'Запись всех вебинаров сохраняется на сайте. Все зарегистрированные на вебинар пользователи получают сертификаты.'
     },
@@ -256,16 +311,12 @@ function getCount (ind) {
     }
 }
 
-.faq__answer-text {
+.faq__answer-item{
     position: absolute;
     top: 0;
     padding: 24px;
     border: 2px solid $blue;
-    border-radius: 32px;
-    font-weight: 'Inter';
-    font-size: 16px;
-    line-height: 1.5;
-    font-weight: 400;
+    border-radius: 32px;  
     top: 50%;
     transform: translate(0, -16px);
     background: $white;
@@ -273,13 +324,22 @@ function getCount (ind) {
     @media (max-width: $xl) {
         position: unset;
         transform: none;
-
     }
+
+    @media (max-width: $lg) {
+        padding: 16px;
+    }
+}
+
+
+.faq__answer-text {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 400;  
 
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 24px;
-        padding: 16px;
     }
 }
 

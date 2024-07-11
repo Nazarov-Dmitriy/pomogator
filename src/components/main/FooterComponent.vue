@@ -22,7 +22,7 @@
                         <ul class="footer__list">
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/"
+                                    to="/trend/robototekhnika"
                                     class="footer__link"
                                 >
                                     Робототехника
@@ -30,7 +30,7 @@
                             </li>
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/"
+                                    to="/trend/khimiya/"
                                     class="footer__link"
                                 >
                                     Химия
@@ -38,7 +38,7 @@
                             </li>
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/"
+                                    to="/trend/fizika"
                                     class="footer__link"
                                 >
                                     Физика
@@ -46,7 +46,7 @@
                             </li>
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/"
+                                    to="/trend/biologiya"
                                     class="footer__link"
                                 >
                                     Биология
@@ -61,7 +61,7 @@
                         <ul class="footer__list">
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/"
+                                    to="/about"
                                     class="footer__link"
                                 >
                                     О нас
@@ -69,7 +69,7 @@
                             </li>
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/"
+                                    to="/blog"
                                     class="footer__link"
                                 >
                                     Блог
@@ -77,7 +77,7 @@
                             </li>
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/"
+                                    to="/webinar"
                                     class="footer__link"
                                 >
                                     Вебинар
