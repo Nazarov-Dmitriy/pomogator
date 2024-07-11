@@ -53,7 +53,7 @@ const cards = ref([
     padding: 60px 80px;
 
     @media (max-width: $lg) {
-        padding: 40px;
+        padding: 40px 80px 40px 40px;
     }
 
     @media (max-width: $sm) {
@@ -72,6 +72,7 @@ const cards = ref([
     font-size: 36px;
     line-height: 1.17;
     color: $blue-primary;
+    font-family: "Kreadon-Demi";
 
     @media (max-width: $sm) {
         font-size: 32px;
@@ -85,6 +86,8 @@ const cards = ref([
     color: $black;
     max-width: 546px;
     width: 100%;
+    font-family: var(--font-family);
+    font-weight: 500;
 
     @media (max-width: $sm) {
         font-size: 20px;
@@ -101,12 +104,14 @@ const cards = ref([
     @media (max-width: $xl) {
         overflow-y: scroll;
         grid-auto-flow: column;
+        width: calc(100% + 80px);
     }
 
     @media (max-width: $sm) {
         grid-template-columns: 1fr;
         overflow: visible;
         grid-auto-flow: row;
+        width: 100%;
     }
 }
 .equipment__card {

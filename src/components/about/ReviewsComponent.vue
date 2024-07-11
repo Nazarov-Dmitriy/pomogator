@@ -78,6 +78,7 @@ const cards = ref([
     font-size: 36px;
     line-height: 1.17;
     color: $blue-primary;
+    font-family: 'Kreadon-Demi';
 }
 .reviews__cards {
     display: grid;
