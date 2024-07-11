@@ -1,23 +1,25 @@
 <template>
     <div class="page">
         <HeaderComponent />
+        <TasksComponent />
         <TeacherComponent />
-        <PartnersComponent />
-        <EquipmentComponent />  
+        <EquipmentComponent />
         <BecomeComponent />
         <ReviewsComponent />
+        <FormComponent />
+        <FooterComponent />
     </div>
 </template>
 
 <script setup>
 import HeaderComponent from '@/components/HeaderComponent.vue'
-import TeacherComponent from '../components/about/TeacherComponent.vue';
-import PartnersComponent from '../components/about/PartnersComponent.vue';
-import BecomeComponent from "../components/about/BecomeComponent.vue"
-import EquipmentComponent from "../components/about/EquipmentComponent.vue"
-import ReviewsComponent from '../components/about/ReviewsComponent.vue';
-
-
+import TasksComponent from '../components/about/TasksComponent.vue'
+import TeacherComponent from '../components/about/TeacherComponent.vue'
+import BecomeComponent from '../components/about/BecomeComponent.vue'
+import EquipmentComponent from '../components/about/EquipmentComponent.vue'
+import ReviewsComponent from '../components/about/ReviewsComponent.vue'
+import FormComponent from '../components/main/FormComponent.vue'
+import FooterComponent from '../components/main/FooterComponent.vue'
 </script>
 <style scoped lang="scss">
 .page {

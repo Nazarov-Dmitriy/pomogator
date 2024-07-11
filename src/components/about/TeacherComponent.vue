@@ -13,14 +13,14 @@
             >
                 <swiper-slide v-for="(teacher, index) in teachers" :key="index">
                     <div class="teachers__info">
-                        <div class="teachers__info-img-wrapper">
-                            <img
-                                class="teachers__info-img"
-                                :src="teacher.image"
-                                :alt="`Image of ${teacher.name}`"
-                            />
-                        </div>
                         <div class="teachers__info-description">
+                            <div class="teachers__info-img-wrapper">
+                                <img
+                                    class="teachers__info-img"
+                                    :src="teacher.image"
+                                    :alt="`Image of ${teacher.name}`"
+                                />
+                            </div>
                             <div
                                 class="teachers__info-description-wrapper teachers__info-description-wrapper--left"
                             >
@@ -108,6 +108,19 @@ const teachers = ref([
         subject: 'Химия',
         experience: '10 лет',
         workplace: 'Школа №10',
+        position: 'Учитель химии',
+        education:
+            'Высшее химическое образование, курсы повышения квалификации по использованию IT-технологий в образовании',
+        skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
+        achievements:
+            'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
+        image: '/src/assets/images/about/teacher/teacher-hero.png'
+    },
+    {
+        name: 'Иванов Михаил Дмитриевич',
+        subject: 'Химия',
+        experience: '10 лет',
+        workplace: 'Школа №10',
         position: 'Преподаватель химии',
         education:
             'Высшее химическое образование, курсы повышения квалификации по использованию IT-технологий в образовании',
@@ -117,7 +130,7 @@ const teachers = ref([
         image: '/src/assets/images/about/teacher/teacher-hero.png'
     },
     {
-        name: 'Иванов Иван Дмитриевич',
+        name: 'Иванов Михаил Дмитриевич',
         subject: 'Химия',
         experience: '10 лет',
         workplace: 'Школа №10',
@@ -181,6 +194,8 @@ function updateActiveIndex(swiper) {
     line-height: 42px;
     color: $blue-primary;
     margin-bottom: 32px;
+    font-family: 'Kreadon-Demi';
+    font-weight: 600;
 
     @media (max-width: $lg) {
         font-size: 32px;
@@ -219,7 +234,8 @@ function updateActiveIndex(swiper) {
     }
 
     @media (max-width: $xl) {
-        top: 30px;
+        top: 50%;
+        transform: translate(0%, -50%);
         left: -15px;
     }
 
@@ -237,7 +253,8 @@ function updateActiveIndex(swiper) {
     padding: 16px 64px 16px 186px;
     background: $blue;
     margin-bottom: 39px;
-    gap: 140px;
+    gap: 70px;
+    position: relative;
 
     @media (max-width: $xl) {
         grid-template-columns: 1fr;
@@ -280,10 +297,16 @@ function updateActiveIndex(swiper) {
     }
 
     &--right .teachers__info-text:nth-child(even) {
+        box-sizing: border-box;
         text-align: right;
         width: auto;
         align-items: start;
         line-height: 23px;
+        padding-right: 50px;
+
+        @media (max-width: $sm) {
+            padding: 0;
+        }
     }
 
     &--right .teachers__info-text:nth-child(odd) {
@@ -343,6 +366,8 @@ function updateActiveIndex(swiper) {
     line-height: 32px;
     color: $blue-primary;
     margin-bottom: 8px;
+    font-family: var(--second-family);
+    font-weight: 600;
 
     @media (max-width: $lg) {
         font-size: 20px;
@@ -356,6 +381,8 @@ function updateActiveIndex(swiper) {
 .teachers__info-topic-text {
     line-height: 24px;
     color: $black;
+    font-family: var(--font-family);
+    font-weight: 400;
 
     @media (max-width: $lg) {
         font-size: 14px;
@@ -409,4 +436,4 @@ function updateActiveIndex(swiper) {
         }
     }
 }
-</style> 
+</style>

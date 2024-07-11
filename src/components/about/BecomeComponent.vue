@@ -69,6 +69,7 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
     text-align: center;
     position: static;
     z-index: 2;
+    font-family: "Kreadon-Demi";
 
     @media (max-width: $lg) {
         font-size: 32px;
