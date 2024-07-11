@@ -87,6 +87,14 @@ const cards = ref([
     scrollbar-width: none;
     overflow-y: scroll;
     grid-auto-flow: column;
+    width: calc(100% + 80px);
+
+    @media (max-width: $lg) {
+        width: calc(100% + 40px);
+    }
+    @media (max-width: $sm) {
+        width: calc(100% + 16px);
+    }
 }
 .reviews__card {
     border: 2px solid $blue;
