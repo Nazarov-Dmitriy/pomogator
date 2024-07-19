@@ -55,7 +55,10 @@
                             </p>
                         </div>
                     </div>
-                    <BtnBackgroud @click="validateForm()">
+                    <BtnBackgroud
+                        emit-name="subscribe"
+                        @subscribe="validateForm()"
+                    >
                         Подписаться
                     </BtnBackgroud>
                 </div>

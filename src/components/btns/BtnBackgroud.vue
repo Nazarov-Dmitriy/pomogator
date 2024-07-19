@@ -15,7 +15,7 @@ const props = defineProps({
         default: null
     },
 })
-const emit = defineEmits(['form-submit', 'offer', 'link'])
+const emit = defineEmits(['form-submit', 'offer', 'link', 'subscribe'])
 
 
 function submitEmit (){

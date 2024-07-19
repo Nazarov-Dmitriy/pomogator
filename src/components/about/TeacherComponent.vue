@@ -22,7 +22,7 @@
                             <div class="teachers__info-img-wrapper">
                                 <img
                                     class="teachers__info-img"
-                                    :src="teacher.image"
+                                    :src="getPath(teacher.image)"
                                     :alt="`Image of ${teacher.name}`"
                                 >
                             </div>
@@ -143,7 +143,7 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: '/src/assets/images/about/teacher/teacher-hero.png'
+        image: 'teacher-hero.png'
     },
     {
         name: 'Иванов Михаил Дмитриевич',
@@ -156,7 +156,7 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: '/src/assets/images/about/teacher/teacher-hero.png'
+        image: '/teacher-hero.png'
     },
     {
         name: 'Иванов Михаил Дмитриевич',
@@ -169,9 +169,14 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: '/src/assets/images/about/teacher/teacher-hero.png'
+        image: 'teacher-hero.png'
     }
 ])
+
+function getPath (img){
+    return new URL("/image/teacher/" + img, import.meta.url).href
+}
+
 const activeIndex = ref(0)
 
 const navigationOptions = {

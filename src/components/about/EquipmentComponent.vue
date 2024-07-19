@@ -15,7 +15,7 @@
                 >
                     <div class="equipment__card-header">
                         <img
-                            :src="card.imgSrc"
+                            :src="getPath(card.imgSrc)"
                             alt=""
                         >
                     </div>
@@ -37,24 +37,28 @@ import { ref } from 'vue'
 
 const cards = ref([
     {
-        imgSrc: '/src/assets/images/about/equipment/equipment-img1.png',
+        imgSrc: 'equipment-img1.png',
         title: 'Цифровая лаборатория',
         description:
             'Комплект учебного оборудования, который включает в себя измерительный блок, интерфейс для связи с компьютером и различные датчики.'
     },
     {
-        imgSrc: '/src/assets/images/about/equipment/equipment-img2.png',
+        imgSrc: 'equipment-img2.png',
         title: 'Мультисенсорные регистраторы данных',
         description:
             'Эти устройства позволяют одновременно собирать данные с нескольких датчиков, что особенно полезно при проведении комплексных экспериментов.'
     },
     {
-        imgSrc: '/src/assets/images/about/equipment/equipment-img3.png',
+        imgSrc: 'equipment-img3.png',
         title: 'Специализированные датчики',
         description:
             'В зависимости от конкретной области исследования, вам могут потребоваться специализированные датчики, такие как датчики pH, температуры, влажности, давления, скорости и т.д.'
     }
 ])
+
+function getPath (img){
+    return new URL("/image/equipment/" + img, import.meta.url).href
+}
 </script>
 
 <style scoped lang="scss">

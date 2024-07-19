@@ -8,7 +8,7 @@
             emit-name="offer"
             @offer="modalShow = true"
         >
-            Предложить материал
+            Предложить тему
         </BtnBackgroud>
     </div>
     <Teleport to="body">

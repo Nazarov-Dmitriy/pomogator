@@ -1,12 +1,21 @@
 <template>
     <section class="reviews">
         <div class="reviews__container">
-            <h2 class="reviews__title">Отзывы</h2>
+            <h2 class="reviews__title">
+                Отзывы
+            </h2>
             <div class="reviews__cards">
-                <div class="reviews__card" v-for="(card, index) in cards" :key="index">
+                <div
+                    v-for="(card, index) in cards"
+                    :key="index"
+                    class="reviews__card"
+                >
                     <div class="reviews__card-header">
                         <div class="reviews__card-header-person">
-                            <img :src="card.img" alt="" />
+                            <img
+                                :src="getPath(card.img)"
+                                alt=""
+                            >
                             <p class="reviews__header-person-text">
                                 {{ card.name }} <span>{{ card.lastName }}</span>
                             </p>
@@ -30,7 +39,7 @@ import { ref } from 'vue'
 
 const cards = ref([
     {
-        img: '/src/assets/images/about/reviews/reviews-hero1.png',
+        img: 'reviews-hero1.png',
         name: 'Иванов ',
         lastName: 'Михаил Дмитриевич',
         date: '12/04/2024',
@@ -38,7 +47,7 @@ const cards = ref([
         text: 'Курс IT для химиков был очень полезен и информативен. Он позволил мне лучше понять, как использовать информационные технологии в преподавании химии. Особенно полезными были занятия по работе с программами для создания интерактивных уроков и презентаций. Я уверен, что эти навыки помогут мне сделать процесс обучения более интересным и эффективным'
     },
     {
-        img: '/src/assets/images/about/reviews/reviews-hero2.png',
+        img: 'reviews-hero2.png',
         name: 'Иванова',
         lastName: 'Ирина Анатольевна',
         date: '12/04/2024',
@@ -46,7 +55,7 @@ const cards = ref([
         text: 'Курс IT для физиков дал мне необходимые знания и навыки для использования информационных технологий в преподавании физики. Я научился создавать интерактивные уроки, использовать программы для моделирования физических процессов и проводить виртуальные эксперименты. Это поможет мне сделать процесс обучения более наглядным и увлекательным'
     },
     {
-        img: '/src/assets/images/about/reviews/reviews-hero3.png',
+        img: 'reviews-hero3.png',
         name: 'Смирнов',
         lastName: 'Владимир Дмитриевич',
         date: '12/04/2024',
@@ -54,6 +63,11 @@ const cards = ref([
         text: 'Курс IT для физиков дал мне возможность освоить новые технологии и инструменты, которые я могу использовать в своей работе. Особенно ценными были занятия по созданию виртуальных лабораторий и использованию программ для моделирования физических процессов. Эти навыки помогут мне сделать процесс обучения физике более наглядным и увлекательным'
     }
 ])
+
+function getPath (img){
+    return new URL("/image/reviews/" + img, import.meta.url).href
+}
+
 </script>
 
 <style scoped lang="scss">
