@@ -118,6 +118,10 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
 .objective__btn {
     flex-grow: 1;
     flex-shrink: 1;
+
+    @media (max-width: $sm) {
+        width: 100%
+    }
 }
 
 .objective__bg-line {

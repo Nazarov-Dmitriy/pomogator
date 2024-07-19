@@ -47,7 +47,7 @@
     }
 
     @media (max-width: $sm) {
-        padding: 16px 16px 183px 16px;
+        padding: 16px 16px 0 16px;
     }
 }
 
@@ -76,8 +76,8 @@
     @media (max-width: $sm) {
         width: 100%;
         font-size: 32px;
-    line-height: 40px;
-    max-width: 288px;
+        line-height: 40px;
+        margin-bottom: 154px;
     }
 }
 
@@ -96,11 +96,12 @@
             right: 25%;
             top: 20px;
         }
+
         @media (max-width: $sm) {
             width: 89px;
-            right: unset;
-            left: 82px;
-            top: 152px;
+            right: 141px;
+            top: unset;
+            bottom: 55px;
         }
     }
 
@@ -117,10 +118,10 @@
 
         @media (max-width: $sm) {
             width: 67px;
-            right: unset;
-            left: 222px;
-            top: 194px;
-        }
+            top: unset;
+            right: 16px;
+            bottom: 50px;
+}
     }
 
     &:nth-of-type(3) {
@@ -136,9 +137,9 @@
 
         @media (max-width: $sm) {
             width: 45px;
-            right: unset;
-            left: 16px;
-            top: 245px;
+            right: 245px;
+            top: unset;
+            bottom: 30px;
         }
     }
 }

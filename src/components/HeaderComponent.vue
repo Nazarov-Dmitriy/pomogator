@@ -56,11 +56,11 @@
                     </li>
                 </ul>
                 <div class="header__block">
-                    <input
+                    <!-- <input
                         type="text"
                         class="header__search"
                         placeholder="Подсказка"
-                    >
+                    > -->
                     <BtnComponent class="btn__header">
                         Войти
                     </BtnComponent>
@@ -125,7 +125,7 @@ function mainLink () {
     background: $gradient-background;
     position: relative;
     z-index: 9000;
- }
+}
 
 .header__wrapper {
     max-width: 1440px;
@@ -147,7 +147,7 @@ function mainLink () {
 
 .header {
     display: grid;
-    grid-template-columns: 161px 212px minmax(300px, 636px);
+    grid-template-columns: 161px 212px 100px;
     grid-template-rows: 40px auto;
     align-items: center;
     justify-content: space-between;
@@ -174,10 +174,9 @@ function mainLink () {
         align-items: center;
         justify-content: space-between;
         grid-template-areas:
-            'block'
-            'trend'
-            'menu';
-        gap: 20px 0;
+            'menu block'
+            'trend trend';
+        gap: 20px 20px;
 
         &.menu-active {
             display: grid;
@@ -185,6 +184,10 @@ function mainLink () {
     }
 
     @media (max-width: $sm) {
+        grid-template-areas:
+            'block'
+            'trend '
+            'menu';
         gap: 16px 0;
     }
 
@@ -204,7 +207,7 @@ function mainLink () {
         max-width: 100%;
         width: 100%;
         display: grid;
-        padding: 20px 40px;
+        padding: 20px 40px 0 40px;
         box-sizing: border-box;
         z-index: 9999;
         border-bottom: 2px solid $blue;
@@ -276,7 +279,7 @@ function mainLink () {
     gap: 32px;
 
     @media (max-width: $lg) {
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     @media (max-width: $sm) {
@@ -313,6 +316,7 @@ function mainLink () {
 .header__block {
     grid-area: block;
     display: flex;
+    justify-content: flex-end;
     gap: 16px;
 
     @media (max-width: $sm) {
@@ -370,7 +374,7 @@ function mainLink () {
     background: $white;
     display: flex;
     gap: 2px;
-    
+
     @media (max-width: $lg) {
         left: -40px;
         width: calc(100% + 80px);
@@ -407,11 +411,12 @@ function mainLink () {
         flex: 1 0 235px;
     }
 
-    &.active, &.router-link-exact-path-active {
+    &.active,
+    &.router-link-exact-path-active {
         background: $blue-primary;
     }
 
-    &:hover{
+    &:hover {
         background: #4360F8;
     }
 }

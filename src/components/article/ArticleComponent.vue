@@ -102,7 +102,11 @@
                                     :article="article"
                                     class="article__share"
                                 />
-                                <div class="article__favorites">
+                                <div
+                                    class="article__favorites"
+                                    :class="{'active': favorites}"
+                                    @click="favorites = !favorites"
+                                >
                                     <p class="article__favorites-text">
                                         Добавить в избранное
                                     </p>
@@ -184,8 +188,10 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
 import OtherArticle from '../article/OtherArticle.vue';
 import OtherTrend from '../trend/OtherTrend.vue';
 
-import { computed, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import ShareComponent from './ShareComponent.vue';
+
+const favorites = ref(false)
 
 const router = useRouter()
 
@@ -488,6 +494,14 @@ watch(() => props.data, () => {
     font-weight: 500;
     color: $blue;
     cursor: pointer;
+
+    &.active{
+        color:$blue;
+
+        & svg path{
+            fill: url(#myGradient);
+        }
+    }
 
     @media (max-width: $sm) {
         flex: 0 0 auto;

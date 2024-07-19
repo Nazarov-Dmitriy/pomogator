@@ -79,7 +79,7 @@ const cards = ref([
 .equipment__title {
     font-weight: 600;
     font-size: 36px;
-    line-height: 1.17;
+    line-height: 42px;
     color: $blue-primary;
     font-family: "Kreadon-Demi";
 
@@ -91,7 +91,7 @@ const cards = ref([
 .equipment__subtitle {
     font-weight: 500;
     font-size: 24px;
-    line-height: 1.3;
+    line-height: 32px;
     color: $black;
     max-width: 546px;
     width: 100%;
@@ -100,7 +100,7 @@ const cards = ref([
 
     @media (max-width: $sm) {
         font-size: 20px;
-        line-height: 1.2;
+        line-height: 24px;
     }
 }
 
@@ -139,11 +139,12 @@ const cards = ref([
     }
 }
 .equipment__card-header {
-    aspect-ratio: 3 / 1;
     background: #5b94ea;
     border-radius: 32px 32px 0 0;
 
     img {
+        aspect-ratio: 3 / 1;
+        object-fit: cover;
         border-radius: 32px 32px 0 0;
         width: 100%;
         height: 100%;
@@ -155,7 +156,7 @@ const cards = ref([
     p {
         font-weight: 500;
         font-size: 24px;
-        line-height: 1.3;
+        line-height: 32px;
         text-align: center;
         color: $white;
         background: $blue;
@@ -165,6 +166,7 @@ const cards = ref([
 
         @media (max-width: $lg) {
             font-size: 20px;
+            line-height: 24px;
         }
     }
 }
@@ -177,6 +179,7 @@ const cards = ref([
 
         @media (max-width: $lg) {
             font-size: 14px;
+            line-height: 20px;
         }
     }
 }

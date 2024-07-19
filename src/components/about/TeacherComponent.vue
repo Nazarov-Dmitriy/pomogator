@@ -1,7 +1,9 @@
 <template>
     <section class="teachers">
         <div class="teachers__container">
-            <h2 class="teachers__title">Преподаватели</h2>
+            <h2 class="teachers__title">
+                Преподаватели
+            </h2>
             <swiper
                 ref="swiperRef"
                 class="teachers__slider"
@@ -9,9 +11,12 @@
                 :slides-per-view="1"
                 :space-between="500"
                 :navigation="navigationOptions"
-                @slideChange="updateActiveIndex"
+                @slide-change="updateActiveIndex"
             >
-                <swiper-slide v-for="(teacher, index) in teachers" :key="index">
+                <swiper-slide
+                    v-for="(teacher, index) in teachers"
+                    :key="index"
+                >
                     <div class="teachers__info">
                         <div class="teachers__info-description">
                             <div class="teachers__info-img-wrapper">
@@ -19,12 +24,14 @@
                                     class="teachers__info-img"
                                     :src="teacher.image"
                                     :alt="`Image of ${teacher.name}`"
-                                />
+                                >
                             </div>
                             <div
                                 class="teachers__info-description-wrapper teachers__info-description-wrapper--left"
                             >
-                                <h3 class="teachers__info-title">{{ teacher.name }}</h3>
+                                <h3 class="teachers__info-title">
+                                    {{ teacher.name }}
+                                </h3>
                                 <p class="teachers__info-text">
                                     Направление: <span>{{ teacher.subject }}</span>
                                 </p>
@@ -32,23 +39,34 @@
                             <div
                                 class="teachers__info-description-wrapper teachers__info-description-wrapper--right"
                             >
-                                <p class="teachers__info-text">Опыт работы</p>
-                                <p class="teachers__info-text">{{ teacher.experience }}</p>
-                                <p class="teachers__info-text">Место работы</p>
-                                <p class="teachers__info-text">{{ teacher.workplace }}</p>
-                                <p class="teachers__info-text">Должность</p>
-                                <p class="teachers__info-text">{{ teacher.position }}</p>
+                                <p class="teachers__info-text">
+                                    Опыт работы
+                                </p>
+                                <p class="teachers__info-text">
+                                    {{ teacher.experience }}
+                                </p>
+                                <p class="teachers__info-text">
+                                    Место работы
+                                </p>
+                                <p class="teachers__info-text">
+                                    {{ teacher.workplace }}
+                                </p>
+                                <p class="teachers__info-text">
+                                    Должность
+                                </p>
+                                <p class="teachers__info-text">
+                                    {{ teacher.position }}
+                                </p>
                             </div>
                             <div class="teachers__info-tabs teachers__info-tabs--mobile">
                                 <span
+                                    v-for="(slide, index) in teachers"
+                                    :key="index"
                                     class="teachers__info-tab teachers__info-tab--mobile"
                                     :class="{
                                         'teachers__info-tabs--active': activeIndex === index
                                     }"
-                                    v-for="(slide, index) in teachers"
-                                    :key="index"
-                                >
-                                </span>
+                                />
                             </div>
                         </div>
                         <div class="teachers__info-topics">
@@ -57,24 +75,36 @@
                                     class="teacher__info-slider-btn teacher__info-slider-btn--left"
                                     src="@/assets/images/about/teacher/slider-button.svg"
                                     alt="slider button"
-                                />
+                                >
                                 <img
                                     class="teacher__info-slider-btn teacher__info-slider-btn--right"
                                     src="@/assets/images/about/teacher/slider-button.svg"
                                     alt="slider button"
-                                />
+                                >
                             </div>
                             <div class="teachers__info-topic">
-                                <h2 class="teachers__info-topic-title">Образование:</h2>
-                                <p class="teachers__info-topic-text">{{ teacher.education }}</p>
+                                <h2 class="teachers__info-topic-title">
+                                    Образование:
+                                </h2>
+                                <p class="teachers__info-topic-text">
+                                    {{ teacher.education }}
+                                </p>
                             </div>
                             <div class="teachers__info-topic">
-                                <h2 class="teachers__info-topic-title">Профессиональные навыки:</h2>
-                                <p class="teachers__info-topic-text">{{ teacher.skills }}</p>
+                                <h2 class="teachers__info-topic-title">
+                                    Профессиональные навыки:
+                                </h2>
+                                <p class="teachers__info-topic-text">
+                                    {{ teacher.skills }}
+                                </p>
                             </div>
                             <div class="teachers__info-topic">
-                                <h2 class="teachers__info-topic-title">Достижения:</h2>
-                                <p class="teachers__info-topic-text">{{ teacher.achievements }}</p>
+                                <h2 class="teachers__info-topic-title">
+                                    Достижения:
+                                </h2>
+                                <p class="teachers__info-topic-text">
+                                    {{ teacher.achievements }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -82,12 +112,11 @@
             </swiper>
             <div class="teachers__info-tabs">
                 <span
-                    class="teachers__info-tab"
-                    :class="{ 'teachers__info-tabs--active': activeIndex === index }"
                     v-for="(slide, index) in teachers"
                     :key="index"
-                >
-                </span>
+                    class="teachers__info-tab"
+                    :class="{ 'teachers__info-tabs--active': activeIndex === index }"
+                />
             </div>
         </div>
     </section>
@@ -150,7 +179,7 @@ const navigationOptions = {
     prevEl: '.teacher__info-slider-btn--left'
 }
 
-function updateActiveIndex(swiper) {
+function updateActiveIndex (swiper) {
     activeIndex.value = swiper.activeIndex % teachers.value.length
 }
 </script>
@@ -199,6 +228,7 @@ function updateActiveIndex(swiper) {
 
     @media (max-width: $lg) {
         font-size: 32px;
+        line-height: 40px;
     }
     @media (max-width: $sm) {
         padding: 0 16px;
@@ -367,7 +397,6 @@ function updateActiveIndex(swiper) {
     color: $blue-primary;
     margin-bottom: 8px;
     font-family: var(--second-family);
-    font-weight: 600;
 
     @media (max-width: $lg) {
         font-size: 20px;

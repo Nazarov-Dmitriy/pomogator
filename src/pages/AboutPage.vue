@@ -6,6 +6,7 @@
         <EquipmentComponent />
         <BecomeComponent />
         <ReviewsComponent />
+        <ContactComponent />
         <FormComponent />
         <FooterComponent />
     </div>
@@ -18,6 +19,7 @@ import TeacherComponent from '../components/about/TeacherComponent.vue'
 import BecomeComponent from '../components/about/BecomeComponent.vue'
 import EquipmentComponent from '../components/about/EquipmentComponent.vue'
 import ReviewsComponent from '../components/about/ReviewsComponent.vue'
+import ContactComponent from '../components/about/ContactComponent.vue'
 import FormComponent from '../components/main/FormComponent.vue'
 import FooterComponent from '../components/main/FooterComponent.vue'
 </script>

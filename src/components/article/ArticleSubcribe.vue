@@ -65,7 +65,8 @@
                 Нажимая кнопку “Подписаться” вы соглашаетесь с <a
                     href=""
                     class="subscribe-article__policy-link"
-                > политикой
+                >
+                    политикой
                     обработки персональных данных</a>
             </div>
         </div>
@@ -121,8 +122,21 @@ function validateForm () {
     flex-direction: column;
     background: #fff;
 
-    .form-main__error-text{
+    .form-main__error-text {
         font-size: 14px;
+    }
+
+    &:hover {
+        border-color: $blue-primary;
+
+        .subscribe-article__subtile {
+            color: $blue-primary;
+        }
+
+        .subscribe-article__policy,
+        .subscribe-article__policy-link {
+            color: $blue-primary;
+        }
     }
 }
 
@@ -166,7 +180,7 @@ function validateForm () {
     color: $blue;
 }
 
-.subscribe-article__btn{
+.subscribe-article__btn {
     width: 100%;
 }
 </style>

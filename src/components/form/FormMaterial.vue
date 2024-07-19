@@ -478,6 +478,21 @@ function validateForm () {
     line-height: 1.5;
     box-sizing: border-box;
 
+    &:hover {
+        border-color: $blue-primary;
+    }
+
+    &:focus {
+        border-color: $blue-primary;
+        color: $black;
+
+        &~.form-item__icon {
+            svg path {
+                fill: $blue-primary
+            }
+        }
+    }
+
     &::placeholder {
         color: $secondary;
     }
@@ -485,6 +500,26 @@ function validateForm () {
     &.error{
         border: 2px solid $primary-red; 
     }
+}
+
+.form-item-input:-webkit-autofill,
+.form-item-input:-webkit-autofill:hover,
+.form-item-input:-webkit-autofill:focus,
+.form-item-input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px #ffffff inset !important;
+}
+
+.form-item-input:-webkit-autofill {
+  -webkit-text-fill-color: $secondary !important;
+  font-size: 16px !important;
+  line-height: 1.5;
+  font-family: 'Inter';
+}
+.form-item-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: $black !important;
+  font-size: 16px !important;
+  line-height: 1.5;
+  font-family: 'Inter';
 }
 
 .form-item__icon {
@@ -504,6 +539,15 @@ function validateForm () {
     box-sizing: border-box;
     height: 241px;
     flex: 0 0 100%;
+
+    &:hover {
+        border-color: $blue-primary;
+    }
+
+    &:focus {
+        border-color: $blue-primary;
+        color: $black;
+    }
 
     &::placeholder {
         color: $secondary;

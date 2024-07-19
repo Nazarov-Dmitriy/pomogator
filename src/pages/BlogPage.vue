@@ -12,13 +12,7 @@
             class="trend__article-header"
             :data="data"
             :search="searchValue"
-        >
-            <template #header>
-                <h2 class="list-article__title">
-                    Содержание
-                </h2>
-            </template>
-        </ListArticle>
+        />
         <SubscrideComponent />
         <FooterComponent />
     </div>

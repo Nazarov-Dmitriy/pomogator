@@ -95,6 +95,10 @@ function article (id, trend) {
         .article__other-title {
             color: $blue-primary;
         }
+        
+        .article__other-subtitle {
+            color: $blue-primary;
+        }
 
         .article__other-date {
             color: $blue-primary;

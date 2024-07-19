@@ -118,6 +118,7 @@ import ModalComponent from '../modal/ModalComponent.vue';
 import { ref } from 'vue';
 
 const id = ref(null)
+const modalShow= ref(false)
 
 const data = ref([
     {

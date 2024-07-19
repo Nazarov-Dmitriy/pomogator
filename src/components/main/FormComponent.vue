@@ -236,7 +236,7 @@ function validateField (param, event, nameParam) {
     let target;
     if (event === 'event') {
         target = param.target.value.trim();
-    }else{
+    } else {
         target = param.trim()
     }
 
@@ -282,7 +282,7 @@ function changeTextarea (event) {
 function validateForm () {
     let validateFeildArr = ['name', 'phone', 'email', 'textarea'];
 
-    validateFeildArr.forEach(item =>{
+    validateFeildArr.forEach(item => {
         validateField(formField[item], 'validate', item)
     })
 }
@@ -406,7 +406,7 @@ function validateForm () {
     flex-wrap: wrap;
 }
 
-.form-main-input {
+.form-main-input{
     flex: 1 1 100%;
     border-radius: 32px;
     border: 2px solid $secondary;
@@ -415,14 +415,50 @@ function validateForm () {
     font-size: 16px;
     line-height: 1.5;
 
+    &:hover {
+        border-color: $blue-primary;
+    }
+
+    &:focus {
+        border-color: $blue-primary;
+        color: $black;
+
+        &~.form-item__icon {
+            svg path {
+                fill: $blue-primary
+            }
+        }
+    }
+
     &::placeholder {
         color: $secondary;
     }
 
-    &.error{
-        border: 2px solid $primary-red; 
+    &.error {
+        border: 2px solid $primary-red;
     }
 }
+
+.form-main-input:-webkit-autofill,
+.form-main-input:-webkit-autofill:hover,
+.form-main-input:-webkit-autofill:focus,
+.form-main-input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px #ffffff inset !important;
+}
+
+.form-main-input:-webkit-autofill {
+  -webkit-text-fill-color: $secondary !important;
+  font-size: 16px !important;
+  line-height: 1.5;
+  font-family: 'Inter';
+}
+.form-main-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: $black !important;
+  font-size: 16px !important;
+  line-height: 1.5;
+  font-family: 'Inter';
+}
+
 
 .form-item__icon {
     position: absolute;
@@ -444,6 +480,15 @@ function validateForm () {
     height: 144px;
     box-sizing: border-box;
 
+    &:hover {
+        border-color: $blue-primary;
+    }
+
+    &:focus {
+        border-color: $blue-primary;
+        color: $black;
+    }
+
     &::placeholder {
         color: $secondary;
     }
@@ -457,8 +502,8 @@ function validateForm () {
         min-height: 116px;
     }
 
-    &.error{
-        border: 2px solid $primary-red; 
+    &.error {
+        border: 2px solid $primary-red;
     }
 }
 

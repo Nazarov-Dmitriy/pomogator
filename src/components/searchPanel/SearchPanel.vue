@@ -17,7 +17,8 @@
             <div class="search-panel__block">
                 <button
                     class="search-panel__btn"
-                    @click=" showSearch()"
+                    @click="showSearch()"
+                    @mouseover=" showSearch()"
                 >
                     <svg
                         width="24"
@@ -105,42 +106,42 @@ function setActiveTags (id) {
 }
 
 function showSearch (){
-    searchActive.value = !searchActive.value
+    searchActive.value =true
     emit('update:modelValue', '')
 }
 
 const hashtagData = ref([
     {
         id: 1,
-        name: 'химия',
+        name: 'Химия',
     },
     {
         id: 2,
-        name: 'урок',
+        name: 'Физика',
     },
     {
         id: 3,
-        name: 'материал',
+        name: 'Биология',
     },
     {
         id: 4,
-        name: 'статья',
+        name: 'Робототехника',
     },
     {
         id: 5,
-        name: 'видео',
+        name: 'Мастер-класс',
     },
     {
         id: 6,
-        name: 'мастер-класс',
+        name: 'Практика',
     },
     {
         id: 7,
-        name: 'инструкция',
+        name: 'Видео',
     },
     {
         id: 8,
-        name: 'практика',
+        name: 'Статья',
     },
 ])
 </script>
@@ -161,11 +162,12 @@ const hashtagData = ref([
 
 .search-panel__input-wraper {
     width: 100%;
+    // background:red
 }
 
 .search-panel__input {
     box-sizing: border-box;
-    background: url('@/assets/icons/header/search.svg');
+    background-image: url('@/assets/icons/header/search.svg');
     background-repeat: no-repeat;
     background-position: right 16px top 6px;
     padding: 8px 56px 8px 16px;
@@ -184,11 +186,11 @@ const hashtagData = ref([
     &:hover,
     &:active,
     &:focus {
-        background: url('@/assets/icons/header/search-hover.svg');
+        background-image: url('@/assets/icons/header/search-hover.svg');
         background-repeat: no-repeat;
         background-position: right 16px top 6px;
         border: 2px solid $blue-primary;
-        color: $blue-primary;
+        color: $blue-primary;   
 
         &::placeholder {
             color: $blue-primary;

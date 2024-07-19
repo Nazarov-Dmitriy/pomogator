@@ -68,7 +68,7 @@
         </div>
         <OfferMaterial />
         <PaginationComponent
-            :perpage="11"
+            :perpage="12"
             :data="props.data"
             @set-list="getRenderList"
         />

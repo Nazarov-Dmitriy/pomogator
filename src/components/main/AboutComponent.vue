@@ -10,7 +10,9 @@
                         процессе
                     </h1>
                     <div class="about__register-panel">
-                        <BtnBackgroud>Регистрация</BtnBackgroud>
+                        <BtnBackgroud class="about__btn">
+                            Регистрация
+                        </BtnBackgroud>
                         <p class="about__register-decription">
                             Регистрация позволит скачивать материалы и участвовать в вебинарах с получением сертификата
                         </p>
@@ -283,6 +285,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
 
     @media (max-width: $sm) {
         padding: 8px;
+        border-radius: 20px;
     }
 }
 
@@ -309,6 +312,12 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
         line-height: 1.25;
         font-size: 14px;
         margin: 0;
+    }
+}
+
+.about__btn{
+    @media (max-width: $sm) {
+       width: 100%;
     }
 }
 </style>

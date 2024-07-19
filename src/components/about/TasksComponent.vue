@@ -1,11 +1,16 @@
 <template>
     <section class="task">
         <div class="task__bg">
-            <img src="/src/assets/images/trend/description/bg.svg" alt="" />
+            <img
+                src="/src/assets/images/trend/description/bg.svg"
+                alt=""
+            >
         </div>
         <div class="task__wrapper">
             <div class="task__info">
-                <h2 class="task__info-title">Задачи и польза проекта</h2>
+                <h2 class="task__info-title">
+                    Задачи и польза проекта
+                </h2>
                 <ul class="task__info-list">
                     <li class="task__info-list-item">
                         Повышение цифровой компетентности педагогов, что позволит им эффективно
@@ -28,13 +33,17 @@
                     </li>
                 </ul>
 
-                <span class="task__info-text"
-                    >Чтобы скачать материалы нужно зарегестрироваться</span
-                >
-                <BtnBackgroud class="task__info-btn">Регистрация</BtnBackgroud>
+                <span class="task__info-text">Чтобы скачать материалы нужно зарегестрироваться</span>
+                <BtnBackgroud class="task__info-btn">
+                    Регистрация
+                </BtnBackgroud>
             </div>
             <div class="task__img-wrapper">
-                <img src="../../assets/images/about/tasks/tasks-img.png" alt="" class="task__img" />
+                <img
+                    src="../../assets/images/about/tasks/tasks-img.png"
+                    alt=""
+                    class="task__img"
+                >
             </div>
         </div>
     </section>
@@ -96,13 +105,15 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     font-family: var(--second-family);
     font-weight: 600;
     font-size: 36px;
-    line-height: 1.17;
+    line-height: 42px;
     color: $black;
     position: static;
     z-index: 1;
+    font-family: "Kreadon-Demi";
 
     @media (max-width: $lg) {
         font-size: 32px;
+        line-height: 40px;
     }
 }
 
@@ -118,18 +129,24 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     list-style-type: disc;
     margin-left: 20px;
     z-index: 1;
+    font-size: 16px;
+    line-height: 24px;
 
     @media (max-width: $lg) {
         font-size: 14px;
+        line-height: 20px;
     }
 }
 .task__info-text {
     line-height: 1.5;
     color: $blue-primary;
     z-index: 1;
+    font-size: 16px;
+    line-height: 24px;
 
     @media (max-width: $lg) {
         font-size: 14px;
+        line-height: 20px;
     }
     @media (max-width: $sm) {
         margin-bottom: -8px;

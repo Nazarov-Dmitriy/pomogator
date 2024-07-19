@@ -5,7 +5,7 @@
                 src="../../assets/images/about/become/become-bg.png"
                 alt=""
                 class="become__background-img"
-            />
+            >
         </div>
         <div class="become__wrapper">
             <h2 class="become__title">
@@ -17,7 +17,9 @@
                 материалам, онлайн-консультациям экспертов и сети единомышленников, которые меняют
                 образование.
             </p>
-            <BtnBackground class="become__button">Регистрация</BtnBackground>
+            <BtnBackground class="become__button">
+                Регистрация
+            </BtnBackground>
         </div>
     </section>
 </template>
@@ -63,7 +65,7 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
 .become__title {
     font-weight: 600;
     font-size: 36px;
-    line-height: 1.17;
+    line-height: 42px;
     text-align: center;
     color: $white;
     text-align: center;
@@ -87,7 +89,7 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
 
     @media (max-width: $lg) {
         font-size: 14px;
-        line-height: 1.4;
+        line-height: 20px;
     }
 }
 
