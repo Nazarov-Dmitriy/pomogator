@@ -56,11 +56,6 @@
                     </li>
                 </ul>
                 <div class="header__block">
-                    <!-- <input
-                        type="text"
-                        class="header__search"
-                        placeholder="Подсказка"
-                    > -->
                     <BtnComponent class="btn__header">
                         Войти
                     </BtnComponent>

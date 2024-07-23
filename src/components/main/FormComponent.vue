@@ -459,7 +459,6 @@ function validateForm () {
   font-family: 'Inter';
 }
 
-
 .form-item__icon {
     position: absolute;
     right: 16px;
