@@ -16,6 +16,7 @@
             </div>
             <div class="search-panel__block">
                 <button
+                    v-if="!showSearchPanel"
                     class="search-panel__btn"
                     @click="showSearch()"
                     @mouseover=" showSearch()"
@@ -96,7 +97,9 @@ onMounted(() => {
 })
 
 function resizeHandler () {
-    window.innerWidth < 576 ? searchActive.value = true : searchActive.value = false
+    if(window.innerWidth < 576){
+        searchActive.value = true
+    }
 }
 
 function setActiveTags (id) {
