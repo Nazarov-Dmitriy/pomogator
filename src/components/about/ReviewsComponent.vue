@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <div class="reviews__card-footer">
-                        <p>{{ card.text }}</p>
+                        <p class="reviews__card-footer-text">{{ card.text }}</p>
                     </div>
                 </div>
             </div>
@@ -197,9 +197,11 @@ function getPath(img) {
         transform: translate(-30px, 10px);
     }
 }
-.reviews__card-footer {
-    p {
-        padding: 16px;
+.reviews__card-footer-text {
+    padding: 16px;
+    @media (max-width: $sm) {
+        font-size: 14px;
+        line-height: 20px;
     }
 }
 </style>

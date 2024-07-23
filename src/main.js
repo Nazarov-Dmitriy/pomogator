@@ -9,10 +9,10 @@ const app = createApp(App);
 app.use(createPinia());
 app.use(router);
 
-// app.use(createYmaps({
-//     apikey: import.meta.env.VITE_YANDEX_API,
-// }));
-// console.log(VueYandexMaps);
+app.use(createYmaps({
+    apikey: import.meta.env.VITE_YANDEX_API,
+}));
+console.log(VueYandexMaps);
 
 app.directive("esc", { ...esc });
 app.mount('#app')
