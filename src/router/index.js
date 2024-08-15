@@ -5,6 +5,13 @@ import AboutPage from '../pages/AboutPage.vue'
 import BlogPage from '../pages/BlogPage.vue'
 import ArticlePage from '../pages/ArticlePage.vue'
 import RegisterPage from '../pages/RegisterPage.vue'
+import CabinetPage from '../pages/CabinetPage.vue'
+import CabinetProfile from '../pages/CabinetProfile.vue'
+import CabinetFavorites from '../pages/CabinetFavorites.vue'
+import CabinetCertificates from '../pages/CabinetCertificates.vue'
+import CabinetMaterials from '../pages/CabinetMaterials.vue'
+
+
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +63,33 @@ const router = createRouter({
             name: 'register',
             component: RegisterPage,
         },
+        {
+            path: '/lk',
+            component: CabinetPage,
+            children: [              
+                {
+                    path: 'profile',
+                    name: 'profile',                    
+                    component: CabinetProfile,
+                },
+                {
+                    path: 'favorites',
+                    name: 'favorites',                    
+                    component: CabinetFavorites,
+                },
+                {
+                    path: 'certificates',
+                    name: 'certificates',                    
+                    component: CabinetCertificates,
+                },
+                {
+                    path: 'materials',
+                    name: 'materials',                    
+                    component: CabinetMaterials,
+                },
+            ]
+        },
+
     ],
     scrollBehavior (to, from, savedPosition) {
         if (savedPosition) {
