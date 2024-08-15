@@ -174,7 +174,7 @@ const teachers = ref([
 ])
 
 function getPath (img){
-    return new URL("/image/teacher/" + img, import.meta.url).href
+    return new URL("image/teacher/" + img, import.meta.url).href
 }
 
 const activeIndex = ref(0)

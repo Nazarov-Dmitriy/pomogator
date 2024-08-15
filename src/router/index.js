@@ -4,8 +4,7 @@ import TrendPage from '@/pages/TrendPage.vue'
 import AboutPage from '../pages/AboutPage.vue'
 import BlogPage from '../pages/BlogPage.vue'
 import ArticlePage from '../pages/ArticlePage.vue'
-
-
+import RegisterPage from '../pages/RegisterPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,7 +50,12 @@ const router = createRouter({
                     component: ArticlePage,
                 },
             ]
-        }
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: RegisterPage,
+        },
     ],
     scrollBehavior (to, from, savedPosition) {
         if (savedPosition) {

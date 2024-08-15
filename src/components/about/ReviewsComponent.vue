@@ -1,13 +1,22 @@
 <template>
     <section class="reviews">
         <div class="reviews__container">
-            <h2 class="reviews__title">Отзывы</h2>
+            <h2 class="reviews__title">
+                Отзывы
+            </h2>
             <div class="reviews__cards">
-                <div v-for="(card, index) in cards" :key="index" class="reviews__card">
+                <div
+                    v-for="(card, index) in cards"
+                    :key="index"
+                    class="reviews__card"
+                >
                     <div class="reviews__card-header">
                         <div class="reviews__card-header-person">
                             <div class="reviews__card-header-person-img-wrapper">
-                                <img :src="getPath(card.img)" alt="" />
+                                <img
+                                    :src="getPath(card.img)"
+                                    alt=""
+                                >
                             </div>
                             <div class="reviews__header-info">
                                 <p class="reviews__header-person-text">
@@ -21,7 +30,9 @@
                         </div>
                     </div>
                     <div class="reviews__card-footer">
-                        <p class="reviews__card-footer-text">{{ card.text }}</p>
+                        <p class="reviews__card-footer-text">
+                            {{ card.text }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -83,7 +94,7 @@ const cards = ref([
     }
 ])
 
-function getPath(img) {
+function getPath (img) {
     return new URL('/image/reviews/' + img, import.meta.url).href
 }
 </script>
