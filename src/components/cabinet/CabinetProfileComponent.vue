@@ -97,7 +97,7 @@
                             </div>
                         </div>
                         <div class="profile__change-btn-wrap">
-                            <BtnBackgroud class="profile__change-btn"
+                            <BtnBackgroud :disabled="!isFormValid" class="profile__change-btn"
                                 >Сохранить пароль</BtnBackgroud
                             >
                         </div>
@@ -109,7 +109,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
 const profileImage = ref('')
@@ -150,6 +150,14 @@ function checkPasswordLength() {
     }
     checkPasswordEqual()
 }
+
+const isFormValid = computed(() => {
+    return (
+        oldPassword.value.trim() !== '' &&
+        newPassword.value.trim() !== '' &&
+        repeatNewPassword.value !== ''
+    )
+})
 
 function triggerFileInput() {
     fileInput.value.click()

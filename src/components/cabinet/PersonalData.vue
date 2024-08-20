@@ -5,14 +5,18 @@
             <form class="personal-data__form">
                 <div class="personal-data__form-wrapper">
                     <div class="personal-data__input-group">
-                        <label for="lastName" class="personal-data__label">Фамилия</label>
+                        <label for="lastName" class="personal-data__label">Фамилия *</label>
                         <input
-                            v-model="lastName"
+                            v-model="formField.lastName"
+                            @input="validateField('lastName')"
                             type="text"
                             id="lastName"
                             class="personal-data__input"
                             placeholder="Смирнова"
                         />
+                        <span v-if="formField.lastNameError" class="error"
+                            >Фамилия должна содержать минимум 3 символа</span
+                        >
                     </div>
                     <div class="personal-data__input-group">
                         <label for="birthDate" class="personal-data__label">Дата рождения</label>
@@ -27,22 +31,44 @@
                     <div class="personal-data__input-group">
                         <label for="email" class="personal-data__label">Email *</label>
                         <input
-                            v-model="email"
+                            v-model="formField.email"
+                            @input="changeEmail"
+                            @blur="validateField('email')"
                             type="text"
                             id="email"
                             class="personal-data__input"
                             placeholder="maria@mail.ru"
                         />
+                        <span v-if="formField.emailError" class="error">Некорректный email</span>
+                    </div>
+                    <div class="personal-data__input-group">
+                        <label for="phone" class="personal-data__label">Телефон *</label>
+                        <input
+                            v-model="formField.phone"
+                            @input="changePhone"
+                            @blur="validateField('phone')"
+                            type="text"
+                            id="phone"
+                            class="personal-data__input"
+                            placeholder="+7 (954) 123-45-67"
+                        />
+                        <span v-if="formField.phoneError" class="error"
+                            >Телефон должен содержать 11 цифр</span
+                        >
                     </div>
                     <div class="personal-data__input-group">
                         <label for="firstName" class="personal-data__label">Имя *</label>
                         <input
-                            v-model="firstName"
+                            v-model="formField.firstName"
+                            @input="validateField('firstName')"
                             type="text"
                             id="firstName"
                             class="personal-data__input"
                             placeholder="Мария"
                         />
+                        <span v-if="formField.firstNameError" class="error"
+                            >Имя должно содержать минимум 3 символа</span
+                        >
                     </div>
                     <div class="personal-data__input-group">
                         <label for="title" class="personal-data__label">Звание</label>
@@ -52,16 +78,6 @@
                             id="title"
                             class="personal-data__input"
                             placeholder="Педагог"
-                        />
-                    </div>
-                    <div class="personal-data__input-group">
-                        <label for="phone" class="personal-data__label">Телефон</label>
-                        <input
-                            v-model="phone"
-                            type="text"
-                            id="phone"
-                            class="personal-data__input"
-                            placeholder="+7 (954) 123-45-67"
                         />
                     </div>
                     <div class="personal-data__input-group">
@@ -92,21 +108,59 @@
         </div>
     </section>
 </template>
-<script setup lang="ts">
-import { ref, computed } from 'vue'
+
+<script setup>
+import { computed, reactive } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
-const lastName = ref('')
-const birthDate = ref('')
-const email = ref('')
-const firstName = ref('')
-const title = ref('')
-const phone = ref('')
-const middleName = ref('')
-const organization = ref('')
+const formField = reactive({
+    lastName: '',
+    firstName: '',
+    phone: '',
+    email: '',
+    lastNameError: false,
+    firstNameError: false,
+    phoneError: false,
+    emailError: false
+})
+
+function validateField(nameParam) {
+    const value = formField[nameParam].trim()
+
+    if (nameParam === 'lastName' || nameParam === 'firstName') {
+        formField[`${nameParam}Error`] = value.length < 3
+    }
+    if (nameParam === 'phone') {
+        formField.phoneError = value.replace(/\D/g, '').length < 11
+    }
+    if (nameParam === 'email') {
+        const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        formField.emailError = !emailRegexp.test(value)
+    }
+}
+
+function changePhone(event) {
+    const target = event.target
+    const x = target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/)
+    x[1] = '+7'
+    target.value = !x[3]
+        ? x[1] + '-(' + x[2]
+        : x[1] + '-(' + x[2] + ')-' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '')
+    formField.phone = target.value
+}
+
+function changeEmail(event) {
+    const target = event.target
+    const x = target.value.match(
+        /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
+    )
+    target.value = x ? x[1] + x[2] + x[3] + x[4] + x[5] + x[6] : ''
+    formField.email = target.value
+}
 
 const isFormValid = computed(() => {
-    return email.value.trim() !== '' && firstName.value.trim() !== ''
+    const trimmedLastName = formField.lastName.trim()
+    return trimmedLastName !== '' && trimmedLastName.length >= 3
 })
 </script>
 
