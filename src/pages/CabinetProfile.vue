@@ -1,17 +1,17 @@
 <template>
     <div class="page">
         <HeaderComponent />
-        Профиль
-
+        <CabinetProfileComponent />
+        <PersonalData />
         <FooterComponent />
     </div>
 </template>
 <script setup>
 import HeaderComponent from '@/components/HeaderComponent.vue'
 
-
-import FooterComponent from '../components/main/FooterComponent.vue';
-
+import FooterComponent from '../components/main/FooterComponent.vue'
+import CabinetProfileComponent from '../components/cabinet/CabinetProfileComponent.vue'
+import PersonalData from '../components/cabinet/PersonalData.vue'
 </script>
 <style scoped lang="scss">
 .page {
