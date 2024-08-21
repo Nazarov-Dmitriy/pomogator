@@ -107,12 +107,12 @@
         </div>
     </section>
 </template>
-
 <script setup>
 import { computed, ref } from 'vue'
+import { useProfileStore } from '/src/stores/useProfileStore'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
-const profileImage = ref('')
+const store = useProfileStore()
 
 const isCorrectPassword = ref(false)
 const isPasswordEqual = ref(false)
@@ -122,7 +122,9 @@ const oldPassword = ref('')
 const newPassword = ref('')
 const repeatNewPassword = ref('')
 
-const hasCustomImage = ref(false)
+// Доступ к изображению из store
+const profileImage = computed(() => store.profileImage)
+const hasCustomImage = computed(() => store.profileImage !== '')
 
 function validatePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
@@ -168,16 +170,14 @@ function onFileChange(event) {
     if (file) {
         const reader = new FileReader()
         reader.onload = (e) => {
-            profileImage.value = e.target.result
-            hasCustomImage.value = true
+            store.setProfileImage(e.target.result) // Сохраняем изображение в store
         }
         reader.readAsDataURL(file)
     }
 }
 
 function removeImage() {
-    profileImage.value = ''
-    hasCustomImage.value = false
+    store.removeProfileImage() // Удаляем изображение из store
 }
 </script>
 

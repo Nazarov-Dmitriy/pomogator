@@ -2,7 +2,7 @@
     <section class="personal-data">
         <div class="personal-data__container">
             <h2 class="personal-data__title">Личные данные</h2>
-            <form class="personal-data__form">
+            <form class="personal-data__form" @submit.prevent="saveData">
                 <div class="personal-data__form-wrapper">
                     <div class="personal-data__input-group">
                         <label for="lastName" class="personal-data__label">Фамилия *</label>
@@ -21,7 +21,7 @@
                     <div class="personal-data__input-group">
                         <label for="birthDate" class="personal-data__label">Дата рождения</label>
                         <input
-                            v-model="birthDate"
+                            v-model="formField.birthDate"
                             type="text"
                             id="birthDate"
                             class="personal-data__input"
@@ -73,7 +73,7 @@
                     <div class="personal-data__input-group">
                         <label for="title" class="personal-data__label">Звание</label>
                         <input
-                            v-model="title"
+                            v-model="formField.rank"
                             type="text"
                             id="title"
                             class="personal-data__input"
@@ -83,7 +83,7 @@
                     <div class="personal-data__input-group">
                         <label for="middleName" class="personal-data__label">Отчество</label>
                         <input
-                            v-model="middleName"
+                            v-model="formField.middleName"
                             type="text"
                             id="middleName"
                             class="personal-data__input"
@@ -93,7 +93,7 @@
                     <div class="personal-data__input-group">
                         <label for="organization" class="personal-data__label">Организация</label>
                         <input
-                            v-model="organization"
+                            v-model="formField.organization"
                             type="text"
                             id="organization"
                             class="personal-data__input"
@@ -111,18 +111,47 @@
 
 <script setup>
 import { computed, reactive } from 'vue'
+import { useProfileStore } from '/src/stores/useProfileStore'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
+const store = useProfileStore()
+
 const formField = reactive({
-    lastName: '',
-    firstName: '',
-    phone: '',
-    email: '',
+    lastName: store.personalData.lastName,
+    firstName: store.personalData.firstName,
+    phone: store.personalData.phone,
+    email: store.personalData.email,
+    birthDate: store.personalData.birthDate,
+    rank: store.personalData.rank,
+    middleName: store.personalData.middleName,
+    organization: store.personalData.organization,
     lastNameError: false,
     firstNameError: false,
+    middleNameError: false,
     phoneError: false,
-    emailError: false
+    emailError: false,
+    rankError: false
 })
+
+function saveData() {
+    store.setPersonalData('lastName', formField.lastName)
+    store.setPersonalData('firstName', formField.firstName)
+    store.setPersonalData('phone', formField.phone)
+    store.setPersonalData('email', formField.email)
+    store.setPersonalData('birthDate', formField.birthDate)
+    store.setPersonalData('rank', formField.rank)
+    store.setPersonalData('middleName', formField.middleName)
+    store.setPersonalData('organization', formField.organization)
+
+    formField.lastName = ''
+    formField.firstName = ''
+    formField.phone = ''
+    formField.email = ''
+    formField.rank = ''
+    formField.middleName = ''
+    formField.organization = ''
+    formField.birthDate = ''
+}
 
 function validateField(nameParam) {
     const value = formField[nameParam].trim()
@@ -160,7 +189,30 @@ function changeEmail(event) {
 
 const isFormValid = computed(() => {
     const trimmedLastName = formField.lastName.trim()
-    return trimmedLastName !== '' && trimmedLastName.length >= 3
+    const trimmedFirstName = formField.firstName.trim()
+    const trimmedMiddleName = formField.middleName.trim()
+    const trimmedPhone = formField.phone.trim()
+    const trimmedEmail = formField.email.trim()
+    const trimmedRank = formField.rank.trim()
+
+    return (
+        trimmedLastName !== '' &&
+        trimmedLastName.length >= 3 &&
+        trimmedFirstName !== '' &&
+        trimmedFirstName.length >= 3 &&
+        trimmedMiddleName !== '' &&
+        trimmedMiddleName.length >= 3 &&
+        trimmedPhone !== '' &&
+        trimmedPhone.length >= 3 &&
+        trimmedEmail !== '' &&
+        trimmedEmail.length >= 3 &&
+        trimmedRank !== '' &&
+        trimmedRank.length >= 3 &&
+        !formField.lastNameError &&
+        !formField.firstNameError &&
+        !formField.emailError &&
+        !formField.phoneError
+    )
 })
 </script>
 
