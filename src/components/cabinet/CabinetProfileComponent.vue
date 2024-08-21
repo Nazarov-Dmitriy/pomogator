@@ -122,7 +122,7 @@ const oldPassword = ref('')
 const newPassword = ref('')
 const repeatNewPassword = ref('')
 
-// Доступ к изображению из store
+
 const profileImage = computed(() => store.profileImage)
 const hasCustomImage = computed(() => store.profileImage !== '')
 
@@ -170,14 +170,14 @@ function onFileChange(event) {
     if (file) {
         const reader = new FileReader()
         reader.onload = (e) => {
-            store.setProfileImage(e.target.result) // Сохраняем изображение в store
+            store.setProfileImage(e.target.result) 
         }
         reader.readAsDataURL(file)
     }
 }
 
 function removeImage() {
-    store.removeProfileImage() // Удаляем изображение из store
+    store.removeProfileImage() 
 }
 </script>
 
