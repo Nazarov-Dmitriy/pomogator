@@ -83,7 +83,7 @@
         </div>
         <div v-else>
             <h2 class="no-result">
-                По запросу {{ search }} ничего не найдено.
+                Материалы отсутствуют
             </h2>
         </div>
         <OfferMaterial />
@@ -95,7 +95,7 @@
     </div>
 </template>
 <script setup>
-import OfferMaterial from '@/components/article/OfferMaterial.vue'
+import OfferMaterial from '@/components/cabinet/CabinetOfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue';

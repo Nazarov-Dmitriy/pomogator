@@ -1,9 +1,9 @@
 <template>
     <div class="page">
         <HeaderComponent />
-        <H2 class="cabinet-material__header kreadon">
+        <CabinetComponentName>
             Мои материалы
-        </H2>
+        </CabinetComponentName>
         <CabinetSearchPanel
             v-model="searchValue"
             class="cabinet-trend__search-panel"
@@ -17,7 +17,8 @@
     </div>
 </template>
 <script setup>
-import HeaderComponent from '@/components/HeaderComponent.vue'
+import HeaderComponent from '@/components/HeaderComponent.vue';
+import CabinetComponentName from '@/components/cabinet/CabinetComponentName.vue';
 import CabinetSearchPanel from '../components/cabinet/CabinetSearchPanel.vue';
 import CabinetListArticle from '../components/cabinet/CabinetListArticle.vue';
 import { onMounted, ref, watch } from 'vue';
@@ -53,13 +54,6 @@ watch(searchValue , (newVal)=>{
     overflow: hidden;
     max-width: 1440px;
     margin: 0 auto;
-}
-
-.cabinet-material__header {
-    padding: 60px 80px 0 80px;
-    font-style: normal;
-    font-weight: 600;
-    color: #4360F8;
 }
 
 .cabinet-trend__search-panel {
