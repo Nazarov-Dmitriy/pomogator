@@ -56,7 +56,11 @@
                     </li>
                 </ul>
                 <div class="header__block">
-                    <BtnComponent class="btn__header">
+                    <BtnComponent
+                        class="btn__header"
+                        emit-name="link"
+                        @link="$router.push('/login')"
+                    >
                         Войти
                     </BtnComponent>
                 </div>

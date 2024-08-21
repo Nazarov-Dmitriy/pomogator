@@ -1,5 +1,3 @@
-<script setup></script>
-
 <template>
     <section class="about__section">
         <div class="about">
@@ -10,7 +8,11 @@
                         процессе
                     </h1>
                     <div class="about__register-panel">
-                        <BtnBackgroud class="about__btn">
+                        <BtnBackgroud
+                            class="about__btn"
+                            emit-name="link"
+                            @link="$router.push('/register')"
+                        >
                             Регистрация
                         </BtnBackgroud>
                         <p class="about__register-decription">
