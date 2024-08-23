@@ -52,18 +52,40 @@
                             <label class="profile__change-label">Старый пароль</label>
                             <input
                                 v-model="oldPassword"
-                                type="password"
+                                :type="isOldPasswordVisible ? 'text' : 'password'"
                                 class="profile__change-input"
                                 placeholder="Введите старый пароль"
+                            />
+                            <img
+                                v-if="oldPassword.length"
+                                class="profile__change-input-img"
+                                :src="
+                                    isOldPasswordVisible
+                                        ? '/public/image/cabinet/cabinetProfile/password-visible.svg'
+                                        : '/public/image/cabinet/cabinetProfile/password-invisible.svg'
+                                "
+                                alt=""
+                                @click="toggleOldPasswordVisibility"
                             />
                         </div>
                         <div class="profile__change-input-group">
                             <label class="profile__change-label">Новый пароль</label>
                             <input
                                 v-model="newPassword"
-                                type="password"
+                                :type="isNewPasswordVisible ? 'text' : 'password'"
                                 class="profile__change-input"
                                 placeholder="Введите новый пароль"
+                            />
+                            <img
+                                v-if="newPassword.length"
+                                class="profile__change-input-img"
+                                :src="
+                                    isNewPasswordVisible
+                                        ? '/public/image/cabinet/cabinetProfile/password-visible.svg'
+                                        : '/public/image/cabinet/cabinetProfile/password-invisible.svg'
+                                "
+                                alt=""
+                                @click="toggleNewPasswordVisibility"
                             />
                             <div v-if="isCorrectPassword" class="error">
                                 <svg
@@ -88,9 +110,27 @@
                             <label class="profile__change-label">Подтверждение пароля</label>
                             <input
                                 v-model="repeatNewPassword"
-                                type="password"
+                                :type="isRepeatedPasswordVisible ? 'text' : 'password'"
                                 class="profile__change-input"
                                 placeholder="Введите новый пароль еще раз"
+                            />
+                            <img
+                                v-if="repeatNewPassword"
+                                class="profile__change-input-img"
+                                :src="
+                                    isRepeatedPasswordVisible
+                                        ? '/public/image/cabinet/cabinetProfile/password-visible.svg'
+                                        : '/public/image/cabinet/cabinetProfile/password-invisible.svg'
+                                "
+                                alt=""
+                                @click="toggleRepeatedPasswordVisibility"
+                            />
+                            <img
+                                v-else-if="type === 'password'"
+                                class="profile__change-input-img"
+                                src="/public/image/cabinet/cabinetProfile/password-visible.svg"
+                                alt=""
+                                @click="toggleRepeatedPasswordVisibility"
                             />
                             <div v-if="isPasswordEqual" class="error">
                                 <p>Пароли не совпадают</p>
@@ -122,9 +162,22 @@ const oldPassword = ref('')
 const newPassword = ref('')
 const repeatNewPassword = ref('')
 
-
 const profileImage = computed(() => store.profileImage)
 const hasCustomImage = computed(() => store.profileImage !== '')
+
+const isNewPasswordVisible = ref(false)
+const isOldPasswordVisible = ref(false)
+const isRepeatedPasswordVisible = ref(false)
+
+function toggleNewPasswordVisibility() {
+    isNewPasswordVisible.value = !isNewPasswordVisible.value
+}
+function toggleOldPasswordVisibility() {
+    isOldPasswordVisible.value = !isOldPasswordVisible.value
+}
+function toggleRepeatedPasswordVisibility() {
+    isRepeatedPasswordVisible.value = !isRepeatedPasswordVisible.value
+}
 
 function validatePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
@@ -170,14 +223,14 @@ function onFileChange(event) {
     if (file) {
         const reader = new FileReader()
         reader.onload = (e) => {
-            store.setProfileImage(e.target.result) 
+            store.setProfileImage(e.target.result)
         }
         reader.readAsDataURL(file)
     }
 }
 
 function removeImage() {
-    store.removeProfileImage() 
+    store.removeProfileImage()
 }
 </script>
 
@@ -335,6 +388,9 @@ function removeImage() {
     height: 48px;
     background-color: $white;
     color: $secondary;
+    position: relative;
+    // background: url('/image/cabinet/cabinetProfile/password-invisible.svg') no-repeat ;
+    // background-position: calc(100% - 16px);
 
     &::placeholder {
         font-weight: 400;
@@ -356,6 +412,13 @@ function removeImage() {
     &.error {
         border: 2px solid $primary-red;
     }
+}
+
+.profile__change-input-img {
+    position: absolute;
+    top: 43px;
+    right: 10px;
+    cursor: pointer;
 }
 .profile__change-btn {
     width: 100%;
