@@ -362,6 +362,8 @@ function removeImage() {
     display: flex;
     align-items: center;
     gap: 8px;
+    max-width: 307px;
+    width: 100%;
 }
 
 .error-text {
@@ -384,13 +386,13 @@ function removeImage() {
     border-radius: 32px;
     padding: 12px 16px;
     box-sizing: border-box;
+    // max-width: 307px;
+    // width: 100%;
     width: 307px;
     height: 48px;
     background-color: $white;
     color: $secondary;
     position: relative;
-    // background: url('/image/cabinet/cabinetProfile/password-invisible.svg') no-repeat ;
-    // background-position: calc(100% - 16px);
 
     &::placeholder {
         font-weight: 400;
@@ -417,7 +419,7 @@ function removeImage() {
 .profile__change-input-img {
     position: absolute;
     top: 43px;
-    right: 10px;
+    right: 8%;
     cursor: pointer;
 }
 .profile__change-btn {
