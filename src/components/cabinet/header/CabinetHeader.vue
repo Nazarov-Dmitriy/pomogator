@@ -162,7 +162,7 @@ function mainLink() {
     router.push('/')
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .header__contaner {
     background: $gradient-background;
     position: relative;
