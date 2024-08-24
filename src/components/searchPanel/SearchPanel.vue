@@ -1,10 +1,7 @@
 <template>
     <div class="search-panel">
         <div class="search-panel__container">
-            <div
-                v-if="showSearchPanel"
-                class="search-panel__input-wraper"
-            >
+            <div v-if="showSearchPanel" class="search-panel__input-wraper">
                 <input
                     :value="modelValue"
                     type="text"
@@ -12,55 +9,55 @@
                     placeholder="Поиск"
                     @input="$emit('update:modelValue', $event.target.value)"
                     @keypress.enter="$emit('search')"
-                >
+                />
             </div>
+
             <div class="search-panel__block">
-                <button
-                    v-if="!showSearchPanel"
-                    class="search-panel__btn"
-                    @click="showSearch()"
-                    @mouseover=" showSearch()"
-                >
-                    <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="search-panel__btn-icon"
+                <div v-if="isSearchVisible">
+                    <button
+                        v-if="!showSearchPanel"
+                        class="search-panel__btn"
+                        @click="showSearch()"
+                        @mouseover="showSearch()"
                     >
-                        <g clip-path="url(#clip0_3001_4986)">
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M24.0008 9.6C24.0008 14.9019 19.7027 19.2 14.4008 19.2C9.09885 19.2 4.80078 14.9019 4.80078 9.6C4.80078 4.29807 9.09885 0 14.4008 0C19.7027 0 24.0008 4.29807 24.0008 9.6ZM15.1178 3.5366C14.548 3.47987 13.9727 3.55039 13.4335 3.74306C12.8943 3.93573 12.4046 4.24574 11.9998 4.65071C11.6093 5.04131 11.6095 5.67448 12.0001 6.06493C12.3907 6.45537 13.0238 6.45525 13.4143 6.06465C13.6097 5.86913 13.8461 5.71946 14.1065 5.62644C14.3668 5.53342 14.6446 5.49937 14.9196 5.52676C15.1947 5.55415 15.4603 5.6423 15.6972 5.78482C15.9341 5.92735 16.1363 6.1207 16.2894 6.35092C16.5952 6.81084 17.2159 6.93581 17.6758 6.63004C18.1357 6.32428 18.2607 5.70357 17.9549 5.24365C17.6379 4.76681 17.2189 4.36632 16.7283 4.07111C16.2377 3.7759 15.6876 3.59334 15.1178 3.5366Z"
-                                fill="#5B94EA"
-                            />
-                            <path
-                                d="M3 22.0338L9 16.0332"
-                                stroke="#5B94EA"
-                                stroke-width="3"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_3001_4986">
-                                <rect
-                                    width="24"
-                                    height="24"
-                                    fill="white"
+                        <svg
+                            v-show="isSearchVisible"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="search-panel__btn-icon"
+                        >
+                            <g clip-path="url(#clip0_3001_4986)">
+                                <path
+                                    fill-rule="evenodd"
+                                    clip-rule="evenodd"
+                                    d="M24.0008 9.6C24.0008 14.9019 19.7027 19.2 14.4008 19.2C9.09885 19.2 4.80078 14.9019 4.80078 9.6C4.80078 4.29807 9.09885 0 14.4008 0C19.7027 0 24.0008 4.29807 24.0008 9.6ZM15.1178 3.5366C14.548 3.47987 13.9727 3.55039 13.4335 3.74306C12.8943 3.93573 12.4046 4.24574 11.9998 4.65071C11.6093 5.04131 11.6095 5.67448 12.0001 6.06493C12.3907 6.45537 13.0238 6.45525 13.4143 6.06465C13.6097 5.86913 13.8461 5.71946 14.1065 5.62644C14.3668 5.53342 14.6446 5.49937 14.9196 5.52676C15.1947 5.55415 15.4603 5.6423 15.6972 5.78482C15.9341 5.92735 16.1363 6.1207 16.2894 6.35092C16.5952 6.81084 17.2159 6.93581 17.6758 6.63004C18.1357 6.32428 18.2607 5.70357 17.9549 5.24365C17.6379 4.76681 17.2189 4.36632 16.7283 4.07111C16.2377 3.7759 15.6876 3.59334 15.1178 3.5366Z"
+                                    fill="#5B94EA"
                                 />
-                            </clipPath>
-                        </defs>
-                    </svg>
-                </button>
+                                <path
+                                    d="M3 22.0338L9 16.0332"
+                                    stroke="#5B94EA"
+                                    stroke-width="3"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_3001_4986">
+                                    <rect width="24" height="24" fill="white" />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </button>
+                </div>
                 <div class="search-panel__hashtag">
                     <div
                         v-for="(item, ind) in hashtagData"
                         :key="item.id"
                         class="search-panel__item"
-                        :class="{ 'active': activeTags.includes(ind + 1) }"
+                        :class="{ active: activeTags.includes(ind + 1) }"
                         @click="setActiveTags(ind + 1)"
                     >
                         <span class="search-panel__symbol">#</span>
@@ -74,18 +71,22 @@
     </div>
 </template>
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue'
 
 defineProps({
-    modelValue:{ 
-        type:String,
-        default: '',
+    modelValue: {
+        type: String,
+        default: ''
+    },
+    isSearchVisible: {
+        type: Boolean,
+        default: null
     }
 })
 
-const emit =defineEmits(['update:modelValue', 'search'])
+const emit = defineEmits(['update:modelValue', 'search'])
 
-const searchActive = ref(false);
+const searchActive = ref(false)
 const activeTags = ref([])
 
 const showSearchPanel = computed(() => {
@@ -93,59 +94,60 @@ const showSearchPanel = computed(() => {
 })
 
 onMounted(() => {
-    window.addEventListener("resize", resizeHandler);
+    window.addEventListener('resize', resizeHandler)
 })
 
-function resizeHandler () {
-    if(window.innerWidth < 576){
+function resizeHandler() {
+    if (window.innerWidth < 576) {
         searchActive.value = true
     }
 }
 
-function setActiveTags (id) {
+function setActiveTags(id) {
     if (!activeTags.value.includes(id)) {
         activeTags.value.push(id)
     }
 }
 
-function showSearch (){
-    searchActive.value =true
+function showSearch() {
+    searchActive.value = true
+
     emit('update:modelValue', '')
 }
 
 const hashtagData = ref([
     {
         id: 1,
-        name: 'Химия',
+        name: 'Химия'
     },
     {
         id: 2,
-        name: 'Физика',
+        name: 'Физика'
     },
     {
         id: 3,
-        name: 'Биология',
+        name: 'Биология'
     },
     {
         id: 4,
-        name: 'Робототехника',
+        name: 'Робототехника'
     },
     {
         id: 5,
-        name: 'Мастер-класс',
+        name: 'Мастер-класс'
     },
     {
         id: 6,
-        name: 'Практика',
+        name: 'Практика'
     },
     {
         id: 7,
-        name: 'Видео',
+        name: 'Видео'
     },
     {
         id: 8,
-        name: 'Статья',
-    },
+        name: 'Статья'
+    }
 ])
 </script>
 <style lang="scss">
@@ -193,7 +195,7 @@ const hashtagData = ref([
         background-repeat: no-repeat;
         background-position: right 16px top 6px;
         border: 2px solid $blue-primary;
-        color: $blue-primary;   
+        color: $blue-primary;
 
         &::placeholder {
             color: $blue-primary;
@@ -205,7 +207,7 @@ const hashtagData = ref([
     }
 
     @media (max-width: $sm) {
-        flex: 1 0 65%
+        flex: 1 0 65%;
     }
 }
 
@@ -256,7 +258,7 @@ const hashtagData = ref([
     gap: 8px;
     cursor: pointer;
 
-    &.active{
+    &.active {
         .search-panel__symbol {
             color: transparent;
             -webkit-text-fill-color: transparent;
@@ -278,7 +280,6 @@ const hashtagData = ref([
         }
     }
 
-    
     &.active:hover {
         .search-panel__symbol {
             color: transparent;
@@ -299,7 +300,7 @@ const hashtagData = ref([
 }
 
 .search-panel__symbol {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 30px;
     line-height: 30px;
     background: $gradient;
