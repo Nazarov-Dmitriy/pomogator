@@ -15,7 +15,7 @@
             <div v-if="hasCustomImage" @click.stop class="profile__photo-hover">
                 <p class="profile__photo-hover-text">Сменить фото</p>
                 <img
-                    src="../../assets/images/cabinet/cabinetProfile/bucket.png"
+                    src="../../../assets/images/cabinet/cabinetProfile/bucket.png"
                     alt="delete png"
                     class="profile__photo-hover-delete"
                     @click="removeImage"

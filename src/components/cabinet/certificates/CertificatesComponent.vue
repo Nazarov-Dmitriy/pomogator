@@ -1,6 +1,6 @@
 <template>
     <section class="certificates-section">
-        <h2 class="certificates__title">Полученные сертификаты</h2>
+        <CabinetTitle>Полученные сертификаты</CabinetTitle>
         <SearchPanel />
         <div class="certificates">
             <CertificateComponent
@@ -21,6 +21,7 @@ import { ref } from 'vue'
 import CertificateComponent from './CertificateComponent.vue'
 import SearchPanel from '../../searchPanel/SearchPanel.vue'
 import PaginationComponent from '../../pagination/PaginationComponent.vue'
+import CabinetTitle from '../CabinetTitle.vue'
 
 const isSearchVisible = ref(false)
 
@@ -74,6 +75,8 @@ const currentCertificates = ref([])
 function updateCurrentCertificates(paginatedData) {
     currentCertificates.value = paginatedData
 }
+
+
 </script>
 <style scoped lang="scss">
 .certificates-section {
@@ -105,13 +108,5 @@ function updateCurrentCertificates(paginatedData) {
     @media (max-width: $sm) {
         grid-template-columns: auto;
     }
-}
-
-.certificates__title {
-    font-family: 'Kreadon-Demi';
-    font-weight: 600;
-    font-size: 36px;
-    line-height: 42px;
-    color: $blue-primary;
 }
 </style>
