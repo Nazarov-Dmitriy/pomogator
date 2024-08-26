@@ -143,7 +143,7 @@
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
 import BtnGradient from '../btns/BtnComponent.vue';
-import ModalComponent from '../modal/ModalComponent.vue';
+import ModalComponent from '../modal/ModalComponentFaq.vue';
 import { ref } from 'vue';
 
 const modalShow= ref(false)

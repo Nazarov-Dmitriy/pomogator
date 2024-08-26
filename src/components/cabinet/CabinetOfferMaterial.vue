@@ -1,10 +1,10 @@
 <template>
-    <div class="offer-material">
-        <p class="offer-material__subtile">
+    <div class="cabinet-offer-material">
+        <p class="cabinet-offer-material__subtile">
             Вы всегда можете предложить новый материал
         </p>
         <BtnBackgroud
-            class="offer-material__btn"
+            class="cabinet-offer-material__btn"
             emit-name="offer"
             @offer="modalShow = true"
         >
@@ -21,13 +21,13 @@
 <script setup>
 import { ref } from 'vue';
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import ModalComponent from '../modal/ModalComponent.vue';
+import ModalComponent from '../modal/ModalComponentMaterials.vue';
 
 const modalShow= ref(false)
 
 </script>
 <style lang="scss">
-.offer-material {
+.cabinet-offer-material {
     background: $gradient-background;
     width: calc(100% + 160px);
     left: -80px;
@@ -45,7 +45,7 @@ const modalShow= ref(false)
     }
 }
 
-.offer-material__subtile {
+.cabinet-offer-material__subtile {
     font-size: 24px;
     line-height: 32px;
     font-weight: 500;
@@ -56,7 +56,7 @@ const modalShow= ref(false)
     }
 }
 
-.offer-material__btn {
+.cabinet-offer-material__btn {
     flex-shrink: 0;
 }
 </style>

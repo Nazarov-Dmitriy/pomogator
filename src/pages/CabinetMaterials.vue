@@ -17,7 +17,7 @@
     </div>
 </template>
 <script setup>
-import HeaderComponent from '@/components/HeaderComponent.vue';
+import HeaderComponent from '@/components/cabinet/header/CabinetHeader.vue';
 import CabinetComponentName from '@/components/cabinet/CabinetComponentName.vue';
 import CabinetSearchPanel from '../components/cabinet/CabinetSearchPanel.vue';
 import CabinetListArticle from '../components/cabinet/CabinetListArticle.vue';

@@ -21,7 +21,7 @@
 <script setup>
 import { ref } from 'vue';
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import ModalComponent from '../modal/ModalComponent.vue';
+import ModalComponent from '../modal/ModalComponentFaq.vue';
 
 const modalShow= ref(false)
 
