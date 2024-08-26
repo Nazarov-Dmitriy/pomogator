@@ -12,13 +12,13 @@
                 :class="{ 'profile__photo-img-empty': !hasCustomImage }"
             />
 
-            <div v-if="hasCustomImage" @click.stop class="profile__photo-hover">
+            <div v-if="hasCustomImage" class="profile__photo-hover">
                 <p class="profile__photo-hover-text">Сменить фото</p>
                 <img
                     src="../../../assets/images/cabinet/cabinetProfile/bucket.png"
                     alt="delete png"
                     class="profile__photo-hover-delete"
-                    @click="removeImage"
+                    @click.stop="removeImage"
                 />
             </div>
         </div>
