@@ -14,8 +14,6 @@
             @setList="updateCurrentCertificates"
         />
     </section>
-    <PrintCertificate />
-
 </template>
 
 <script setup>
@@ -73,14 +71,7 @@ const certificateData = ref([
     }
 ])
 
-const certificateData2 = ref([
-    {
-        id: 1,
-        studentData: 'Иванов Иван Иванович',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    }
-])
+
 
 const currentCertificates = ref([])
 

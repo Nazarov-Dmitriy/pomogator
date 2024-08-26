@@ -4,7 +4,7 @@
         :key="certificate.id"
         class="certificate"
     >
-        <div ref="certificateRefs" class="certificate__wrapper">
+        <div class="certificate__wrapper">
             <div class="certificate__main">
                 <h2 class="certificate__title">Сертификат</h2>
                 <div class="certificate__info">
@@ -48,7 +48,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import PrintCertificate from './PrintCertificate.vue'
+import { createVNode, render } from 'vue'
 
 const props = defineProps({
     certificateData: {
@@ -56,8 +57,6 @@ const props = defineProps({
         default: () => []
     }
 })
-
-const certificateRefs = ref([])
 
 function downloadCertificate(certificate) {
     const link = document.createElement('a')
@@ -67,11 +66,24 @@ function downloadCertificate(certificate) {
 }
 
 function printCertificate(index) {
-    const certificateElement = certificateRefs.value[index]
-    if (certificateElement) {
-        const printWindow = window.open('', '_blank')
-        printWindow.document.write(certificateElement.outerHTML)
-        printWindow.document.close()
+    const certificate = props.certificateData[index]
+
+    const printWindow = window.open('', '_blank')
+
+    const vnode = createVNode(PrintCertificate, { certificate })
+
+    printWindow.document.open()
+    printWindow.document.write(
+        '<html><head><title>Print</title><style>body{margin:0;}</style></head><body>'
+    )
+    printWindow.document.write('<div id="print-container"></div>')
+    printWindow.document.write('</body></html>')
+    printWindow.document.close()
+
+    const printContainer = printWindow.document.getElementById('print-container')
+    render(vnode, printContainer)
+
+    printWindow.onload = () => {
         printWindow.focus()
         printWindow.print()
     }
