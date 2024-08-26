@@ -1,13 +1,17 @@
 <template>
-    <div v-for="certificate in props.certificateData" :key="certificate.id" class="certificate">
-        <div class="certificate__wrapper">
+    <div
+        v-for="(certificate, index) in props.certificateData"
+        :key="certificate.id"
+        class="certificate"
+    >
+        <div ref="certificateRefs" class="certificate__wrapper">
             <div class="certificate__main">
                 <h2 class="certificate__title">Сертификат</h2>
                 <div class="certificate__info">
                     <p class="certificate__text">Подтверждает, что</p>
                     <h2 class="certificate__student-name">{{ certificate.studentData }}</h2>
                     <p class="certificate__text">
-                        Участвовал в вебинаре по IT технологиям для преподвателей
+                        Участвовал в вебинаре по IT технологиям для преподавателей
                     </p>
                 </div>
 
@@ -15,20 +19,28 @@
                     <img src="/public/image/cabinet/cabinetCertificates/small-logo.svg" alt="" />
                     <div class="span-wrapper">
                         <span>Дата вебинара</span>
-                        <span>01.08.2024</span>
+                        <span>{{ certificate.date }}</span>
                     </div>
                 </div>
             </div>
             <div class="certificate__footer">
-                <h2 class="certificate__footer-title">Новые IT технологии в химии</h2>
+                <h2 class="certificate__footer-title">{{ certificate.certificateName }}</h2>
                 <div class="certificate__footer-bottom">
                     <div class="certificate__icons">
-                        <img src="/public/image/cabinet/cabinetCertificates/download.svg" alt="" />
+                        <img
+                            src="/public/image/cabinet/cabinetCertificates/download.svg"
+                            alt=""
+                            @click="downloadCertificate(certificate)"
+                        />
                         <img src="/public/image/cabinet/cabinetCertificates/share.svg" alt="" />
-                        <img src="/public/image/cabinet/cabinetCertificates/print.png" alt="" />
+                        <img
+                            src="/public/image/cabinet/cabinetCertificates/print.png"
+                            alt=""
+                            @click="printCertificate(index)"
+                        />
                     </div>
 
-                    <span class="certificate__data">01.05.2024</span>
+                    <span class="certificate__data">{{ certificate.date }}</span>
                 </div>
             </div>
         </div>
@@ -36,12 +48,34 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+
 const props = defineProps({
     certificateData: {
         type: Array,
         default: () => []
     }
 })
+
+const certificateRefs = ref([])
+
+function downloadCertificate(certificate) {
+    const link = document.createElement('a')
+    link.href = certificate.downloadUrl
+    link.download = `${certificate.studentData}-certificate.pdf`
+    link.click()
+}
+
+function printCertificate(index) {
+    const certificateElement = certificateRefs.value[index]
+    if (certificateElement) {
+        const printWindow = window.open('', '_blank')
+        printWindow.document.write(certificateElement.outerHTML)
+        printWindow.document.close()
+        printWindow.focus()
+        printWindow.print()
+    }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -14,6 +14,8 @@
             @setList="updateCurrentCertificates"
         />
     </section>
+    <PrintCertificate />
+
 </template>
 
 <script setup>
@@ -22,6 +24,7 @@ import CertificateComponent from './CertificateComponent.vue'
 import SearchPanel from '../../searchPanel/SearchPanel.vue'
 import PaginationComponent from '../../pagination/PaginationComponent.vue'
 import CabinetTitle from '../CabinetTitle.vue'
+import PrintCertificate from './PrintCertificate.vue'
 
 const isSearchVisible = ref(false)
 
@@ -70,13 +73,20 @@ const certificateData = ref([
     }
 ])
 
+const certificateData2 = ref([
+    {
+        id: 1,
+        studentData: 'Иванов Иван Иванович',
+        date: '01.08.2024',
+        certificateName: 'Новые IT технологии в химии'
+    }
+])
+
 const currentCertificates = ref([])
 
 function updateCurrentCertificates(paginatedData) {
     currentCertificates.value = paginatedData
 }
-
-
 </script>
 <style scoped lang="scss">
 .certificates-section {
@@ -108,5 +118,8 @@ function updateCurrentCertificates(paginatedData) {
     @media (max-width: $sm) {
         grid-template-columns: auto;
     }
+}
+
+@media print {
 }
 </style>
