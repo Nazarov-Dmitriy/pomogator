@@ -14,7 +14,7 @@
                 <div class="card-top">
                     <div class="card-top__edit">
                         <img
-                            src="@/assets/icons/cabinet/edit.svg"
+                            src="@/assets/images/cabinet/cabinetProfile/edit.svg"
                             alt="edit"
                         >
                         <p>
@@ -26,8 +26,9 @@
                             удалить
                         </p>
                         <img
-                            src="@/assets/icons/cabinet/delete.svg"
+                            src="@/assets/images/cabinet/cabinetProfile/bucket.png"
                             alt="delete"
+                            class="card-top__delete-img"
                         >
                     </div>
                 </div>
@@ -226,6 +227,11 @@ watch(() => props.data, () => {
     p {
         color: $primary-red;
     }
+}
+
+.card-top__delete-img {
+    width: 24px;
+    height: 24px;
 }
 
 .card-img {

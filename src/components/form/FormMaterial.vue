@@ -1,7 +1,7 @@
 <template>
-    <div class="modal__form">
-        <div class="form__header">
-            <h2 class="form__title">
+    <div class="modal__form-material">
+        <div class="form-material__header">
+            <h2 class="form-material__title">
                 Предложить материал
             </h2>
             <button
@@ -31,55 +31,62 @@
             </button>
         </div>
 
-        <div class="form__body">
+        <div class="form-material__body">
             <form
-                class="form-field"
+                class="form-material-field"
                 @submit.prevent
                 @keypress.enter.prevent
             >
-                <div class="form-item form-item__name">
+                <div class="form-materia__photo flex justify-center">
+                    <img 
+                        src='/public/image/cabinet/cabinetProfile/default-img.png'
+                        alt="ФОТО"
+                        width="106px"
+                    >
+                </div>
+                <div class="form-materia-item form-materia-item__name">
                     <label
                         for="name"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.nameError }"
                     >Как вас зовут? *</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="name"
                             v-model="formField.name"
                             type="text"
                             placeholder="Мария Иванова"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.nameError }"
                             @keypress.enter="validateField($event, 'event', 'name')"
                         >
                     </div>
                     <div
                         v-if="formField.nameError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-                <div class="form-item form-item__email">
+                <div class="form-materia-item form-materia-item__email">
                     <label
                         for="email"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.emailError }"
                     >E-mail *</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="email"
                             v-model="formField.email"
                             type="text"
                             placeholder="mariaivanova@mail.ru"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.emailError }"
                             @input="changeEmail($event)"
                             @keypress.enter="validateField($event, 'event', 'email')"
@@ -87,30 +94,30 @@
                     </div>
                     <div
                         v-if="formField.emailError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-                <div class="form-item form-item__position">
+                <div class="form-materia-item form-materia-item__position">
                     <label
                         for="position"
-                        class="form-item__label"
-                        :class="{ 'error': formField.phoneError }"
+                        class="form-materia-item__label"
+                        :class="{ 'error': formField.positionError }"
                     >Должность *</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="position"
-                            v-model="formField.phone"
+                            v-model="formField.position"
                             type="text"
                             placeholder="Преподаватель"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.positionError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'position')"
@@ -118,30 +125,30 @@
                     </div>
                     <div
                         v-if="formField.positionError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-                <div class="form-item form-item__work">
+                <div class="form-materia-item form-materia-item__work">
                     <label
                         for="work"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.workError }"
                     >Место работ *</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="work"
                             v-model="formField.phone"
                             type="text"
                             placeholder="Школа №1"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.workError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'work')"
@@ -149,30 +156,30 @@
                     </div>
                     <div
                         v-if="formField.positionError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-                <div class="form-item form-item__direction">
+                <div class="form-materia-item form-materia-item__direction">
                     <label
                         for="direction"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.directionError }"
                     >Направление *</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="direction"
                             v-model="formField.direction"
                             type="text"
                             placeholder="Выберите направление"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.directionError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'direction')"
@@ -180,30 +187,30 @@
                     </div>
                     <div
                         v-if="formField.positionError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-                <div class="form-item form-item__article">
+                <div class="form-materia-item form-materia-item__article">
                     <label
                         for="article"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.articleError }"
                     >Название статьи *</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="article"
                             v-model="formField.article"
                             type="text"
                             placeholder="IT технологии"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.articleError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'article')"
@@ -211,30 +218,30 @@
                     </div>
                     <div
                         v-if="formField.positionError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-                <div class="form-item form-item__video">
+                <div class="form-materia-item form-materia-item__video">
                     <label
                         for="video"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.videoError }"
                     >Ссылка на видеоматериал</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="video"
-                            v-model="formField.article"
+                            v-model="formField.video"
                             type="text"
                             placeholder="видео_материал.ру"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.videoError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'video')"
@@ -242,31 +249,30 @@
                     </div>
                     <div
                         v-if="formField.positionError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-
-                <div class="form-item form-item__website">
+                <div class="form-materia-item form-materia-item__website">
                     <label
                         for="website"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.websiteError }"
                     >Ссылка на источник</label>
-                    <div class="form-item__group">
+                    <div class="form-materia-item__group">
                         <input
                             id="website"
-                            v-model="formField.article"
+                            v-model="formField.website"
                             type="text"
                             placeholder="сайт_источник.ру"
-                            class="form-item-input"
+                            class="form-materia-item-input"
                             :class="{ 'error': formField.websiteError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'website')"
@@ -274,22 +280,21 @@
                     </div>
                     <div
                         v-if="formField.positionError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-
-                <div class="form-item form-item__textarea">
+                <div class="form-materia-item form-materia-item__textarea">
                     <label
                         for="textarea"
-                        class="form-item__label"
+                        class="form-materia-item__label"
                         :class="{ 'error': formField.textareaError }"
                     >Описание материала *</label>
                     <textarea
@@ -297,27 +302,27 @@
                         v-model="formField.textarea"
                         type="text"
                         placeholder="Напишите тему и анонс предлагаемого материала"
-                        class="form-item-textearea"
+                        class="form-materia-item-textearea"
                         :class="{ 'error': formField.textareaError }"
                         @input="changeTextarea($event)"
                     />
                     <div
                         v-if="formField.textareaError"
-                        class="form-item__error"
+                        class="form-materia-item__error"
                     >
                         <img
                             src="@/assets/icons/error.svg"
                             alt="icon"
                         >
-                        <p class="form-item__error-text">
+                        <p class="form-materia-item__error-text">
                             Поле заполненно некорректно
                         </p>
                     </div>
                 </div>
-                <div class="form-item form-item__upload">
+                <div class="form-materia-item__upload flex flex-wrap gap-8 items-end">
                     <label
                         for="upload"
-                        class="form-item__label upload"
+                        class="form-materia-item__label upload"
                     >Прикрепить файл
                         <svg
                             class="upload-icon"
@@ -343,14 +348,14 @@
         </div>
 
         <div class="form-footer">
-            <div class="form-item__submit">
-                <p class="form-item__policy">
-                    Нажимая на кнопку «Отправить», я соглашаюсь с <span class="form-item__policy-link">политикой
+            <div class="form-materia-item__submit">
+                <p class="form-materia-item__policy">
+                    Нажимая на кнопку «Отправить», я соглашаюсь с <span class="form-materia-item__policy-link">политикой
                         обработки персональных данных</span>
                 </p>
                 <BtnBackgroud
-                    class="form-item__btn"
-                    emit-name="form-submit"
+                    class="form-materia-item__btn"
+                    emit-name="form-materia-submit"
                     @form-submit="validateForm()"
                 >
                     Отправить
@@ -360,7 +365,7 @@
         <img
             src="@/assets/images/form/bg-material.svg"
             alt="bg-image"
-            class="form-item__bg-line-tablet"
+            class="form-materia-item__bg-line-tablet"
         >
     </div>
 </template>
@@ -453,13 +458,14 @@ function validateForm () {
 
 </script>
 <style lang="scss" scoped>
-.modal__form {
+.modal__form-material {
     padding: 32px;
     display: flex;
     flex-direction: column;
     gap: 32px;
     background: $gradient-background;
-
+    overflow: auto;
+    height: 100vh;
         
     @media (max-width: $lg) {
         padding: 24px;
@@ -470,14 +476,14 @@ function validateForm () {
     }
 }
 
-.form__header {
+.form-material__header {
     display: flex;
     flex-direction: column;
     gap: 8px;
     position: relative;
 }
 
-.form__title {
+.form-material__title {
     font-family: "Kreadon-Demi";
     font-size: 36px;
     line-height: 42px;
@@ -487,11 +493,11 @@ function validateForm () {
     }
 }
 
-.form__subtitle {
-    font-size: 16px;
-    line-height: 24px;
-    color: $blue-primary;
-}
+// .form-material__subtitle {
+//     font-size: 16px;
+//     line-height: 24px;
+//     color: $blue-primary;
+// }
 
 .close-btn {
     position: absolute;
@@ -502,14 +508,15 @@ function validateForm () {
     cursor: pointer;
 }
 
-.form__body {
+.form-material__body {
     display: flex;
 }
 
-.form-field {
+.form-material-field {
     display: grid;
     grid-template-columns: minmax(200px, 492px) minmax(200px, 600px);
     grid-template-areas:
+        'photo textarea'
         'name textarea'
         'email textarea'
         'position textarea'
@@ -533,54 +540,60 @@ function validateForm () {
     }
 }
 
-.form-item__name {
+.form-materia__photo {
+    grid-area: photo;
+}
+
+.form-materia-item__name {
     grid-area: name;
 }
 
-.form-item__email {
+.form-materia-item__email {
     grid-area: email;
 }
 
-.form-item__position {
+.form-materia-item__position {
     grid-area: position;
 }
 
-.form-item__work {
+.form-materia-item__work {
     grid-area: work;
 }
 
-.form-item__direction {
+.form-materia-item__direction {
     grid-area: direction;
 }
 
-.form-item__article {
+.form-materia-item__article {
     grid-area: article;
 }
 
-.form-item__video {
+.form-materia-item__video {
     grid-area: video;
 }
 
-.form-item__website {
+.form-materia-item__website {
     grid-area: website;
 }
 
-.form-item__textarea {
+.form-materia-item__textarea {
     grid-area: textarea;
+    height: 100%;
 }
 
-.form-item__upload {
+.form-materia-item__upload {
     grid-area: upload;
 }
 
-.form-item {
+.form-materia-item {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     align-content: flex-start;
+    z-index: 1;
 }
 
-.form-item__label {
+.form-materia-item__label {
     flex: 1 1 100%;
     font-size: 16px;
     line-height: 24px;
@@ -592,7 +605,7 @@ function validateForm () {
     }
 }
 
-.form-item__group {
+.form-materia-item__group {
     flex: 1 1 100%;
     position: relative;
     display: flex;
@@ -601,7 +614,7 @@ function validateForm () {
     min-width: 100px;
 }
 
-.form-item-input {
+.form-materia-item-input {
     width: 100px;
     flex: 1 1 100%;
     border-radius: 32px;
@@ -636,32 +649,32 @@ function validateForm () {
     }
 }
 
-.form-item-input:-webkit-autofill,
-.form-item-input:-webkit-autofill:hover,
-.form-item-input:-webkit-autofill:focus,
-.form-item-input:-webkit-autofill:active {
+.form-materia-item-input:-webkit-autofill,
+.form-materia-item-input:-webkit-autofill:hover,
+.form-materia-item-input:-webkit-autofill:focus,
+.form-materia-item-input:-webkit-autofill:active {
   box-shadow: 0 0 0 30px #ffffff inset !important;
 }
 
-.form-item-input:-webkit-autofill {
+.form-materia-item-input:-webkit-autofill {
   -webkit-text-fill-color: $secondary !important;
   font-size: 16px !important;
   line-height: 1.5;
   font-family: 'Inter';
 }
-.form-item-input:-webkit-autofill:focus {
+.form-materia-item-input:-webkit-autofill:focus {
   -webkit-text-fill-color: $black !important;
   font-size: 16px !important;
   line-height: 1.5;
   font-family: 'Inter';
 }
 
-.form-item__icon {
+.form-materia-item__icon {
     position: absolute;
     right: 16px;
 }
 
-.form-item-textearea {
+.form-materia-item-textearea {
     border-radius: 32px;
     border: 2px solid $secondary;
     padding: 12px 56px 12px 16px;
@@ -671,8 +684,9 @@ function validateForm () {
     outline: none;
     resize: none;
     box-sizing: border-box;
-    height: 241px;
+    // height: 241px;
     flex: 0 0 100%;
+    height: calc(100% - 32px);
 
     &:hover {
         border-color: $blue-primary;
@@ -701,7 +715,7 @@ function validateForm () {
     }
 }
 
-.form-item__submit {
+.form-materia-item__submit {
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -722,7 +736,7 @@ function validateForm () {
     }
 }
 
-.form-item__policy {
+.form-materia-item__policy {
     flex: 0 1 300px;
     font-size: 12px;
     line-height: 18px;
@@ -734,12 +748,12 @@ function validateForm () {
     }
 }
 
-.form-item__policy-link {
+.form-materia-item__policy-link {
     text-decoration: underline;
     cursor: pointer;
 }
 
-.form-item__bg-line {
+.form-materia-item__bg-line {
     position: absolute;
     width: 869px;
     height: 277px;
@@ -749,7 +763,7 @@ function validateForm () {
     rotate: 166.07deg;
 }
 
-.form-item__bg-line-tablet {
+.form-materia-item__bg-line-tablet {
         position: absolute;
         display: block;
         bottom: -139px;
@@ -764,29 +778,29 @@ function validateForm () {
     }
 }
 
-.form-item__btn {
+.form-materia-item__btn {
     @media (max-width: $sm) {
         width: 288px;
     }
 }
 
-.form-item__error {
+.form-materia-item__error {
     display: flex;
     gap: 8px;
     align-items: center;
 }
 
-.form-item__error-text {
+.form-materia-item__error-text {
     font-size: 16px;
     line-height: 24px;
     color: $primary-red
 }
 
-.form-item__upload {
+.form-materia-item__upload {
     display: flex;
-    gap: 10px;    
+    gap: 10px;
 
-    .form-item__label.upload{
+    .form-materia-item__label.upload{
         line-height: 18px;
         color:  $blue-primary;
         font-size: 12px;
