@@ -112,7 +112,7 @@
 <script setup>
 import { computed, reactive } from 'vue'
 import { useProfileStore } from '/src/stores/useProfileStore'
-import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import BtnBackgroud from '../../btns/BtnBackgroud.vue'
 
 const store = useProfileStore()
 
@@ -219,6 +219,13 @@ const isFormValid = computed(() => {
 <style lang="scss" scoped>
 .personal-data {
     padding: 60px 80px;
+
+    @media (max-width: $lg) {
+        padding: 40px;
+    }
+    @media (max-width: $sm) {
+        padding: 32px 16px;
+    }
 }
 .personal-data__container {
     max-width: 1280px;
@@ -244,6 +251,14 @@ const isFormValid = computed(() => {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 16px;
     row-gap: 32px;
+
+    @media (max-width: $lg) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $sm) {
+        grid-template-columns: 1fr;
+    }
 }
 .personal-data__input-group {
     display: flex;
@@ -266,6 +281,11 @@ const isFormValid = computed(() => {
     height: 48px;
     background-color: $white;
     color: $secondary;
+
+    @media(max-width: $lg){
+        width: 100%;
+        max-width: 100%;
+    }
 
     &::placeholder {
         font-weight: 400;

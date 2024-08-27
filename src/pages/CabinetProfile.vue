@@ -8,8 +8,8 @@
 </template>
 <script setup>
 import FooterComponent from '../components/main/FooterComponent.vue'
-import CabinetProfileComponent from '../components/cabinet/CabinetProfileComponent.vue'
-import PersonalData from '../components/cabinet/PersonalData.vue'
+import CabinetProfileComponent from '../components/cabinet/profile/CabinetProfileComponent.vue'
+import PersonalData from '../components/cabinet/profile/PersonalData.vue'
 import CabinetHeader from '../components/cabinet/header/CabinetHeader.vue'
 </script>
 <style scoped lang="scss">

@@ -108,33 +108,29 @@
                 </div>
                 <div class="header__trend">
                     <div class="header__trend-decor" />
-                    <router-link
-                        to="/trend/khimiya/"
-                        class="header__trend-item"
-                        active-class="active"
-                    >
-                        Химия
+                    <router-link to="/lk/profile/" class="header__trend-item" active-class="active">
+                        Мой профиль
                     </router-link>
                     <router-link
-                        to="/trend/fizika"
+                        to="/lk/favorites"
                         class="header__trend-item"
                         active-class="active"
                     >
-                        Физика
+                        Избранное
                     </router-link>
                     <router-link
-                        to="/trend/biologiya"
+                        to="/lk/materials"
                         class="header__trend-item"
                         active-class="active"
                     >
-                        Биология
+                        Мои материалы
                     </router-link>
                     <router-link
-                        to="/trend/robototekhnika"
+                        to="/lk/certificates"
                         class="header__trend-item"
                         active-class="active"
                     >
-                        Робототехника
+                        Мои сертификаты
                     </router-link>
                     <div class="header__trend-decor" />
                 </div>
@@ -162,7 +158,7 @@ function mainLink() {
     router.push('/')
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .header__contaner {
     background: $gradient-background;
     position: relative;
