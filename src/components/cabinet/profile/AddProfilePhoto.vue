@@ -69,6 +69,12 @@ function removeImage() {
     display: flex;
     flex-direction: column;
     gap: 32px;
+
+    @media (max-width: $sm) {
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
 }
 
 .profile__photo-hover {
@@ -111,6 +117,16 @@ function removeImage() {
     font-size: 36px;
     line-height: 42px;
     color: $blue-primary;
+
+    @media (max-width: $lg) {
+        font-size: 32px;
+        line-height: 40px;
+    }
+    @media (max-width: $lg) {
+        font-size: 30px;
+        text-align: left;
+        width: 100%;
+    }
 }
 .profile__photo-img-wrapper {
     width: 307px;
@@ -123,6 +139,16 @@ function removeImage() {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+
+    @media (max-width: $lg) {
+        width: 248px;
+        height: 248px;
+    }
+    @media (max-width: $sm) {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
     &:hover {
         background: url('../../../public/image/cabinet/cabinetProfile/hover-img.png');

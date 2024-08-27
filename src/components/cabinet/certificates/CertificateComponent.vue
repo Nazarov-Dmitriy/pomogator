@@ -117,7 +117,7 @@ function printCertificate(index) {
     font-weight: 600;
     font-size: 26px;
     line-height: 117%;
-    background: linear-gradient(162deg, #f84343 0%, $blue-primary 100%);
+    background: linear-gradient(149deg, #f84343 35%, #4360f8 70%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -193,9 +193,8 @@ function printCertificate(index) {
     font-size: 24px;
     line-height: 32px;
     color: $black;
-    text-align: center;
     box-sizing: border-box;
-    padding: 24px 32px 0 32px;
+    padding: 24px 16px 0 16px;
 }
 .certificate__footer-bottom {
     display: flex;

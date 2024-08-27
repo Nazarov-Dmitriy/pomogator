@@ -172,6 +172,10 @@ const isFormValid = computed(() => {
     display: flex;
     flex-direction: column;
     gap: 32px;
+
+    @media (max-width: $sm) {
+        width: 100%;
+    }
 }
 .profile__change-title {
     font-family: 'Kreadon-Demi';
@@ -179,6 +183,15 @@ const isFormValid = computed(() => {
     font-size: 36px;
     line-height: 42px;
     color: $blue-primary;
+
+    @media (max-width: $lg) {
+        font-size: 32px;
+        line-height: 40px;
+        width: max-content;
+    }
+    @media (max-width: $lg) {
+        font-size: 30px;
+    }
 }
 .form {
     display: flex;
@@ -196,6 +209,10 @@ const isFormValid = computed(() => {
     gap: 8px;
     position: relative;
     z-index: 2;
+
+    @media (max-width: $sm) {
+        width: 100%;
+    }
 }
 
 .error {
@@ -204,6 +221,10 @@ const isFormValid = computed(() => {
     gap: 8px;
     max-width: 307px;
     width: 100%;
+    @media (max-width: $sm) {
+        max-width: 100%;
+        width: 100%;
+    }
 }
 
 .error-text {
@@ -213,6 +234,9 @@ const isFormValid = computed(() => {
     color: #383fd7;
     max-width: 307px;
     width: 100%;
+    @media (max-width: $sm) {
+        max-width: 100%;
+    }
 }
 
 .profile__change-label {
@@ -231,6 +255,14 @@ const isFormValid = computed(() => {
     background-color: $white;
     color: $secondary;
     position: relative;
+
+    @media (max-width: $lg) {
+        max-width: auto;
+        width: 100%;
+    }
+    @media (max-width: $sm) {
+        width: 100%;
+    }
 
     &::placeholder {
         font-weight: 400;

@@ -3,6 +3,7 @@
         <div class="search-panel__container">
             <div v-if="showSearchPanel" class="search-panel__input-wraper">
                 <input
+                    v-if="isSearchVisible"
                     :value="modelValue"
                     type="text"
                     class="search-panel__input"

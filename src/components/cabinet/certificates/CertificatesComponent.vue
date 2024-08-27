@@ -1,7 +1,7 @@
 <template>
     <section class="certificates-section">
         <CabinetTitle>Полученные сертификаты</CabinetTitle>
-        <SearchPanel />
+        <SearchPanel :isSearchVisible="isSearchVisible" />
         <div class="certificates">
             <CertificateComponent
                 :certificateData="currentCertificates"
@@ -22,7 +22,6 @@ import CertificateComponent from './CertificateComponent.vue'
 import SearchPanel from '../../searchPanel/SearchPanel.vue'
 import PaginationComponent from '../../pagination/PaginationComponent.vue'
 import CabinetTitle from '../CabinetTitle.vue'
-import PrintCertificate from './PrintCertificate.vue'
 
 const isSearchVisible = ref(false)
 
@@ -70,8 +69,6 @@ const certificateData = ref([
         certificateName: 'Новые IT технологии в химии'
     }
 ])
-
-
 
 const currentCertificates = ref([])
 
