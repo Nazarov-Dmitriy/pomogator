@@ -12,7 +12,7 @@
                 @click="linkArticle(item.id)"
             >
                 <img
-                    :src="getUrl(item.img)"
+                    :src="getUrl(item.image)"
                     alt="img-card"
                     class="card-img"
                 >
@@ -40,7 +40,7 @@
                                     class="card-btn__img"
                                 >
                                 <p class="card-btn__count">
-                                    {{ item.like }}
+                                    {{ item.likes }}
                                 </p>
                             </div>
                             <div class="card-btn">
@@ -50,12 +50,12 @@
                                     class="card-btn__img"
                                 >
                                 <p class="card-btn__count">
-                                    {{ item.show }}
+                                    {{ item.shows }}
                                 </p>
                             </div>
                         </div>
                         <div class="card-date">
-                            <span class="card-date__text">Дата публикации</span> {{ item.publication_date }}
+                            <span class="card-date__text">Дата публикации</span> {{ item.date_publication }}
                         </div>
                     </div>
                 </div>
@@ -97,7 +97,7 @@ const router = useRouter()
 const renderList = ref([])
 
 function getUrl (url) {
-    return new URL(url, import.meta.url).href
+    return import.meta.env.VITE_SERVER_URL + url
 }
 
 function getRenderList (list) {

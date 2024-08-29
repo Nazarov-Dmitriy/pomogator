@@ -25,8 +25,9 @@ import SearchPanel from '../components/searchPanel/SearchPanel.vue';
 import ListArticle from '../components/article/ListArticle.vue';
 import SubscrideComponent from '../components/blog/SubscrideComponent.vue';
 import { onMounted, ref, watch } from 'vue';
-import  {getAll}  from '../db/db.js';   
+// import  {getAll}  from '../db/db.js';   
 import FooterComponent from '../components/main/FooterComponent.vue';
+import axiosR from '@/api/http';
 
 
 const searchValue = ref('')
@@ -42,9 +43,26 @@ function search (){
 }
 
 onMounted(()=>{
-    dataAll.value = [...getAll()]
-    data.value = dataAll.value
+    // dataAll.value = [...getAll()];
+    // data.value = dataAll.value;
+    getListArticle();
 })
+
+function getListArticle () {
+    console.log(111);
+    
+    axiosR.get('/news/list'
+    )
+        .then(res => {
+            console.log(res);
+            dataAll.value= [...res.data]
+            data.value = dataAll.value;
+
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
 
 watch(searchValue , (newVal)=>{
     if(newVal.trim() == ''){
