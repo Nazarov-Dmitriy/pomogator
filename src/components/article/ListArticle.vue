@@ -1,18 +1,33 @@
 <template>
     <div class="list-article__container">
         <slot name="header" />
-        <div v-if="renderList.length > 0" class="list-article" :class="props.customClass[0]">
+        <div
+            v-if="renderList.length > 0"
+            class="list-article"
+            :class="props.customClass[0]"
+        >
             <div
                 v-for="item in renderList"
                 :key="item.id"
                 class="card"
                 @click="linkArticle(item.id)"
             >
-                <img :src="getUrl(item.img)" alt="img-card" class="card-img" />
+                <img
+                    :src="getUrl(item.img)"
+                    alt="img-card"
+                    class="card-img"
+                >
                 <div class="card-body">
                     <div class="card-contnent">
-                        <div class="card-hashtags" :class="props.customClass[2]">
-                            <p v-for="hashtag in item.tags" :key="hashtag" class="card-hashtag">
+                        <div
+                            class="card-hashtags"
+                            :class="props.customClass[2]"
+                        >
+                            <p
+                                v-for="hashtag in item.tags"
+                                :key="hashtag"
+                                class="card-hashtag"
+                            >
                                 #{{ hashtag }}
                             </p>
                         </div>
@@ -27,7 +42,7 @@
                                     src="@/assets/icons/article/like.svg"
                                     alt="like"
                                     class="card-btn__img"
-                                />
+                                >
                                 <p class="card-btn__count">
                                     {{ item.like }}
                                 </p>
@@ -37,13 +52,16 @@
                                     src="@/assets/icons/article/show.svg"
                                     alt="show"
                                     class="card-btn__img"
-                                />
+                                >
                                 <p class="card-btn__count">
                                     {{ item.show }}
                                 </p>
                             </div>
                         </div>
-                        <div class="card-date" :class="props.customClass[1]">
+                        <div
+                            class="card-date"
+                            :class="props.customClass[1]"
+                        >
                             <span class="card-date__text">Дата публикации</span>
                             {{ item.publication_date }}
                         </div>
@@ -52,11 +70,17 @@
             </div>
         </div>
         <div v-else>
-            <h2 class="no-result">По запросу {{ search }} ничего не найдено.</h2>
+            <h2 class="no-result">
+                По запросу {{ search }} ничего не найдено.
+            </h2>
         </div>
 
         <OfferMaterial v-if="props.isOfferVisible" />
-        <PaginationComponent :perpage="12" :data="props.data" @set-list="getRenderList" />
+        <PaginationComponent
+            :perpage="12"
+            :data="props.data"
+            @set-list="getRenderList"
+        />
     </div>
 </template>
 <script setup>
@@ -89,15 +113,15 @@ const router = useRouter()
 
 const renderList = ref([])
 
-function getUrl(url) {
+function getUrl (url) {
     return new URL(url, import.meta.url).href
 }
 
-function getRenderList(list) {
+function getRenderList (list) {
     renderList.value = list
 }
 
-function linkArticle(id) {
+function linkArticle (id) {
     if (route.name === 'trend-page') {
         router.push(`/trend/${route.params.name}/${id}`)
     } else if (route.name === 'blog-page') {
@@ -250,6 +274,12 @@ watch(
 }
 
 .card-date__text {
+    @media (max-width: $xl) {
+        display: none;
+    }
+}
+</style>
+-date__text {
     @media (max-width: $xl) {
         display: none;
     }
