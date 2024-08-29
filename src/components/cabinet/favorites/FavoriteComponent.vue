@@ -4,7 +4,11 @@
             <CabinetTitle> Материалы</CabinetTitle>
             <SearchPanel :isSearchVisible="isSearchVisible" />
             <div class="cards">
-                <ListArticle :data="currentMaterials" :isOfferVisible="isOfferVisible" />
+                <ListArticle
+                    :data="currentMaterials"
+                    :isOfferVisible="isOfferVisible"
+                    custom-btn="custom-card-btns"
+                />
             </div>
             <PaginationComponent
                 :perpage="4"
@@ -17,7 +21,9 @@
                 <ListArticle
                     :data="currentWebinars"
                     :isOfferVisible="isOfferVisible"
-                    :customClass="['custom-card', 'custom-text-right', 'custom-text-left']"
+                    custom-article="custom-card"
+                    custom-text="custom-text-right"
+                    custom-btn="custom-card-btns"
                 />
                 <PaginationComponent
                     :perpage="3"
@@ -171,6 +177,12 @@ updateCurrentWebinars(cardWebinarData.value.slice(0, 4))
 <style lang="scss">
 .cabinet-favorite {
     padding: 60px 80px;
+    @media (max-width: $lg) {
+        padding: 40px;
+    }
+    @media (max-width: $sm) {
+        padding: 32px 16px;
+    }
 }
 .cabinet-favorite__container {
     display: flex;
@@ -180,7 +192,6 @@ updateCurrentWebinars(cardWebinarData.value.slice(0, 4))
 .cards {
     display: grid;
     grid-template-columns: repeat(2, auto);
-    gap: 16px;
 }
 
 .cabinet-favorite__webinars {
@@ -192,12 +203,31 @@ updateCurrentWebinars(cardWebinarData.value.slice(0, 4))
 .custom-card {
     display: flex;
     text-align: right;
+
+    @media (max-width: $lg) {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: $md) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.custom-card-btns {
+    @media (max-width: $lg) {
+        gap: 20px;
+    }
 }
 .custom-text-right {
-    text-align: right;
+    justify-content: flex-start;
 }
 
 .custom-text-left {
     justify-content: flex-start;
+}
+
+.cabinet-favorite__article-wrapper {
+    display: flex;
+    flex-direction: column;
 }
 </style>

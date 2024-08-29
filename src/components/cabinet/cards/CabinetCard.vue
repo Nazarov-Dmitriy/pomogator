@@ -1,16 +1,16 @@
 <template>
     <div v-for="card in props.cardData" :key="card.id" class="card">
         <slot name="header">
-            <!-- <div class="card__header">
-            <div class="card__header-btn" @click="activeEmit">
-                <img src="/public/icons/cabinet/change.svg" alt="" />
-                <span>редактировать</span>
+            <div class="card__header">
+                <div class="card__header-btn" @click="activeEmit">
+                    <img src="/public/icons/cabinet/change.svg" alt="" />
+                    <span>редактировать</span>
+                </div>
+                <div class="card__header-btn" @click="activeEmit(card.id)">
+                    <span>удалить</span>
+                    <img src="../../../assets/images/cabinet/cabinetProfile/bucket.png" alt="" />
+                </div>
             </div>
-            <div class="card__header-btn" @click="activeEmit(card.id)">
-                <span>удалить</span>
-                <img src="../../../assets/images/cabinet/cabinetProfile/bucket.png" alt="" />
-            </div>
-        </div> -->
         </slot>
         <div class="card__main">
             <img :src="card.cardImg" alt="" class="card__main-img" />
