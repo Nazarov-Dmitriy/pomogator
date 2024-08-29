@@ -1,17 +1,14 @@
 <template>
     <div class="page">
-        <HeaderComponent />
-        Избранное
-
+        <CabinetHeader />
+        <FavoriteComponent />
         <FooterComponent />
     </div>
 </template>
 <script setup>
-import HeaderComponent from '@/components/HeaderComponent.vue'
-
-
-import FooterComponent from '../components/main/FooterComponent.vue';
-
+import FooterComponent from '../components/main/FooterComponent.vue'
+import FavoriteComponent from '../components/cabinet/favorites/FavoriteComponent.vue'
+import CabinetHeader from '../components/cabinet/header/CabinetHeader.vue'
 </script>
 <style scoped lang="scss">
 .page {

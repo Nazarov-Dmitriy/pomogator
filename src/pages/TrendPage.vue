@@ -6,6 +6,7 @@
 
         <SearchPanel
             v-model="searchValue"
+            is-search-visible="true"
             class="trend__search-panel"
             @search="search()"
         />

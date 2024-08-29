@@ -1,8 +1,5 @@
 <template>
-    <button
-        class="btn-bg"
-        @click="submitEmit"
-    >
+    <button class="btn-bg" @click="submitEmit" :disabled="disabled">
         <span class="btn-bg__text">
             <slot />
         </span>
@@ -14,14 +11,13 @@ const props = defineProps({
         type: String,
         default: null
     },
+    disabled: Boolean
 })
 const emit = defineEmits(['form-submit', 'offer', 'link', 'subscribe'])
 
-
-function submitEmit (){
+function submitEmit() {
     emit(props.emitName)
 }
-
 </script>
 <style lang="scss">
 .btn-bg {
@@ -34,7 +30,6 @@ function submitEmit (){
     display: flex;
     justify-content: center;
     align-items: center;
-
 
     &:hover {
         background: $gradient;
@@ -50,5 +45,9 @@ function submitEmit (){
     font-size: 16px;
     font-weight: 500;
     line-height: 1.5;
+}
+
+.btn-bg:disabled {
+    background: #a0b1ed;
 }
 </style>

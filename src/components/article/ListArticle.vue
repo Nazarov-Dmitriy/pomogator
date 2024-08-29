@@ -4,6 +4,7 @@
         <div
             v-if="renderList.length > 0"
             class="list-article"
+            :class="props.customClass[0]"
         >
             <div
                 v-for="item in renderList"
@@ -18,7 +19,10 @@
                 >
                 <div class="card-body">
                     <div class="card-contnent">
-                        <div class="card-hashtags">
+                        <div
+                            class="card-hashtags"
+                            :class="props.customClass[2]"
+                        >
                             <p
                                 v-for="hashtag in item.tags"
                                 :key="hashtag"
@@ -55,7 +59,7 @@
                             </div>
                         </div>
                         <div class="card-date">
-                            <span class="card-date__text">Дата публикации</span> {{ item.date_publication }}
+                            <span class="card-date__text">Дата публикации</span> {{ item.publication_date }}
                         </div>
                     </div>
                 </div>
@@ -66,7 +70,8 @@
                 По запросу {{ search }} ничего не найдено.
             </h2>
         </div>
-        <OfferMaterial />
+
+        <OfferMaterial v-if="props.isOfferVisible" />
         <PaginationComponent
             :perpage="12"
             :data="props.data"
@@ -76,9 +81,9 @@
 </template>
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
-import PaginationComponent from '../pagination/PaginationComponent.vue';
+import PaginationComponent from '../pagination/PaginationComponent.vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ref, watch } from 'vue';
+import { ref, watch } from 'vue'
 
 const props = defineProps({
     data: {
@@ -89,6 +94,14 @@ const props = defineProps({
         type: String,
         default: ''
     },
+    isOfferVisible: {
+        type: Boolean,
+        default: true
+    },
+    customClass: {
+        type: Array,
+        default: () => []
+    }
 })
 
 const route = useRoute()
@@ -104,18 +117,20 @@ function getRenderList (list) {
     renderList.value = list
 }
 
-
 function linkArticle (id) {
     if (route.name === 'trend-page') {
         router.push(`/trend/${route.params.name}/${id}`)
     } else if (route.name === 'blog-page') {
         router.push(`blog/article/${id}`)
+    } else {
+        router.push(`/blog/article/${id}`)
     }
 }
 
-watch(() => props.data, () => {
-})
-
+watch(
+    () => props.data,
+    () => {}
+)
 </script>
 <style lang="scss">
 .list-article__container {
@@ -202,7 +217,7 @@ watch(() => props.data, () => {
 .card-hashtag {
     font-size: 16px;
     line-height: 24px;
-    color: $blue
+    color: $blue;
 }
 
 .card__title {
@@ -228,13 +243,13 @@ watch(() => props.data, () => {
 .card-btns {
     display: flex;
     gap: 40px;
-    align-items: center
+    align-items: center;
 }
 
 .card-btn {
     display: flex;
     gap: 10px;
-    align-items: center
+    align-items: center;
 }
 
 .card-btn__img {
@@ -245,16 +260,22 @@ watch(() => props.data, () => {
 .card-btn__count {
     font-size: 16px;
     line-height: 24px;
-    color: $blue
+    color: $blue;
 }
 
 .card-date {
     font-size: 16px;
     line-height: 24px;
-    color: $blue
+    color: $blue;
 }
 
 .card-date__text {
+    @media (max-width: $xl) {
+        display: none;
+    }
+}
+</style>
+-date__text {
     @media (max-width: $xl) {
         display: none;
     }
