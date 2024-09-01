@@ -1,7 +1,7 @@
 <template>
     <div class="list-article__container">
         <slot name="header" />
-        <div v-if="renderList.length > 0" class="list-article" :class="props.customClass[0]">
+        <div v-if="renderList.length > 0" class="list-article" :class="props.customArticle">
             <div
                 v-for="item in renderList"
                 :key="item.id"
@@ -11,7 +11,7 @@
                 <img :src="getUrl(item.img)" alt="img-card" class="card-img" />
                 <div class="card-body">
                     <div class="card-contnent">
-                        <div class="card-hashtags" :class="props.customClass[2]">
+                        <div class="card-hashtags" :class="props.customText">
                             <p v-for="hashtag in item.tags" :key="hashtag" class="card-hashtag">
                                 #{{ hashtag }}
                             </p>
@@ -21,7 +21,7 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <div class="card-btns">
+                        <div class="card-btns" :class="props.customBtn">
                             <div class="card-btn show">
                                 <img
                                     src="@/assets/icons/article/like.svg"
@@ -43,7 +43,7 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="card-date" :class="props.customClass[1]">
+                        <div class="card-date" :class="props.customDate">
                             <span class="card-date__text">Дата публикации</span>
                             {{ item.publication_date }}
                         </div>
@@ -81,6 +81,22 @@ const props = defineProps({
     customClass: {
         type: Array,
         default: () => []
+    },
+    customDate: {
+        type: String,
+        default: null
+    },
+    customBtn: {
+        type: String,
+        default: null
+    },
+    customArticle: {
+        type: String,
+        default: null
+    },
+    customText: {
+        type: String,
+        default: null
     }
 })
 
