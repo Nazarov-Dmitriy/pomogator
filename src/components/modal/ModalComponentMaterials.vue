@@ -15,17 +15,35 @@
 </template>
 
 <script setup>
-import FormMaterial from '../form/FormMaterial.vue';
+import { watch, onUnmounted } from 'vue'
+import FormMaterial from '../form/FormMaterial.vue'
 
 FormMaterial
 const props = defineProps({
-    show: Boolean,
+    show: Boolean
 })
 defineEmits(['close'])
 
+watch(
+    () => props.show,
+    (newValue) => {
+        if (newValue) {
+            document.body.classList.add('no-scroll')
+        } else {
+            document.body.classList.remove('no-scroll')
+        }
+    }
+)
+
+onUnmounted(() => {
+    document.body.classList.remove('no-scroll')
+})
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.no-scroll{
+overflow: hidden}
+
 .modal-mask {
   position: fixed;
   z-index: 10;
