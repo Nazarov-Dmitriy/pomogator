@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/html-self-closing -->
 <template>
     <div class="page">
         <HeaderComponent />
@@ -8,7 +7,9 @@
             v-model="searchValue"
             is-search-visible="true"
             class="trend__search-panel"
+            :active-tags="activeTags"
             @search="search()"
+            @active-tags="setTags"
         />
         <ListArticle
             class="trend__article-header"
@@ -27,6 +28,11 @@
         <OtherTrend />
         <FooterComponent />
     </div>
+    <Teleport to="body">
+        <template v-if="!isLoad">
+            <Loader />
+        </template>
+    </Teleport>
 </template>
 
 <script setup>
@@ -35,15 +41,36 @@ import TrendAbout from '../components/trend/TrendAbout.vue';
 import SearchPanel from '../components/searchPanel/SearchPanel.vue';
 import ListArticle from '../components/article/ListArticle.vue';
 import OtherTrend from '../components/trend/OtherTrend.vue';
-import { onMounted, ref, watch } from 'vue';
-import { getTrend } from '../db/db.js';
-import { useRoute } from 'vue-router';
+import { computed, onMounted, ref, watch } from 'vue';
 import FooterComponent from '../components/main/FooterComponent.vue';
+import { useNewsStore } from '@/stores/newsStore';
+import Loader from '@/components/loader/Loader.vue';
+import { useRoute } from 'vue-router';
 
-const route = useRoute();
-const searchValue = ref('')
+const newsStore = useNewsStore();
+const isLoad = ref(false);
+const searchValue = ref('');
 const dataTrend = ref([])
 const data = ref([])
+const activeTags = ref([])
+const route = useRoute();
+
+
+const getNewsList = computed(() => {
+    return newsStore.getNewsList;
+})
+
+const getTags = computed(() => {
+    return newsStore.getTags;
+})
+
+const getCategory = computed(() => {
+    return newsStore.getCategory;
+})
+
+const getCategoryId = computed(() => {
+    return newsStore.getCategoryId;
+})
 
 function search () {
     data.value = dataTrend.value.filter(el => {
@@ -51,9 +78,19 @@ function search () {
     })
 }
 
+function setTags (id){  
+    if (!activeTags.value.includes(id)) {
+        activeTags.value.push(id)
+    }else{
+        activeTags.value =  activeTags.value.filter( el => el !== id)
+    }
+}
+
 onMounted(() => {
-    dataTrend.value = getTrend(route.params.name);
     data.value = dataTrend.value
+    newsStore.getTagsDb();
+    newsStore.getLisParamstDb({ "category": getCategoryId.value });
+
 })
 
 watch(searchValue, (newVal) => {
@@ -62,10 +99,32 @@ watch(searchValue, (newVal) => {
     }
 })
 
-watch(() => route.params.name, (newVal) => {
-    dataTrend.value = getTrend(newVal);
-    data.value = dataTrend.value ;
-}, { deep: true })
+watch(activeTags, (newVal) => {
+    console.log(newVal);
+
+    isLoad.value = false
+    if (activeTags.value.length > 0) {
+        newsStore.getLisParamstDb({ "tags": newVal.toString() })
+    }else{
+        newsStore.getLisParamstDb({ "category": getCategoryId.value })
+    }
+},{deep: true})
+
+watch([getNewsList, getTags, getCategory], () => {
+    console.log("getNewsList, getTags, get");
+    
+    isLoad.value = true
+    data.value = getNewsList.value
+})
+
+watch(() => route.params.name, () => {
+    newsStore.getLisParamstDb({ "category": getCategoryId.value });
+    activeTags.value=[]
+    isLoad.value = false;
+})
+
+
+
 
 </script>
 <style scoped lang="scss">
@@ -100,7 +159,7 @@ watch(() => route.params.name, (newVal) => {
     }
 
     @media (max-width: $sm) {
-        padding:0 16px 32px 16px;
+        padding: 0 16px 32px 16px;
     }
 }
 

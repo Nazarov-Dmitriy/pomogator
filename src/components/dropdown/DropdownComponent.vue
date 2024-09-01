@@ -4,9 +4,7 @@
         ref="dropDown"
         class="dashboard__dropdown-wrapper"
     >
-        <div
-            @click="isDropDownVisible = !isDropDownVisible"
-        >
+        <div @click="isDropDownVisible = !isDropDownVisible">
             <p :class="['dropdown-selected-text']">
                 {{ mappedSelectedOption }}
             </p>
@@ -14,10 +12,9 @@
                 class="dropdown-icon"
                 src="../../assets/icons/appearance.svg"
                 alt="icon-appearance"
-                :class="{'active' : isDropDownVisible}"
+                :class="{ 'active': isDropDownVisible }"
             >
         </div>
-
         <transition name="slide-fade">
             <div
                 v-if="isDropDownVisible"
@@ -37,15 +34,13 @@
             </div>
         </transition>
     </div>
- 
+
     <div
         v-else
         ref="dropDown"
         class="dashboard__dropdown-wrapper"
     >
-        <div
-            @click="isDropDownVisible = !isDropDownVisible"
-        >
+        <div @click="isDropDownVisible = !isDropDownVisible">
             <p :class="['dropdown-selected-text']">
                 {{ mappedSelectedOption }}
             </p>
@@ -53,7 +48,7 @@
                 class="dropdown-icon"
                 src="../../assets/icons/appearance.svg"
                 alt="icon-appearance"
-                :class="{'active' : isDropDownVisible}"
+                :class="{ 'active': isDropDownVisible }"
             >
         </div>
         <transition name="slide-fade">
@@ -65,9 +60,7 @@
                     v-for="(option, ind) in props.options"
                     :key="ind"
                 >
-                    <div
-                        class="option flex gap-2"
-                    >
+                    <div class="option flex gap-2">
                         <input
                             :id="option.name"
                             v-model="selectedOption"
@@ -84,7 +77,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref,  defineEmits,computed, onMounted, onBeforeUnmount, watch } from 'vue'
+import { defineProps, ref, defineEmits, computed, onMounted, onBeforeUnmount, watch } from 'vue'
 const dropDown = ref(null)
 
 const props = defineProps({
@@ -93,7 +86,7 @@ const props = defineProps({
         default: () => []
     },
     modelValue: {
-        type: [Number , Array] ,
+        type: [Number, Array],
         default: null
     },
     multi: {
@@ -120,7 +113,7 @@ const toggleOptionSelect = (option) => {
     }, 100)
 }
 
-const toggleMultiOptionSelect = () => { 
+const toggleMultiOptionSelect = () => {
     emit('update:modelValue', selectedOption.value)
 }
 
@@ -132,31 +125,30 @@ const closeDropDown = (element) => {
 
 
 const mappedSelectedOption = computed(() => {
-    if(props.multi){
-        let str=''
+    if (props.multi) {
+        let str = ''
         props.options.forEach(el => {
-            if( selectedOption.value?.includes(el.id)){
-                str+= el.name + ' '
+            if (selectedOption.value?.includes(el.id)) {
+                str += el.name + ' '
             }
-        }
-        )
+        })
         return str || props.placeholder
-    }else{
-        return props.options[selectedOption.value-1]?.name|| props.placeholder
+    } else {
+        return props.options[selectedOption.value - 1]?.name || props.placeholder
     }
 })
 
 onMounted(() => {
     window.addEventListener('click', closeDropDown);
-    selectedOption.value = props.modelValue ;
+    selectedOption.value = props.modelValue;
 })
 
 onBeforeUnmount(() => {
     window.removeEventListener('click', closeDropDown)
 })
 
-watch(() =>props.modelValue, () =>{
-    selectedOption.value = props.modelValue 
+watch(() => props.modelValue, () => {
+    selectedOption.value = props.modelValue
 })
 
 </script>
@@ -218,7 +210,7 @@ watch(() =>props.modelValue, () =>{
     top: 20px;
     right: 12px;
 
-    &.active{
+    &.active {
         transform: rotate(180deg);
     }
 }

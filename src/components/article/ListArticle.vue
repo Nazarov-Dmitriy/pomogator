@@ -18,17 +18,20 @@
                     class="card-img"
                 >
                 <div class="card-body">
-                    <div class="card-contnent">
+                    <div
+                        v-if="getTags.length > 0"
+                        class="card-contnent"
+                    >
                         <div
                             class="card-hashtags"
                             :class="props.customClass[2]"
                         >
                             <p
-                                v-for="hashtag in item.tags"
-                                :key="hashtag"
+                                v-for="tag in item.tags"
+                                :key="tag"
                                 class="card-hashtag"
                             >
-                                #{{ hashtag }}
+                                #{{ getTag(tag) }}
                             </p>
                         </div>
                         <p class="card__title">
@@ -59,7 +62,7 @@
                             </div>
                         </div>
                         <div class="card-date">
-                            <span class="card-date__text">Дата публикации</span> {{ item.publication_date }}
+                            <span class="card-date__text">Дата публикации</span> {{ item.date_publication }}
                         </div>
                     </div>
                 </div>
@@ -82,8 +85,9 @@
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue'
+import { useNewsStore } from '@/stores/newsStore'; 
 import { useRoute, useRouter } from 'vue-router'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
     data: {
@@ -104,8 +108,13 @@ const props = defineProps({
     }
 })
 
-const route = useRoute()
-const router = useRouter()
+const newsStore = useNewsStore();
+const route = useRoute();
+const router = useRouter();
+
+const getTags = computed(() => {
+    return newsStore.getTags;
+})
 
 const renderList = ref([])
 
@@ -115,6 +124,9 @@ function getUrl (url) {
 
 function getRenderList (list) {
     renderList.value = list
+}
+function getTag (tag){
+    return getTags.value.filter(el => el.id === tag)[0].name
 }
 
 function linkArticle (id) {
@@ -129,7 +141,8 @@ function linkArticle (id) {
 
 watch(
     () => props.data,
-    () => {}
+    () => {
+    }
 )
 </script>
 <style lang="scss">
@@ -270,12 +283,6 @@ watch(
 }
 
 .card-date__text {
-    @media (max-width: $xl) {
-        display: none;
-    }
-}
-</style>
--date__text {
     @media (max-width: $xl) {
         display: none;
     }

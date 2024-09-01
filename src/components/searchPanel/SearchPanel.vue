@@ -1,7 +1,10 @@
 <template>
     <div class="search-panel">
         <div class="search-panel__container">
-            <div v-if="showSearchPanel" class="search-panel__input-wraper">
+            <div
+                v-if="showSearchPanel"
+                class="search-panel__input-wraper"
+            >
                 <input
                     v-if="isSearchVisible"
                     :value="modelValue"
@@ -10,7 +13,7 @@
                     placeholder="Поиск"
                     @input="$emit('update:modelValue', $event.target.value)"
                     @keypress.enter="$emit('search')"
-                />
+                >
             </div>
 
             <div class="search-panel__block">
@@ -47,7 +50,11 @@
                             </g>
                             <defs>
                                 <clipPath id="clip0_3001_4986">
-                                    <rect width="24" height="24" fill="white" />
+                                    <rect
+                                        width="24"
+                                        height="24"
+                                        fill="white"
+                                    />
                                 </clipPath>
                             </defs>
                         </svg>
@@ -55,7 +62,7 @@
                 </div>
                 <div class="search-panel__hashtag">
                     <div
-                        v-for="(item, ind) in hashtagData"
+                        v-for="(item, ind) in getTags"
                         :key="item.id"
                         class="search-panel__item"
                         :class="{ active: activeTags.includes(ind + 1) }"
@@ -73,6 +80,7 @@
 </template>
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { useNewsStore } from '@/stores/newsStore'; 
 
 defineProps({
     modelValue: {
@@ -82,13 +90,21 @@ defineProps({
     isSearchVisible: {
         type: Boolean,
         default: null
+    },
+    activeTags: {
+        type: Array,
+        default: ()=> []
     }
 })
 
-const emit = defineEmits(['update:modelValue', 'search'])
+const newsStore = useNewsStore();
+const getTags = computed(() => {
+    return newsStore.getTags;
+})
+
+const emit = defineEmits(['update:modelValue', 'search', 'active-tags'])
 
 const searchActive = ref(false)
-const activeTags = ref([])
 
 const showSearchPanel = computed(() => {
     return searchActive.value
@@ -98,58 +114,21 @@ onMounted(() => {
     window.addEventListener('resize', resizeHandler)
 })
 
-function resizeHandler() {
+function resizeHandler () {
     if (window.innerWidth < 576) {
         searchActive.value = true
     }
 }
 
-function setActiveTags(id) {
-    if (!activeTags.value.includes(id)) {
-        activeTags.value.push(id)
-    }
+function setActiveTags (id) {
+    emit('active-tags', id)
 }
 
-function showSearch() {
+function showSearch () {
     searchActive.value = true
-
     emit('update:modelValue', '')
 }
 
-const hashtagData = ref([
-    {
-        id: 1,
-        name: 'Химия'
-    },
-    {
-        id: 2,
-        name: 'Физика'
-    },
-    {
-        id: 3,
-        name: 'Биология'
-    },
-    {
-        id: 4,
-        name: 'Робототехника'
-    },
-    {
-        id: 5,
-        name: 'Мастер-класс'
-    },
-    {
-        id: 6,
-        name: 'Практика'
-    },
-    {
-        id: 7,
-        name: 'Видео'
-    },
-    {
-        id: 8,
-        name: 'Статья'
-    }
-])
 </script>
 <style lang="scss">
 .search-panel__container {
