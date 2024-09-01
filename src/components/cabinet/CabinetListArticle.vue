@@ -9,10 +9,12 @@
                 v-for="item in renderList"
                 :key="item.id"
                 class="card"
-                @click="linkArticle(item.id)"
             >
                 <div class="card-top">
-                    <div class="card-top__edit">
+                    <div 
+                        class="card-top__edit"
+                        @click="modalShow = true"
+                    >
                         <img
                             src="@/assets/images/cabinet/cabinetProfile/edit.svg"
                             alt="edit"
@@ -21,7 +23,10 @@
                             редактировать
                         </p>
                     </div>
-                    <div class="card-top__delete">
+                    <div 
+                        class="card-top__delete"
+                        @click="deleteElement (item.id)"
+                    >
                         <p>
                             удалить
                         </p>
@@ -32,51 +37,55 @@
                         >
                     </div>
                 </div>
-                <img
-                    :src="getUrl(item.img)"
-                    alt="img-card"
-                    class="card-img"
+                <div
+                    @click="linkArticle(item.id)"
                 >
-                <div class="card-body">
-                    <div class="card-contnent">
-                        <div class="card-hashtags">
-                            <p
-                                v-for="hashtag in item.tags"
-                                :key="hashtag"
-                                class="card-hashtag"
-                            >
-                                #{{ hashtag }}
+                    <img
+                        :src="getUrl(item.img)"
+                        alt="img-card"
+                        class="card-img"
+                    >
+                    <div class="card-body">
+                        <div class="card-contnent">
+                            <div class="card-hashtags">
+                                <p
+                                    v-for="hashtag in item.tags"
+                                    :key="hashtag"
+                                    class="card-hashtag"
+                                >
+                                    #{{ hashtag }}
+                                </p>
+                            </div>
+                            <p class="card__title">
+                                {{ item.title }}
                             </p>
                         </div>
-                        <p class="card__title">
-                            {{ item.title }}
-                        </p>
-                    </div>
-                    <div class="card-footer">
-                        <div class="card-btns">
-                            <div class="card-btn show">
-                                <img
-                                    src="@/assets/icons/article/like.svg"
-                                    alt="like"
-                                    class="card-btn__img"
-                                >
-                                <p class="card-btn__count">
-                                    {{ item.like }}
-                                </p>
+                        <div class="card-footer">
+                            <div class="card-btns">
+                                <div class="card-btn show">
+                                    <img
+                                        src="@/assets/icons/article/like.svg"
+                                        alt="like"
+                                        class="card-btn__img"
+                                    >
+                                    <p class="card-btn__count">
+                                        {{ item.like }}
+                                    </p>
+                                </div>
+                                <div class="card-btn">
+                                    <img
+                                        src="@/assets/icons/article/show.svg"
+                                        alt="show"
+                                        class="card-btn__img"
+                                    >
+                                    <p class="card-btn__count">
+                                        {{ item.show }}
+                                    </p>
+                                </div>
                             </div>
-                            <div class="card-btn">
-                                <img
-                                    src="@/assets/icons/article/show.svg"
-                                    alt="show"
-                                    class="card-btn__img"
-                                >
-                                <p class="card-btn__count">
-                                    {{ item.show }}
-                                </p>
+                            <div class="card-date">
+                                <span class="card-date__text">Дата публикации</span> {{ item.publication_date }}
                             </div>
-                        </div>
-                        <div class="card-date">
-                            <span class="card-date__text">Дата публикации</span> {{ item.publication_date }}
                         </div>
                     </div>
                 </div>
@@ -93,13 +102,23 @@
             :data="props.data"
             @set-list="getRenderList"
         />
+        <Teleport to="body">
+            <ModalComponent
+                :show="modalShow"
+                @close="modalShow = false"
+            />
+        </Teleport>
     </div>
 </template>
 <script setup>
 import OfferMaterial from '@/components/cabinet/CabinetOfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue';
+import ModalComponent from '../modal/ModalComponentMaterials.vue';
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch } from 'vue';
+import { defineProps} from 'vue';
+
+const modalShow= ref(false)
 
 const props = defineProps({
     data: {
@@ -125,13 +144,18 @@ function getRenderList (list) {
     renderList.value = list
 }
 
+function deleteElement (id) {
+    this.renderList = this.renderList.filter((item) => item.id !== id);
+}
 
 function linkArticle (id) {
     if (route.name === 'trend-page') {
         router.push(`/trend/${route.params.name}/${id}`)
     } else if (route.name === 'blog-page') {
         router.push(`blog/article/${id}`)
-    }
+    } else if (route.name === 'materials') {
+        router.push(`/trend/${route.params.name}/${id}`)
+    } 
 }
 
 watch(() => props.data, () => {
