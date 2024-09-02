@@ -8,14 +8,6 @@
                 class="card"
                 @click="linkArticle(item.id)"
             >
-<<<<<<< HEAD
-                <img :src="getUrl(item.img)" alt="img-card" class="card-img" />
-                <div class="card-body">
-                    <div class="card-contnent">
-                        <div class="card-hashtags" :class="props.customText">
-                            <p v-for="hashtag in item.tags" :key="hashtag" class="card-hashtag">
-                                #{{ hashtag }}
-=======
                 <img
                     :src="getUrl(item.image)"
                     alt="img-card"
@@ -36,7 +28,6 @@
                                 class="card-hashtag"
                             >
                                 #{{ getTag(tag) }}
->>>>>>> origin/main
                             </p>
                         </div>
                         <p class="card__title">
@@ -66,14 +57,8 @@
                                 </p>
                             </div>
                         </div>
-<<<<<<< HEAD
-                        <div class="card-date" :class="props.customDate">
-                            <span class="card-date__text">Дата публикации</span>
-                            {{ item.publication_date }}
-=======
                         <div class="card-date">
                             <span class="card-date__text">Дата публикации</span> {{ item.date_publication }}
->>>>>>> origin/main
                         </div>
                     </div>
                 </div>
@@ -139,13 +124,8 @@ const getTags = computed(() => {
 
 const renderList = ref([])
 
-<<<<<<< HEAD
-function getUrl(url) {
-    return new URL(url, import.meta.url).href
-=======
 function getUrl (url) {
     return import.meta.env.VITE_SERVER_URL + url
->>>>>>> origin/main
 }
 
 function getRenderList(list) {
@@ -313,8 +293,4 @@ watch(
         display: none;
     }
 }
-<<<<<<< HEAD
 </style>
-=======
-</style>
->>>>>>> origin/main
