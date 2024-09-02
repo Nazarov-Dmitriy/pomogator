@@ -5,9 +5,11 @@
 
         <SearchPanel
             v-model="searchValue"
-            is-search-visible="true"
+            :is-search-visible="true"
             class="trend__search-panel"
+            :active-tags="activeTags"
             @search="search()"
+            @active-tags="setTags"
         />
         <ListArticle
             class="trend__article-header"
@@ -17,6 +19,11 @@
         <SubscrideComponent />
         <FooterComponent />
     </div>
+    <Teleport to="body">
+        <template v-if="!isLoad">
+            <Loader />
+        </template>
+    </Teleport>
 </template>
 
 <script setup>
@@ -25,32 +32,70 @@ import TaskMaterial from '../components/blog/TaskMaterial.vue';
 import SearchPanel from '../components/searchPanel/SearchPanel.vue';
 import ListArticle from '../components/article/ListArticle.vue';
 import SubscrideComponent from '../components/blog/SubscrideComponent.vue';
-import { onMounted, ref, watch } from 'vue';
-import  {getAll}  from '../db/db.js';   
+import { computed, onMounted, ref, watch } from 'vue';
 import FooterComponent from '../components/main/FooterComponent.vue';
+import { useNewsStore } from '@/stores/newsStore'; 
+import Loader from '@/components/loader/Loader.vue';
 
+const newsStore = useNewsStore();
+
+const isLoad = ref(false);
+
+const getNewsList = computed(() => {
+    return newsStore.getNewsList;
+})
+
+const getTags = computed(() => {
+    return newsStore.getTags;
+})
+
+const getCategory = computed(() => {
+    return newsStore.getCategory;
+})
+const activeTags = ref([])
 
 const searchValue = ref('')
-
-const dataAll = ref([])
 
 const data = ref([])
 
 function search (){
-    data.value  = dataAll.value.filter(el => {
+    data.value  = getNewsList.value.filter(el => {
         return  (el.title).toLocaleLowerCase().includes((searchValue.value).toLocaleLowerCase())
     })
 }
 
+function setTags (id){  
+    if (!activeTags.value.includes(id)) {
+        activeTags.value.push(id)
+    }else{
+        activeTags.value =  activeTags.value.filter( el => el !== id)
+    }
+}
+
 onMounted(()=>{
-    dataAll.value = [...getAll()]
-    data.value = dataAll.value
+    newsStore.getNewsListDb();
+    newsStore.getTagsDb();
+    newsStore.getCategoryDb();
 })
 
 watch(searchValue , (newVal)=>{
     if(newVal.trim() == ''){
-        data.value = dataAll.value
+        data.value = getNewsList.value
     }
+})
+
+watch(activeTags, (newVal) => {
+    isLoad.value = false
+    if (activeTags.value.length > 0) {
+        newsStore.getLisParamstDb({ "tags": newVal.toString() })
+    }else{
+        newsStore.getNewsListDb();
+    }
+},{deep: true})
+
+watch([getNewsList, getTags, getCategory], () => {
+    isLoad.value = true
+    data.value = getNewsList.value
 })
 
 </script>
@@ -60,6 +105,8 @@ watch(searchValue , (newVal)=>{
     overflow: hidden;
     max-width: 1440px;
     margin: 0 auto;
+    flex-direction: column;
+    display: flex;
 }
 
 .trend__search-panel {

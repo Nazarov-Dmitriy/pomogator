@@ -142,7 +142,6 @@ const formField = reactive({
 
 onMounted(() => {
     atricle()
-    console.log(atricleData);
 })
 
 function atricle () {

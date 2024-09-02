@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
     font-family: "Inter";
     src: url("../fonts/Inter-Regular.woff2") format("woff2"),
@@ -44,8 +48,6 @@ h2,
 h3,
 h4,
 h5,
-ul,
-li,
 span,
 form,
 input,

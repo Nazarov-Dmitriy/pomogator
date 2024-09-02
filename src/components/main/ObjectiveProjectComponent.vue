@@ -53,6 +53,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     max-width: 1440px;
     margin: 0 auto;
     position: relative;
+    width: 100%;
 
     @media (max-width: $lg) {
         overflow: visible;

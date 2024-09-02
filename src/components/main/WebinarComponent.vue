@@ -58,7 +58,11 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                             </div>
                         </div>
                         <div class="webinar__info-button-wrap">
-                            <BtnBackgroud class="webinar__info-button">
+                            <BtnBackgroud
+                                class="webinar__info-button"
+                                emit-name="link"
+                                @link="$router.push('/register')"
+                            >
                                 Регистрация
                             </BtnBackgroud>
                         </div>

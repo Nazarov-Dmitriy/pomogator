@@ -29,7 +29,7 @@
                                     class="card-btn__img"
                                 />
                                 <p class="card-btn__count">
-                                    {{ item.like }}
+                                    {{ item.likes }}
                                 </p>
                             </div>
                             <div class="card-btn">
@@ -39,7 +39,7 @@
                                     class="card-btn__img"
                                 />
                                 <p class="card-btn__count">
-                                    {{ item.show }}
+                                    {{ item.shows }}
                                 </p>
                             </div>
                         </div>
@@ -62,8 +62,9 @@
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue'
+import { useNewsStore } from '@/stores/newsStore'; 
 import { useRoute, useRouter } from 'vue-router'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
     data: {
@@ -100,17 +101,25 @@ const props = defineProps({
     }
 })
 
-const route = useRoute()
-const router = useRouter()
+const newsStore = useNewsStore();
+const route = useRoute();
+const router = useRouter();
+
+const getTags = computed(() => {
+    return newsStore.getTags;
+})
 
 const renderList = ref([])
 
-function getUrl(url) {
-    return new URL(url, import.meta.url).href
+function getUrl (url) {
+    return import.meta.env.VITE_SERVER_URL + url
 }
 
 function getRenderList(list) {
     renderList.value = list
+}
+function getTag (tag){
+    return getTags.value.filter(el => el.id === tag)[0].name
 }
 
 function linkArticle(id) {
@@ -125,7 +134,8 @@ function linkArticle(id) {
 
 watch(
     () => props.data,
-    () => {}
+    () => {
+    }
 )
 </script>
 <style lang="scss">

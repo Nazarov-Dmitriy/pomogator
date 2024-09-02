@@ -5,12 +5,10 @@
             class="modal-mask"
         >
             <div
-                v-esc="()=>$emit('close')"
+                v-esc="() => $emit('close')"
                 class="modal-container"
             >
-                <FormMaterial 
-                    @close="$emit('close')"
-                />
+                <FormMaterial @close="$emit('close')" />
             </div>
         </div>
     </Transition>
@@ -30,7 +28,7 @@ defineEmits(['close'])
 <style lang="scss" scoped>
 .modal-mask {
   position: fixed;
-  z-index: 9998;
+  z-index: 10;
   top: 0;
   left: 0;
   width: 100%;

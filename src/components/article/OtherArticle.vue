@@ -17,7 +17,7 @@
                 @click="article(item.id, item.trend)"
             >
                 <img
-                    :src="item.img"
+                    :src="getUrl(item.image)"
                     alt=""
                     class="article__other-img"
                 >
@@ -28,14 +28,14 @@
                             :key="el"
                             class="article__other-tag"
                         >
-                            #{{ el }}
+                            #{{ getTag(el) }}
                         </p>
                     </div>
                     <p class="article__other-subtitle">
                         {{ item.title }}
                     </p>
                     <p class="article__other-date">
-                        {{ item.publication_date }}
+                        {{ item.date_publication }}
                     </p>
                 </div>
             </div>
@@ -45,7 +45,9 @@
 </template>
 <script setup>
 import { useRouter } from 'vue-router';
+import { useNewsStore } from '@/stores/newsStore'; 
 import ArticleSubcribe from './ArticleSubcribe.vue';
+import { computed } from 'vue';
 const router = useRouter()
 
 const props = defineProps({
@@ -58,6 +60,22 @@ const props = defineProps({
         default: ''
     }
 })
+
+
+const newsStore = useNewsStore();
+
+const getTags = computed(() => {
+    return newsStore.getTags;
+})
+
+
+function getUrl (url) {
+    return import.meta.env.VITE_SERVER_URL + url
+}
+
+function getTag (tag){    
+    return getTags?.value.filter(el => el.id === tag)[0]?.name
+}
 
 function article (id, trend) {
     router.push({ path: `/trend/${trend}/${id}` })

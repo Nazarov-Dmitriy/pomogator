@@ -83,14 +83,14 @@
                                     >
                                         {{ item.answer }}
                                     </p>
-                                    <BtnGradient
+                                    <BtnComponent
                                         class="btn__proposal"
                                         emit-name="offer"
                                         style="margin-top: 10px;"
                                         @offer="modalShow = true"
                                     >
                                         Предложить материал
-                                    </BtnGradient>
+                                    </BtnComponent>
                                 </div>
                             </template>
                         </Transition>
@@ -113,7 +113,7 @@
 </template>
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import BtnGradient from '../btns/BtnComponent.vue';
+import BtnComponent from '../btns/BtnComponent.vue';
 import ModalComponent from '../modal/ModalComponent.vue';
 import { ref } from 'vue';
 
