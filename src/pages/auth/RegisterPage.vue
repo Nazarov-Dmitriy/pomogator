@@ -87,7 +87,6 @@ const registerForm = reactive({
 
 
 function Register (){
-    console.log(222);
     let data={
         login: registerForm.login,
         password: registerForm.password,

@@ -1,7 +1,7 @@
 <template>
     <div class="article">
         <img
-            :src="props.article?.img"
+            :src="getUrl(props.article?.image)"
             alt="atricle image"
             class="article__img"
         >
@@ -18,17 +18,17 @@
                         <div class="article__header">
                             <div class="article__header-block">
                                 <h1 class="article__title">
-                                    {{ article.title }}
+                                    {{ article?.title }}
                                 </h1>
                                 <div class="article__tags">
                                     <div
-                                        v-for="item in article.tags"
+                                        v-for="item in article?.tags"
                                         :key="item.id"
                                         class="article__tag-item"
                                     >
                                         <span class="article__tag-symbol">#</span>
                                         <p class="article__tag-text">
-                                            {{ item }}
+                                            {{ getTag(item) }}
                                         </p>
                                     </div>
                                 </div>
@@ -49,8 +49,8 @@
                         >
                             <div class="article__avatar">
                                 <img
-                                    v-if="article.avtor.avatar"
-                                    :src="article.avtor.avatar"
+                                    v-if="article.avtor?.avatar"
+                                    :src="article.avtor?.avatar"
                                     alt="avatar"
                                     class="article__avatar-img"
                                 >
@@ -63,20 +63,22 @@
                             </div>
                             <div class="article__avtor-info">
                                 <p class="article__avtor-article">
-                                    <span class="article__avtor-field">Автор статьи: </span>{{ article.avtor.fullname }}
+                                    <span class="article__avtor-field">Автор статьи: </span>{{ article?.avtor?.fullname || "Иванов Михаил Александрович"
+                                    }}
                                 </p>
                                 <p class="article__avtor-work">
-                                    <span class="article__avtor-field">Место работы: </span>{{ article.avtor.place_work }}
+                                    <span class="article__avtor-field">Место работы: </span>{{ article?.avtor?.place_work ||" Институт Информационных Технологий"
+                                    }}
                                 </p>
                                 <p>
                                     <span class="article__avtor-field">Источник: </span> <a
                                         :href="article.source"
                                         class="article__avtor-link"
-                                    >{{ article.source__text }}</a>
+                                    >{{ article?.source__text || "ссылка_на_райт.ру" }}</a>
                                 </p>
                             </div>
                             <p class="article__avtor-publication">
-                                Дата публикации {{ article.publication_date }}
+                                Дата публикации {{ article?.date_publication }}
                             </p>
                         </div>
                         <div
@@ -91,7 +93,7 @@
                                         alt="up"
                                         class="article__btns-icon"
                                     >
-                                    {{ article.show }}
+                                    {{ article?.shows }}
                                     <img
                                         src="@/assets/icons/article/down.svg"
                                         alt="down"
@@ -104,7 +106,7 @@
                                 />
                                 <div
                                     class="article__favorites"
-                                    :class="{'active': favorites}"
+                                    :class="{ 'active': favorites }"
                                     @click="favorites = !favorites"
                                 >
                                     <p class="article__favorites-text">
@@ -153,13 +155,13 @@
                     <div class="article__sidebar">
                         <div class="article__tags">
                             <div
-                                v-for="item in article.tags"
+                                v-for="item in article?.tags"
                                 :key="item.id"
                                 class="article__tag-item"
                             >
                                 <span class="article__tag-symbol">#</span>
                                 <p class="article__tag-text">
-                                    {{ item }}
+                                    {{ getTag(item) }}
                                 </p>
                             </div>
                         </div>
@@ -183,30 +185,22 @@
     </div>
 </template>
 <script setup>
+import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router'
 import BtnBackgroud from '../btns/BtnBackgroud.vue';
 import OtherArticle from '../article/OtherArticle.vue';
 import OtherTrend from '../trend/OtherTrend.vue';
-
-import { computed, ref, watch } from 'vue';
 import ShareComponent from './ShareComponent.vue';
-
-const favorites = ref(false)
-
-const router = useRouter()
+import { useNewsStore } from '@/stores/newsStore';
 
 const props = defineProps({
     article: {
-        type: Array,
-        default: () => []
-    },
-    type: {
-        type: String,
-        default: ''
+        type: Object,
+        default: () => { }
     },
     otherAtricle: {
-        type: Array,
-        default: () => []
+        type: Object,
+        default: () => { }
     },
     page: {
         type: String,
@@ -214,15 +208,26 @@ const props = defineProps({
     }
 })
 
-const getContnent = computed(() => {
-    let content = '';
-    if (props.article?.content) {
-        props.article?.content.forEach(el => {
-            content += el
-        });
-    }
-    return content
+const favorites = ref(false)
+const newsStore = useNewsStore();
+const router = useRouter()
+
+const getTags = computed(() => {
+    return newsStore.getTags;
 })
+
+const getContnent = computed(() => {    
+    return props.article?.article
+
+})
+
+function getUrl (url) {
+    return import.meta.env.VITE_SERVER_URL + url
+}
+
+function getTag (tag) {
+    return getTags?.value.filter(el => el.id === tag)[0]?.name
+}
 
 watch(() => props.data, () => {
 })
@@ -437,14 +442,21 @@ watch(() => props.data, () => {
     font-size: 20px;
     line-height: 30px;
     display: flex;
-    gap: 20px;
     flex-wrap: wrap;
     margin-top: 40px;
+    flex-direction: column;
 }
 
-.article__contnent p {
-    text-indent: 30px;
-    text-align: justify;
+.article__contnent {
+    p {
+        text-indent: 30px;
+        text-align: justify;
+    }
+
+    ul,
+    ol {
+        padding-inline-start: 40px;
+    }
 }
 
 .article__footer {
@@ -495,10 +507,10 @@ watch(() => props.data, () => {
     color: $blue;
     cursor: pointer;
 
-    &.active{
-        color:$blue;
+    &.active {
+        color: $blue;
 
-        & svg path{
+        & svg path {
             fill: url(#myGradient);
         }
     }
@@ -507,18 +519,18 @@ watch(() => props.data, () => {
         flex: 0 0 auto;
     }
 
-    &:hover{
-        color:$blue-primary;
+    &:hover {
+        color: $blue-primary;
 
-        & svg path{
+        & svg path {
             fill: $blue-primary;
         }
     }
 
-    &:active{
-        color:$blue;
+    &:active {
+        color: $blue;
 
-        & svg path{
+        & svg path {
             fill: url(#myGradient);
         }
     }
@@ -640,19 +652,19 @@ watch(() => props.data, () => {
     }
 }
 
-.article-layout{
+.article-layout {
     position: relative;
     overflow: hidden;
 }
 
-.article-bg{
+.article-bg {
     position: absolute;
     z-index: 0;
     bottom: 206px;
     right: -866px;
 
     @media (max-width: $xl) {
-       display: none;
+        display: none;
     }
 }
 </style>

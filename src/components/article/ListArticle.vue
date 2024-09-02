@@ -8,12 +8,35 @@
                 class="card"
                 @click="linkArticle(item.id)"
             >
+<<<<<<< HEAD
                 <img :src="getUrl(item.img)" alt="img-card" class="card-img" />
                 <div class="card-body">
                     <div class="card-contnent">
                         <div class="card-hashtags" :class="props.customText">
                             <p v-for="hashtag in item.tags" :key="hashtag" class="card-hashtag">
                                 #{{ hashtag }}
+=======
+                <img
+                    :src="getUrl(item.image)"
+                    alt="img-card"
+                    class="card-img"
+                >
+                <div class="card-body">
+                    <div
+                        v-if="getTags.length > 0"
+                        class="card-contnent"
+                    >
+                        <div
+                            class="card-hashtags"
+                            :class="props.customClass[2]"
+                        >
+                            <p
+                                v-for="tag in item.tags"
+                                :key="tag"
+                                class="card-hashtag"
+                            >
+                                #{{ getTag(tag) }}
+>>>>>>> origin/main
                             </p>
                         </div>
                         <p class="card__title">
@@ -29,7 +52,7 @@
                                     class="card-btn__img"
                                 />
                                 <p class="card-btn__count">
-                                    {{ item.like }}
+                                    {{ item.likes }}
                                 </p>
                             </div>
                             <div class="card-btn">
@@ -39,13 +62,18 @@
                                     class="card-btn__img"
                                 />
                                 <p class="card-btn__count">
-                                    {{ item.show }}
+                                    {{ item.shows }}
                                 </p>
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div class="card-date" :class="props.customDate">
                             <span class="card-date__text">Дата публикации</span>
                             {{ item.publication_date }}
+=======
+                        <div class="card-date">
+                            <span class="card-date__text">Дата публикации</span> {{ item.date_publication }}
+>>>>>>> origin/main
                         </div>
                     </div>
                 </div>
@@ -62,8 +90,9 @@
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue'
+import { useNewsStore } from '@/stores/newsStore'; 
 import { useRoute, useRouter } from 'vue-router'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 const props = defineProps({
     data: {
@@ -100,17 +129,30 @@ const props = defineProps({
     }
 })
 
-const route = useRoute()
-const router = useRouter()
+const newsStore = useNewsStore();
+const route = useRoute();
+const router = useRouter();
+
+const getTags = computed(() => {
+    return newsStore.getTags;
+})
 
 const renderList = ref([])
 
+<<<<<<< HEAD
 function getUrl(url) {
     return new URL(url, import.meta.url).href
+=======
+function getUrl (url) {
+    return import.meta.env.VITE_SERVER_URL + url
+>>>>>>> origin/main
 }
 
 function getRenderList(list) {
     renderList.value = list
+}
+function getTag (tag){
+    return getTags.value.filter(el => el.id === tag)[0].name
 }
 
 function linkArticle(id) {
@@ -125,7 +167,8 @@ function linkArticle(id) {
 
 watch(
     () => props.data,
-    () => {}
+    () => {
+    }
 )
 </script>
 <style lang="scss">
@@ -270,4 +313,8 @@ watch(
         display: none;
     }
 }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> origin/main

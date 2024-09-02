@@ -46,7 +46,6 @@ const loginForm = reactive({
 })
 
 function Login (){
-    console.log(222);
     let data={
         login: loginForm.login,
         password: loginForm.password

@@ -11,6 +11,8 @@ import CabinetCertificates from '../pages/CabinetCertificates.vue'
 import CabinetMaterials from '../pages/CabinetMaterials.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
+import AddNewsPage from '../pages/moderator/AddNewsPage.vue'
+import ModeratorPage from '../pages/moderator/ModeratorPage.vue'
 
 
 
@@ -92,6 +94,17 @@ const router = createRouter({
                     path: 'materials',
                     name: 'materials',                    
                     component: CabinetMaterials,
+                },
+            ]
+        },
+        {
+            path: '/moderator',
+            component: ModeratorPage,
+            children: [      
+                {
+                    path: 'add-news',
+                    name: 'add-news',                    
+                    component: AddNewsPage,
                 },
             ]
         },

@@ -64,35 +64,20 @@
                         Войти
                     </BtnComponent>
                 </div>
-                <div class="header__trend">
+                <div
+                    v-if="getCategory"
+                    class="header__trend"
+                >
                     <div class="header__trend-decor" />
                     <router-link
-                        to="/trend/khimiya/"
+                        v-for="item in getCategory"
+                        :key="item.id"
+                        :to="`/trend/${item.link_name}`"
                         class="header__trend-item"
                         active-class="active"
+                        @click="setCategoryId(item.id)"
                     >
-                        Химия
-                    </router-link>
-                    <router-link
-                        to="/trend/fizika"
-                        class="header__trend-item"
-                        active-class="active"
-                    >
-                        Физика
-                    </router-link>
-                    <router-link
-                        to="/trend/biologiya"
-                        class="header__trend-item"
-                        active-class="active"
-                    >
-                        Биология
-                    </router-link>
-                    <router-link
-                        to="/trend/robototekhnika"
-                        class="header__trend-item"
-                        active-class="active"
-                    >
-                        Робототехника
+                        {{ item.name }}
                     </router-link>
                     <div class="header__trend-decor" />
                 </div>
@@ -101,13 +86,32 @@
     </div>
 </template>
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import BtnComponent from './btns/BtnComponent.vue'
-import { ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import { useNewsStore } from '@/stores/newsStore';
 
+const newsStore = useNewsStore();
 const btnMenu = ref(false)
 const menuActive = ref(false)
 const router = useRouter()
+const route = useRoute();
+
+const getCategory = computed(() => {
+    return newsStore.getCategory;
+})
+
+const getCategoryId = computed(() => {
+    return newsStore.getCategoryId;
+})
+
+onMounted(() => {
+    newsStore.getCategoryDb();
+})
+
+function setCategoryId (id) {
+    newsStore.setCategoryId(id)
+}
 
 function setMenuAcive () {
     btnMenu.value = !btnMenu.value
@@ -117,6 +121,14 @@ function setMenuAcive () {
 function mainLink () {
     router.push('/')
 }
+
+watch([getCategory, getCategoryId], () => {
+
+    if (!getCategoryId.value && route.name === "trend-page") {
+        let id = getCategory.value.findIndex(el => el.link_name === route.params.name) + 1;
+        newsStore.setCategoryId(id)
+    }
+})
 
 </script>
 <style lang="scss">

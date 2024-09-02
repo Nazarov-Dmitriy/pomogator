@@ -5,7 +5,7 @@ import FooterComponent from '../components/main/FooterComponent.vue';
 </script>
 
 <template>
-    <div class="page-container">
+    <div class="page-container page">
         <HeaderComponent />
         <main class="main-container">
             <slot />
