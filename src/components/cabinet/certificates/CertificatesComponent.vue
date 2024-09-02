@@ -13,6 +13,7 @@
             :data="certificateData"
             @setList="updateCurrentCertificates"
         />
+        
     </section>
 </template>
 

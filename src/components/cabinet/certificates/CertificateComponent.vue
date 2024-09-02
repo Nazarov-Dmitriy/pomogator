@@ -32,7 +32,7 @@
                             alt=""
                             @click="downloadCertificate(certificate)"
                         />
-                        <img src="/public/image/cabinet/cabinetCertificates/share.svg" alt="" />
+                        <CertificateShare />
                         <img
                             src="/public/image/cabinet/cabinetCertificates/print.png"
                             alt=""
@@ -49,7 +49,8 @@
 
 <script setup>
 import PrintCertificate from './PrintCertificate.vue'
-import { createVNode, render } from 'vue'
+import { createVNode, ref, render } from 'vue'
+import CertificateShare from './CertificateShare.vue'
 
 const props = defineProps({
     certificateData: {
@@ -57,6 +58,8 @@ const props = defineProps({
         default: () => []
     }
 })
+
+const showMenu = ref(true)
 
 function downloadCertificate(certificate) {
     const link = document.createElement('a')

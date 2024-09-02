@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useProfileStore = defineStore('profileStore', {
     state: () => ({
-        profileImage: '', 
+        profileImage: '',
         personalData: {
             lastName: '',
             firstName: '',
@@ -14,7 +14,7 @@ export const useProfileStore = defineStore('profileStore', {
             organization: ''
         }
     }),
-    
+
     actions: {
         setPersonalData(field, value) {
             if (this.personalData.hasOwnProperty(field)) {
@@ -22,10 +22,20 @@ export const useProfileStore = defineStore('profileStore', {
             }
         },
         setProfileImage(imageData) {
-            this.profileImage = imageData 
+            this.profileImage = imageData
         },
         removeProfileImage() {
-            this.profileImage = '' 
+            this.profileImage = ''
+        }
+    },
+    computed: {
+        profileStore() {
+            return useProfileStore()
+        }
+    },
+    methods: {
+        updateName(value) {
+            this.profileStore.setPersonalData('firstName', value)
         }
     }
 })

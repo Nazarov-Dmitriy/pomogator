@@ -4,7 +4,7 @@
         <form
             @submit.prevent="checkPasswordLength"
             @keypress.enter.prevent="checkPasswordLength"
-            class="form profile__change-form"
+            class=" profile__change-form"
         >
             <div class="profile__change-input-group">
                 <label class="profile__change-label">Старый пароль</label>
