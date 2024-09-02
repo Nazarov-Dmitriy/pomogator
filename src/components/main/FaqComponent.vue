@@ -1,15 +1,9 @@
 <template>
     <section class="faq">
         <div class="faq-container">
-            <h2 class="faq__title">
-                Часто задаваемые вопросы
-            </h2>
+            <h2 class="faq__title">Часто задаваемые вопросы</h2>
             <div class="faq__content">
-                <div
-                    v-for="item in data"
-                    :key="item.title"
-                    class="faq__item"
-                >
+                <div v-for="item in data" :key="item.title" class="faq__item">
                     <div class="faq__question">
                         <div class="faq__count">
                             <p class="faq__count-text">
@@ -22,7 +16,7 @@
                         <div class="faq__arrow">
                             <button
                                 class="faq__arrow-btn"
-                                :class="{ 'active': id === item.id }"
+                                :class="{ active: id === item.id }"
                                 @click="id = item.id"
                             >
                                 <svg
@@ -47,46 +41,30 @@
                     <div class="faq__answer">
                         <Transition name="fade">
                             <template v-if="item.id === id">
-                                <div
-                                    v-if="item.id !== 3 && item.id !== 4"
-                                    class="faq__answer-item"
-                                >
-                                    <p
-                                        class="faq__answer-text"
-                                    >
+                                <div v-if="item.id !== 3 && item.id !== 4" class="faq__answer-item">
+                                    <p class="faq__answer-text">
                                         {{ item.answer }}
                                     </p>
                                 </div>
-                                <div
-                                    v-else-if="item.id == 3"
-                                    class="faq__answer-item"
-                                >
-                                    <p
-                                       
-                                        class="faq__answer-text"
-                                    >
+                                <div v-else-if="item.id == 3" class="faq__answer-item">
+                                    <p class="faq__answer-text">
                                         {{ item.answer }}
                                         <BtnBackgroud
                                             class="webinar__info-button"
-                                            style="margin-top: 10px;"
+                                            style="margin-top: 10px"
                                         >
                                             Регистрация
                                         </BtnBackgroud>
                                     </p>
                                 </div>
-                                <div
-                                    v-else-if="item.id == 4"
-                                    class="faq__answer-item"
-                                >
-                                    <p
-                                        class="faq__answer-text"
-                                    >
+                                <div v-else-if="item.id == 4" class="faq__answer-item">
+                                    <p class="faq__answer-text">
                                         {{ item.answer }}
                                     </p>
                                     <BtnComponent
                                         class="btn__proposal"
                                         emit-name="offer"
-                                        style="margin-top: 10px;"
+                                        style="margin-top: 10px"
                                         @offer="modalShow = true"
                                     >
                                         Предложить материал
@@ -98,27 +76,20 @@
                 </div>
             </div>
         </div>
-        <img
-            src="@/assets/images/main/faq/bg-line.svg"
-            alt="bg-image"
-            class="faq__bg-line"
-        >
+        <img src="@/assets/images/main/faq/bg-line.svg" alt="bg-image" class="faq__bg-line" />
         <Teleport to="body">
-            <ModalComponent
-                :show="modalShow"
-                @close="modalShow = false"
-            />
+            <ModalComponent :show="modalShow" @close="modalShow = false" />
         </Teleport>
     </section>
 </template>
 <script setup>
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import BtnComponent from '../btns/BtnComponent.vue';
-import ModalComponent from '../modal/ModalComponentFaq.vue';
-import { ref } from 'vue';
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import BtnComponent from '../btns/BtnComponent.vue'
+import ModalComponent from '../modal/ModalComponentFaq.vue'
+import { ref } from 'vue'
 
 const id = ref(null)
-const modalShow= ref(false)
+const modalShow = ref(false)
 
 const data = ref([
     {
@@ -145,13 +116,12 @@ const data = ref([
         id: 5,
         title: 'Если прошел регистрацию на вебинар, но не получилось присоединиться во время трансляции, будет ли возможность посмотреть вебинар в записи?',
         answer: 'Запись всех вебинаров сохраняется на сайте. Все зарегистрированные на вебинар пользователи получают сертификаты.'
-    },
+    }
 ])
 
-function getCount (ind) {
+function getCount(ind) {
     return ind < 10 ? '0' + (ind + 1) : ind + 1
 }
-
 </script>
 <style lang="scss">
 .faq {
@@ -177,7 +147,7 @@ function getCount (ind) {
 }
 
 .faq__title {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 36px;
     line-height: 48px;
     color: $blue-primary;
@@ -227,7 +197,6 @@ function getCount (ind) {
     justify-content: center;
     align-items: center;
 
-
     &-text {
         background: $gradient;
         background-clip: text;
@@ -249,7 +218,6 @@ function getCount (ind) {
     @media (max-width: $lg) {
         font-size: 20px;
         line-height: 24px;
-
     }
 
     @media (max-width: $sm) {
@@ -264,8 +232,7 @@ function getCount (ind) {
     justify-content: flex-start;
     flex-shrink: 0;
     margin-left: auto;
-    transition: all .5s ease;
-
+    transition: all 0.5s ease;
 
     &:has(.active) {
         transform: translateX(24px);
@@ -312,12 +279,12 @@ function getCount (ind) {
     }
 }
 
-.faq__answer-item{
+.faq__answer-item {
     position: absolute;
     top: 0;
     padding: 24px;
     border: 2px solid $blue;
-    border-radius: 32px;  
+    border-radius: 32px;
     top: 50%;
     transform: translate(0, -16px);
     background: $white;
@@ -332,18 +299,16 @@ function getCount (ind) {
     }
 }
 
-
 .faq__answer-text {
     font-size: 16px;
     line-height: 1.5;
-    font-weight: 400;  
+    font-weight: 400;
 
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 24px;
     }
 }
-
 
 .fade-enter-active,
 .fade-leave-active {
