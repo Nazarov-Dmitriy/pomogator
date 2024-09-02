@@ -63,18 +63,21 @@
                             </div>
                             <div class="article__avtor-info">
                                 <p class="article__avtor-article">
-                                    <span class="article__avtor-field">Автор статьи: </span>{{ article?.avtor?.fullname || "Иванов Михаил Александрович"
+                                    <span class="article__avtor-field">Автор статьи: </span>{{ article?.avtor?.fullname
+                                        || "Иванов Михаил Александрович"
                                     }}
                                 </p>
                                 <p class="article__avtor-work">
-                                    <span class="article__avtor-field">Место работы: </span>{{ article?.avtor?.place_work ||" Институт Информационных Технологий"
+                                    <span class="article__avtor-field">Место работы: </span>{{
+                                        article?.avtor?.place_work || " Институт Информационных Технологий"
                                     }}
                                 </p>
                                 <p>
                                     <span class="article__avtor-field">Источник: </span> <a
                                         :href="article.source"
                                         class="article__avtor-link"
-                                    >{{ article?.source__text || "ссылка_на_райт.ру" }}</a>
+                                    >{{ article?.source__text || "ссылка_на_райт.ру"
+                                    }}</a>
                                 </p>
                             </div>
                             <p class="article__avtor-publication">
@@ -88,17 +91,27 @@
                         <div class="article__footer">
                             <div class="article__btns">
                                 <div class="article__raiting">
-                                    <img
-                                        src="@/assets/icons/article/up.svg"
-                                        alt="up"
-                                        class="article__btns-icon"
+                                    <button
+                                        class="article__raiting-btn"
+                                        @click="setLike('add')"
                                     >
-                                    {{ article?.shows }}
-                                    <img
-                                        src="@/assets/icons/article/down.svg"
-                                        alt="down"
-                                        class="article__btns-icon"
+                                        <img
+                                            src="@/assets/icons/article/up.svg"
+                                            alt="up"
+                                            class="article__raiting-btn-icon"
+                                        >
+                                    </button>
+                                    {{ getLikes }}
+                                    <button
+                                        class="article__raiting-btn"
+                                        @click="setLike('dis')"
                                     >
+                                        <img
+                                            src="@/assets/icons/article/down.svg"
+                                            alt="down"
+                                            class="article__raiting-btn-icon"
+                                        >
+                                    </button>
                                 </div>
                                 <ShareComponent
                                     :article="article"
@@ -208,7 +221,7 @@ const props = defineProps({
     }
 })
 
-const favorites = ref(false)
+const favorites = ref(null)
 const newsStore = useNewsStore();
 const router = useRouter()
 
@@ -216,13 +229,44 @@ const getTags = computed(() => {
     return newsStore.getTags;
 })
 
-const getContnent = computed(() => {    
-    return props.article?.article
+const activeLike = ref(false);
 
+const getContnent = computed(() => {
+    return props.article?.article
+})
+
+const getLikes = computed(() => {
+    if(!activeLike.value){
+        return  props.article?.likes
+    }else if(activeLike.value === "add"){
+        return  props.article?.likes + 1
+    }else{
+        return  props.article?.likes - 1
+    }
 })
 
 function getUrl (url) {
     return import.meta.env.VITE_SERVER_URL + url
+}
+
+function setLike (param) {
+    if(param === "add"){
+        if(activeLike.value !== 'add'){
+            newsStore.setLike({
+                id: props.article.id,
+                like: activeLike.value ? 2 : 1
+            })
+        }
+        activeLike.value = 'add'
+    }else{
+        if(activeLike.value !== 'dis'){
+            newsStore.setLike({
+                id: props.article.id,
+                dislike: activeLike.value ? 2 : 1
+            })
+        }
+        activeLike.value = 'dis'
+    }
 }
 
 function getTag (tag) {
@@ -480,12 +524,6 @@ watch(() => props.data, () => {
     align-items: center;
 }
 
-.article__btns-icon {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-}
-
 .article__raiting {
     display: flex;
     align-items: center;
@@ -494,6 +532,17 @@ watch(() => props.data, () => {
     line-height: 32px;
     font-weight: 500;
     color: $black;
+
+    &-btn {
+        width: 24px;
+        height: 24px;
+
+        &-icon {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+    }
 }
 
 .article__favorites {

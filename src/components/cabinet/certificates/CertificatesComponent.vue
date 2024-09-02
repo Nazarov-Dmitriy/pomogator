@@ -1,19 +1,18 @@
 <template>
     <section class="certificates-section">
         <CabinetTitle>Полученные сертификаты</CabinetTitle>
-        <SearchPanel :isSearchVisible="isSearchVisible" />
+        <SearchPanel :is-search-visible="isSearchVisible" />
         <div class="certificates">
             <CertificateComponent
-                :certificateData="currentCertificates"
-                :isSearchVisible="isSearchVisible"
+                :certificate-data="currentCertificates"
+                :is-search-visible="isSearchVisible"
             />
         </div>
         <PaginationComponent
             :perpage="6"
             :data="certificateData"
-            @setList="updateCurrentCertificates"
+            @set-list="updateCurrentCertificates"
         />
-        
     </section>
 </template>
 
@@ -73,7 +72,7 @@ const certificateData = ref([
 
 const currentCertificates = ref([])
 
-function updateCurrentCertificates(paginatedData) {
+function updateCurrentCertificates (paginatedData) {
     currentCertificates.value = paginatedData
 }
 </script>

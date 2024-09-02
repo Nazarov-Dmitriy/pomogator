@@ -60,6 +60,7 @@ onMounted(() => {
     newsStore.getTagsDb();
     newsStore.getNewsDb(articleId.value);
     newsStore.getNewsListDb();
+    newsStore.addShow(articleId.value)
 })
 
 function getOtherAtricle () {

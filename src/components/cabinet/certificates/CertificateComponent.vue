@@ -6,17 +6,26 @@
     >
         <div class="certificate__wrapper">
             <div class="certificate__main">
-                <h2 class="certificate__title">Сертификат</h2>
+                <h2 class="certificate__title">
+                    Сертификат
+                </h2>
                 <div class="certificate__info">
-                    <p class="certificate__text">Подтверждает, что</p>
-                    <h2 class="certificate__student-name">{{ certificate.studentData }}</h2>
+                    <p class="certificate__text">
+                        Подтверждает, что
+                    </p>
+                    <h2 class="certificate__student-name">
+                        {{ certificate.studentData }}
+                    </h2>
                     <p class="certificate__text">
                         Участвовал в вебинаре по IT технологиям для преподавателей
                     </p>
                 </div>
 
                 <div class="certificate__main-bottom">
-                    <img src="/public/image/cabinet/cabinetCertificates/small-logo.svg" alt="" />
+                    <img
+                        src="/public/image/cabinet/cabinetCertificates/small-logo.svg"
+                        alt=""
+                    >
                     <div class="span-wrapper">
                         <span>Дата вебинара</span>
                         <span>{{ certificate.date }}</span>
@@ -24,20 +33,22 @@
                 </div>
             </div>
             <div class="certificate__footer">
-                <h2 class="certificate__footer-title">{{ certificate.certificateName }}</h2>
+                <h2 class="certificate__footer-title">
+                    {{ certificate.certificateName }}
+                </h2>
                 <div class="certificate__footer-bottom">
                     <div class="certificate__icons">
                         <img
                             src="/public/image/cabinet/cabinetCertificates/download.svg"
                             alt=""
                             @click="downloadCertificate(certificate)"
-                        />
+                        >
                         <CertificateShare />
                         <img
                             src="/public/image/cabinet/cabinetCertificates/print.png"
                             alt=""
                             @click="printCertificate(index)"
-                        />
+                        >
                     </div>
 
                     <span class="certificate__data">{{ certificate.date }}</span>
@@ -61,14 +72,14 @@ const props = defineProps({
 
 const showMenu = ref(true)
 
-function downloadCertificate(certificate) {
+function downloadCertificate (certificate) {
     const link = document.createElement('a')
     link.href = certificate.downloadUrl
     link.download = `${certificate.studentData}-certificate.pdf`
     link.click()
 }
 
-function printCertificate(index) {
+function printCertificate (index) {
     const certificate = props.certificateData[index]
 
     const printWindow = window.open('', '_blank')

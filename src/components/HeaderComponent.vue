@@ -385,6 +385,7 @@ watch([getCategory, getCategoryId], () => {
     background: $white;
     display: flex;
     gap: 2px;
+    z-index: 100;
 
     @media (max-width: $lg) {
         left: -40px;

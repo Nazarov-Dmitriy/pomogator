@@ -75,8 +75,6 @@ export const useNewsStore = defineStore("schoolsStore", {
             }
         },
         getLisParamstDb (param,) {
-            console.log(param);
-            
             try {
                 axiosR.get(`/news/list`,
                     {
@@ -106,7 +104,28 @@ export const useNewsStore = defineStore("schoolsStore", {
                 )
                 .catch(err => {
                     console.log(err);
-                })        },
+                })
+        },
+        addShow (id) {
+            axiosR.get('/news/show/' + id)
+                .then(() => {
+                }
+                )
+                .catch(err => {
+                    console.log(err);
+                })
+        },
+        setLike (params) {
+            axiosR.get('/news/like', {
+                params
+            })
+                .then(() => {
+                }
+                )
+                .catch(err => {
+                    console.log(err);
+                })
+        },
     },
 });
 
