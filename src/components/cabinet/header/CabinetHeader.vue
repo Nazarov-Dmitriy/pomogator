@@ -162,7 +162,7 @@ function mainLink() {
 .header__contaner {
     background: $gradient-background;
     position: relative;
-    z-index: 9000;
+    // z-index: 9000;
 }
 
 .header__wrapper {
