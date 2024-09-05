@@ -58,5 +58,8 @@ const modalShow= ref(false)
 
 .cabinet-offer-material__btn {
     flex-shrink: 0;
+    @media (max-width: $sm) {
+        width: 100%;
+    }
 }
 </style>

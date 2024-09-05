@@ -57,7 +57,7 @@ const hashtagData = ref([
     flex-wrap: wrap;
 
     @media (max-width: $sm) {
-        padding: 0 16px;
+        padding: 0;
         border-bottom: none;
         gap: 16px;
     }
@@ -76,6 +76,7 @@ const hashtagData = ref([
 
     @media (max-width: $sm) {
         justify-content: flex-start;
+        gap: 16px;
     }
 }
 

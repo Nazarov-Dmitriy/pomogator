@@ -63,11 +63,11 @@ watch(searchValue , (newVal)=>{
     position: relative;
 
     @media (max-width: $lg) {
-        padding: 8px 40px 32px 40px;
+        padding: 0 40px;
     }
 
     @media (max-width: $sm) {
-        padding: 24px 0px 32px 0px;
+        padding: 32px 16px;
     }
 }
 

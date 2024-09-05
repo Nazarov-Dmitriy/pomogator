@@ -13,5 +13,16 @@
     font-style: normal;
     font-weight: 600;
     color: #4360F8;
+
+    @media (max-width: $lg) {
+        padding: 40px 40px 0 40px;
+        font-size: 32px;
+        line-height: 40px;    
+    }
+
+    @media (max-width: $sm) {
+        padding: 32px 16px;
+        font-size: 30px;
+    }
 }
 </style>

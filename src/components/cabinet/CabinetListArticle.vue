@@ -1,14 +1,14 @@
 <template>
-    <div class="list-article__container">
+    <div class="cabinet-list-article__container">
         <slot name="header" />
         <div
             v-if="renderList.length > 0"
-            class="list-article"
+            class="cabinet-list-article"
         >
             <div
                 v-for="item in renderList"
                 :key="item.id"
-                class="card"
+                class="cabinet-card"
             >
                 <div class="card-top">
                     <div 
@@ -43,48 +43,48 @@
                     <img
                         :src="getUrl(item.img)"
                         alt="img-card"
-                        class="card-img"
+                        class="cabinet-card-img"
                     >
-                    <div class="card-body">
-                        <div class="card-contnent">
-                            <div class="card-hashtags">
+                    <div class="cabinet-card-body">
+                        <div class="cabinet-card-contnent">
+                            <div class="cabinet-card-hashtags">
                                 <p
                                     v-for="hashtag in item.tags"
                                     :key="hashtag"
-                                    class="card-hashtag"
+                                    class="cabinet-card-hashtag"
                                 >
                                     #{{ hashtag }}
                                 </p>
                             </div>
-                            <p class="card__title">
+                            <p class="cabinet-card__title">
                                 {{ item.title }}
                             </p>
                         </div>
-                        <div class="card-footer">
-                            <div class="card-btns">
+                        <div class="cabinet-card-footer">
+                            <div class="cabinet-card-btns">
                                 <div class="card-btn show">
                                     <img
                                         src="@/assets/icons/article/like.svg"
                                         alt="like"
-                                        class="card-btn__img"
+                                        class="cabinet-card-btn__img"
                                     >
-                                    <p class="card-btn__count">
+                                    <p class="cabinet-card-btn__count">
                                         {{ item.like }}
                                     </p>
                                 </div>
-                                <div class="card-btn">
+                                <div class="cabinet-card-btn">
                                     <img
                                         src="@/assets/icons/article/show.svg"
                                         alt="show"
-                                        class="card-btn__img"
+                                        class="cabinet-card-btn__img"
                                     >
-                                    <p class="card-btn__count">
+                                    <p class="cabinet-card-btn__count">
                                         {{ item.show }}
                                     </p>
                                 </div>
                             </div>
-                            <div class="card-date">
-                                <span class="card-date__text">Дата публикации</span> {{ item.publication_date }}
+                            <div class="cabinet-card-date">
+                                <span class="cabinet-card-date__text">Дата публикации</span> {{ item.publication_date }}
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@ watch(() => props.data, () => {
 
 </script>
 <style lang="scss">
-.list-article__container {
+.cabinet-list-article__container {
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -176,18 +176,18 @@ watch(() => props.data, () => {
     }
 }
 
-.list-article {
+.cabinet-list-article {
     display: grid;
     grid-template-columns: 1fr 1fr;
     box-sizing: border-box;
     gap: 24px 16px;
 
-    @media (max-width: $md) {
+    @media (max-width: $sm) {
         grid-template-columns: 1fr;
     }
 }
 
-.card {
+.cabinet-card {
     border-radius: 32px;
     box-sizing: border-box;
     border: 2px solid $blue;
@@ -235,6 +235,9 @@ watch(() => props.data, () => {
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
+        @media (max-width: $sm) {
+            display: none;
+        }
     }
 }
 
@@ -258,13 +261,13 @@ watch(() => props.data, () => {
     height: 24px;
 }
 
-.card-img {
+.cabinet-card-img {
     width: 100%;
     aspect-ratio: 2.9 / 1;
     object-fit: cover;
 }
 
-.card-body {
+.cabinet-card-body {
     padding: 16px;
     display: flex;
     gap: 20px;
@@ -272,26 +275,26 @@ watch(() => props.data, () => {
     flex-grow: 1;
 }
 
-.card-contnent {
+.cabinet-card-contnent {
     flex: 1 1 100%;
     display: flex;
     flex-direction: column;
     gap: 7px;
 }
 
-.card-hashtags {
+.cabinet-card-hashtags {
     display: flex;
     justify-content: flex-end;
     gap: 40px;
 }
 
-.card-hashtag {
+.cabinet-card-hashtag {
     font-size: 16px;
     line-height: 24px;
     color: $blue
 }
 
-.card__title {
+.cabinet-card__title {
     flex: 1 1 100%;
     font-size: 24px;
     line-height: 32px;
@@ -304,43 +307,43 @@ watch(() => props.data, () => {
     }
 }
 
-.card-footer {
+.cabinet-card-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 8px;
 }
 
-.card-btns {
+.cabinet-card-btns {
     display: flex;
     gap: 40px;
     align-items: center
 }
 
-.card-btn {
+.cabinet-card-btn {
     display: flex;
     gap: 10px;
     align-items: center
 }
 
-.card-btn__img {
+.cabinet-card-btn__img {
     width: 24px;
     height: 24px;
 }
 
-.card-btn__count {
+.cabinet-card-btn__count {
     font-size: 16px;
     line-height: 24px;
     color: $blue
 }
 
-.card-date {
+.cabinet-card-date {
     font-size: 16px;
     line-height: 24px;
     color: $blue
 }
 
-.card-date__text {
+.cabinet-card-date__text {
     @media (max-width: $xl) {
         display: none;
     }
