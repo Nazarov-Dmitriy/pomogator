@@ -241,7 +241,11 @@ const getLikes = computed(() => {
     }else if(activeLike.value === "add"){
         return  props.article?.likes + 1
     }else{
-        return  props.article?.likes - 1
+        if(props.article?.likes - 1 > 0){
+            return  props.article?.likes - 1
+        }else{
+            return 0
+        }
     }
 })
 
@@ -252,9 +256,17 @@ function getUrl (url) {
 function setLike (param) {
     if(param === "add"){
         if(activeLike.value !== 'add'){
+            let count;
+
+            if(props.article?.likes === 0 ){
+                count = 1;
+            }else{
+                count =activeLike.value === "add" ? 2 : 1
+            }
+            
             newsStore.setLike({
                 id: props.article.id,
-                like: activeLike.value ? 2 : 1
+                like: count
             })
         }
         activeLike.value = 'add'
