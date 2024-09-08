@@ -1,9 +1,7 @@
 <template>
     <section class="news">
         <div>
-            <h2 class="news__title news__container">
-                Актуальные новости
-            </h2>
+            <h2 class="news__title news__container">Актуальные новости</h2>
             <div class="news__cards news__container">
                 <div
                     v-for="item in atricleData"
@@ -13,19 +11,12 @@
                 >
                     <div class="news__card-header">
                         <div class="news__card-img-wrapper">
-                            <img
-                                :src="item.img"
-                                alt="card img"
-                                class="news__card-img"
-                            >
+                            <img :src="item.img" alt="card img" class="news__card-img" />
                         </div>
                     </div>
                     <div class="news__card-body">
                         <div class="news__card-body-tags">
-                            <span
-                                v-for="(el, ind) in item.tags"
-                                :key="ind"
-                            >#{{ el }}</span>
+                            <span v-for="(el, ind) in item.tags" :key="ind">#{{ el }}</span>
                         </div>
                         <p class="news__text news__card-text">
                             {{ item.title }}
@@ -46,28 +37,23 @@
                             Подробнее
                         </BtnGradient>
                         <div class="news__card-bg">
-                            <img
-                                src="../../assets/images/main/news/news-card-bg.png"
-                                alt=""
-                            >
+                            <img src="../../assets/images/main/news/news-card-bg.png" alt="" />
                         </div>
                     </div>
                 </div>
             </div>
             <div class="news__info">
-                <div class="news__info-wrapper">
+                <div v-if="!formField.validateSubscribe" class="news__info-wrapper">
                     <div class="news__text news__container">
                         Подпишитесь на рассылку, чтобы не пропустить актуальный для вас вебинар или
                         новость дня
                     </div>
-                    <form
-                        class="news__form news__container"
-                        @submit.prevent="sendMail"
-                    >
+                    <form class="news__form news__container" @submit.prevent="sendMail">
                         <label
                             :class="{ 'invalid-text': formField.emailError }"
                             for="news__input-id"
-                        >E-mail</label>
+                            >E-mail</label
+                        >
                         <div class="news__input-wrapper">
                             <div class="input-wrapper">
                                 <input
@@ -78,44 +64,32 @@
                                     placeholder="mariaivanova@mail.ru"
                                     @input="changeEmail($event)"
                                     @keypress.enter="validateField($event, 'event')"
-                                >
-                                <div
-                                    v-if="formField.emailError"
-                                    class="validate-danger"
-                                >
+                                />
+                                <div v-if="formField.emailError" class="validate-danger">
                                     <div class="validate-svg">
                                         <img
                                             src="../../assets/icons/main/news/validate.svg"
                                             alt=""
-                                        >
+                                        />
                                     </div>
                                     <span>Поле заполненно некорректно</span>
                                 </div>
                             </div>
-                            <BtnBackgroud class="news__form-button">
-                                Отправить
-                            </BtnBackgroud>
+                            <BtnBackgroud class="news__form-button"> Отправить </BtnBackgroud>
                             <p class="news__text news__form-text">
                                 Нажимая кнопку “Подписаться” вы соглашаетесь с
                                 <a href="#">
-                                    <span>политикой обработки персональных данных</span></a>
+                                    <span>политикой обработки персональных данных</span></a
+                                >
                             </p>
                         </div>
                     </form>
                 </div>
-                <div
-                    v-if="formField.validateSubscribe"
-                    class="news__success news__container"
-                >
+                <div v-if="formField.validateSubscribe" class="news__success news__container">
                     <div class="news__success-wrapper">
-                        <h2 class="news__success-title">
-                            Ваши данные приняты
-                        </h2>
+                        <h2 class="news__success-title">Ваши данные приняты</h2>
                         <div class="news__success-svg">
-                            <img
-                                src="../../assets/images/main/news/success.svg"
-                                alt=""
-                            >
+                            <img src="../../assets/images/main/news/success.svg" alt="" />
                         </div>
                     </div>
                 </div>
@@ -128,8 +102,15 @@
 import { onMounted, reactive, ref } from 'vue'
 import BtnGradient from '../btns/BtnComponent.vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
-import { randomArticle } from '../../db/db.js';
-import { useRouter } from 'vue-router';
+import { randomArticle } from '../../db/db.js'
+import { useRouter } from 'vue-router'
+
+const props = defineProps({
+    isVisible: {
+        type: Boolean,
+        default: null
+    }
+})
 
 const router = useRouter()
 const atricleData = ref([])
@@ -137,51 +118,55 @@ const atricleData = ref([])
 const formField = reactive({
     email: '',
     emailError: false,
-    validateSubscribe: false,
+    validateSubscribe: false
 })
 
 onMounted(() => {
     atricle()
 })
 
-function atricle () {
-    atricleData.value = randomArticle(null, 3);
+function atricle() {
+    atricleData.value = randomArticle(null, 3)
 }
 
 const sendMail = () => {
     validateForm()
 }
 
-function linkArticle (id, trend) {
+function linkArticle(id, trend) {
     router.push({ path: `/trend/${trend}/${id}` })
 }
 
-function validateField (param, event) {
+function validateField(param, event) {
     formField.validateSubscribe = false
-    let target;
+    let target
     if (event === 'event') {
-        target = param.target.value.trim();
+        target = param.target.value.trim()
     } else {
         target = param.trim()
     }
-    let email_regexp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    let email_regexp =
+        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
 
-    !email_regexp.test(String(target).toLowerCase()) ? formField.emailError = true : formField.emailError = false;
+    !email_regexp.test(String(target).toLowerCase())
+        ? (formField.emailError = true)
+        : (formField.emailError = false)
 
     if (!formField.emailError) {
         formField.validateSubscribe = true
     }
-};
+}
 
-function changeEmail (event) {
-    let target = event.target;
-    let x = target.value.match(/([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/);
-    target.value = x ? (x[1] + x[2] + x[3] + x[4] + x[5] + x[6]) : '';
-    formField.email = target.value;
-};
+function changeEmail(event) {
+    let target = event.target
+    let x = target.value.match(
+        /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
+    )
+    target.value = x ? x[1] + x[2] + x[3] + x[4] + x[5] + x[6] : ''
+    formField.email = target.value
+}
 
-
-function validateForm () {
+function validateForm() {
     validateField(formField.email, 'validate')
 }
 </script>
@@ -198,12 +183,13 @@ function validateForm () {
 .news {
     padding: 60px 0;
     background: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
+    height: 100%;
 
-    @media (max-width: 992px) {
+    @media (max-width: $lg) {
         padding: 40px 0;
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: $sm) {
         padding: 32px 0;
     }
 }
@@ -384,7 +370,8 @@ function validateForm () {
         line-height: 120%;
     }
 
-    @media (max-width: $lg) {}
+    @media (max-width: $lg) {
+    }
 }
 
 .news__card-text--empty {
@@ -399,10 +386,12 @@ function validateForm () {
 
 .news__input-wrapper {
     display: grid;
-    column-gap: 48px;
+    column-gap: 16px;
     row-gap: 10px;
     grid-template-columns: 1fr auto;
+    height: 48px;
     position: relative;
+    height: 100%;
 
     @media (max-width: $lg) {
         width: 100%;
@@ -427,13 +416,13 @@ function validateForm () {
     border-radius: 32px;
     padding: 12px 16px;
     width: 100%;
-    height: 24px;
     background: $white;
     color: $blue-primary;
     transition: 0.2s;
     background: url('/src/assets/icons/main/news/mail.svg');
     background-repeat: no-repeat;
     background-position: right 16px top 10px;
+    height: 48px;
 
     &::placeholder {
         color: #a0b1ed;
@@ -532,7 +521,8 @@ function validateForm () {
         text-decoration-skip-ink: none;
     }
 
-    @media (max-width: $sm) {}
+    @media (max-width: $sm) {
+    }
 }
 
 .news__success {
