@@ -6,13 +6,14 @@
             </h2>
             <div class="flex flex-col gap-2 w-full">
                 <div class="flex flex-col w-full gap-2">
-                    <label for="name">Логин</label>
+                    <label for="email">Email</label>
                     <input
-                        id="name"
-                        v-model="loginForm.login"
+                        id="email"
+                        v-model="loginForm.email"
                         type="text"
                         class="w-full p-2 rounded-md"
                     >
+                    <p>{{ getError?.email }}</p>
                 </div>
                 <div class="flex flex-col w-full gap-2">
                     <label for="password">Пароль</label>
@@ -22,6 +23,7 @@
                         type="text"
                         class="w-full p-2 rounded-md"
                     >
+                    <p>{{ getError?.password }}</p>
                 </div>
             </div>
             <BtnComponent
@@ -37,29 +39,34 @@
 import MainLayots from '@/layouts/MainLayots.vue';
 import FormComponent from '@/components/form/FormComponent.vue';
 import BtnComponent from '@/components/btns/BtnComponent.vue';
-import { reactive } from 'vue';
-import axiosR from '@/api/http';
+import { computed, reactive, watch } from 'vue';
+import { useUserStore } from '@/stores/userStore';
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
+const userStore = useUserStore();
 
 const loginForm = reactive({
-    login: 'dddd',
-    password: 'aaaa'
+    email: '',
+    password: ''
 })
 
-function Login (){
-    let data={
-        login: loginForm.login,
-        password: loginForm.password
-    }
+const user = computed(() => {
+    return userStore.getUser
+})
 
-    axiosR.post('/login', data)
-        .then(res => {
-            console.log(res);
-            
-        })
-        .catch(err => {
-            console.log(err);          
-        })    
+const getError = computed(() => {
+    return userStore.getError
+})
+
+
+function Login (){    
+    userStore.login({...loginForm})
 }
+
+watch(user, ()=>{
+    router.push({ path: '/' });
+})
 
 </script>
 <style lang="scss">

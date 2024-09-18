@@ -7,19 +7,21 @@ const axiosR = axios.create({
         "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
         "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
         'Access-Control-Allow-Credentials':true
-        // 'Content-Type': 'application/json',
     },
 })
 
-// axiosR.interceptors.request.use(
-//     config => {
-//         config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
-//         config.headers['X-Requested-With'] = `XMLHttpRequest`;
-//         return config;
-//     },
-//     error => {
-//         return Promise.reject(error);
-//     }
-// );
+axiosR.interceptors.request.use(
+    config => {
+        
+        if(localStorage.getItem('token')){
+            config.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+            config.headers['X-Requested-With'] = `XMLHttpRequest`;
+        }
+        return config;
+    },
+    error => {
+        return Promise.reject(error);
+    }
+);
 
 export default axiosR

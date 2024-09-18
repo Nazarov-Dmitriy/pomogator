@@ -1,0 +1,20 @@
+<template>
+    <div class="page">
+        <HeaderComponent />
+        <FavoriteComponent />
+        <FooterComponent />
+    </div>
+</template>
+<script setup>
+import FooterComponent from '@/components/main/FooterComponent.vue'
+import FavoriteComponent from '@/components/cabinet/favorites/FavoriteComponent.vue'
+import HeaderComponent from '@/components/header/HeaderComponent.vue';
+</script>
+<style scoped lang="scss">
+.page {
+    min-height: 100vh;
+    overflow: hidden;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+</style>

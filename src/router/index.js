@@ -4,11 +4,11 @@ import TrendPage from '@/pages/TrendPage.vue'
 import AboutPage from '../pages/AboutPage.vue'
 import BlogPage from '../pages/BlogPage.vue'
 import ArticlePage from '../pages/ArticlePage.vue'
-import CabinetPage from '../pages/CabinetPage.vue'
-import CabinetProfile from '../pages/CabinetProfile.vue'
-import CabinetFavorites from '../pages/CabinetFavorites.vue'
-import CabinetCertificates from '../pages/CabinetCertificates.vue'
-import CabinetMaterials from '../pages/CabinetMaterials.vue'
+import CabinetPage from '../pages/cabinet/CabinetPage.vue'
+import CabinetProfile from '../pages/cabinet/CabinetProfile.vue'
+import CabinetFavorites from '../pages/cabinet/CabinetFavorites.vue'
+import CabinetCertificates from '../pages/cabinet/CabinetCertificates.vue'
+import CabinetMaterials from '../pages/cabinet/CabinetMaterials.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
 import AddNewsPage from '../pages/moderator/AddNewsPage.vue'
@@ -62,15 +62,20 @@ const router = createRouter({
             ]
         },
         {
-            path: '/login',
-            name: 'login',
-            component: LoginPage,
-        },
-        {
-            path: '/register',
-            name: 'register',
-            component: RegisterPage,
-        },     
+            path:"/auth",
+            children: [              
+                {
+                    path: 'login',
+                    name: 'login',
+                    component: LoginPage,
+                },
+                {
+                    path: 'register',
+                    name: 'register',
+                    component: RegisterPage,
+                },     
+            ]
+        },   
         {
             path: '/lk',
             component: CabinetPage,

@@ -36,7 +36,7 @@
 </template>
 
 <script setup>
-import HeaderComponent from '@/components/HeaderComponent.vue'
+import HeaderComponent from '@/components/header/HeaderComponent.vue'
 import TrendAbout from '../components/trend/TrendAbout.vue';
 import SearchPanel from '../components/searchPanel/SearchPanel.vue';
 import ListArticle from '../components/article/ListArticle.vue';
@@ -100,8 +100,6 @@ watch(searchValue, (newVal) => {
 })
 
 watch(activeTags, (newVal) => {
-    console.log(newVal);
-
     isLoad.value = false
     if (activeTags.value.length > 0) {
         newsStore.getLisParamstDb({ "tags": newVal.toString() })

@@ -3,7 +3,7 @@ import axiosR from '@/api/http';
 
 import { reactive, ref } from "vue";
 
-export const useNewsStore = defineStore("schoolsStore", {
+export const useNewsStore = defineStore("newsStore", {
     state: () => ({
         newsList: reactive([]),
         tags: reactive([]),

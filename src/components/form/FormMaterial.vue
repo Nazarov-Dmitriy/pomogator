@@ -1,8 +1,13 @@
 <template>
     <div class="modal__form-material">
         <div class="form-material__header">
-            <h2 class="form-material__title">Предложить материал</h2>
-            <button class="close-btn" @click="$emit('close')">
+            <h2 class="form-material__title">
+                Предложить материал
+            </h2>
+            <button
+                class="close-btn"
+                @click="$emit('close')"
+            >
                 <svg
                     width="24"
                     height="24"
@@ -27,42 +32,53 @@
         </div>
 
         <div class="form-material__body">
-            <form class="form-material-field" @submit.prevent @keypress.enter.prevent>
+            <form
+                class="form-material-field"
+                @submit.prevent
+                @keypress.enter.prevent
+            >
                 <div class="form-materia__photo flex justify-center">
                     <img
                         class="rounded-full object-cover aspect-square"
                         :src="
-                            profileStore.profileImage !== ''
-                                ? profileStore.profileImage
+                            userStore.profileImage !== ''
+                                ? userStore.profileImage
                                 : '/public/image/cabinet/cabinetProfile/default-img.png'
                         "
                         alt="ФОТО"
                         width="106px"
-                    />
+                    >
                 </div>
                 <div class="form-materia-item form-materia-item__name">
                     <label
                         for="name"
                         class="form-materia-item__label"
                         :class="{ error: formField.nameError }"
-                        >Как вас зовут? *</label
-                    >
+                    >Как вас зовут? *</label>
                     <div class="form-materia-item__group">
                         <input
                             id="name"
-                            :value="profileStore.personalData.firstName"
-                            @input="updateName($event.target.value)"
+                            :value="userStore.personalData.firstName"
                             type="text"
                             placeholder="Мария Иванова"
                             class="form-materia-item-input"
                             :class="{ error: formField.nameError }"
+                            @input="updateName($event.target.value)"
                             @keypress.enter="validateField($event, 'event', 'name')"
-                        />
+                        >
                     </div>
 
-                    <div v-if="formField.nameError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.nameError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__email">
@@ -70,23 +86,30 @@
                         for="email"
                         class="form-materia-item__label"
                         :class="{ error: formField.emailError }"
-                        >E-mail *</label
-                    >
+                    >E-mail *</label>
                     <div class="form-materia-item__group">
                         <input
                             id="email"
-                            :value="profileStore.personalData.email"
+                            :value="userStore.personalData.email"
                             type="text"
                             placeholder="mariaivanova@mail.ru"
                             class="form-materia-item-input"
                             :class="{ error: formField.emailError }"
                             @input="changeEmail($event)"
                             @keypress.enter="validateField($event, 'event', 'email')"
-                        />
+                        >
                     </div>
-                    <div v-if="formField.emailError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.emailError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__position">
@@ -94,12 +117,11 @@
                         for="position"
                         class="form-materia-item__label"
                         :class="{ error: formField.positionError }"
-                        >Должность *</label
-                    >
+                    >Должность *</label>
                     <div class="form-materia-item__group">
                         <input
                             id="position"
-                            :value="profileStore.personalData.rank"
+                            :value="userStore.personalData.rank"
 
                             type="text"
                             placeholder="Преподаватель"
@@ -107,11 +129,19 @@
                             :class="{ error: formField.positionError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'position')"
-                        />
+                        >
                     </div>
-                    <div v-if="formField.positionError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.positionError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__work">
@@ -119,12 +149,11 @@
                         for="work"
                         class="form-materia-item__label"
                         :class="{ error: formField.workError }"
-                        >Место работ *</label
-                    >
+                    >Место работ *</label>
                     <div class="form-materia-item__group">
                         <input
                             id="work"
-                            :value="profileStore.personalData.phone"
+                            :value="userStore.personalData.phone"
 
                             type="text"
                             placeholder="Школа №1"
@@ -132,11 +161,19 @@
                             :class="{ error: formField.workError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'work')"
-                        />
+                        >
                     </div>
-                    <div v-if="formField.positionError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.positionError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__direction">
@@ -144,12 +181,11 @@
                         for="direction"
                         class="form-materia-item__label"
                         :class="{ error: formField.directionError }"
-                        >Направление *</label
-                    >
+                    >Направление *</label>
                     <div class="form-materia-item__group">
                         <input
                             id="direction"
-                            :value="profileStore.personalData.organization"
+                            :value="userStore.personalData.organization"
 
                             type="text"
                             placeholder="Выберите направление"
@@ -157,11 +193,19 @@
                             :class="{ error: formField.directionError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'direction')"
-                        />
+                        >
                     </div>
-                    <div v-if="formField.positionError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.positionError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__article">
@@ -169,8 +213,7 @@
                         for="article"
                         class="form-materia-item__label"
                         :class="{ error: formField.articleError }"
-                        >Название статьи *</label
-                    >
+                    >Название статьи *</label>
                     <div class="form-materia-item__group">
                         <input
                             id="article"
@@ -181,11 +224,19 @@
                             :class="{ error: formField.articleError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'article')"
-                        />
+                        >
                     </div>
-                    <div v-if="formField.positionError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.positionError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__video">
@@ -193,8 +244,7 @@
                         for="video"
                         class="form-materia-item__label"
                         :class="{ error: formField.videoError }"
-                        >Ссылка на видеоматериал</label
-                    >
+                    >Ссылка на видеоматериал</label>
                     <div class="form-materia-item__group">
                         <input
                             id="video"
@@ -205,11 +255,19 @@
                             :class="{ error: formField.videoError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'video')"
-                        />
+                        >
                     </div>
-                    <div v-if="formField.positionError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.positionError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__website">
@@ -217,8 +275,7 @@
                         for="website"
                         class="form-materia-item__label"
                         :class="{ error: formField.websiteError }"
-                        >Ссылка на источник</label
-                    >
+                    >Ссылка на источник</label>
                     <div class="form-materia-item__group">
                         <input
                             id="website"
@@ -229,11 +286,19 @@
                             :class="{ error: formField.websiteError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'website')"
-                        />
+                        >
                     </div>
-                    <div v-if="formField.positionError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.positionError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item form-materia-item__textarea">
@@ -241,8 +306,7 @@
                         for="textarea"
                         class="form-materia-item__label"
                         :class="{ error: formField.textareaError }"
-                        >Описание материала *</label
-                    >
+                    >Описание материала *</label>
                     <textarea
                         id="textarea"
                         v-model="formField.textarea"
@@ -252,14 +316,24 @@
                         :class="{ error: formField.textareaError }"
                         @input="changeTextarea($event)"
                     />
-                    <div v-if="formField.textareaError" class="form-materia-item__error">
-                        <img src="@/assets/icons/error.svg" alt="icon" />
-                        <p class="form-materia-item__error-text">Поле заполненно некорректно</p>
+                    <div
+                        v-if="formField.textareaError"
+                        class="form-materia-item__error"
+                    >
+                        <img
+                            src="@/assets/icons/error.svg"
+                            alt="icon"
+                        >
+                        <p class="form-materia-item__error-text">
+                            Поле заполненно некорректно
+                        </p>
                     </div>
                 </div>
                 <div class="form-materia-item__upload flex flex-wrap gap-8 items-end">
-                    <label for="upload" class="form-materia-item__label upload"
-                        >Прикрепить файл
+                    <label
+                        for="upload"
+                        class="form-materia-item__label upload"
+                    >Прикрепить файл
                         <svg
                             class="upload-icon"
                             width="24"
@@ -274,7 +348,11 @@
                             />
                         </svg>
                     </label>
-                    <input id="upload" type="file" hidden />
+                    <input
+                        id="upload"
+                        type="file"
+                        hidden
+                    >
                 </div>
             </form>
         </div>
@@ -283,9 +361,7 @@
             <div class="form-materia-item__submit">
                 <p class="form-materia-item__policy">
                     Нажимая на кнопку «Отправить», я соглашаюсь с
-                    <span class="form-materia-item__policy-link"
-                        >политикой обработки персональных данных</span
-                    >
+                    <span class="form-materia-item__policy-link">политикой обработки персональных данных</span>
                 </p>
                 <BtnBackgroud
                     class="form-materia-item__btn"
@@ -300,20 +376,20 @@
             src="@/assets/images/form/bg-material.svg"
             alt="bg-image"
             class="form-materia-item__bg-line-tablet"
-        />
+        >
     </div>
 </template>
 <script setup>
 import { reactive } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
-import { useProfileStore } from '@/stores/useProfileStore'
+import { useUserStore } from '@/stores/userStore';
 
-const profileStore = useProfileStore()
+const userStore = useUserStore()
 
 defineEmits(['close'])
 
 const formField = reactive({
-    name: profileStore.personalData.firstName,
+    name: userStore.personalData.firstName,
     email: '',
     position: '',
     work: '',
@@ -334,7 +410,7 @@ const formField = reactive({
     falidateForm: false
 })
 
-function validateField(param, event, nameParam) {
+function validateField (param, event, nameParam) {
     let target
     if (event === 'event') {
         target = param.target.value.trim()
@@ -372,7 +448,7 @@ function validateField(param, event, nameParam) {
     }
 }
 
-function changeEmail(event) {
+function changeEmail (event) {
     let target = event.target
     let x = target.value.match(
         /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
@@ -381,7 +457,7 @@ function changeEmail(event) {
     formField.email = target.value
 }
 
-function changeTextarea(event) {
+function changeTextarea (event) {
     let target = event.target
     event.target.scrollBy(target.scrollHeight, 100)
 
@@ -390,7 +466,7 @@ function changeTextarea(event) {
     }
 }
 
-function validateForm() {
+function validateForm () {
     let validateFeildArr = ['name', 'phone', 'email', 'textarea']
 
     validateFeildArr.forEach((item) => {
@@ -433,12 +509,6 @@ function validateForm() {
         max-width: 90%;
     }
 }
-
-// .form-material__subtitle {
-//     font-size: 16px;
-//     line-height: 24px;
-//     color: $blue-primary;
-// }
 
 .close-btn {
     position: absolute;
@@ -625,7 +695,6 @@ function validateForm() {
     outline: none;
     resize: none;
     box-sizing: border-box;
-    // height: 241px;
     flex: 0 0 100%;
     height: calc(100% - 32px);
 

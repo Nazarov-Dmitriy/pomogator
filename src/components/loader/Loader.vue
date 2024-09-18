@@ -26,15 +26,6 @@ export default {
 </script>
 
 <style lang="scss">
-// .loader-container{
-//     flex-grow: 1;
-//     min-height: 300px;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     align-items: center;
-// }
-
 .loader-container{
     position: fixed;
     top: 50%;

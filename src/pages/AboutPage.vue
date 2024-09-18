@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import HeaderComponent from '@/components/HeaderComponent.vue'
+import HeaderComponent from '@/components/header/HeaderComponent.vue'
 import TasksComponent from '../components/about/TasksComponent.vue'
 import TeacherComponent from '../components/about/TeacherComponent.vue'
 import BecomeComponent from '../components/about/BecomeComponent.vue'

@@ -57,11 +57,38 @@
                 </ul>
                 <div class="header__block">
                     <BtnComponent
+                        v-if="!getUser"
                         class="btn__header"
                         emit-name="link"
-                        @link="$router.push('/login')"
+                        @link="$router.push('/auth/login')"
                     >
                         Войти
+                    </BtnComponent>
+                    <button
+                        v-if="getAutotizationBtn === 'page'"
+                        class="btn__profile"
+                        @click="$router.push('/lk/profile')"
+                    >
+                        <img
+                            v-if="getUser.avatar"
+                            :src="getUrl"
+                            alt="user"
+                            class="btn__profile-img"
+                        >
+                        <img
+                            v-else
+                            src="@/assets/icons/header/user.svg"
+                            alt="user"
+                            class="btn__profile-img"
+                        >
+                    </button>
+                    <BtnComponent
+                        v-if="getAutotizationBtn === 'lk'"
+                        class="btn__header"
+                        emit-name="action"
+                        @action="logout()"
+                    >
+                        Выход
                     </BtnComponent>
                 </div>
                 <div
@@ -87,10 +114,12 @@
 </template>
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
-import BtnComponent from './btns/BtnComponent.vue'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useNewsStore } from '@/stores/newsStore';
+import BtnComponent from '../btns/BtnComponent.vue';
+import { useUserStore } from '@/stores/userStore';
 
+const userStore = useUserStore();
 const newsStore = useNewsStore();
 const btnMenu = ref(false)
 const menuActive = ref(false)
@@ -103,6 +132,28 @@ const getCategory = computed(() => {
 
 const getCategoryId = computed(() => {
     return newsStore.getCategoryId;
+})
+
+const getUser = computed(() => {
+    return userStore.getUser
+})
+
+const getSuccessRes = computed(() => {
+    return userStore.getSuccessRes
+})
+
+const getUrl = computed(() => {
+    return  import.meta.env.VITE_SERVER_URL + getUser.value?.avatar
+})
+
+
+const getAutotizationBtn = computed(() => {
+    let path = route.path;   
+    if(userStore.getUser ){
+        return path.includes('/lk/') ? 'lk' : "page"
+    }else{
+        return false
+    }
 })
 
 onMounted(() => {
@@ -122,6 +173,10 @@ function mainLink () {
     router.push('/')
 }
 
+function logout () {
+    userStore.logout()
+}
+
 watch([getCategory, getCategoryId], () => {
 
     if (!getCategoryId.value && route.name === "trend-page") {
@@ -130,12 +185,22 @@ watch([getCategory, getCategoryId], () => {
     }
 })
 
+watch([getUser], ()=>{
+    
+})
+
+watch(getSuccessRes, ()=>{
+    if(getSuccessRes.value) {
+        userStore.resetSuccessRes();        
+        router.push('/')
+    }
+})
+
 </script>
 <style lang="scss">
 .header__contaner {
     background: $gradient-background;
     position: relative;
-    // z-index: 9000;
 }
 
 .header__wrapper {
@@ -437,5 +502,17 @@ watch([getCategory, getCategoryId], () => {
     @media (max-width: $sm) {
         flex: 1 0 100px;
     }
+}
+
+.btn__profile {
+    width: 48px;
+    height: 48px;
+    border: none;
+    outline: unset;
+}
+.btn__profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
 }
 </style>

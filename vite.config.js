@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
     server:{port: 5172}, 
+    devtool: 'source-map',
     plugins: [
         vue(),
     ],

@@ -163,12 +163,10 @@
 import { shallowRef } from 'vue';
 import { YandexMap, YandexMapDefaultSchemeLayer, YandexMapMarker, YandexMapDefaultFeaturesLayer } from 'vue-yandex-maps';
 
-const handleClick = (event) => console.log(event);
 const marker =
 {
     coordinates: [65.337193, 55.350812],
     title: 'ул. Космонавтов, 49А',
-    onClick: handleClick,
     draggable: true,
 }
 

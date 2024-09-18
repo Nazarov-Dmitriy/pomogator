@@ -1,66 +1,79 @@
 <template>
     <div class="profile__photo">
-        <h2 class="profile__photo-title">Фотография профиля</h2>
+        <h2 class="profile__photo-title">
+            Фотография профиля
+        </h2>
         <div
-            :class="{ 'profile__photo-img-empty': !hasCustomImage }"
             class="profile__photo-img-wrapper"
+            :class="{ 'profile__photo-img-empty': !getUser?.avatar }"
             @click="triggerFileInput"
         >
             <img
-                :src="profileImage"
+                :src="getUrl"
                 class="profile__photo-img"
-                :class="{ 'profile__photo-img-empty': !hasCustomImage }"
-            />
+                :class="{ 'profile__photo-img-empty': !getUser?.avatar }"
+            >
 
-            <div v-if="hasCustomImage" class="profile__photo-hover">
-                <p class="profile__photo-hover-text">Сменить фото</p>
+            <div
+                v-if="getUser?.avatar"
+                class="profile__photo-hover"
+            >
+                <p class="profile__photo-hover-text">
+                    Сменить фото
+                </p>
                 <img
                     src="../../../assets/images/cabinet/cabinetProfile/bucket.png"
                     alt="delete png"
                     class="profile__photo-hover-delete"
                     @click.stop="removeImage"
-                />
+                >
             </div>
         </div>
         <input
-            type="file"
             ref="fileInput"
+            type="file"
             class="profile__photo-input"
-            @change="onFileChange"
             accept="image/*"
             style="display: none"
-        />
+            @change="onFileChange"
+        >
     </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useProfileStore } from '/src/stores/useProfileStore'
+import { useUserStore } from '@/stores/userStore';
 
-const store = useProfileStore()
+const userStore = useUserStore();
+
+const getUser = computed(() => {
+    return userStore.getUser
+})
 
 const fileInput = ref(null)
 
-const profileImage = computed(() => store.profileImage)
-const hasCustomImage = computed(() => store.profileImage !== '')
-
-function triggerFileInput() {
+function triggerFileInput () {
     fileInput.value.click()
 }
 
-function onFileChange(event) {
+const getUrl = computed(() => {
+    return  getUser.value?.avatar ? import.meta.env.VITE_SERVER_URL + getUser.value?.avatar : null
+})
+
+
+
+function onFileChange (event) {
     const file = event.target.files[0]
-    if (file) {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-            store.setProfileImage(e.target.result)
-        }
-        reader.readAsDataURL(file)
+    let formData = new FormData();
+    if (file) { 
+        formData.append('email', getUser?.value?.email)
+        formData.append("avatar", file)
+        userStore.userAddAvatar(formData);
     }
 }
 
-function removeImage() {
-    store.removeProfileImage()
+function removeImage () {
+    userStore.userRemoveAvatar()
 }
 </script>
 
@@ -135,7 +148,7 @@ function removeImage() {
     transition: background 0.4s;
     position: relative;
     z-index: 2;
-    background: url('../../../public/image/cabinet/cabinetProfile/default-img.png');
+    background: url('/image/cabinet/cabinetProfile/default-img.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -151,7 +164,7 @@ function removeImage() {
     }
 
     &:hover {
-        background: url('../../../public/image/cabinet/cabinetProfile/hover-img.png');
+        background: url('/image/cabinet/cabinetProfile/hover-img.png');
         background-repeat: no-repeat;
         background-size: cover;
         background-position: 0 0;

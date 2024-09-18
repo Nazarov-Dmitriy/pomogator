@@ -23,7 +23,7 @@
     </Teleport>
 </template>
 <script setup>
-import HeaderComponent from '@/components/HeaderComponent.vue'
+import HeaderComponent from '@/components/header/HeaderComponent.vue'
 import ArticleComponent from '../components/article/ArticleComponent.vue'
 import FooterComponent from '../components/main/FooterComponent.vue';
 import { computed, onMounted, ref, watch } from 'vue';

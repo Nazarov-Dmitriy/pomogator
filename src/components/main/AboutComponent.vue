@@ -11,7 +11,7 @@
                         <BtnBackgroud
                             class="about__btn"
                             emit-name="link"
-                            @link="$router.push('/register')"
+                            @link="$router.push('/auth/register')"
                         >
                             Регистрация
                         </BtnBackgroud>

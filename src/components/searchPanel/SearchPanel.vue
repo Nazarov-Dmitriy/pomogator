@@ -147,7 +147,6 @@ function showSearch () {
 
 .search-panel__input-wraper {
     width: 100%;
-    // background:red
 }
 
 .search-panel__input {

@@ -1,10 +1,12 @@
 <template>
     <div class="profile__change">
-        <h2 class="profile__change-title">Смена пароля</h2>
+        <h2 class="profile__change-title">
+            Смена пароля
+        </h2>
         <form
-            @submit.prevent="checkPasswordLength"
-            @keypress.enter.prevent="checkPasswordLength"
             class=" profile__change-form"
+            @submit.prevent
+            @keypress.enter.prevent="checkPasswordLength"
         >
             <div class="profile__change-input-group">
                 <label class="profile__change-label">Старый пароль</label>
@@ -13,7 +15,7 @@
                     :type="isOldPasswordVisible ? 'text' : 'password'"
                     class="profile__change-input"
                     placeholder="Введите старый пароль"
-                />
+                >
                 <img
                     v-if="oldPassword.length"
                     class="profile__change-input-img"
@@ -24,7 +26,10 @@
                     "
                     alt=""
                     @click="toggleOldPasswordVisibility"
-                />
+                >
+
+                <p>{{ getError?.password }}</p>
+                <p>{{ oldPasswordError ? "Длина пароля меньше 8 символов" : "" }}</p>
             </div>
             <div class="profile__change-input-group">
                 <label class="profile__change-label">Новый пароль</label>
@@ -33,7 +38,7 @@
                     :type="isNewPasswordVisible ? 'text' : 'password'"
                     class="profile__change-input"
                     placeholder="Введите новый пароль"
-                />
+                >
                 <img
                     v-if="newPassword.length"
                     class="profile__change-input-img"
@@ -44,8 +49,11 @@
                     "
                     alt=""
                     @click="toggleNewPasswordVisibility"
-                />
-                <div v-if="isCorrectPassword" class="error">
+                >
+                <div
+                    v-if="isCorrectPassword === false"
+                    class="error"
+                >
                     <svg
                         width="20"
                         height="20"
@@ -71,7 +79,7 @@
                     :type="isRepeatedPasswordVisible ? 'text' : 'password'"
                     class="profile__change-input"
                     placeholder="Введите новый пароль еще раз"
-                />
+                >
                 <img
                     v-if="repeatNewPassword"
                     class="profile__change-input-img"
@@ -82,22 +90,30 @@
                     "
                     alt=""
                     @click="toggleRepeatedPasswordVisibility"
-                />
+                >
                 <img
                     v-else-if="type === 'password'"
                     class="profile__change-input-img"
                     src="/public/image/cabinet/cabinetProfile/password-visible.svg"
                     alt=""
                     @click="toggleRepeatedPasswordVisibility"
-                />
-                <div v-if="isPasswordEqual" class="error">
+                >
+                <div
+                    v-if="isPasswordEqual"
+                    class="error"
+                >
                     <p>Пароли не совпадают</p>
                 </div>
             </div>
             <div class="profile__change-btn-wrap">
-                <BtnBackgroud :disabled="!isFormValid" class="profile__change-btn"
-                    >Сохранить пароль</BtnBackgroud
+                <BtnBackgroud
+                    :disabled="!isFormValid"
+                    emit-name="action"
+                    class="profile__change-btn"
+                    @action="checkPasswordLength()"
                 >
+                    Сохранить пароль
+                </BtnBackgroud>
             </div>
         </form>
     </div>
@@ -105,57 +121,78 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useProfileStore } from '/src/stores/useProfileStore'
+import { useUserStore } from '@/stores/userStore';
 import BtnBackgroud from '../../btns/BtnBackgroud.vue'
 
-const store = useProfileStore()
+const userStore = useUserStore()
 
-const isCorrectPassword = ref(false)
+const isCorrectPassword = ref(null)
 const isPasswordEqual = ref(false)
 
 const oldPassword = ref('')
 const newPassword = ref('')
 const repeatNewPassword = ref('')
+const oldPasswordError = ref(false)
+
+
 
 const isNewPasswordVisible = ref(false)
 const isOldPasswordVisible = ref(false)
 const isRepeatedPasswordVisible = ref(false)
 
-function toggleNewPasswordVisibility() {
+const getError = computed(() => {
+    return userStore.getError
+})
+
+
+function toggleNewPasswordVisibility () {
     isNewPasswordVisible.value = !isNewPasswordVisible.value
 }
-function toggleOldPasswordVisibility() {
+function toggleOldPasswordVisibility () {
     isOldPasswordVisible.value = !isOldPasswordVisible.value
 }
-function toggleRepeatedPasswordVisibility() {
+function toggleRepeatedPasswordVisibility () {
     isRepeatedPasswordVisible.value = !isRepeatedPasswordVisible.value
 }
 
-function validatePassword(password) {
+function validatePassword (password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
     return regex.test(password)
 }
 
-function checkPasswordEqual() {
-    if (newPassword.value !== repeatNewPassword.value) {
+function checkPasswordEqual () {
+    if (newPassword.value === repeatNewPassword.value) {
         isPasswordEqual.value = true
     } else {
         isPasswordEqual.value = false
     }
 }
 
-function checkPasswordLength() {
-    if (!validatePassword(oldPassword.value)) {
+function validateForm (){   
+    if (validatePassword(newPassword.value) ) {
         isCorrectPassword.value = true
-    } else if (newPassword.value !== repeatNewPassword.value) {
-        isPasswordEqual.value = true
-    } else {
+    }else{
         isCorrectPassword.value = false
-        oldPassword.value = ''
-        newPassword.value = ''
-        repeatNewPassword.value = ''
     }
-    checkPasswordEqual()
+
+    if (oldPassword.value.length >= 8) {
+        oldPasswordError.value = false
+    }else{
+        oldPasswordError.value = true
+    }
+    checkPasswordEqual();
+
+
+}
+
+function checkPasswordLength () {
+    validateForm();
+    if(isCorrectPassword.value && !oldPasswordError.value && isPasswordEqual.value){
+        userStore.userChangePassword({password: oldPassword.value, new_password: newPassword.value})
+        isCorrectPassword.value = true
+        oldPasswordError.value = false
+        isPasswordEqual.value = null
+    }
 }
 
 const isFormValid = computed(() => {

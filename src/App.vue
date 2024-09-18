@@ -2,6 +2,12 @@
     <router-view />
 </template>
 
+<script setup>
+import { useUserStore } from '@/stores/userStore';
+const userStore = useUserStore();
+userStore.autoLigon()
+</script>
+
 <style lang="scss">
 #app {
   -webkit-font-smoothing: antialiased;
