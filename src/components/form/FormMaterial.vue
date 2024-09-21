@@ -407,7 +407,7 @@ const formField = reactive({
     videoError: false,
     websiteError: false,
     textareaError: false,
-    falidateForm: false
+    validateForm: false
 })
 
 function validateField (param, event, nameParam) {
