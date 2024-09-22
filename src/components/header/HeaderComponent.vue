@@ -7,52 +7,30 @@
                     alt="logo"
                     class="header__logo"
                     @click="mainLink()"
-                >
-                <div
-                    class="hamburger"
-                    :class="{ 'is-active': btnMenu }"
-                    @click="setMenuAcive()"
-                >
+                />
+                <div class="hamburger" :class="{ 'is-active': btnMenu }" @click="setMenuAcive()">
                     <span class="line" />
                     <span class="line" />
                     <span class="line" />
                 </div>
             </div>
-            <div
-                class="header"
-                :class="{ 'menu-active': menuActive }"
-            >
+            <div class="header" :class="{ 'menu-active': menuActive }">
                 <img
                     src="@/assets/icons/logo.svg"
                     alt="logo"
                     class="header__logo"
                     @click="mainLink()"
-                >
+                />
 
                 <ul class="header__nav">
                     <li class="header__item">
-                        <router-link
-                            to="/about"
-                            class="header__link"
-                        >
-                            О нас
-                        </router-link>
+                        <router-link to="/about" class="header__link"> О нас </router-link>
                     </li>
                     <li class="header__item">
-                        <router-link
-                            to="/blog"
-                            class="header__link"
-                        >
-                            Блог
-                        </router-link>
+                        <router-link to="/blog" class="header__link"> Блог </router-link>
                     </li>
                     <li class="header__item">
-                        <router-link
-                            to="/webinar"
-                            class="header__link"
-                        >
-                            Вебинар
-                        </router-link>
+                        <router-link to="/webinar" class="header__link"> Вебинар </router-link>
                     </li>
                 </ul>
                 <div class="header__block">
@@ -74,13 +52,13 @@
                             :src="getUrl"
                             alt="user"
                             class="btn__profile-img"
-                        >
+                        />
                         <img
                             v-else
                             src="@/assets/icons/header/user.svg"
                             alt="user"
                             class="btn__profile-img"
-                        >
+                        />
                     </button>
                     <BtnComponent
                         v-if="getAutotizationBtn === 'lk'"
@@ -91,10 +69,7 @@
                         Выход
                     </BtnComponent>
                 </div>
-                <div
-                    v-if="getCategory"
-                    class="header__trend"
-                >
+                <div v-if="getCategory" class="header__trend">
                     <div class="header__trend-decor" />
                     <router-link
                         v-for="item in getCategory"
@@ -113,25 +88,25 @@
     </div>
 </template>
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 import { computed, onMounted, ref, watch } from 'vue'
-import { useNewsStore } from '@/stores/newsStore';
-import BtnComponent from '../btns/BtnComponent.vue';
-import { useUserStore } from '@/stores/userStore';
+import { useNewsStore } from '@/stores/newsStore'
+import BtnComponent from '../btns/BtnComponent.vue'
+import { useUserStore } from '@/stores/userStore'
 
-const userStore = useUserStore();
-const newsStore = useNewsStore();
+const userStore = useUserStore()
+const newsStore = useNewsStore()
 const btnMenu = ref(false)
 const menuActive = ref(false)
 const router = useRouter()
-const route = useRoute();
+const route = useRoute()
 
 const getCategory = computed(() => {
-    return newsStore.getCategory;
+    return newsStore.getCategory
 })
 
 const getCategoryId = computed(() => {
-    return newsStore.getCategoryId;
+    return newsStore.getCategoryId
 })
 
 const getUser = computed(() => {
@@ -143,59 +118,54 @@ const getSuccessRes = computed(() => {
 })
 
 const getUrl = computed(() => {
-    return  import.meta.env.VITE_SERVER_URL + getUser.value?.avatar
+    return import.meta.env.VITE_SERVER_URL + getUser.value?.avatar
 })
 
-
 const getAutotizationBtn = computed(() => {
-    let path = route.path;   
-    if(userStore.getUser ){
-        return path.includes('/lk/') ? 'lk' : "page"
-    }else{
+    let path = route.path
+    if (userStore.getUser) {
+        return path.includes('/lk/') ? 'lk' : 'page'
+    } else {
         return false
     }
 })
 
 onMounted(() => {
-    newsStore.getCategoryDb();
+    newsStore.getCategoryDb()
 })
 
-function setCategoryId (id) {
+function setCategoryId(id) {
     newsStore.setCategoryId(id)
 }
 
-function setMenuAcive () {
+function setMenuAcive() {
     btnMenu.value = !btnMenu.value
     menuActive.value = !menuActive.value
 }
 
-function mainLink () {
+function mainLink() {
     router.push('/')
 }
 
-function logout () {
+function logout() {
     userStore.logout()
 }
 
 watch([getCategory, getCategoryId], () => {
-
-    if (!getCategoryId.value && route.name === "trend-page") {
-        let id = getCategory.value.findIndex(el => el.link_name === route.params.name) + 1;
+    if (!getCategoryId.value && route.name === 'trend-page') {
+        let id = getCategory.value.findIndex((el) => el.link_name === route.params.name) + 1
         newsStore.setCategoryId(id)
     }
 })
 
-watch([getUser], ()=>{
-    
-})
+watch([getUser], () => {})
 
-watch(getSuccessRes, ()=>{
-    if(getSuccessRes.value) {
-        userStore.resetSuccessRes();        
+watch(getSuccessRes, () => {
+    if (getSuccessRes.value) {
+        userStore.resetSuccessRes()
         router.push('/')
     }
 })
-
 </script>
 <style lang="scss">
 .header__contaner {
@@ -267,7 +237,7 @@ watch(getSuccessRes, ()=>{
         gap: 16px 0;
     }
 
-    &>.header__logo {
+    & > .header__logo {
         @media (max-width: $lg) {
             display: none;
         }
@@ -361,7 +331,7 @@ watch(getSuccessRes, ()=>{
     @media (max-width: $sm) {
         flex-direction: column;
         gap: 16px;
-        align-items: center
+        align-items: center;
     }
 }
 
@@ -438,7 +408,7 @@ watch(getSuccessRes, ()=>{
     }
 
     @media (max-width: $sm) {
-        flex: 1 0 65%
+        flex: 1 0 65%;
     }
 }
 
@@ -494,7 +464,7 @@ watch(getSuccessRes, ()=>{
     }
 
     &:hover {
-        background: #4360F8;
+        background: #4360f8;
     }
 }
 

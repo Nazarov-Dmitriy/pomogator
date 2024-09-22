@@ -325,6 +325,7 @@ function clickOutside (event) {
     }
 }
 
+
 onMounted(() => {
     window.addEventListener('mousedown', clickOutside)
 })

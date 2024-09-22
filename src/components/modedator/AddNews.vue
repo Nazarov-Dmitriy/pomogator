@@ -145,7 +145,7 @@ const getCategory = computed(() => {
     return newsStore.getCategory;
 })
 
-const isLoad = ref(false);
+const isLoad = ref(true);
 
 const dataNews = reactive({
     title: 'Статья 1',
