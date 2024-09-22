@@ -1,13 +1,11 @@
 <template>
     <div class="page">
-        <HeaderComponent />
         <CertificatesComponent />
         <FooterComponent />
     </div>
 </template>
 <script setup>
 import FooterComponent from '@/components/main/FooterComponent.vue'
-import HeaderComponent from '@/components/header/HeaderComponent.vue';
 import CertificatesComponent from '@/components/cabinet/certificates/CertificatesComponent.vue'
 </script>
 <style scoped lang="scss">

@@ -1,6 +1,5 @@
 <template>
     <div class="page">
-        <HeaderComponent />
         <FavoriteComponent />
         <FooterComponent />
     </div>

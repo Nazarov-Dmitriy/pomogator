@@ -7,30 +7,52 @@
                     alt="logo"
                     class="header__logo"
                     @click="mainLink()"
-                />
-                <div class="hamburger" :class="{ 'is-active': btnMenu }" @click="setMenuAcive()">
+                >
+                <div
+                    class="hamburger"
+                    :class="{ 'is-active': btnMenu }"
+                    @click="setMenuAcive()"
+                >
                     <span class="line" />
                     <span class="line" />
                     <span class="line" />
                 </div>
             </div>
-            <div class="header" :class="{ 'menu-active': menuActive }">
+            <div
+                class="header"
+                :class="{ 'menu-active': menuActive }"
+            >
                 <img
                     src="@/assets/icons/logo.svg"
                     alt="logo"
                     class="header__logo"
                     @click="mainLink()"
-                />
+                >
 
                 <ul class="header__nav">
                     <li class="header__item">
-                        <router-link to="/about" class="header__link"> О нас </router-link>
+                        <router-link
+                            to="/about"
+                            class="header__link"
+                        >
+                            О нас
+                        </router-link>
                     </li>
                     <li class="header__item">
-                        <router-link to="/blog" class="header__link"> Блог </router-link>
+                        <router-link
+                            to="/blog"
+                            class="header__link"
+                        >
+                            Блог
+                        </router-link>
                     </li>
                     <li class="header__item">
-                        <router-link to="/webinar" class="header__link"> Вебинар </router-link>
+                        <router-link
+                            to="/webinar"
+                            class="header__link"
+                        >
+                            Вебинар
+                        </router-link>
                     </li>
                 </ul>
                 <div class="header__block">
@@ -52,13 +74,13 @@
                             :src="getUrl"
                             alt="user"
                             class="btn__profile-img"
-                        />
+                        >
                         <img
                             v-else
                             src="@/assets/icons/header/user.svg"
                             alt="user"
                             class="btn__profile-img"
-                        />
+                        >
                     </button>
                     <BtnComponent
                         v-if="getAutotizationBtn === 'lk'"
@@ -69,7 +91,10 @@
                         Выход
                     </BtnComponent>
                 </div>
-                <div v-if="getCategory" class="header__trend">
+                <div
+                    v-if="getCategory"
+                    class="header__trend"
+                >
                     <div class="header__trend-decor" />
                     <router-link
                         v-for="item in getCategory"
@@ -134,20 +159,20 @@ onMounted(() => {
     newsStore.getCategoryDb()
 })
 
-function setCategoryId(id) {
+function setCategoryId (id) {
     newsStore.setCategoryId(id)
 }
 
-function setMenuAcive() {
+function setMenuAcive () {
     btnMenu.value = !btnMenu.value
     menuActive.value = !menuActive.value
 }
 
-function mainLink() {
+function mainLink () {
     router.push('/')
 }
 
-function logout() {
+function logout () {
     userStore.logout()
 }
 

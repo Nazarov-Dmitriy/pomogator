@@ -5,8 +5,9 @@
                 src="../../../assets/images/cabinet/cabinetProfile/profile-bg.svg"
                 alt="background image"
                 class="profile__bg-img"
-            >
+            />
         </div>
+
         <div class="profile__container">
             <div class="profile__wrapper">
                 <AddProfilePhoto />
