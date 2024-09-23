@@ -28,7 +28,6 @@ const emit = defineEmits(['select'])
 
 function handleSelect (option) {
     selectedOption.value = option.name  
-    console.log(selectedOption.value);
     emit('select', selectedOption.value) 
 }
 </script>

@@ -1,7 +1,6 @@
 <template>
     <section class="cabinet-favorite">
         <div class="cabinet-favorite__container">
-            <CabinetTitle> Материалы</CabinetTitle>
             <SearchPanel :isSearchVisible="isSearchVisible" />
             <div class="cards">
                 <ListArticle

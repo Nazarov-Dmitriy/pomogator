@@ -1,10 +1,7 @@
 <template>
     <div class="search-panel">
         <div class="search-panel__container">
-            <div
-                v-if="showSearchPanel"
-                class="search-panel__input-wraper"
-            >
+            <div v-if="showSearchPanel" class="search-panel__input-wraper">
                 <input
                     v-if="isSearchVisible"
                     :value="modelValue"
@@ -13,7 +10,7 @@
                     placeholder="Поиск"
                     @input="$emit('update:modelValue', $event.target.value)"
                     @keypress.enter="$emit('search')"
-                >
+                />
             </div>
 
             <div class="search-panel__block">
@@ -50,11 +47,7 @@
                             </g>
                             <defs>
                                 <clipPath id="clip0_3001_4986">
-                                    <rect
-                                        width="24"
-                                        height="24"
-                                        fill="white"
-                                    />
+                                    <rect width="24" height="24" fill="white" />
                                 </clipPath>
                             </defs>
                         </svg>
@@ -80,7 +73,7 @@
 </template>
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useNewsStore } from '@/stores/newsStore'; 
+import { useNewsStore } from '@/stores/newsStore'
 
 defineProps({
     modelValue: {
@@ -93,13 +86,13 @@ defineProps({
     },
     activeTags: {
         type: Array,
-        default: ()=> []
+        default: () => []
     }
 })
 
-const newsStore = useNewsStore();
+const newsStore = useNewsStore()
 const getTags = computed(() => {
-    return newsStore.getTags;
+    return newsStore.getTags
 })
 
 const emit = defineEmits(['update:modelValue', 'search', 'active-tags'])
@@ -114,33 +107,30 @@ onMounted(() => {
     window.addEventListener('resize', resizeHandler)
 })
 
-function resizeHandler () {
+function resizeHandler() {
     if (window.innerWidth < 576) {
         searchActive.value = true
     }
 }
 
-function setActiveTags (id) {
+function setActiveTags(id) {
     emit('active-tags', id)
 }
 
-function showSearch () {
+function showSearch() {
     searchActive.value = true
     emit('update:modelValue', '')
 }
-
 </script>
 <style lang="scss">
 .search-panel__container {
     padding: 21px 0;
-    border-bottom: 2px solid $blue-primary;
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
 
     @media (max-width: $sm) {
         padding: 0 16px;
-        border-bottom: none;
         gap: 16px;
     }
 }
