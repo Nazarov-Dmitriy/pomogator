@@ -104,6 +104,7 @@ const showSearchPanel = computed(() => {
 })
 
 onMounted(() => {
+    newsStore.getTagsDb();
     window.addEventListener('resize', resizeHandler)
 })
 

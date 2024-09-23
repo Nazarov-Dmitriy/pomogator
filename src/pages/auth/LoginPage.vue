@@ -22,12 +22,11 @@
                         <input
                             id="password"
                             ref="inputPassword"
-                            placeholder="Введите пароль"
                             v-model="loginForm.password"
+                            placeholder="Введите пароль"
                             :type="passwordVisible ? 'text' : 'password'"
                             class="input__password input--password w-full p-2 rounded-md"
                             @focus="isFocused = true"
-                            @blur="isFocused"
                         >
                         <p>{{ getError?.password }}</p>
                         <span
@@ -74,7 +73,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useUserStore } from '@/stores/userStore'
 import { useRouter } from 'vue-router'
 import MainLayots from '@/layouts/MainLayots.vue'
@@ -101,6 +100,10 @@ const getError = computed(() => userStore.getError)
 function Login () {
     userStore.login({ ...loginForm })
 }
+
+watch(user, () => {
+    router.push({ path: '/' })
+})
 
 function togglePasswordVisibility () {
     passwordVisible.value = !passwordVisible.value
@@ -187,6 +190,10 @@ onUnmounted(() => {
     .icon {
         width: 24px;
         height: 24px;
+    }
+
+    @media (max-width: $sm) {
+        // top: 61%;
     }
 }
 

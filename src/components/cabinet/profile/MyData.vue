@@ -1,13 +1,7 @@
 <template>
     <div class="my-data__wrapper">
-        <p class="my-data__text">
-            Мои
-        </p>
-        <DropdownComponent
-            :options="options"
-            placeholder="данные"
-            @select="handleSelect"
-        />
+        <p class="my-data__text">Мои</p>
+        <DropdownComponent :options="options" placeholder="данные" @select="handleSelect" />
     </div>
 </template>
 
@@ -26,12 +20,11 @@ const selectedOption = ref(null)
 
 const emit = defineEmits(['select'])
 
-function handleSelect (option) {
-    selectedOption.value = option.name  
-    emit('select', selectedOption.value) 
+function handleSelect(option) {
+    selectedOption.value = option.name
+    emit('select', selectedOption.value)
 }
 </script>
-
 
 <style lang="scss" scoped>
 .my-data__wrapper {
@@ -39,6 +32,16 @@ function handleSelect (option) {
     padding: 60px 80px;
     display: flex;
     gap: 16px;
+
+    @media (max-width: $lg) {
+        padding: 40px;
+    }
+    @media (max-width: $sm) {
+        padding: 32px 16px;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
 
     :deep(.dashboard__dropdown-wrapper) {
         border: none;
@@ -53,6 +56,13 @@ function handleSelect (option) {
         color: #4360f8;
         transition: border-bottom 0.1s;
         height: 56px;
+
+        @media (max-width: $sm) {
+            font-size: 30px;
+            line-height: 40px;
+            min-width: auto;
+            height: auto;
+        }
 
         &:hover {
             border-bottom: 2px solid #4360f8;
@@ -69,6 +79,10 @@ function handleSelect (option) {
         background: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
         width: auto;
         top: 10px;
+
+        @media(max-width: $lg){
+            
+        }
     }
 
     :deep(.option) {
@@ -91,5 +105,10 @@ function handleSelect (option) {
     font-size: 48px;
     line-height: 56px;
     color: #060c1f;
+
+    @media (max-width: $sm) {
+        font-size: 30px;
+        line-height: 40px;
+    }
 }
 </style>

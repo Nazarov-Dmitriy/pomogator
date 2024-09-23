@@ -39,7 +39,6 @@
                                 placeholder="Введите пароль"
                                 class="input__password w-full p-2 rounded-md"
                                 @focus="isFocusedPassword = true"
-                                @blur="isFocusedPassword"
                             >
                             <span
                                 class="toggle-password-icons"
@@ -72,7 +71,6 @@
                                 placeholder="Повторите пароль"
                                 class="input__password w-full p-2 rounded-md"
                                 @focus="isFocusedConfirmPassword = true"
-                                @blur="isFocusedConfirmPassword"
                             >
                             <span
                                 class="toggle-password-icons"
@@ -105,9 +103,9 @@
                     </div>
                     <div class="btn-wrapper mb-4">
                         <BtnBackgroud
-                            emit-name="action"
+                            emit-name="form-submit"
                             class="btn"
-                            @action="register()"
+                            @form-submit="register()"
                         >
                             Продолжить
                         </BtnBackgroud>
@@ -273,10 +271,16 @@ function result (res) {
 }
 
 function register () {
-    if (registerForm.confirmPassword === registerForm.password && registerForm.password >= 3) {
+    if (
+        registerForm.confirmPassword === registerForm.password &&
+        registerForm.password.length >= 3
+    ) {
         registerForm.errorConfirmPassword = false
         userStore.registerUser(
-            { email: registerForm.email, password: registerForm.password },
+            {
+                email: registerForm.email,
+                password: registerForm.password
+            },
             result
         )
     } else {
@@ -297,6 +301,10 @@ watch(
     },
     { deep: true }
 )
+/**
+ * 
+    логика для отображения трех иконок
+ */
 
 const passwordVisible = ref(false)
 const confirmPasswordVisible = ref(false)
@@ -324,7 +332,6 @@ function clickOutside (event) {
         isFocusedConfirmPassword.value = false
     }
 }
-
 
 onMounted(() => {
     window.addEventListener('mousedown', clickOutside)
