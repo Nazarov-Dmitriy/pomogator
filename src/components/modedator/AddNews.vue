@@ -23,9 +23,9 @@
                     <label
                         for=""
                         class="text-base"
-                    >Подзаголовк статьи</label>
+                    >Аннотация</label>
                     <input
-                        v-model="dataNews.subtitle"
+                        v-model="dataNews.annotation"
                         type="text"
                         class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
                     >
@@ -71,11 +71,52 @@
                 <label
                     for=""
                     class="text-base"
+                >Ссылка на источник</label>
+                <input
+                    v-model="dataNews.link_to_source"
+                    type="text"
+                    class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
+                >
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label
+                    for=""
+                    class="text-base"
+                >Теги</label>
+                <DropdownComponent
+                    v-model:modelValue="isArticleImage"
+                    :options="optionArticleImageDropdown"
+                    :placeholder="'Выбирите теги'"
+                />
+            </div>
+
+            <div
+                v-if="isArticleImage === 1"
+                class="flex flex-col gap-2"
+            >
+                <label
+                    for=""
+                    class="text-base"
                 >Картинка</label>
                 <input
                     type="file"
                     class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
                     @change="onFileChange"
+                >
+            </div>
+            <div
+                v-else
+                class="flex flex-col gap-2"
+            >
+                <label
+                    for=""
+                    class="text-base"
+                >Ссылка на видеоматериал</label>
+                <input
+                    v-model="dataNews.video"
+                    type="text"
+                    class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
                 >
             </div>
             <BtnBackgroud
@@ -85,6 +126,12 @@
             >
                 Отправить
             </BtnBackgroud>
+            <div
+                v-if="getIsSuccses"
+                style="color:green"
+            >
+                Статья успешно добавлена
+            </div>
         </template>
     </div>
 </template>
@@ -141,20 +188,33 @@ const getTags = computed(() => {
     return newsStore.getTags;
 })
 
+const getIsSuccses = computed(() => {
+    return newsStore.getIsSuccses;
+})
+
 const getCategory = computed(() => {
     return newsStore.getCategory;
 })
 
 const isLoad = ref(false);
+const isArticleImage = ref(1);
+
+const optionArticleImageDropdown =[
+    {id: 1, name: "Изображение"},
+    {id: 2, name: "Видео"}
+]
+
+
 
 const dataNews = reactive({
     title: 'Статья 1',
-    subtitle: 'ПОдзоголовок статьи 1',
-    tags: [1, 2],
-    article: `<p>Информационные технологии играют значительную роль в повышении качества образования в области химии. Они предоставляют новые возможности для обучения, развивают личность учащихся и интенсифицируют процесс обучения.</p><p>&nbsp;</p><p>Использование обучающих дисков и компьютерных технологий позволяет студентам осваивать сложные темы, такие как химическая связь и электролиз. Демонстрационный химический эксперимент остаётся важным средством для поддержания интереса к предмету, однако некоторые опасные опыты невозможно провести в аудитории.</p><p>&nbsp;</p><p>Использование обучающих дисков и компьютерных технологий позволяет студентам осваивать сложные темы, такие как химическая связь и электролиз. Демонстрационный химический эксперимент остаётся важным средством для поддержания интереса к предмету, однако некоторые опасные опыты невозможно провести в аудитории.</p><p>&nbsp;</p><p>Применение информационных технологий в химии способствует повышению мотивации студентов к исследовательской деятельности и улучшению образовательного процесса в целом.</p><p>&nbsp;</p><p>Информационные технологии открывают новые горизонты для изучения химии. Они позволяют проводить виртуальные эксперименты, моделировать химические процессы и изучать свойства веществ в безопасных условиях. Это делает обучение более доступным и интересным для студентов разных возрастов и уровней подготовки.</p><p>&nbsp;</p><p>Использование информационных технологий в химии способствует развитию критического мышления у студентов. Они учатся анализировать информацию, делать выводы и применять полученные знания на практике. Это помогает им стать более уверенными и успешными в будущей карьере.</p><p>&nbsp;</p><p>Информационные технологии также способствуют интернационализации образования. Они позволяют студентам общаться с коллегами из других стран, участвовать в международных проектах и обмениваться опытом. Это расширяет кругозор студентов и помогает им стать более открытыми и толерантными людьми.</p><p>&nbsp;</p><p>В заключение, информационные технологии играют важную роль в современном образовании. Они делают обучение химии более эффективным, интересным и доступным для всех. Благодаря им студенты получают возможность изучать химию на новом уровне и готовиться к успешной карьере в будущем.</p>`,
+    annotation: 'ПОдзоголовок статьи 1',
     category: 1,
+    tags: [1, 2],
+    article: `<p>Информационные технологии играют значительную роль в повышении качества образования в области химии. Они предоставляют новые возможности для обучения, развивают личность учащихся и интенсифицируют процесс обучения.</p><p>&nbsp;</p>`,
     file: null,
-    respone: null
+    link_to_source: null,
+    video: null
 })
 
 onMounted(()=>{
@@ -182,10 +242,18 @@ async function  submit () {
 }
 
 
+isLoad.value = true
 
 watch([ getTags, getCategory], () => {
     isLoad.value = true
 })
+
+watch(isArticleImage, () => {
+    dataNews.file = null;
+    dataNews.video = null;
+})
+
+
 
 
 

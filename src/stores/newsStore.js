@@ -1,32 +1,36 @@
-import { defineStore } from "pinia";
-import axiosR from '@/api/http';
+import { defineStore } from 'pinia'
+import axiosR from '@/api/http'
 
-import { reactive, ref } from "vue";
+import { reactive, ref } from 'vue'
 
-export const useNewsStore = defineStore("newsStore", {
+export const useNewsStore = defineStore('newsStore', {
     state: () => ({
         newsList: reactive([]),
         tags: reactive([]),
         category: reactive([]),
         categoryId: ref(),
-        news: ref(null)
+        news: ref(null),
+        isSuccess: false
     }),
     getters: {
         getNewsList (state) {
-            return state.newsList;
+            return state.newsList
         },
         getTags (state) {
-            return state.tags;
+            return state.tags
         },
         getCategory (state) {
-            return state.category;
+            return state.category
         },
         getNews (state) {
-            return state.news;
+            return state.news
         },
         getCategoryId (state) {
-            return state.categoryId;
+            return state.categoryId
         },
+        getIsSuccses (state) {
+            return state.isSuccessF
+        }
     },
     actions: {
         setCategoryId (id) {
@@ -35,34 +39,33 @@ export const useNewsStore = defineStore("newsStore", {
         getNewsListDb () {
             try {
                 axiosR.get(`/news/list`).then((res) => {
-                    this.newsList = [];
-                    this.newsList = [...res.data];
-
-                });
+                    this.newsList = []
+                    this.newsList = [...res.data]
+                })
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         },
         getTagsDb () {
             try {
                 if (this.tags.length === 0) {
                     axiosR.get(`/news/tags`).then((res) => {
-                        this.tags = res.data;
-                    });
+                        this.tags = res.data
+                    })
                 }
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         },
         getCategoryDb () {
             try {
                 if (this.category.length === 0) {
-                    axiosR.get(`/news/categoty`).then((res) => {
-                        this.category = res.data;
-                    });
+                    axiosR.get(`/news/category`).then((res) => {
+                        this.category = res.data
+                    })
                 }
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         },
         getNewsDb (params) {
@@ -74,7 +77,7 @@ export const useNewsStore = defineStore("newsStore", {
                 console.log(err);
             }
         },
-        getLisParamstDb (param,) {
+        getLisParamstDb (param) {
             try {
                 axiosR.get(`/news/list`,
                     {
@@ -83,27 +86,26 @@ export const useNewsStore = defineStore("newsStore", {
                 ).then((res) => {
                     this.newsList = [];
                     this.newsList = [...res.data];
-
                 });
             } catch (err) {
                 console.log(err);
             }
         },
-        addNewstDb (data, result) {
-            axiosR.post('/news/add', data,
-                {
+        addNewstDb (data) {
+            this.isSuccess = false
+            axiosR
+                .post('/news/add', data, {
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 })
                 .then((res) => {
                     if (res.status === 200) {
-                        result("Статья успешно добавлена")
+                        this.isSuccess = true
                     }
-                }
-                )
-                .catch(err => {
-                    console.log(err);
+                })
+                .catch((err) => {
+                    console.log(err)
                 })
         },
         addShow (id) {
@@ -125,7 +127,6 @@ export const useNewsStore = defineStore("newsStore", {
                 .catch(err => {
                     console.log(err);
                 })
-        },
-    },
-});
-
+        }
+    }
+})

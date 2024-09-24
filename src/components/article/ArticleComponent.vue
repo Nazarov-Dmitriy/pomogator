@@ -1,10 +1,12 @@
 <template>
     <div class="article">
         <img
-            :src="getUrl(props.article?.image)"
+            v-if="article?.file"
+            :src="getUrl(article?.file)"
             alt="atricle image"
             class="article__img"
         >
+        <VideoComponent :src="article?.video" class-name="video-player" />
         <div class="article-layout">
             <div class="article__container">
                 <p
@@ -23,7 +25,7 @@
                                 <div class="article__tags">
                                     <div
                                         v-for="item in article?.tags"
-                                        :key="item.id"
+                                        :key="item"
                                         class="article__tag-item"
                                     >
                                         <span class="article__tag-symbol">#</span>
@@ -205,6 +207,7 @@ import OtherArticle from '../article/OtherArticle.vue';
 import OtherTrend from '../trend/OtherTrend.vue';
 import ShareComponent from './ShareComponent.vue';
 import { useNewsStore } from '@/stores/newsStore';
+import VideoComponent from '../video/VideoComponent.vue';
 
 const props = defineProps({
     article: {

@@ -94,6 +94,8 @@ watch(activeTags, (newVal) => {
 },{deep: true})
 
 watch([getNewsList, getTags, getCategory], () => {
+    console.log(222);
+    
     isLoad.value = true
     data.value = getNewsList.value
 })

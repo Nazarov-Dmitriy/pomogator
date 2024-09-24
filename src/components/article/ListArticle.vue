@@ -1,36 +1,14 @@
 <template>
     <div class="list-article__container">
         <slot name="header" />
-        <div
-            v-if="renderList.length > 0"
-            class="list-article"
-            :class="props.customArticle"
-        >
-            <div
-                v-for="item in renderList"
-                :key="item.id"
-                class="card"
-                @click="linkArticle(item.id)"
-            >
-                <img
-                    :src="getUrl(item.image)"
-                    alt="img-card"
-                    class="card-img"
-                >
+        <div v-if="renderList.length > 0" class="list-article" :class="props.customArticle">
+            <div v-for="item in renderList" :key="item.id" class="card" @click="linkArticle(item.id)">
+                <img v-if="item.file" :src="getUrl(item.file)" alt="img-card" class="card-img">
+                <VideoComponent v-if="item.video" :src="item?.video" :preview="true" />
                 <div class="card-body">
-                    <div
-                        v-if="getTags.length > 0"
-                        class="card-contnent"
-                    >
-                        <div
-                            class="card-hashtags"
-                            :class="props.customClass[2]"
-                        >
-                            <p
-                                v-for="tag in item.tags"
-                                :key="tag"
-                                class="card-hashtag"
-                            >
+                    <div v-if="getTags.length > 0" class="card-contnent">
+                        <div class="card-hashtags" :class="props.customClass[2]">
+                            <p v-for="tag in item.tags" :key="tag" class="card-hashtag">
                                 #{{ getTag(tag) }}
                             </p>
                         </div>
@@ -39,37 +17,23 @@
                         </p>
                     </div>
                     <div class="card-footer">
-                        <div
-                            class="card-btns"
-                            :class="props.customBtn"
-                        >
+                        <div class="card-btns" :class="props.customBtn">
                             <div class="card-btn show">
-                                <img
-                                    src="@/assets/icons/article/like.svg"
-                                    alt="like"
-                                    class="card-btn__img"
-                                >
+                                <img src="@/assets/icons/article/like.svg" alt="like" class="card-btn__img">
                                 <p class="card-btn__count">
                                     {{ item.likes }}
                                 </p>
                             </div>
                             <div class="card-btn">
-                                <img
-                                    src="@/assets/icons/article/show.svg"
-                                    alt="show"
-                                    class="card-btn__img"
-                                >
+                                <img src="@/assets/icons/article/show.svg" alt="show" class="card-btn__img">
                                 <p class="card-btn__count">
                                     {{ item.shows }}
                                 </p>
                             </div>
                         </div>
-                        <div
-                            class="card-date"
-                            :class="props.customDate"
-                        >
+                        <div class="card-date" :class="props.customDate">
                             <span class="card-date__text">Дата публикации</span>
-                            {{ item.publication_date }}
+                            {{ item.createdAt }}
                         </div>
                     </div>
                 </div>
@@ -82,19 +46,16 @@
         </div>
 
         <OfferMaterial v-if="props.isOfferVisible" />
-        <PaginationComponent
-            :perpage="12"
-            :data="props.data"
-            @set-list="getRenderList"
-        />
+        <PaginationComponent :perpage="12" :data="props.data" @set-list="getRenderList" />
     </div>
 </template>
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue'
-import { useNewsStore } from '@/stores/newsStore'; 
+import { useNewsStore } from '@/stores/newsStore';
 import { useRoute, useRouter } from 'vue-router'
 import { computed, ref, watch } from 'vue'
+import VideoComponent from '../video/VideoComponent.vue';
 
 const props = defineProps({
     data: {
@@ -149,7 +110,7 @@ function getRenderList (list) {
     renderList.value = list
 }
 
-function getTag (tag){
+function getTag (tag) {
     return getTags.value.filter(el => el.id === tag)[0].name
 }
 
@@ -170,145 +131,145 @@ watch(
 )
 </script>
 <style lang="scss">
-.list-article__container {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+    .list-article__container {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
 
-    .no-result {
+        .no-result {
+            font-size: 24px;
+            line-height: 32px;
+            font-weight: 500;
+            color: $black;
+        }
+    }
+
+    .list-article {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        box-sizing: border-box;
+        gap: 24px 16px;
+
+        @media (max-width: $md) {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .card {
+        border-radius: 32px;
+        box-sizing: border-box;
+        border: 2px solid $blue;
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+
+        &:hover {
+            border: 2px solid $blue-primary;
+
+            .card__title {
+                color: $blue-primary;
+            }
+
+            .card-btn__count {
+                color: $blue-primary;
+            }
+
+            .card-date {
+                color: $blue-primary;
+            }
+
+            .card-hashtag {
+                color: $blue-primary;
+            }
+        }
+    }
+
+    .card-img {
+        width: 100%;
+        aspect-ratio: 2.9 / 1;
+        object-fit: cover;
+    }
+
+    .card-body {
+        padding: 16px;
+        display: flex;
+        gap: 20px;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .card-contnent {
+        flex: 1 1 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .card-hashtags {
+        display: flex;
+        justify-content: flex-end;
+        gap: 40px;
+    }
+
+    .card-hashtag {
+        font-size: 16px;
+        line-height: 24px;
+        color: $blue;
+    }
+
+    .card__title {
+        flex: 1 1 100%;
         font-size: 24px;
         line-height: 32px;
         font-weight: 500;
         color: $black;
-    }
-}
 
-.list-article {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    box-sizing: border-box;
-    gap: 24px 16px;
-
-    @media (max-width: $md) {
-        grid-template-columns: 1fr;
-    }
-}
-
-.card {
-    border-radius: 32px;
-    box-sizing: border-box;
-    border: 2px solid $blue;
-    overflow: hidden;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-
-    &:hover {
-        border: 2px solid $blue-primary;
-
-        .card__title {
-            color: $blue-primary;
-        }
-
-        .card-btn__count {
-            color: $blue-primary;
-        }
-
-        .card-date {
-            color: $blue-primary;
-        }
-
-        .card-hashtag {
-            color: $blue-primary;
+        @media (max-width: $lg) {
+            font-size: 20px;
+            line-height: 24px;
         }
     }
-}
 
-.card-img {
-    width: 100%;
-    aspect-ratio: 2.9 / 1;
-    object-fit: cover;
-}
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
 
-.card-body {
-    padding: 16px;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    flex-grow: 1;
-}
+    .card-btns {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+    }
 
-.card-contnent {
-    flex: 1 1 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-}
+    .card-btn {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
 
-.card-hashtags {
-    display: flex;
-    justify-content: flex-end;
-    gap: 40px;
-}
+    .card-btn__img {
+        width: 24px;
+        height: 24px;
+    }
 
-.card-hashtag {
-    font-size: 16px;
-    line-height: 24px;
-    color: $blue;
-}
-
-.card__title {
-    flex: 1 1 100%;
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 500;
-    color: $black;
-
-    @media (max-width: $lg) {
-        font-size: 20px;
+    .card-btn__count {
+        font-size: 16px;
         line-height: 24px;
+        color: $blue;
     }
-}
 
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-
-.card-btns {
-    display: flex;
-    gap: 40px;
-    align-items: center;
-}
-
-.card-btn {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.card-btn__img {
-    width: 24px;
-    height: 24px;
-}
-
-.card-btn__count {
-    font-size: 16px;
-    line-height: 24px;
-    color: $blue;
-}
-
-.card-date {
-    font-size: 16px;
-    line-height: 24px;
-    color: $blue;
-}
-
-.card-date__text {
-    @media (max-width: $xl) {
-        display: none;
+    .card-date {
+        font-size: 16px;
+        line-height: 24px;
+        color: $blue;
     }
-}
+
+    .card-date__text {
+        @media (max-width: $xl) {
+            display: none;
+        }
+    }
 </style>
