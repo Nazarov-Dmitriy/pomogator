@@ -1,9 +1,6 @@
 <template>
     <div class="page">
-        <HeaderComponent />
-        <CabinetComponentName>
-            Мои материалы
-        </CabinetComponentName>
+        
         <CabinetSearchPanel
             v-model="searchValue"
             class="cabinet-trend__search-panel"
@@ -17,8 +14,6 @@
     </div>
 </template>
 <script setup>
-import HeaderComponent from '@/components/header/HeaderComponent.vue';
-import CabinetComponentName from '@/components/cabinet/CabinetComponentName.vue';
 import CabinetSearchPanel from '@/components/cabinet/CabinetSearchPanel.vue';
 import CabinetListArticle from '@/components/cabinet/CabinetListArticle.vue';
 import { onMounted, ref, watch } from 'vue';

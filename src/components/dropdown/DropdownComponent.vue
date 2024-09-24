@@ -99,7 +99,7 @@ const props = defineProps({
     },
 
 })
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'select'])
 
 const selectedOption = ref(null)
 
@@ -107,6 +107,7 @@ const isDropDownVisible = ref(false)
 
 const toggleOptionSelect = (option) => {
     selectedOption.value = option.id
+    emit('select', option)
     emit('update:modelValue', option.id)
     setTimeout(() => {
         isDropDownVisible.value = false

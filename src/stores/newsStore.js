@@ -71,16 +71,16 @@ export const useNewsStore = defineStore('newsStore', {
         getNewsDb (params) {
             try {
                 axiosR.get(`/news/` + params).then((res) => {
-                    this.news = res.data;
-                });
+                    this.news = res.data
+                })
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         },
         getLisParamstDb (param) {
             try {
-                axiosR.get(`/news/list`,
-                    {
+                axiosR
+                    .get(`/news/list`, {
                         params: param
                     }
                 ).then((res) => {
@@ -88,7 +88,7 @@ export const useNewsStore = defineStore('newsStore', {
                     this.newsList = [...res.data];
                 });
             } catch (err) {
-                console.log(err);
+                console.log(err)
             }
         },
         addNewstDb (data) {
@@ -109,23 +109,17 @@ export const useNewsStore = defineStore('newsStore', {
                 })
         },
         addShow (id) {
-            axiosR.get('/news/show/' + id)
-                .then(() => {
-                }
-                )
-                .catch(err => {
-                    console.log(err);
+            axiosR
+                .get('/news/show/' + id)
+                .then(() => {})
+                .catch((err) => {
+                    console.log(err)
                 })
         },
         setLike (params) {
-            axiosR.get('/news/like', {
-                params
-            })
-                .then(() => {
-                }
-                )
-                .catch(err => {
-                    console.log(err);
+            axiosR
+                .get('/news/like', {
+                    params
                 })
         }
     }

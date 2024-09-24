@@ -113,25 +113,25 @@
     </div>
 </template>
 <script setup>
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router'
 import { computed, onMounted, ref, watch } from 'vue'
-import { useNewsStore } from '@/stores/newsStore';
-import BtnComponent from '../btns/BtnComponent.vue';
-import { useUserStore } from '@/stores/userStore';
+import { useNewsStore } from '@/stores/newsStore'
+import BtnComponent from '../btns/BtnComponent.vue'
+import { useUserStore } from '@/stores/userStore'
 
-const userStore = useUserStore();
-const newsStore = useNewsStore();
+const userStore = useUserStore()
+const newsStore = useNewsStore()
 const btnMenu = ref(false)
 const menuActive = ref(false)
 const router = useRouter()
-const route = useRoute();
+const route = useRoute()
 
 const getCategory = computed(() => {
-    return newsStore.getCategory;
+    return newsStore.getCategory
 })
 
 const getCategoryId = computed(() => {
-    return newsStore.getCategoryId;
+    return newsStore.getCategoryId
 })
 
 const getUser = computed(() => {
@@ -143,21 +143,20 @@ const getSuccessRes = computed(() => {
 })
 
 const getUrl = computed(() => {
-    return  import.meta.env.VITE_SERVER_URL + getUser.value?.avatar
+    return import.meta.env.VITE_SERVER_URL + getUser.value?.avatar
 })
 
-
 const getAutotizationBtn = computed(() => {
-    let path = route.path;   
-    if(userStore.getUser ){
-        return path.includes('/lk/') ? 'lk' : "page"
-    }else{
+    let path = route.path
+    if (userStore.getUser) {
+        return path.includes('/lk/') ? 'lk' : 'page'
+    } else {
         return false
     }
 })
 
 onMounted(() => {
-    newsStore.getCategoryDb();
+    newsStore.getCategoryDb()
 })
 
 function setCategoryId (id) {
@@ -178,24 +177,20 @@ function logout () {
 }
 
 watch([getCategory, getCategoryId], () => {
-
-    if (!getCategoryId.value && route.name === "trend-page") {
-        let id = getCategory.value.findIndex(el => el.link_name === route.params.name) + 1;
+    if (!getCategoryId.value && route.name === 'trend-page') {
+        let id = getCategory.value.findIndex((el) => el.link_name === route.params.name) + 1
         newsStore.setCategoryId(id)
     }
 })
 
-watch([getUser], ()=>{
-    
-})
+watch([getUser], () => {})
 
-watch(getSuccessRes, ()=>{
-    if(getSuccessRes.value) {
-        userStore.resetSuccessRes();        
+watch(getSuccessRes, () => {
+    if (getSuccessRes.value) {
+        userStore.resetSuccessRes()
         router.push('/')
     }
 })
-
 </script>
 <style lang="scss">
 .header__contaner {
@@ -267,7 +262,7 @@ watch(getSuccessRes, ()=>{
         gap: 16px 0;
     }
 
-    &>.header__logo {
+    & > .header__logo {
         @media (max-width: $lg) {
             display: none;
         }
@@ -361,7 +356,7 @@ watch(getSuccessRes, ()=>{
     @media (max-width: $sm) {
         flex-direction: column;
         gap: 16px;
-        align-items: center
+        align-items: center;
     }
 }
 
@@ -438,7 +433,7 @@ watch(getSuccessRes, ()=>{
     }
 
     @media (max-width: $sm) {
-        flex: 1 0 65%
+        flex: 1 0 65%;
     }
 }
 
@@ -494,7 +489,7 @@ watch(getSuccessRes, ()=>{
     }
 
     &:hover {
-        background: #4360F8;
+        background: #4360f8;
     }
 }
 

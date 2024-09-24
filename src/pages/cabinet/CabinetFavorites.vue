@@ -1,6 +1,5 @@
 <template>
     <div class="page">
-        <HeaderComponent />
         <FavoriteComponent />
         <FooterComponent />
     </div>
@@ -8,7 +7,6 @@
 <script setup>
 import FooterComponent from '@/components/main/FooterComponent.vue'
 import FavoriteComponent from '@/components/cabinet/favorites/FavoriteComponent.vue'
-import HeaderComponent from '@/components/header/HeaderComponent.vue';
 </script>
 <style scoped lang="scss">
 .page {

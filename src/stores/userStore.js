@@ -40,19 +40,22 @@ export const useUserStore = defineStore('userStore', {
                     this.error = err.response.data;
                 });
         },
-        registerUser (data , result) {
-            axiosR.post(`/auth/sign-up`, data).then((res) => {
-                if(res.status === 200){
-                    this.token = res.data;
-                    this.error = null;
-                    this.rigisterStepTwo = true;
-                    this.user = res.data.user;
-                    localStorage.setItem('token', res.data.token);
-                    result(200)
-                }
-            }).catch(err => {
-                this.error = err.response.data;
-            });
+        registerUser (data, result) {
+            axiosR.post(`/auth/sign-up`, data)
+                .then((res) => {
+                    if (res.data.status === 200) {
+                        this.token = res.data.token;
+                        this.error = null;
+                        this.rigisterStepTwo = true;
+                        this.user = res.data.user;
+                        localStorage.setItem('token', res.data.token);
+                        result(200);
+                    }
+                })
+                .catch(err => {
+                    this.error = err.response?.data || "Ошибка регистрации";
+                    console.error('Ошибка регистрации:', err.response?.data || err);
+                });
         },
         registerUserInfo (data) {
             axiosR.post(`/auth/user-info`, data).then((res) => {

@@ -45,8 +45,6 @@
 </template>
 <script setup>
 import { computed, onMounted, ref,  watch } from 'vue'
-
-import '../../utils/vk_api.js'
 // import axios from 'axios'
 
 const props = defineProps({
