@@ -7,18 +7,25 @@
                 </h2>
                 <div class="flex flex-col gap-2 w-full">
                     <div class="flex flex-col w-full gap-2">
-                        <label for="email">Email</label>
+                        <label
+                            class="field__label"
+                            :class="{ error: getError?.email }"
+                            for="email">Email</label>
                         <input
                             id="email"
                             v-model="loginForm.email"
                             type="text"
                             placeholder="mariaivanova@mail.ru"
                             class="input w-full p-2 rounded-md"
+                            :class="{ error: getError?.email }"
                         >
-                        <p>{{ getError?.email }}</p>
+                        <p class="error-text">{{ getError?.email }}</p>
                     </div>
                     <div class="flex flex-col w-full gap-2 relative">
-                        <label for="password">Пароль</label>
+                        <label
+                            class="field__label"                 
+                            :class="{ error: getError?.password }"
+                            for="password">Пароль</label>
                         <input
                             id="password"
                             ref="inputPassword"
@@ -26,9 +33,10 @@
                             placeholder="Введите пароль"
                             :type="passwordVisible ? 'text' : 'password'"
                             class="input__password input--password w-full p-2 rounded-md"
+                            :class="{ error: getError?.email }"
                             @focus="isFocused = true"
                         >
-                        <p>{{ getError?.password }}</p>
+                        <p class="error-text">{{ getError?.password }}</p>
                         <span
                             ref="toggleImg"
                             class="toggle-password-icon"
@@ -148,6 +156,12 @@ onUnmounted(() => {
     }
 }
 
+.input{
+    &.error {
+        border: 2px solid $primary-red;
+    }
+}
+
 .input__password {
     transition: 0.2s;
     background-repeat: no-repeat;
@@ -178,13 +192,17 @@ onUnmounted(() => {
         line-height: 150%;
         color: #a0b1ed;
     }
+
+    &.error {
+        border: 2px solid $primary-red;
+    }
 }
 
 .toggle-password-icon {
     position: absolute;
     top: 60%;
     right: 16px;
-    transform: translateY(-50%);
+    transform: translateY(-35%);
     cursor: pointer;
 
     .icon {
