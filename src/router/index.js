@@ -13,6 +13,12 @@ import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
 import AddNewsPage from '../pages/moderator/AddNewsPage.vue'
 import ModeratorPage from '../pages/moderator/ModeratorPage.vue'
+import WebinarPage from '@/pages/webinar/WebinarPage.vue'
+import FutureWebinar from '@/components/webinar/WebinarHeader.vue'
+import OnlineWebinar from '@/components/webinar/OnlineWebinar.vue'
+import WebinarsComponent from '@/components/webinar/WebinarsComponent.vue'
+import WebinarsPage from '@/pages/webinar/WebinarsPage.vue'
+import CurrentWebinar from '@/pages/webinar/CurrentWebinar.vue'
 
 
 
@@ -113,6 +119,23 @@ const router = createRouter({
                 },
             ]
         },
+        {
+            path: '/webinar',
+            component: WebinarPage,
+            children: [
+                {
+                    path: 'webinars',
+                    name: 'webinars',
+                    component: WebinarsPage
+                },
+                {
+                    path: 'current-webinar',
+                    name: 'current-webinar',
+                    component: CurrentWebinar
+                },
+                
+            ]
+        }
 
     ],
     scrollBehavior (to, from, savedPosition) {

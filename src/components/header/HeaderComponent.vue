@@ -48,7 +48,7 @@
                     </li>
                     <li class="header__item">
                         <router-link
-                            to="/webinar"
+                            to="/webinar/webinars"
                             class="header__link"
                         >
                             Вебинар
