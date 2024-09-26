@@ -17,10 +17,13 @@
                 @click="article(item.id, item.trend)"
             >
                 <img
-                    :src="getUrl(item.image)"
+                    v-if="item?.file"
+                    :src="getUrl(item.file)"
                     alt=""
                     class="article__other-img"
                 >
+                <VideoComponent :src="item?.video" />
+
                 <div class="article__other-contnent">
                     <div class="article__other-tags">
                         <p
@@ -35,7 +38,7 @@
                         {{ item.title }}
                     </p>
                     <p class="article__other-date">
-                        {{ item.date_publication }}
+                        {{ item.createdAt }}
                     </p>
                 </div>
             </div>
@@ -48,6 +51,7 @@ import { useRouter } from 'vue-router';
 import { useNewsStore } from '@/stores/newsStore'; 
 import ArticleSubcribe from './ArticleSubcribe.vue';
 import { computed } from 'vue';
+import VideoComponent from '../video/VideoComponent.vue';
 const router = useRouter()
 
 const props = defineProps({

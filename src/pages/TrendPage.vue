@@ -89,8 +89,9 @@ function setTags (id){
 onMounted(() => {
     data.value = dataTrend.value
     newsStore.getTagsDb();
-    newsStore.getLisParamstDb({ "category": getCategoryId.value });
-
+    if(getCategoryId.value) {
+        newsStore.getLisParamstDb({ "category": getCategoryId.value });
+    }
 })
 
 watch(searchValue, (newVal) => {
@@ -108,9 +109,13 @@ watch(activeTags, (newVal) => {
     }
 },{deep: true})
 
-watch([getNewsList, getTags, getCategory], () => {
+watch(getCategory, () => {
+    let categoryId = getCategory.value.filter(c => c.link_name === route.params.name)[0].id
+    newsStore.getLisParamstDb({ "category": categoryId });
+})
+
+watch([getNewsList, getTags], () => {
     console.log("getNewsList, getTags, get");
-    
     isLoad.value = true
     data.value = getNewsList.value
 })

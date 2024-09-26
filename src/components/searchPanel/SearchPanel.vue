@@ -108,17 +108,17 @@ onMounted(() => {
     window.addEventListener('resize', resizeHandler)
 })
 
-function resizeHandler() {
+function resizeHandler () {
     if (window.innerWidth < 576) {
         searchActive.value = true
     }
 }
 
-function setActiveTags(id) {
+function setActiveTags (id) {
     emit('active-tags', id)
 }
 
-function showSearch() {
+function showSearch () {
     searchActive.value = true
     emit('update:modelValue', '')
 }
@@ -129,10 +129,14 @@ function showSearch() {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
+    border-bottom: 2px solid $blue-primary;
+
 
     @media (max-width: $sm) {
         padding: 0 16px;
         gap: 16px;
+        border-bottom: none;
+
     }
 }
 
