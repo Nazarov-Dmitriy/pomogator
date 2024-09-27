@@ -1,34 +1,27 @@
 <template>
-    <div class="header__contaner">
+    <div class="header__container">
         <div class="header__wrapper">
             <div class="header__mobile">
                 <img
                     src="@/assets/icons/logo.svg"
                     alt="logo"
                     class="header__logo"
-                    @click="mainLink()"
-                >
-                <div
-                    class="hamburger"
-                    :class="{ 'is-active': btnMenu }"
-                    @click="setMenuAcive()"
-                >
-                    <span class="line" />
-                    <span class="line" />
-                    <span class="line" />
+                    @click="mainLink"
+                />
+                <div class="hamburger" :class="{ 'is-active': btnMenu }" @click="setMenuActive">
+                    <span class="line"></span>
+                    <span class="line"></span>
+                    <span class="line"></span>
                 </div>
             </div>
-            <div
-                class="header"
-                :class="{ 'menu-active': menuActive }"
-            >
+            <div class="header" :class="{ 'menu-active': menuActive }">
                 <img
                     src="@/assets/icons/logo.svg"
                     alt="logo"
                     class="header__logo"
-                    @click="mainLink()"
-                >
-                <span />
+                    @click="mainLink"
+                />
+                <span></span>
                 <div class="header__block">
                     <div class="header__exit">
                         <span>Выход</span>
@@ -65,136 +58,87 @@
                 </div>
                 <div class="header__hero">
                     <img
-                        v-if="userStore.profileImage"
-                        :src="userStore.profileImage"
+                        v-if="getUser"
+                        :src="getUrl"
                         alt=""
                         class="header__hero-img"
-                    >
+                    />
                     <img
                         v-else
-                        src="../../../assets/images/cabinet/cabinetHeader/default-avata.png"
+                        src="../../../assets/images/cabinet/cabinetHeader/default-avatar.png"
                         alt=""
                         class="header__hero-img"
-                    >
+                    />
                     <div
-                        v-if="
-                            userStore.personalData.lastName &&
-                                userStore.personalData.firstName &&
-                                userStore.personalData.middleName
-                        "
+                        v-if="getUser"
                         class="header__hero-info"
                     >
                         <h2 class="header__hero-info-title">
-                            {{ userStore.personalData.lastName }}
-                            {{ userStore.personalData.firstName }}
-                            {{ userStore.personalData.middleName }}
+                            {{ getUser.surname }} {{ getUser.name }}
+                            {{ getUser.patronymic }}
                         </h2>
-                        <span>{{ userStore.personalData.rank }}</span>
+                        <span>{{ getUser.rank }}</span>
                     </div>
-                    <div
-                        v-else
-                        class="header__hero-info"
-                    >
-                        <h2 class="header__hero-info-title">
-                            Смирнова Мария Владимировна
-                        </h2>
+                    <div v-else class="header__hero-info">
+                        <h2 class="header__hero-info-title">Смирнова Мария Владимировна</h2>
                         <span>Педагог</span>
                     </div>
                 </div>
-                <div
-                    v-if="userStore.personalData.email && userStore.personalData.phone"
-                    class="header__info"
-                >
-                    <a
-                        href="#"
-                        class="header__info-text header__info-text--mail"
-                    >{{
-                        userStore.personalData.email
+                <div v-if="getUser" class="header__info">
+                    <a href="#" class="header__info-text header__info-text--mail">{{
+                        getUser.email
                     }}</a>
-                    <a
-                        href="#"
-                        class="header__info-text header__info-text--number"
-                    >{{
-                        userStore.personalData.phone
+                    <a v-if="getUser.phone" href="#" class="header__info-text header__info-text--number">{{
+                        getUser.phone
                     }}</a>
                 </div>
-                <div
-                    v-else
-                    class="header__info"
-                >
-                    <a
-                        href="#"
-                        class="header__info-text header__info-text--mail"
-                    >maria@mail.ru</a>
-                    <a
-                        href="#"
-                        class="header__info-text header__info-text--number"
-                    >+7 (954) 123-45-67</a>
-                </div>
-                <div class="header__trend">
-                    <div class="header__trend-decor" />
-                    <router-link
-                        to="/lk/profile/"
-                        class="header__trend-item"
-                        active-class="active"
+                <div v-else class="header__info">
+                    <a href="#" class="header__info-text header__info-text--mail">maria@mail.ru</a>
+                    <a href="#" class="header__info-text header__info-text--number"
+                        >+7 (954) 123-45-67</a
                     >
-                        Мой профиль
-                    </router-link>
-                    <router-link
-                        to="/lk/favorites"
-                        class="header__trend-item"
-                        active-class="active"
-                    >
-                        Избранное
-                    </router-link>
-                    <router-link
-                        to="/lk/materials"
-                        class="header__trend-item"
-                        active-class="active"
-                    >
-                        Мои материалы
-                    </router-link>
-                    <router-link
-                        to="/lk/certificates"
-                        class="header__trend-item"
-                        active-class="active"
-                    >
-                        Мои сертификаты
-                    </router-link>
-                    <div class="header__trend-decor" />
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script setup>
+import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import { computed, ref, watch } from 'vue'
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '@/stores/userStore'
 
-const userStore = useUserStore();
-
+const userStore = useUserStore()
 const btnMenu = ref(false)
 const menuActive = ref(false)
 const router = useRouter()
 
-const getUser = computed(() => {
-    return userStore.getUser
-})
+const getUser = computed(() => userStore.getUser)
 
-function setMenuAcive () {
+function setMenuActive() {
     btnMenu.value = !btnMenu.value
     menuActive.value = !menuActive.value
 }
 
-function mainLink () {
+function mainLink() {
     router.push('/')
 }
+const getUrl = computed(() => {
+    return import.meta.env.VITE_SERVER_URL + getUser.value?.avatar
+})
 
-watch(getUser, ()=>{
-}, {deep: true})
-
+watch(
+    getUser,
+    (newUser) => {
+        if (newUser) {
+            console.log('User data changed:', newUser)
+            console.log(getUser, 'смотрим getUser')
+        }
+    },
+    { deep: true }
+)
 </script>
+
 <style lang="scss" scoped>
 .header__contaner {
     background: $gradient-background;

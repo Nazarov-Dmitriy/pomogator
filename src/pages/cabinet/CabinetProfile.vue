@@ -27,6 +27,8 @@ import CabinetFavorites from '@/pages/cabinet/CabinetFavorites.vue'
 import CabinetCertificates from '@/pages/cabinet/CabinetCertificates.vue'
 import { ref } from 'vue'
 import MyData from '@/components/cabinet/profile/MyData.vue'
+import CabinetHeader from '@/components/cabinet/header/CabinetHeader.vue'
+import HeaderUserInfo from '@/components/cabinet/header/HeaderUserInfo.vue'
 
 const componentsMap = {
     данные: null,
