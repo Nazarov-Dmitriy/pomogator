@@ -1,19 +1,11 @@
 <template>
     <section class="personal-data">
         <div class="personal-data__container">
-            <h2 class="personal-data__title">
-                Личные данные
-            </h2>
-            <form
-                class="personal-data__form"
-                @submit.prevent
-            >
+            <h2 class="personal-data__title">Личные данные</h2>
+            <form class="personal-data__form" @submit.prevent>
                 <div class="personal-data__form-wrapper">
                     <div class="personal-data__input-group">
-                        <label
-                            for="surname"
-                            class="personal-data__label"
-                        >Фамилия *</label>
+                        <label for="surname" class="personal-data__label">Фамилия *</label>
                         <input
                             id="surname"
                             v-model.trim="formField.surname"
@@ -21,44 +13,32 @@
                             class="personal-data__input"
                             placeholder="Смирнова"
                             @input="validateField('surname')"
-                        >
-                        <span
-                            v-if="formField.surnameError"
-                            class="error"
-                        >Фамилия быть пустой</span>
+                        />
+                        <span v-if="formField.surnameError" class="error">Фамилия быть пустой</span>
                     </div>
                     <div class="personal-data__input-group">
-                        <label
-                            for="birthDate"
-                            class="personal-data__label"
-                        >Дата рождения</label>
+                        <label for="birthDate" class="personal-data__label">Дата рождения</label>
                         <input
                             id="birthDate"
                             v-model="formField.date_birth"
                             type="date"
                             class="personal-data__input"
                             placeholder="01.01.1990"
-                        >
+                        />
                     </div>
                     <div class="personal-data__input-group">
-                        <label
-                            for="rank"
-                            class="personal-data__label"
-                        >Звание</label>
+                        <label for="rank" class="personal-data__label">Звание</label>
                         <input
                             id="rank"
                             v-model.trim="formField.rank"
                             type="text"
                             class="personal-data__input"
                             placeholder="Звание"
-                        >
+                        />
                     </div>
-                 
+
                     <div class="personal-data__input-group">
-                        <label
-                            for="name"
-                            class="personal-data__label"
-                        >Имя *</label>
+                        <label for="name" class="personal-data__label">Имя *</label>
                         <input
                             id="name"
                             v-model.trim="formField.name"
@@ -66,17 +46,11 @@
                             class="personal-data__input"
                             placeholder="Мария"
                             @input="validateField('name')"
-                        >
-                        <span
-                            v-if="formField.nameError"
-                            class="error"
-                        >Имя должно быть пустым</span>
+                        />
+                        <span v-if="formField.nameError" class="error">Имя должно быть пустым</span>
                     </div>
                     <div class="personal-data__input-group">
-                        <label
-                            for="position"
-                            class="personal-data__label"
-                        >Должность *</label>
+                        <label for="position" class="personal-data__label">Должность *</label>
                         <input
                             id="position"
                             v-model.trim="formField.position"
@@ -84,17 +58,13 @@
                             class="personal-data__input"
                             placeholder="Преподаватель"
                             @input="validateField('position')"
+                        />
+                        <span v-if="formField.positionError" class="error"
+                            >Должность должна быть пустой</span
                         >
-                        <span
-                            v-if="formField.positionError"
-                            class="error"
-                        >Должность должна быть пустой</span>
                     </div>
                     <div class="personal-data__input-group">
-                        <label
-                            for="email"
-                            class="personal-data__label"
-                        >Email *</label>
+                        <label for="email" class="personal-data__label">Email *</label>
                         <input
                             id="email"
                             v-model.trim="formField.email"
@@ -103,32 +73,23 @@
                             placeholder="maria@mail.ru"
                             @input="changeEmail"
                             @blur="validateField('email')"
-                        >
-                        <span
-                            v-if="formField.emailError"
-                            class="error"
-                        >Некорректный email</span>
+                        />
+                        <span v-if="formField.emailError" class="error">Некорректный email</span>
                     </div>
-                    
+
                     <div class="personal-data__input-group">
-                        <label
-                            for="patronymic"
-                            class="personal-data__label"
-                        >Отчество</label>
+                        <label for="patronymic" class="personal-data__label">Отчество</label>
                         <input
                             id="patronymic"
                             v-model.trim="formField.patronymic"
                             type="text"
                             class="personal-data__input"
                             placeholder="Владимировна"
-                        >
+                        />
                     </div>
-                    
+
                     <div class="personal-data__input-group">
-                        <label
-                            for="place_work"
-                            class="personal-data__label"
-                        >Место работы *</label>
+                        <label for="place_work" class="personal-data__label">Место работы *</label>
                         <input
                             id="place_work"
                             v-model.trim="formField.place_work"
@@ -136,18 +97,14 @@
                             class="personal-data__input"
                             placeholder="Школа №1"
                             @input="validateField('place_work')"
+                        />
+                        <span v-if="formField.place_workError" class="error"
+                            >Место работы не должно быть пустым</span
                         >
-                        <span
-                            v-if="formField.place_workError"
-                            class="error"
-                        >Место работы не должно быть пустым</span>
                     </div>
 
                     <div class="personal-data__input-group">
-                        <label
-                            for="phone"
-                            class="personal-data__label"
-                        >Телефон</label>
+                        <label for="phone" class="personal-data__label">Телефон</label>
                         <input
                             id="phone"
                             v-model.trim="formField.phone"
@@ -156,11 +113,10 @@
                             placeholder="+7 (954) 123-45-67"
                             @input="changePhone"
                             @blur="validateField('phone')"
+                        />
+                        <span v-if="formField.phoneError" class="error"
+                            >Телефон должен содержать 11 цифр</span
                         >
-                        <span
-                            v-if="formField.phoneError"
-                            class="error"
-                        >Телефон должен содержать 11 цифр</span>
                     </div>
                 </div>
                 <div class="personal-data__btn">
@@ -179,76 +135,83 @@
 
 <script setup>
 import { computed, reactive, watch } from 'vue'
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '@/stores/userStore'
 import BtnBackgroud from '../../btns/BtnBackgroud.vue'
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 
 const getUser = computed(() => {
     return userStore.getUser
 })
 
-
 const formField = reactive({
     name: getUser.value?.name,
-    surname:  getUser.value?.surname,
-    patronymic:  getUser.value?.patronymic,
-    date_birth:  getUser.value?.date_birth,
-    birthDate:  getUser.value?.birthDate,
-    position:  getUser.value?.position,
-    place_work:  getUser.value?.place_work,
-    rank:  getUser.value?.rank,
-    phone:  getUser.value?.phone,
+    surname: getUser.value?.surname,
+    patronymic: getUser.value?.patronymic,
+    date_birth: getUser.value?.date_birth,
+    birthDate: getUser.value?.birthDate,
+    position: getUser.value?.position,
+    place_work: getUser.value?.place_work,
+    rank: getUser.value?.rank,
+    phone: getUser.value?.phone,
     email: getUser.value?.email,
     nameError: false,
     surnameError: false,
     positionError: false,
     emailError: false,
     place_workError: false,
-    phoneError: false,
+    phoneError: false
 })
 
-function saveUserInfo () {
-    if( isFormValid.value){
+function saveUserInfo() {
+    if (isFormValid.value) {
         const userInfo = {
             name: formField.name,
-            surname:  formField.surname,
-            patronymic:  formField.patronymic,
-            date_birth:  formField.date_birth,
-            birthDate:  formField.birthDate,
-            position:  formField.position,
-            place_work:  formField.place_work,
-            rank:  formField.rank,
-            phone:  formField.phone,
+            surname: formField.surname,
+            patronymic: formField.patronymic,
+            date_birth: formField.date_birth,
+            birthDate: formField.birthDate,
+            position: formField.position,
+            place_work: formField.place_work,
+            rank: formField.rank,
+            phone: formField.phone,
             email: formField.email,
-            current_email: getUser.value.email,
+            current_email: getUser.value.email
         }
         userStore.userUpdateInfo(userInfo)
     }
 }
 
-function validateField (nameParam, validateForm) {
-    const value = formField[nameParam]   
-    
-    if(validateForm){
-        if(nameParam.includes('Error') && formField[nameParam]){
+function validateField(nameParam, validateForm) {
+    const value = formField[nameParam]
+
+    if (validateForm) {
+        if (nameParam.includes('Error') && formField[nameParam]) {
             return false
         }
 
-        if (nameParam === 'name' || nameParam === 'surname' || nameParam === 'position' || nameParam === 'place_work') {
-            if( value?.length === 0  ||  !value) {
+        if (
+            nameParam === 'name' ||
+            nameParam === 'surname' ||
+            nameParam === 'position' ||
+            nameParam === 'place_work'
+        ) {
+            if (value?.length === 0 || !value) {
                 return false
             }
         }
 
         if (nameParam === 'email') {
             const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-            if(!value || !emailRegexp.test(value)  ) 
-                return false
+            if (!value || !emailRegexp.test(value)) return false
         }
-    }
-    else{
-        if (nameParam === 'name' || nameParam === 'surname' || nameParam === 'position' || nameParam === 'place_work') {
+    } else {
+        if (
+            nameParam === 'name' ||
+            nameParam === 'surname' ||
+            nameParam === 'position' ||
+            nameParam === 'place_work'
+        ) {
             formField[`${nameParam}Error`] = value.length === 0
         }
 
@@ -260,11 +223,46 @@ function validateField (nameParam, validateForm) {
             const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
             formField.emailError = !emailRegexp.test(value)
         }
+        // if (nameParam === 'date_birth') {
+        //     const dateRegexp = /^\d{4}-\d{2}-\d{2}$/
+        //     formField.dateError = !dateRegexp.test(value)
+        // }
     }
- 
 }
 
-function changePhone (event) {
+// function handleDateInput(event) {
+//     let input = event.target.value.replace(/\D/g, '')
+
+//     if (input.length > 2) input = input.slice(0, 2) + '.' + input.slice(2)
+//     if (input.length > 5) input = input.slice(0, 5) + '.' + input.slice(5, 9)
+
+//     formField.date_birth = input
+// }
+
+// function validateDate() {
+//     const dateRegexp = /^\d{4}\.\d{2}\.\d{2}$/
+
+//     if (!dateRegexp.test(formField.date_birth)) {
+//         formField.dateError = true
+//     } else {
+//         const [day, month, year] = formField.date_birth.split('.').map(Number)
+
+//         if (
+//             day < 1 ||
+//             day > 31 ||
+//             month < 1 ||
+//             month > 12 ||
+//             year < 1940 ||
+//             year > new Date().getFullYear()
+//         ) {
+//             formField.dateError = true
+//         } else {
+//             formField.dateError = false
+//         }
+//     }
+// }
+
+function changePhone(event) {
     const target = event.target
     const x = target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/)
     x[1] = '+7'
@@ -274,7 +272,7 @@ function changePhone (event) {
     formField.phone = target.value
 }
 
-function changeEmail (event) {
+function changeEmail(event) {
     const target = event.target
     const x = target.value.match(
         /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
@@ -285,30 +283,36 @@ function changeEmail (event) {
 
 const isFormValid = computed(() => {
     let valid = true
-   
-    for (let key in formField){
-        let validation =  validateField(key, true);        
-        validation === false  ? valid =false : ""              
+
+    for (let key in formField) {
+        let validation = validateField(key, true)
+        validation === false ? (valid = false) : ''
     }
-    
+
     return valid
 })
 
-watch(getUser, ()=>{
-    const user = {
-        name: getUser.value?.name,
-        surname:  getUser.value?.surname,
-        patronymic:  getUser.value?.patronymic,
-        date_birth:  getUser.value?.date_birth,
-        birthDate:  getUser.value?.birthDate,
-        position:  getUser.value?.position,
-        place_work:  getUser.value?.place_work,
-        rank:  getUser.value?.rank,
-        phone:  getUser.value?.phone,
-        email: getUser.value?.email,
-    }
-    Object.assign(formField, user);  
-}, {deep: true})
+watch(
+    getUser,
+    () => {
+        const user = {
+            name: getUser.value?.name,
+            surname: getUser.value?.surname,
+            patronymic: getUser.value?.patronymic,
+            date_birth: getUser.value?.date_birth,
+            birthDate: getUser.value?.birthDate,
+            position: getUser.value?.position,
+            place_work: getUser.value?.place_work,
+            rank: getUser.value?.rank,
+            phone: getUser.value?.phone,
+            email: getUser.value?.email
+        }
+        Object.assign(formField, user)
+    },
+    { deep: true }
+)
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -377,7 +381,7 @@ watch(getUser, ()=>{
     background-color: $white;
     color: $black;
 
-    @media(max-width: $lg){
+    @media (max-width: $lg) {
         width: 100%;
         max-width: 100%;
     }
@@ -402,5 +406,9 @@ watch(getUser, ()=>{
     &.error {
         border: 2px solid $primary-red;
     }
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+    display: none;
 }
 </style>

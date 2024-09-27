@@ -37,6 +37,7 @@
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore'
+import BtnBackgroud from '@/components/btns/BtnBackgroud.vue'
 
 const userStore = useUserStore()
 
@@ -102,7 +103,7 @@ watch(
     }
 
     span {
-        @media (max-width: $lg) {
+        @media (max-width: $sm) {
             text-align: center;
         }
     }
@@ -113,6 +114,10 @@ watch(
     font-size: 36px;
     line-height: 42px;
     color: $blue-primary;
+
+    @media(max-width: $sm){
+        text-align: center;
+    }
 }
 .header__info {
     grid-area: 1 / 3 / 2 / 4;
@@ -177,8 +182,13 @@ watch(
     &::after {
         content: url(../../../assets/images/cabinet/cabinetHeader/phone-svg.svg);
     }
+    @media (max-width: $lg) {
+        position: absolute;
+        right: 40px;
+    }
     @media (max-width: $sm) {
         justify-content: center;
+        position: static;
     }
 }
 

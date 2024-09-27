@@ -224,14 +224,14 @@ watch(getSuccessRes, () => {
     @media (max-width: $lg) {
         display: none;
         // grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: auto;
+        grid-template-rows: auto auto auto;
+        grid-template-columns: auto auto auto;
         align-items: center;
         justify-content: space-between;
         grid-template-areas:
             'menu menu menu'
             'info info block'
             'trend trend trend';
-        gap: 20px 20px;
 
         &.menu-active {
             display: grid;
@@ -245,6 +245,7 @@ watch(getSuccessRes, () => {
             'trend '
             'menu';
         gap: 16px 0;
+        grid-template-columns: 1fr;
     }
 
     :deep(.btn-gradient) {
