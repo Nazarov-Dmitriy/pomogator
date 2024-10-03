@@ -2,19 +2,29 @@
     <div class="page">
         <HeaderComponent />
         <ArticleComponent
-            v-if="Object.keys(article).length !== 0" :other-atricle="otherAtricle" :article="article"
-            :page="page" />
+            v-if="article"
+            :other-atricle="otherAtricle"
+            :article="article"
+            :page="page"
+            :is-favorite="isFavorite"
+        />
         <OtherTrend v-if="page === 'trend'" />
-        <OtherArticle v-if="page === 'blog'" position="main" :other-atricle="otherAtriclePage" />
+        <OtherArticle
+            v-if="page === 'blog' && otherAtriclePage.length > 0"
+            position="main"
+            :other-atricle="otherAtriclePage"
+        />
         <FooterComponent />
         <router-view />
     </div>
+
     <Teleport to="body">
         <template v-if="!isLoad">
             <Loader />
         </template>
     </Teleport>
 </template>
+
 <script setup>
 import HeaderComponent from '@/components/header/HeaderComponent.vue'
 import ArticleComponent from '../components/article/ArticleComponent.vue'
@@ -25,15 +35,18 @@ import { useNewsStore } from '@/stores/newsStore'
 import OtherTrend from '../components/trend/OtherTrend.vue'
 import OtherArticle from '../components/article/OtherArticle.vue'
 import Loader from '@/components/loader/Loader.vue'
+import { useUserStore } from '@/stores/userStore'
 
 const isLoad = ref(false)
 const newsStore = useNewsStore()
+const userStore = useUserStore()
 const route = useRoute()
 const articleId = ref()
-const article = ref({})
+const article = ref(null)
 const otherAtricle = ref([])
 const otherAtriclePage = ref([])
 const page = ref('')
+const isFavorite = ref(null)
 
 const getNewsList = computed(() => {
     return newsStore.getNewsList
@@ -47,20 +60,30 @@ const getNews = computed(() => {
     return newsStore.getNews
 })
 
-onMounted(() => {
-    articleId.value = +route.params.id
-    newsStore.getTagsDb()
-    newsStore.getNewsDb(articleId.value)
-    newsStore.getNewsListDb()
-    newsStore.addShow(articleId.value)
+const getUser = computed(() => {
+    return userStore.getUser
 })
 
-function getOtherAtricle () {
+onMounted(async () => {
+    articleId.value = +route.params.id
+    newsStore.getTagsDb()
+    newsStore.getNewsListDb()
+    newsStore.addShow(articleId.value)
+    newsStore.getNewsDb(articleId.value)
+    if (getUser.value) {
+        isFavorite.value = await newsStore.getFaforite({
+            news_id: articleId.value,
+            user_id: getUser.value.id
+        })
+    }
+})
+
+function getOtherAtricle() {
     otherAtricle.value = randomArticle(articleId.value, 3)
     otherAtriclePage.value = randomArticle(articleId.value, 4)
 }
 
-function getPage () {
+function getPage() {
     if (route.name === 'blog-article') {
         page.value = 'blog'
     } else {
@@ -68,7 +91,7 @@ function getPage () {
     }
 }
 
-function randomArticle (id, count) {
+function randomArticle(id, count) {
     const idArr = [id]
     const arrContnent = []
     let currentCount = getNewsList.value.length <= count ? getNewsList.value.length - 1 : count
@@ -102,15 +125,23 @@ watch([getNewsList, getTags, getNews], () => {
         getOtherAtricle()
     }
 })
+
+watch(getUser, async () => {
+    isFavorite.value = await newsStore.getFaforite({
+        news_id: articleId.value,
+        user_id: getUser.value.id
+    })
+})
 </script>
+
 <style lang="scss">
-    .page {
-        min-height: 100vh;
-        overflow: hidden;
-        max-width: 1440px;
-        margin: 0 auto;
-        flex-direction: column;
-        display: flex;
-        justify-content: space-between;
-    }
+.page {
+    min-height: 100vh;
+    overflow: hidden;
+    max-width: 1440px;
+    margin: 0 auto;
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+}
 </style>

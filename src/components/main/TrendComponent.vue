@@ -1,30 +1,18 @@
 <template>
     <section class="trends__contaner">
         <div class="trends">
-            <h2 class="trends__header">
-                Направления
-            </h2>
+            <h2 class="trends__header">Направления</h2>
             <div class="trends__list">
                 <div class="trends__card">
-                    <div class="trends__card-name">
-                        Химия
-                    </div>
+                    <div class="trends__card-name">Химия</div>
                     <div class="trends__card-info">
                         <ul class="trends__card-list">
                             <li class="trends__card-item">
                                 Виртуальные практикумы и лабораторные работы
                             </li>
-                            <li class="trends__card-item">
-                                Демонстрационные эксперименты
-                            </li>
-                            <li class="trends__card-item">
-                                Моделирование химических процессов
-                            </li>
-                            <li
-                                class="trends__card-item"
-                            >
-                                Проекты и исследования
-                            </li>
+                            <li class="trends__card-item">Демонстрационные эксперименты</li>
+                            <li class="trends__card-item">Моделирование химических процессов</li>
+                            <li class="trends__card-item">Проекты и исследования</li>
                         </ul>
                         <BtnBackgroud
                             class="btn__trends-card"
@@ -36,20 +24,14 @@
                     </div>
                 </div>
                 <div class="trends__card">
-                    <div class="trends__card-name">
-                        Физика
-                    </div>
+                    <div class="trends__card-name">Физика</div>
                     <div class="trends__card-info">
                         <ul class="trends__card-list">
                             <li class="trends__card-item">
                                 Виртуальные практикумы и лабораторные работы
                             </li>
-                            <li class="trends__card-item">
-                                Демонстрационные эксперименты
-                            </li>
-                            <li class="trends__card-item">
-                                Электронные таблицы и графики
-                            </li>
+                            <li class="trends__card-item">Демонстрационные эксперименты</li>
+                            <li class="trends__card-item">Электронные таблицы и графики</li>
                             <li class="trends__card-item">
                                 Наглядное представление результатов экспериментов
                             </li>
@@ -64,23 +46,15 @@
                     </div>
                 </div>
                 <div class="trends__card">
-                    <div class="trends__card-name">
-                        Биология
-                    </div>
+                    <div class="trends__card-name">Биология</div>
                     <div class="trends__card-info">
                         <ul class="trends__card-list">
                             <li class="trends__card-item">
                                 Виртуальные практикумы и лабораторные работы
                             </li>
-                            <li class="trends__card-item">
-                                Демонстрационные эксперименты
-                            </li>
-                            <li class="trends__card-item">
-                                Предметные тестирования и диагностики
-                            </li>
-                            <li class="trends__card-item">
-                                Проекты и исследования
-                            </li>
+                            <li class="trends__card-item">Демонстрационные эксперименты</li>
+                            <li class="trends__card-item">Предметные тестирования и диагностики</li>
+                            <li class="trends__card-item">Проекты и исследования</li>
                         </ul>
                         <BtnBackgroud
                             class="btn__trends-card"
@@ -92,23 +66,15 @@
                     </div>
                 </div>
                 <div class="trends__card">
-                    <div class="trends__card-name">
-                        Робототехника
-                    </div>
+                    <div class="trends__card-name">Робототехника</div>
                     <div class="trends__card-info">
                         <ul class="trends__card-list">
                             <li class="trends__card-item">
                                 Конструирование и программирование роботов
                             </li>
-                            <li class="trends__card-item">
-                                VR-очки в проектах и исследованиях
-                            </li>
-                            <li class="trends__card-item">
-                                3D-моделирование
-                            </li>
-                            <li class="trends__card-item">
-                                Научно-техническое творчество
-                            </li>
+                            <li class="trends__card-item">VR-очки в проектах и исследованиях</li>
+                            <li class="trends__card-item">3D-моделирование</li>
+                            <li class="trends__card-item">Научно-техническое творчество</li>
                         </ul>
                         <BtnBackgroud
                             class="btn__trends-card"
@@ -121,36 +87,33 @@
                 </div>
             </div>
             <div class="trends__proposal">
-                Если не нашли на нашем сайте нужный материал, предложите свою тему по направлению или задайте вопрос
+                Если не нашли на нашем сайте нужный материал, предложите свою тему по направлению
+                или задайте вопрос
             </div>
             <BtnGradient
                 class="btn__proposal"
                 emit-name="offer"
-                @offer="modalShow = true"
+                @offer="$router.push('/article/add')"
             >
+                <!-- @offer="modalShow = true" -->
                 Предложить материал
             </BtnGradient>
         </div>
         <Teleport to="body">
-            <ModalComponent
-                :show="modalShow"
-                @close="modalShow = false"
-            />
+            <ModalComponent :show="modalShow" @close="modalShow = false" />
         </Teleport>
     </section>
 </template>
 
 <script setup>
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import BtnGradient from '../btns/BtnComponent.vue';
-import ModalComponent from '../modal/ModalComponentFaq.vue';
-import { ref } from 'vue';
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import BtnGradient from '../btns/BtnComponent.vue'
+import ModalComponent from '../modal/ModalComponentFaq.vue'
+import { ref } from 'vue'
 
-const modalShow= ref(false)
-
+const modalShow = ref(false)
 </script>
-<script>
-</script>
+<script></script>
 
 <style lang="scss">
 .trend-container {
@@ -163,7 +126,7 @@ const modalShow= ref(false)
     padding: 60px 80px 60px 80px;
 
     @media (max-width: $lg) {
-        padding:40px;
+        padding: 40px;
     }
 
     @media (max-width: $sm) {
@@ -171,8 +134,8 @@ const modalShow= ref(false)
     }
 }
 
-.trends__header{
-    font-family: "Kreadon-Demi";
+.trends__header {
+    font-family: 'Kreadon-Demi';
     font-size: 36px;
     line-height: 43px;
     color: $blue-primary;
@@ -203,7 +166,7 @@ const modalShow= ref(false)
     border-radius: 32px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
 
 .trends__card-name {
@@ -225,11 +188,11 @@ const modalShow= ref(false)
     padding: 16px 16px 16px 16px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; 
+    justify-content: space-between;
     background: $gradient-background;
     border-radius: 0 0 32px 32px;
     height: 100%;
-    align-items:center;
+    align-items: center;
 }
 
 .trends__card-list {
@@ -243,7 +206,7 @@ const modalShow= ref(false)
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    
+
     @media (max-width: $lg) {
         font-size: 14px;
         line-height: 20px;
@@ -253,13 +216,13 @@ const modalShow= ref(false)
 .btn__trends-card {
     width: 100%;
     max-width: 304px;
-    
+
     @media (max-width: $lg) {
         max-width: 256px;
     }
 }
 
-.trends__proposal{
+.trends__proposal {
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;

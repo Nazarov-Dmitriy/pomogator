@@ -2,7 +2,6 @@
     <div class="page">
         <HeaderComponent />
         <TaskMaterial />
-
         <SearchPanel
             v-model="searchValue"
             :is-search-visible="true"
@@ -11,11 +10,7 @@
             @search="search()"
             @active-tags="setTags"
         />
-        <ListArticle
-            class="trend__article-header"
-            :data="data"
-            :search="searchValue"
-        />
+        <ListArticle class="trend__article-header" :data="data" :search="searchValue" />
         <SubscrideComponent />
         <FooterComponent />
     </div>
@@ -28,78 +23,80 @@
 
 <script setup>
 import HeaderComponent from '@/components/header/HeaderComponent.vue'
-import TaskMaterial from '../components/blog/TaskMaterial.vue';
-import SearchPanel from '../components/searchPanel/SearchPanel.vue';
-import ListArticle from '../components/article/ListArticle.vue';
-import SubscrideComponent from '../components/blog/SubscrideComponent.vue';
-import { computed, onMounted, ref, watch } from 'vue';
-import FooterComponent from '../components/main/FooterComponent.vue';
-import { useNewsStore } from '@/stores/newsStore'; 
-import Loader from '@/components/loader/Loader.vue';
+import TaskMaterial from '../components/blog/TaskMaterial.vue'
+import SearchPanel from '../components/searchPanel/SearchPanel.vue'
+import ListArticle from '../components/article/ListArticle.vue'
+import SubscrideComponent from '../components/blog/SubscrideComponent.vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import FooterComponent from '../components/main/FooterComponent.vue'
+import { useNewsStore } from '@/stores/newsStore'
+import Loader from '@/components/loader/Loader.vue'
 
-const newsStore = useNewsStore();
+const newsStore = useNewsStore()
 
-const isLoad = ref(false);
+const isLoad = ref(false)
 
 const getNewsList = computed(() => {
-    return newsStore.getNewsList;
+    return newsStore.getNewsList
 })
 
 const getTags = computed(() => {
-    return newsStore.getTags;
+    return newsStore.getTags
 })
 
 const getCategory = computed(() => {
-    return newsStore.getCategory;
+    return newsStore.getCategory
 })
+
 const activeTags = ref([])
 
 const searchValue = ref('')
 
 const data = ref([])
 
-function search (){
-    data.value  = getNewsList.value.filter(el => {
-        return  (el.title).toLocaleLowerCase().includes((searchValue.value).toLocaleLowerCase())
+function search() {
+    data.value = getNewsList.value.filter((el) => {
+        return el.title.toLocaleLowerCase().includes(searchValue.value.toLocaleLowerCase())
     })
 }
 
-function setTags (id){  
+function setTags(id) {
     if (!activeTags.value.includes(id)) {
         activeTags.value.push(id)
-    }else{
-        activeTags.value =  activeTags.value.filter( el => el !== id)
+    } else {
+        activeTags.value = activeTags.value.filter((el) => el !== id)
     }
 }
 
-onMounted(()=>{
-    newsStore.getNewsListDb();
-    newsStore.getTagsDb();
-    newsStore.getCategoryDb();
+onMounted(() => {
+    newsStore.getNewsListDb()
+    newsStore.getTagsDb()
+    newsStore.getCategoryDb()
 })
 
-watch(searchValue , (newVal)=>{
-    if(newVal.trim() == ''){
+watch(searchValue, (newVal) => {
+    if (newVal.trim() == '') {
         data.value = getNewsList.value
     }
 })
 
-watch(activeTags, (newVal) => {
-    isLoad.value = false
-    if (activeTags.value.length > 0) {
-        newsStore.getLisParamstDb({ "tags": newVal.toString() })
-    }else{
-        newsStore.getNewsListDb();
-    }
-},{deep: true})
+watch(
+    activeTags,
+    (newVal) => {
+        isLoad.value = false
+        if (activeTags.value.length > 0) {
+            newsStore.getLisParamstDb({ tags: newVal.toString() })
+        } else {
+            newsStore.getNewsListDb()
+        }
+    },
+    { deep: true }
+)
 
 watch([getNewsList, getTags, getCategory], () => {
-    console.log(222);
-    
     isLoad.value = true
     data.value = getNewsList.value
 })
-
 </script>
 <style scoped lang="scss">
 .page {
@@ -135,12 +132,12 @@ watch([getNewsList, getTags, getCategory], () => {
     }
 
     @media (max-width: $sm) {
-        padding:0 16px 32px 16px;
+        padding: 0 16px 32px 16px;
     }
 }
 
 .list-article__title {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 36px;
     line-height: 42px;
     color: $blue-primary;

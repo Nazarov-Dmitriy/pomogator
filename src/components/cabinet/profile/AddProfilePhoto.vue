@@ -1,8 +1,6 @@
 <template>
     <div class="profile__photo">
-        <h2 class="profile__photo-title">
-            Фотография профиля
-        </h2>
+        <h2 class="profile__photo-title">Фотография профиля</h2>
         <div
             class="profile__photo-img-wrapper"
             :class="{ 'profile__photo-img-empty': !getUser?.avatar }"
@@ -12,21 +10,16 @@
                 :src="getUrl"
                 class="profile__photo-img"
                 :class="{ 'profile__photo-img-empty': !getUser?.avatar }"
-            >
+            />
 
-            <div
-                v-if="getUser?.avatar"
-                class="profile__photo-hover"
-            >
-                <p class="profile__photo-hover-text">
-                    Сменить фото
-                </p>
+            <div v-if="getUser?.avatar" class="profile__photo-hover">
+                <p class="profile__photo-hover-text">Сменить фото</p>
                 <img
                     src="../../../assets/images/cabinet/cabinetProfile/bucket.png"
                     alt="delete png"
                     class="profile__photo-hover-delete"
                     @click.stop="removeImage"
-                >
+                />
             </div>
         </div>
         <input
@@ -36,15 +29,15 @@
             accept="image/*"
             style="display: none"
             @change="onFileChange"
-        >
+        />
     </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '@/stores/userStore'
 
-const userStore = useUserStore();
+const userStore = useUserStore()
 
 const getUser = computed(() => {
     return userStore.getUser
@@ -52,27 +45,25 @@ const getUser = computed(() => {
 
 const fileInput = ref(null)
 
-function triggerFileInput () {
+function triggerFileInput() {
     fileInput.value.click()
 }
 
 const getUrl = computed(() => {
-    return  getUser.value?.avatar ? import.meta.env.VITE_SERVER_URL + getUser.value?.avatar : null
+    return getUser.value?.avatar ? import.meta.env.VITE_SERVER_URL + getUser.value?.avatar : null
 })
 
-
-
-function onFileChange (event) {
+function onFileChange(event) {
     const file = event.target.files[0]
-    let formData = new FormData();
-    if (file) { 
+    let formData = new FormData()
+    if (file) {
         formData.append('email', getUser?.value?.email)
-        formData.append("avatar", file)
-        userStore.userAddAvatar(formData);
+        formData.append('avatar', file)
+        userStore.userAddAvatar(formData)
     }
 }
 
-function removeImage () {
+function removeImage() {
     userStore.userRemoveAvatar()
 }
 </script>

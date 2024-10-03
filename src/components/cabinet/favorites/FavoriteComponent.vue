@@ -1,176 +1,108 @@
 <template>
     <section class="cabinet-favorite">
         <div class="cabinet-favorite__container">
-            <SearchPanel :isSearchVisible="isSearchVisible" />
+            <SearchPanel
+                v-model="searchMyMaterialValue"
+                :is-search-visible="true"
+                :active-tags="activeTagsMyMaterial"
+                @search="searchMyMaterial()"
+                @active-tags="setTagsMyMaterial"
+            />
             <div class="cards">
                 <ListArticle
-                    :data="currentMaterials"
-                    :isOfferVisible="isOfferVisible"
+                    :data="dataMyMatirial"
+                    :is-offer-visible="false"
                     custom-btn="custom-card-btns"
                 />
             </div>
-            <PaginationComponent
-                :perpage="4"
-                :data="cardMaterialData"
-                @setList="updateCurrentMaterials"
-            />
+
             <div class="cabinet-favorite__webinars">
                 <CabinetTitle> Вебинары</CabinetTitle>
-                <SearchPanel :isSearchVisible="isSearchVisible" />
+                <SearchPanel :is-search-visible="isSearchVisible" />
                 <ListArticle
-                    :data="currentWebinars"
-                    :isOfferVisible="isOfferVisible"
+                    :data="[]"
+                    :is-offer-visible="false"
                     custom-article="custom-card"
                     custom-text="custom-text-right"
                     custom-btn="custom-card-btns"
                 />
-                <PaginationComponent
-                    :perpage="3"
-                    :data="cardWebinarData"
-                    @setList="updateCurrentWebinars"
-                />
             </div>
         </div>
     </section>
+    <Teleport to="body">
+        <template v-if="!isLoad">
+            <Loader />
+        </template>
+    </Teleport>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import SearchPanel from '../../searchPanel/SearchPanel.vue'
 import CabinetTitle from '../CabinetTitle.vue'
-import PaginationComponent from '../../pagination/PaginationComponent.vue'
 import ListArticle from '../../article/ListArticle.vue'
+import { useNewsStore } from '@/stores/newsStore'
+import { useUserStore } from '@/stores/userStore'
+import Loader from '@/components/loader/Loader.vue'
 
-const isSearchVisible = ref(false)
-const isOfferVisible = ref(false)
+const newsStore = useNewsStore()
+const userStore = useUserStore()
+const isLoad = ref(false)
+const searchMyMaterialValue = ref('')
+const activeTagsMyMaterial = ref([])
+const dataMyMatirial = ref([])
 
-const cardMaterialData = ref([
-    {
-        id: 1,
-        img: 'https://avgrodno.by/wp-content/uploads/2023/12/1.png',
-        tags: ['статья', 'технологии'],
-        title: 'Роль информационных технологий в науке',
-        like: '100',
-        show: '100',
-        publication_date: '01.05.2024'
-    },
-    {
-        id: 2,
-        img: 'https://avgrodno.by/wp-content/uploads/2023/12/1.png',
-        tags: ['статья', 'технологии'],
-        title: 'Роль информационных технологий в науке',
-        like: '100',
-        show: '100',
-        publication_date: '01.05.2024'
-    },
-    {
-        id: 3,
-        img: 'https://avgrodno.by/wp-content/uploads/2023/12/1.png',
-        tags: ['статья', 'технологии'],
-        title: 'Роль информационных технологий в науке',
-        like: '100',
-        show: '100',
-        publication_date: '01.05.2024'
-    },
-    {
-        id: 4,
-        img: 'https://avgrodno.by/wp-content/uploads/2023/12/1.png',
-        tags: ['статья2', 'технологии'],
-        title: 'Влияние технологий на образование',
-        like: '150',
-        show: '200',
-        publication_date: '02.05.2024'
-    },
-    {
-        id: 5,
-        img: 'https://avgrodno.by/wp-content/uploads/2023/12/1.png',
-        tags: ['статья3', 'технологии'],
-        title: 'Инновации в медицине',
-        like: '120',
-        show: '300',
-        publication_date: '03.05.2024'
-    },
-    {
-        id: 6,
-        img: 'https://avatars.mds.yandex.net/i?id=73eea54d244a5342660766ad91fa5a8cbfe9ff52-9050465-images-thumbs&n=13',
-        tags: ['статья4', 'наука'],
-        title: 'Роль технологий в науке',
-        like: '110',
-        show: '150',
-        publication_date: '04.05.2024'
+const getUser = computed(() => {
+    return userStore.getUser
+})
+
+const getNewsList = computed(() => {
+    return newsStore.getNewsList
+})
+
+onMounted(() => {
+    newsStore.getFNewsFavorite(getUser.value?.id)
+})
+
+function setTagsMyMaterial(id) {
+    if (!activeTagsMyMaterial.value.includes(id)) {
+        activeTagsMyMaterial.value.push(id)
+    } else {
+        activeTagsMyMaterial.value = activeTagsMyMaterial.value.filter((el) => el !== id)
     }
-])
-
-const cardWebinarData = ref([
-    {
-        id: 1,
-        img: 'https://avatars.mds.yandex.net/i?id=73eea54d244a5342660766ad91fa5a8cbfe9ff52-9050465-images-thumbs&n=13',
-        tags: ['вебинар', 'наука'],
-        title: 'Современные вызовы в науке',
-        like: '200',
-        show: '300',
-        publication_date: '15.06.2024'
-    },
-    {
-        id: 2,
-        img: 'https://avatars.mds.yandex.net/i?id=73eea54d244a5342660766ad91fa5a8cbfe9ff52-9050465-images-thumbs&n=13',
-        tags: ['вебинар', 'наука'],
-        title: 'Современные вызовы в науке',
-        like: '200',
-        show: '300',
-        publication_date: '15.06.2024'
-    },
-    {
-        id: 3,
-        img: 'https://avatars.mds.yandex.net/i?id=73eea54d244a5342660766ad91fa5a8cbfe9ff52-9050465-images-thumbs&n=13',
-        tags: ['вебинар', 'наука'],
-        title: 'Современные вызовы в науке',
-        like: '200',
-        show: '300',
-        publication_date: '15.06.2024'
-    },
-    {
-        id: 4,
-        img: 'https://avatars.mds.yandex.net/i?id=73eea54d244a5342660766ad91fa5a8cbfe9ff52-9050465-images-thumbs&n=13',
-        tags: ['вебинар', 'наука'],
-        title: 'Современные вызовы в науке',
-        like: '200',
-        show: '300',
-        publication_date: '15.06.2024'
-    },
-    {
-        id: 5,
-        img: 'https://avatars.mds.yandex.net/i?id=73eea54d244a5342660766ad91fa5a8cbfe9ff52-9050465-images-thumbs&n=13',
-        tags: ['вебинар', 'наука'],
-        title: 'Современные вызовы в науке',
-        like: '200',
-        show: '300',
-        publication_date: '15.06.2024'
-    },
-    {
-        id: 6,
-        img: 'https://avatars.mds.yandex.net/i?id=73eea54d244a5342660766ad91fa5a8cbfe9ff52-9050465-images-thumbs&n=13',
-        tags: ['вебинар', 'наука'],
-        title: 'Современные вызовы в науке',
-        like: '200',
-        show: '300',
-        publication_date: '15.06.2024'
-    }
-])
-
-const currentMaterials = ref([])
-const currentWebinars = ref([])
-
-function updateCurrentMaterials(paginatedData) {
-    currentMaterials.value = paginatedData
 }
 
-function updateCurrentWebinars(paginatedData) {
-    currentWebinars.value = paginatedData
+function searchMyMaterial() {
+    dataMyMatirial.value = getNewsList.value.filter((el) => {
+        return el.title
+            .toLocaleLowerCase()
+            .includes(searchMyMaterialValue.value.toLocaleLowerCase())
+    })
 }
 
-updateCurrentMaterials(cardMaterialData.value.slice(0, 6))
-updateCurrentWebinars(cardWebinarData.value.slice(0, 4))
+watch(
+    activeTagsMyMaterial,
+    (newVal) => {
+        isLoad.value = false
+        if (activeTagsMyMaterial.value.length > 0) {
+            newsStore.getFNewsFavorite(getUser.value?.id, { tags: newVal.toString() })
+        } else {
+            newsStore.getFNewsFavorite(getUser.value?.id)
+        }
+    },
+    { deep: true }
+)
+
+watch(searchMyMaterial, (newVal) => {
+    if (newVal.trim() == '') {
+        dataMyMatirial.value = getNewsList.value
+    }
+})
+
+watch(getNewsList, () => {
+    isLoad.value = true
+    dataMyMatirial.value = getNewsList.value
+})
 </script>
 
 <style lang="scss">

@@ -4,11 +4,11 @@
         <div class="cabinet-search-panel__container">
             <div class="cabinet-search-panel__hashtag">
                 <div
-                    v-for="(item, ind) in hashtagData"
+                    v-for="item in tags"
                     :key="item.id"
                     class="cabinet-search-panel__item"
-                    :class="{ 'active': activeTags.includes(ind + 1) }"
-                    @click="setActiveTags(ind + 1)"
+                    :class="{ active: activeTags.includes(item.id) }"
+                    @click="setActiveTags(item.id)"
                 >
                     <span class="cabinet-search-panel__symbol">#</span>
                     <p class="cabinet-search-panel__text">
@@ -20,34 +20,22 @@
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
-
-const activeTags = ref([])
-
-function setActiveTags (id) {
-    if (!activeTags.value.includes(id)) {
-        activeTags.value.push(id)
+defineProps({
+    tags: {
+        type: Array,
+        default: () => []
+    },
+    activeTags: {
+        type: Array,
+        default: () => []
     }
-}
+})
 
-const hashtagData = ref([
-    {
-        id: 1,
-        name: 'Химия',
-    },
-    {
-        id: 2,
-        name: 'Физика',
-    },
-    {
-        id: 3,
-        name: 'Биология',
-    },
-    {
-        id: 4,
-        name: 'Робототехника',
-    },
-])
+const emit = defineEmits(['active-tags'])
+
+function setActiveTags(id) {
+    emit('active-tags', id)
+}
 </script>
 <style lang="scss">
 .cabinet-search-panel__container {
@@ -83,10 +71,10 @@ const hashtagData = ref([
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 0 8px;    
+    padding: 0 8px;
     cursor: pointer;
 
-    &.active{
+    &.active {
         .cabinet-search-panel__symbol {
             color: transparent;
             -webkit-text-fill-color: transparent;
@@ -108,7 +96,6 @@ const hashtagData = ref([
         }
     }
 
-    
     &.active:hover {
         .cabinet-search-panel__symbol {
             color: transparent;
@@ -129,7 +116,7 @@ const hashtagData = ref([
 }
 
 .cabinet-search-panel__symbol {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 30px;
     line-height: 30px;
     background: $gradient;

@@ -1,9 +1,5 @@
 <template>
-    <div
-        v-if="!multi"
-        ref="dropDown"
-        class="dashboard__dropdown-wrapper"
-    >
+    <div v-if="!multi" ref="dropDown" class="dashboard__dropdown-wrapper" :class="{ error: error }">
         <div @click="isDropDownVisible = !isDropDownVisible">
             <p :class="['dropdown-selected-text']">
                 {{ mappedSelectedOption }}
@@ -12,22 +8,13 @@
                 class="dropdown-icon"
                 src="../../assets/icons/appearance.svg"
                 alt="icon-appearance"
-                :class="{ 'active': isDropDownVisible }"
-            >
+                :class="{ active: isDropDownVisible }"
+            />
         </div>
         <transition name="slide-fade">
-            <div
-                v-if="isDropDownVisible"
-                class="option-wrapper"
-            >
-                <template
-                    v-for="(option, ind) in props.options"
-                    :key="ind"
-                >
-                    <div
-                        class="option"
-                        @click="toggleOptionSelect(option)"
-                    >
+            <div v-if="isDropDownVisible" class="option-wrapper">
+                <template v-for="(option, ind) in props.options" :key="ind">
+                    <div class="option" @click="toggleOptionSelect(option)">
                         {{ option.name }}
                     </div>
                 </template>
@@ -35,11 +22,7 @@
         </transition>
     </div>
 
-    <div
-        v-else
-        ref="dropDown"
-        class="dashboard__dropdown-wrapper"
-    >
+    <div v-else ref="dropDown" class="dashboard__dropdown-wrapper" :class="{ error: error }">
         <div @click="isDropDownVisible = !isDropDownVisible">
             <p :class="['dropdown-selected-text']">
                 {{ mappedSelectedOption }}
@@ -48,18 +31,12 @@
                 class="dropdown-icon"
                 src="../../assets/icons/appearance.svg"
                 alt="icon-appearance"
-                :class="{ 'active': isDropDownVisible }"
-            >
+                :class="{ active: isDropDownVisible }"
+            />
         </div>
         <transition name="slide-fade">
-            <div
-                v-if="isDropDownVisible"
-                class="option-wrapper"
-            >
-                <template
-                    v-for="(option, ind) in props.options"
-                    :key="ind"
-                >
+            <div v-if="isDropDownVisible" class="option-wrapper">
+                <template v-for="(option, ind) in props.options" :key="ind">
                     <div class="option flex gap-2">
                         <input
                             :id="option.name"
@@ -67,7 +44,7 @@
                             type="checkbox"
                             :value="option.id"
                             :checked="toggleMultiOptionSelect()"
-                        >
+                        />
                         <label :for="option.name"> {{ option.name }}</label>
                     </div>
                 </template>
@@ -97,7 +74,10 @@ const props = defineProps({
         type: String,
         default: 'Выбирите'
     },
-
+    error: {
+        type: Boolean,
+        default: false
+    }
 })
 const emit = defineEmits(['update:modelValue', 'select'])
 
@@ -124,11 +104,10 @@ const closeDropDown = (element) => {
     }
 }
 
-
 const mappedSelectedOption = computed(() => {
     if (props.multi) {
         let str = ''
-        props.options.forEach(el => {
+        props.options.forEach((el) => {
             if (selectedOption.value?.includes(el.id)) {
                 str += el.name + ' '
             }
@@ -140,18 +119,20 @@ const mappedSelectedOption = computed(() => {
 })
 
 onMounted(() => {
-    window.addEventListener('click', closeDropDown);
-    selectedOption.value = props.modelValue;
+    window.addEventListener('click', closeDropDown)
+    selectedOption.value = props.modelValue
 })
 
 onBeforeUnmount(() => {
     window.removeEventListener('click', closeDropDown)
 })
 
-watch(() => props.modelValue, () => {
-    selectedOption.value = props.modelValue
-})
-
+watch(
+    () => props.modelValue,
+    () => {
+        selectedOption.value = props.modelValue
+    }
+)
 </script>
 
 <style scoped lang="scss">
@@ -165,6 +146,10 @@ watch(() => props.modelValue, () => {
     height: 56px;
     background: $white;
     border-radius: 12px;
+
+    &.error {
+        border-color: $primary-red;
+    }
 }
 
 .dropdown-selected {

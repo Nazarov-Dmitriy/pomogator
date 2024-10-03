@@ -5,31 +5,36 @@
                 v-if="!getRigisterStepTwo"
                 class="login flex flex-col items-center gap-4"
             >
-                <img
-                    class="img-bg"
-                    src="/src/assets/images/main/news/news-card-bg.png"
-                    alt=""
-                >
-                <h2 class="title">
-                    Регистрация
-                </h2>
+                <img class="img-bg" src="/src/assets/images/main/news/news-card-bg.png" alt="" />
+                <h2 class="title">Регистрация</h2>
                 <div class="form-wrapper flex flex-col gap-2 w-full">
                     <div class="flex flex-col w-full gap-2">
-                        <label for="email">Email</label>
+                        <label
+                            class="field__label"
+                            :class="{ error: registerFormError.email || getError?.email }"
+                            for="email"
+                            >Email</label
+                        >
                         <input
                             id="email"
                             v-model="registerForm.email"
                             type="text"
                             placeholder="Введите email"
                             class="input w-full p-2 rounded-md"
-                        >
-                        <p v-if="registerForm.errorConfirmEmail">
-                            Пароли не совпадают
+                            :class="{ error: registerFormError.email || getError?.email }"
+                        />
+                        <p v-if="registerFormError.email" class="error-text">
+                            {{ getError?.email ? getError?.email : 'Поле не должно быть пустым' }}
                         </p>
-                        <p>{{ getError?.email }}</p>
+                        <p class="error-text">{{ getError?.email }}</p>
                     </div>
                     <div class="flex flex-col w-full gap-2">
-                        <label for="password">Пароль</label>
+                        <label
+                            class="field__label"
+                            :class="{ error: registerFormError.password }"
+                            for="password"
+                            >Пароль</label
+                        >
                         <div class="relative">
                             <input
                                 id="password"
@@ -38,8 +43,9 @@
                                 :type="passwordVisible ? 'text' : 'password'"
                                 placeholder="Введите пароль"
                                 class="input__password w-full p-2 rounded-md"
+                                :class="{ error: registerFormError.password }"
                                 @focus="isFocusedPassword = true"
-                            >
+                            />
                             <span
                                 class="toggle-password-icons"
                                 @mousedown.stop="togglePasswordVisibility('password')"
@@ -55,13 +61,21 @@
                                     "
                                     alt="toggle visibility"
                                     class="icon"
-                                >
+                                />
                             </span>
                         </div>
+                        <p v-if="registerFormError.password" class="error-text">
+                            Длина пароля должна быть от 8
+                        </p>
                     </div>
 
                     <div class="flex flex-col w-full gap-2">
-                        <label for="confirmPassword">Подтвердите пароль</label>
+                        <label
+                            class="field__label"
+                            :class="{ error: registerFormError.confirm }"
+                            for="confirmPassword"
+                            >Подтвердите пароль</label
+                        >
                         <div class="relative">
                             <input
                                 id="confirmPassword"
@@ -70,8 +84,9 @@
                                 :type="confirmPasswordVisible ? 'text' : 'password'"
                                 placeholder="Повторите пароль"
                                 class="input__password w-full p-2 rounded-md"
+                                :class="{ error: registerFormError.confirm }"
                                 @focus="isFocusedConfirmPassword = true"
-                            >
+                            />
                             <span
                                 class="toggle-password-icons"
                                 @mousedown.stop="togglePasswordVisibility('confirm')"
@@ -87,10 +102,10 @@
                                     "
                                     alt="toggle visibility"
                                     class="icon"
-                                >
+                                />
                             </span>
                         </div>
-                        <p v-if="registerForm.errorConfirmPassword">
+                        <p v-if="registerFormError.confirm" class="error-text">
                             Пароли не совпадают
                         </p>
                     </div>
@@ -102,11 +117,7 @@
                         </p>
                     </div>
                     <div class="btn-wrapper mb-4">
-                        <BtnBackgroud
-                            emit-name="form-submit"
-                            class="btn"
-                            @form-submit="register()"
-                        >
+                        <BtnBackgroud emit-name="form-submit" class="btn" @form-submit="register()">
                             Продолжить
                         </BtnBackgroud>
                     </div>
@@ -121,34 +132,42 @@
                     </div>
                 </div>
             </FormComponent>
-            <FormComponent
-                v-else
-                class="login flex flex-col items-center gap-4"
-            >
-                <h2 class="title">
-                    Личные данные
-                </h2>
-                <div class="flex flex-col gap-2 w-full">
+            <FormComponent v-else class="login flex flex-col items-center gap-4">
+                <h2 class="title">Личные данные</h2>
+                <div class="flex flex-col gap-2 w-full items-center">
                     <div class="flex flex-col w-full gap-2">
-                        <label for="surname">Фамилия *</label>
+                        <label
+                            class="field__label"
+                            :class="{ error: getError?.surname }"
+                            for="surname"
+                            >Фамилия *</label
+                        >
                         <input
                             id="surname"
                             v-model="registerFormInfo.surname"
                             type="text"
-                            class="input w-full p-2 rounded-md"
-                        >
-                        <p>{{ getError?.surname }}</p>
+                            :class="{ error: getError?.surname }"
+                            class="input !bg-none w-full p-2 rounded-md"
+                        />
+                        <p v-if="getError?.surname" class="error-text">
+                            {{ getError?.surname }}
+                        </p>
                     </div>
 
                     <div class="flex flex-col w-full gap-2">
-                        <label for="name">Имя * *</label>
+                        <label class="field__label" :class="{ error: getError?.name }" for="name"
+                            >Имя *</label
+                        >
                         <input
                             id="name"
                             v-model="registerFormInfo.name"
                             type="text"
-                            class="input w-full p-2 rounded-md"
-                        >
-                        <p>{{ getError?.name }}</p>
+                            :class="{ error: getError?.name }"
+                            class="input !bg-none w-full p-2 rounded-md"
+                        />
+                        <p v-if="getError?.name" class="error-text">
+                            {{ getError?.name }}
+                        </p>
                     </div>
                     <div class="flex flex-col w-full gap-2">
                         <label for="patronymic">Отчество</label>
@@ -156,38 +175,54 @@
                             id="patronymic"
                             v-model="registerFormInfo.patronymic"
                             type="text"
-                            class="input w-full p-2 rounded-md"
-                        >
+                            class="input !bg-none w-full p-2 rounded-md"
+                        />
                     </div>
                     <div class="flex flex-col w-full gap-2">
                         <label for="date_birth">Дата рождения</label>
                         <input
                             id="date_birth"
                             v-model="registerFormInfo.date_birth"
-                            class="input w-full p-2 rounded-md"
+                            class="input !bg-none w-full p-2 rounded-md"
                             type="date"
-                        >
+                        />
                     </div>
                     <div class="flex flex-col w-full gap-2">
-                        <label for="position">Должность *</label>
+                        <label
+                            class="field__label"
+                            :class="{ error: getError?.position }"
+                            for="position"
+                            >Должность *</label
+                        >
                         <input
                             id="position"
                             v-model="registerFormInfo.position"
                             type="text"
-                            class="w-full p-2 rounded-md"
-                        >
-                        <p>{{ getError?.position }}</p>
+                            class="input !bg-none w-full p-2 rounded-md"
+                            :class="{ error: getError?.position }"
+                        />
+                        <p v-if="getError?.position" class="error-text">
+                            {{ getError?.position }}
+                        </p>
                     </div>
 
                     <div class="flex flex-col w-full gap-2">
-                        <label for="place_work">Место работы *</label>
+                        <label
+                            class="field__label"
+                            :class="{ error: getError?.place_work }"
+                            for="place_work"
+                            >Место работы *</label
+                        >
                         <input
                             id="place_work"
                             v-model="registerFormInfo.place_work"
                             type="text"
-                            class="w-full p-2 rounded-md"
-                        >
-                        <p>{{ getError?.place_wor }}</p>
+                            class="input !bg-none w-full p-2 rounded-md"
+                            :class="{ error: getError?.place_work }"
+                        />
+                        <p v-if="getError?.place_work" class="error-text">
+                            {{ getError?.place_work }}
+                        </p>
                     </div>
 
                     <div class="flex flex-col w-full gap-2">
@@ -196,8 +231,8 @@
                             id="rank"
                             v-model="registerFormInfo.rank"
                             type="text"
-                            class="w-full p-2 rounded-md"
-                        >
+                            class="input !bg-none w-full p-2 rounded-md"
+                        />
                     </div>
 
                     <div class="flex flex-col w-full gap-2">
@@ -206,15 +241,26 @@
                             id="phone"
                             v-model="registerFormInfo.phone"
                             type="text"
-                            class="w-full p-2 rounded-md"
-                        >
+                            class="input !bg-none w-full p-2 rounded-md"
+                        />
                     </div>
-                    <BtnComponent
+                    <BtnBackgroud
                         emit-name="action"
+                        class="w-[200px] mt-7"
                         @action="registerInfo()"
                     >
                         Сохранить
-                    </BtnComponent>
+                    </BtnBackgroud>
+
+                    <div class="btn-wrapper w-[200px] mt-7">
+                        <BtnComponent
+                            emit-name="action"
+                            class="btn"
+                            @action="router.push('/auth/login')"
+                        >
+                            Войти в аккаунт
+                        </BtnComponent>
+                    </div>
                 </div>
             </FormComponent>
         </div>
@@ -236,8 +282,15 @@ const initialRegisterForm = {
     email: '',
     password: '',
     confirmPassword: '',
-    errorConfirmPassword: false
+    validate: false
 }
+
+const initailRegisterFormError = {
+    email: '',
+    password: '',
+    confirm: false
+}
+
 const initialRegisterFormInfo = {
     name: '',
     surname: '',
@@ -252,6 +305,7 @@ const initialRegisterFormInfo = {
 
 const registerForm = reactive({ ...initialRegisterForm })
 
+const registerFormError = reactive({ ...initailRegisterFormError })
 const registerFormInfo = reactive({ ...initialRegisterFormInfo })
 
 const getError = computed(() => {
@@ -266,16 +320,28 @@ const getRigisterStepTwo = computed(() => {
     return userStore.getRigisterStepTwo
 })
 
-function result (res) {
-    res && Object.assign(registerForm, initialRegisterForm)
+function validateRegisterForm() {
+    registerFormError.confirm =
+        registerForm.confirmPassword !== registerForm.password || registerForm.password.length < 8
+    registerFormError.email = registerForm.email.length === 0
+    registerFormError.password = registerForm.password.length < 8
+    registerForm.validate =
+        !registerFormError.confirm && !registerFormError.password && !registerFormError.email
 }
 
-function register () {
-    if (
-        registerForm.confirmPassword === registerForm.password &&
-        registerForm.password.length >= 3
-    ) {
-        registerForm.errorConfirmPassword = false
+function result(res) {
+    if (res) {
+        Object.assign(registerForm, initialRegisterForm)
+        Object.assign(registerFormError, initailRegisterFormError)
+    }
+}
+
+function register() {
+    validateRegisterForm()
+    console.log(registerFormError)
+    console.log(registerForm)
+
+    if (registerForm.validate) {
         userStore.registerUser(
             {
                 email: registerForm.email,
@@ -283,12 +349,10 @@ function register () {
             },
             result
         )
-    } else {
-        registerForm.errorConfirmPassword = true
     }
 }
 
-function registerInfo () {
+function registerInfo() {
     userStore.registerUserInfo({ ...registerFormInfo, email: getUser.value?.email || null })
 }
 
@@ -301,6 +365,7 @@ watch(
     },
     { deep: true }
 )
+
 /**
  * 
     логика для отображения трех иконок
@@ -314,7 +379,7 @@ const inputPassword = ref(null)
 const inputConfirmPassword = ref(null)
 const toggleImg = ref(null)
 
-function togglePasswordVisibility (type) {
+function togglePasswordVisibility(type) {
     if (type === 'password') {
         passwordVisible.value = !passwordVisible.value
     } else if (type === 'confirm') {
@@ -322,7 +387,7 @@ function togglePasswordVisibility (type) {
     }
 }
 
-function clickOutside (event) {
+function clickOutside(event) {
     if (
         (inputPassword.value && !inputPassword.value.contains(event.target)) ||
         (!inputConfirmPassword.value.contains(event.target) &&
@@ -345,18 +410,22 @@ onUnmounted(() => {
 .register {
     padding: 60px 0px;
     box-sizing: border-box;
+
     @media (max-width: $lg) {
         padding: 40px;
     }
+
     @media (max-width: $sm) {
         padding: 32px 16px;
     }
 }
+
 .form-wrapper {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
+
 .img-bg {
     position: absolute;
     right: 0;
@@ -432,6 +501,7 @@ onUnmounted(() => {
     display: flex;
     justify-content: center;
 }
+
 .btn {
     width: max-content;
     position: relative;

@@ -11,10 +11,7 @@ import CabinetCertificates from '../pages/cabinet/CabinetCertificates.vue'
 import CabinetMaterials from '../pages/cabinet/CabinetMaterials.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
-import AddNewsPage from '../pages/moderator/AddNewsPage.vue'
-import ModeratorPage from '../pages/moderator/ModeratorPage.vue'
-
-
+import EditArticlePage from '@/pages/article/EditArticlePage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,103 +23,126 @@ const router = createRouter({
         },
         {
             path: '/trend',
-            name: 'trend',            
+            name: 'trend',
             children: [
                 {
                     path: ':name/:id',
-                    name: 'trend-article',               
-                    component: ArticlePage,
+                    name: 'trend-article',
+                    component: ArticlePage
                 },
                 {
                     path: ':name',
-                    name: 'trend-page',               
-                    component: TrendPage,
-                },
+                    name: 'trend-page',
+                    component: TrendPage
+                }
             ]
         },
         {
             path: '/about',
             name: 'about',
-            component: AboutPage,
+            component: AboutPage
         },
         {
             path: '/blog',
             name: 'blog',
-            children: [              
+            children: [
                 {
                     path: '',
-                    name: 'blog-page',                    
-                    component: BlogPage,
+                    name: 'blog-page',
+                    component: BlogPage
                 },
                 {
                     path: 'article/:id',
-                    name: 'blog-article',                    
-                    component: ArticlePage,
-                },
+                    name: 'blog-article',
+                    component: ArticlePage
+                }
             ]
         },
         {
-            path:"/auth",
-            children: [              
+            path: '/auth',
+            children: [
                 {
                     path: 'login',
                     name: 'login',
-                    component: LoginPage,
+                    component: LoginPage
                 },
                 {
                     path: 'register',
                     name: 'register',
-                    component: RegisterPage,
-                },     
+                    component: RegisterPage
+                }
             ]
-        },   
+        },
         {
             path: '/lk',
             component: CabinetPage,
-            children: [              
+            meta: { protected: true },
+            children: [
                 {
                     path: 'profile',
-                    name: 'profile',                    
+                    name: 'profile',
                     component: CabinetProfile,
+                    meta: { protected: true }
                 },
                 {
                     path: 'favorites',
-                    name: 'favorites',                    
+                    name: 'favorites',
                     component: CabinetFavorites,
+                    meta: { protected: true }
                 },
                 {
                     path: 'certificates',
-                    name: 'certificates',                    
+                    name: 'certificates',
                     component: CabinetCertificates,
+                    meta: { protected: true }
                 },
                 {
                     path: 'materials',
-                    name: 'materials',                    
+                    name: 'materials',
                     component: CabinetMaterials,
-                },
+                    meta: { protected: true }
+                }
             ]
         },
         {
-            path: '/moderator',
-            component: ModeratorPage,
-            children: [      
+            path: '/article',
+            children: [
                 {
-                    path: 'add-news',
-                    name: 'add-news',                    
-                    component: AddNewsPage,
+                    path: 'add',
+                    name: 'add-article',
+                    component: EditArticlePage,
+                    meta: { protected: true }
                 },
+                {
+                    path: 'edit/:id',
+                    name: 'edit-article',
+                    component: EditArticlePage,
+                    meta: { protected: true }
+                }
             ]
-        },
-
+        }
     ],
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
         } else {
             return {
-                top: 0, behavior: 'smooth',
+                top: 0,
+                behavior: 'smooth'
             }
         }
+    }
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((route) => route.meta.protected)) {
+        if (localStorage.getItem('token')) {
+            next()
+            return
+        }
+        next('/')
+    } else {
+        next()
     }
 })
 

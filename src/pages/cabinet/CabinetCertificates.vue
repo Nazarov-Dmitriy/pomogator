@@ -1,8 +1,6 @@
 <template>
-    <div class="page">
-        <CertificatesComponent />
-        <FooterComponent />
-    </div>
+    <CertificatesComponent />
+    <FooterComponent />
 </template>
 <script setup>
 import FooterComponent from '@/components/main/FooterComponent.vue'

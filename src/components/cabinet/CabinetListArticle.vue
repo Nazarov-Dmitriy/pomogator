@@ -1,59 +1,35 @@
 <template>
     <div class="list-article__container">
         <slot name="header" />
-        <div
-            v-if="renderList.length > 0"
-            class="list-article"
-        >
-            <div
-                v-for="item in renderList"
-                :key="item.id"
-                class="card"
-            >
+        <div v-if="renderList.length > 0" class="list-article">
+            <div v-for="item in renderList" :key="item.id" class="card">
                 <div class="card-top">
-                    <div 
-                        class="card-top__edit"
-                        @click="modalShow = true"
-                    >
-                        <img
-                            src="@/assets/images/cabinet/cabinetProfile/edit.svg"
-                            alt="edit"
-                        >
-                        <p>
-                            редактировать
-                        </p>
+                    <div class="card-top__edit" @click="linkToEdit(item.id)">
+                        <img src="@/assets/images/cabinet/cabinetProfile/edit.svg" alt="edit" />
+                        <p>редактировать</p>
                     </div>
-                    <div 
-                        class="card-top__delete"
-                        @click="deleteElement (item.id)"
-                    >
-                        <p>
-                            удалить
-                        </p>
+                    <div class="card-top__delete" @click="removeArticle(item.id)">
+                        <p>удалить</p>
                         <img
                             src="@/assets/images/cabinet/cabinetProfile/bucket.png"
                             alt="delete"
                             class="card-top__delete-img"
-                        >
+                        />
                     </div>
                 </div>
-                <div
-                    @click="linkArticle(item.id)"
-                >
+                <div @click="linkArticle(item.id)">
                     <img
-                        :src="getUrl(item.img)"
+                        v-if="item.file"
+                        :src="getUrl(item.file)"
                         alt="img-card"
                         class="card-img"
-                    >
+                    />
+                    <VideoComponent v-if="item.video" :src="item?.video" :preview="true" />
                     <div class="card-body">
                         <div class="card-contnent">
                             <div class="card-hashtags">
-                                <p
-                                    v-for="hashtag in item.tags"
-                                    :key="hashtag"
-                                    class="card-hashtag"
-                                >
-                                    #{{ hashtag }}
+                                <p v-for="tag in item.tags" :key="tag" class="card-hashtag">
+                                    #{{ getTag(tag) }}
                                 </p>
                             </div>
                             <p class="card__title">
@@ -67,9 +43,9 @@
                                         src="@/assets/icons/article/like.svg"
                                         alt="like"
                                         class="card-btn__img"
-                                    >
+                                    />
                                     <p class="card-btn__count">
-                                        {{ item.like }}
+                                        {{ item.likes }}
                                     </p>
                                 </div>
                                 <div class="card-btn">
@@ -77,14 +53,15 @@
                                         src="@/assets/icons/article/show.svg"
                                         alt="show"
                                         class="card-btn__img"
-                                    >
+                                    />
                                     <p class="card-btn__count">
-                                        {{ item.show }}
+                                        {{ item.shows }}
                                     </p>
                                 </div>
                             </div>
                             <div class="card-date">
-                                <span class="card-date__text">Дата публикации</span> {{ item.publication_date }}
+                                <span class="card-date__text">Дата публикации</span>
+                                {{ item.createdAt }}
                             </div>
                         </div>
                     </div>
@@ -92,75 +69,77 @@
             </div>
         </div>
         <div v-else>
-            <h2 class="no-result">
-                Материалы отсутствуют
-            </h2>
+            <h2 class="no-result">Материалы отсутствуют</h2>
         </div>
         <OfferMaterial />
-        <PaginationComponent
-            :perpage="8"
-            :data="props.data"
-            @set-list="getRenderList"
-        />
+        <PaginationComponent :perpage="8" :data="props.data" @set-list="getRenderList" />
         <Teleport to="body">
-            <ModalComponent
-                :show="modalShow"
-                @close="modalShow = false"
-            />
+            <ModalComponent :show="modalShow" @close="modalShow = false" />
         </Teleport>
     </div>
 </template>
 <script setup>
 import OfferMaterial from '@/components/cabinet/CabinetOfferMaterial.vue'
-import PaginationComponent from '../pagination/PaginationComponent.vue';
-import ModalComponent from '../modal/ModalComponentMaterials.vue';
-import { useRoute, useRouter } from 'vue-router'
-import { ref, watch } from 'vue';
-import { defineProps} from 'vue';
+import PaginationComponent from '../pagination/PaginationComponent.vue'
+import ModalComponent from '../modal/ModalComponentMaterials.vue'
+import { useRouter } from 'vue-router'
+import { computed, ref, watch } from 'vue'
+import { defineProps } from 'vue'
+import VideoComponent from '../video/VideoComponent.vue'
+import { useNewsStore } from '@/stores/newsStore'
 
-const modalShow= ref(false)
+const modalShow = ref(false)
 
 const props = defineProps({
     data: {
         type: Array,
         default: () => []
-    },
-    search: {
-        type: String,
-        default: ''
-    },
+    }
 })
 
-const route = useRoute()
+const emit = defineEmits(['remove-article'])
+
 const router = useRouter()
+const newsStore = useNewsStore()
 
 const renderList = ref([])
 
-function getUrl (url) {
-    return new URL(url, import.meta.url).href
+function getUrl(url) {
+    return import.meta.env.VITE_SERVER_URL + url
 }
 
-function getRenderList (list) {
+const getTags = computed(() => {
+    return newsStore.getTags
+})
+
+function getTag(tag) {
+    return getTags.value.filter((el) => el.id === tag)[0]?.name
+}
+
+function getRenderList(list) {
     renderList.value = list
 }
 
-function deleteElement (id) {
-    this.renderList = this.renderList.filter((item) => item.id !== id);
+function linkArticle(id) {
+    router.push(`/blog/article/${id}`)
 }
 
-function linkArticle (id) {
-    if (route.name === 'trend-page') {
-        router.push(`/trend/${route.params.name}/${id}`)
-    } else if (route.name === 'blog-page') {
-        router.push(`blog/article/${id}`)
-    } else if (route.name === 'materials') {
-        router.push(`/trend/${route.params.name}/${id}`)
-    } 
+function linkToEdit(id) {
+    router.push(`/article/edit/${id}`)
 }
 
-watch(() => props.data, () => {
-})
+async function removeArticle(id) {
+    let res = await newsStore.removeArticle(id)
 
+    if (res) {
+        emit('remove-article')
+    }
+}
+
+watch(
+    () => props.data,
+    () => {}
+)
 </script>
 <style lang="scss">
 .list-article__container {
@@ -240,14 +219,15 @@ watch(() => props.data, () => {
 
 .card-top__edit {
     justify-content: flex-start;
+
     p {
         color: $blue-primary;
     }
 }
 
-
 .card-top__delete {
     justify-content: flex-end;
+
     p {
         color: $primary-red;
     }
@@ -288,7 +268,7 @@ watch(() => props.data, () => {
 .card-hashtag {
     font-size: 16px;
     line-height: 24px;
-    color: $blue
+    color: $blue;
 }
 
 .card__title {
@@ -314,13 +294,13 @@ watch(() => props.data, () => {
 .card-btns {
     display: flex;
     gap: 40px;
-    align-items: center
+    align-items: center;
 }
 
 .card-btn {
     display: flex;
     gap: 10px;
-    align-items: center
+    align-items: center;
 }
 
 .card-btn__img {
@@ -331,13 +311,13 @@ watch(() => props.data, () => {
 .card-btn__count {
     font-size: 16px;
     line-height: 24px;
-    color: $blue
+    color: $blue;
 }
 
 .card-date {
     font-size: 16px;
     line-height: 24px;
-    color: $blue
+    color: $blue;
 }
 
 .card-date__text {

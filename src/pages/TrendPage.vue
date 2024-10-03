@@ -11,18 +11,9 @@
             @search="search()"
             @active-tags="setTags"
         />
-        <ListArticle
-            class="trend__article-header"
-            :data="data"
-            :search="searchValue"
-        >
+        <ListArticle class="trend__article-header" :data="data" :search="searchValue">
             <template #header>
-                <h2
-                    v-if="data.length > 0"
-                    class="list-article__title"
-                >
-                    Содержание
-                </h2>
+                <h2 v-if="data.length > 0" class="list-article__title">Содержание</h2>
             </template>
         </ListArticle>
         <OtherTrend />
@@ -37,60 +28,59 @@
 
 <script setup>
 import HeaderComponent from '@/components/header/HeaderComponent.vue'
-import TrendAbout from '../components/trend/TrendAbout.vue';
-import SearchPanel from '../components/searchPanel/SearchPanel.vue';
-import ListArticle from '../components/article/ListArticle.vue';
-import OtherTrend from '../components/trend/OtherTrend.vue';
-import { computed, onMounted, ref, watch } from 'vue';
-import FooterComponent from '../components/main/FooterComponent.vue';
-import { useNewsStore } from '@/stores/newsStore';
-import Loader from '@/components/loader/Loader.vue';
-import { useRoute } from 'vue-router';
+import TrendAbout from '../components/trend/TrendAbout.vue'
+import SearchPanel from '../components/searchPanel/SearchPanel.vue'
+import ListArticle from '../components/article/ListArticle.vue'
+import OtherTrend from '../components/trend/OtherTrend.vue'
+import { computed, onMounted, ref, watch } from 'vue'
+import FooterComponent from '../components/main/FooterComponent.vue'
+import { useNewsStore } from '@/stores/newsStore'
+import Loader from '@/components/loader/Loader.vue'
+import { useRoute } from 'vue-router'
 
-const newsStore = useNewsStore();
-const isLoad = ref(false);
-const searchValue = ref('');
+const newsStore = useNewsStore()
+const isLoad = ref(false)
+const searchValue = ref('')
 const dataTrend = ref([])
 const data = ref([])
 const activeTags = ref([])
-const route = useRoute();
-
+const route = useRoute()
 
 const getNewsList = computed(() => {
-    return newsStore.getNewsList;
+    return newsStore.getNewsList
 })
 
 const getTags = computed(() => {
-    return newsStore.getTags;
+    return newsStore.getTags
 })
 
 const getCategory = computed(() => {
-    return newsStore.getCategory;
+    return newsStore.getCategory
 })
 
 const getCategoryId = computed(() => {
-    return newsStore.getCategoryId;
+    return newsStore.getCategoryId
 })
 
-function search () {
-    data.value = dataTrend.value.filter(el => {
-        return (el.title).toLocaleLowerCase().includes((searchValue.value).toLocaleLowerCase())
+function search() {
+    data.value = dataTrend.value.filter((el) => {
+        return el.title.toLocaleLowerCase().includes(searchValue.value.toLocaleLowerCase())
     })
 }
 
-function setTags (id){  
+function setTags(id) {
     if (!activeTags.value.includes(id)) {
         activeTags.value.push(id)
-    }else{
-        activeTags.value =  activeTags.value.filter( el => el !== id)
+    } else {
+        activeTags.value = activeTags.value.filter((el) => el !== id)
     }
 }
 
 onMounted(() => {
     data.value = dataTrend.value
-    newsStore.getTagsDb();
-    if(getCategoryId.value) {
-        newsStore.getLisParamstDb({ "category": getCategoryId.value });
+    newsStore.getTagsDb()
+    if (getCategoryId.value) {
+        newsStore.getLisParamstDb({ category: getCategoryId.value })
     }
 })
 
@@ -100,35 +90,37 @@ watch(searchValue, (newVal) => {
     }
 })
 
-watch(activeTags, (newVal) => {
-    isLoad.value = false
-    if (activeTags.value.length > 0) {
-        newsStore.getLisParamstDb({ "tags": newVal.toString() })
-    }else{
-        newsStore.getLisParamstDb({ "category": getCategoryId.value })
-    }
-},{deep: true})
+watch(
+    activeTags,
+    (newVal) => {
+        isLoad.value = false
+        if (activeTags.value.length > 0) {
+            newsStore.getLisParamstDb({ tags: newVal.toString() })
+        } else {
+            newsStore.getLisParamstDb({ category: getCategoryId.value })
+        }
+    },
+    { deep: true }
+)
 
 watch(getCategory, () => {
-    let categoryId = getCategory.value.filter(c => c.link_name === route.params.name)[0].id
-    newsStore.getLisParamstDb({ "category": categoryId });
+    let categoryId = getCategory.value.filter((c) => c.link_name === route.params.name)[0].id
+    newsStore.getLisParamstDb({ category: categoryId })
 })
 
 watch([getNewsList, getTags], () => {
-    console.log("getNewsList, getTags, get");
     isLoad.value = true
     data.value = getNewsList.value
 })
 
-watch(() => route.params.name, () => {
-    newsStore.getLisParamstDb({ "category": getCategoryId.value });
-    activeTags.value=[]
-    isLoad.value = false;
-})
-
-
-
-
+watch(
+    () => route.params.name,
+    () => {
+        newsStore.getLisParamstDb({ category: getCategoryId.value })
+        activeTags.value = []
+        isLoad.value = false
+    }
+)
 </script>
 <style scoped lang="scss">
 .page {
@@ -167,7 +159,7 @@ watch(() => route.params.name, () => {
 }
 
 .list-article__title {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 36px;
     line-height: 42px;
     color: $blue-primary;
