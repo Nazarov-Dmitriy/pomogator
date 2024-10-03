@@ -12,6 +12,12 @@ import CabinetMaterials from '../pages/cabinet/CabinetMaterials.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
 import EditArticlePage from '@/pages/article/EditArticlePage.vue'
+import WebinarPage from '@/pages/webinar/WebinarPage.vue'
+import FutureWebinar from '@/components/webinar/WebinarHeader.vue'
+import OnlineWebinar from '@/components/webinar/OnlineWebinar.vue'
+import WebinarsComponent from '@/components/webinar/WebinarsComponent.vue'
+import WebinarsPage from '@/pages/webinar/WebinarsPage.vue'
+import CurrentWebinar from '@/pages/webinar/CurrentWebinar.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -118,6 +124,22 @@ const router = createRouter({
                     name: 'edit-article',
                     component: EditArticlePage,
                     meta: { protected: true }
+                }
+            ]
+        },
+        {
+            path: '/webinar',
+            component: WebinarPage,
+            children: [
+                {
+                    path: 'webinars',
+                    name: 'webinars',
+                    component: WebinarsPage
+                },
+                {
+                    path: 'current-webinar',
+                    name: 'current-webinar',
+                    component: CurrentWebinar
                 }
             ]
         }

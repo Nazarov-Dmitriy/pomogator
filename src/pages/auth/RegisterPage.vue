@@ -338,8 +338,6 @@ function result(res) {
 
 function register() {
     validateRegisterForm()
-    console.log(registerFormError)
-    console.log(registerForm)
 
     if (registerForm.validate) {
         userStore.registerUser(

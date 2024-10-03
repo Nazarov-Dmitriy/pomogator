@@ -7,12 +7,8 @@
                     alt="logo"
                     class="header__logo"
                     @click="mainLink()"
-                >
-                <div
-                    class="hamburger"
-                    :class="{ 'is-active': btnMenu }"
-                    @click="setMenuAcive()"
-                >
+                />
+                <div class="hamburger" :class="{ 'is-active': btnMenu }" @click="setMenuAcive()">
                     <span class="line" />
                     <span class="line" />
                     <span class="line" />
@@ -20,41 +16,32 @@
             </div>
             <div
                 class="header"
-                :class="{ 'menu-active': menuActive }"
+                :class="{ 'menu-active': menuActive, 'header__user-info': getUserInfo }"
             >
-                <img
-                    src="@/assets/icons/logo.svg"
-                    alt="logo"
-                    class="header__logo"
-                    @click="mainLink()"
-                >
-
-                <ul class="header__nav">
-                    <li class="header__item">
-                        <router-link
-                            to="/about"
-                            class="header__link"
-                        >
-                            О нас
-                        </router-link>
-                    </li>
-                    <li class="header__item">
-                        <router-link
-                            to="/blog"
-                            class="header__link"
-                        >
-                            Блог
-                        </router-link>
-                    </li>
-                    <li class="header__item">
-                        <router-link
-                            to="/webinar"
-                            class="header__link"
-                        >
-                            Вебинар
-                        </router-link>
-                    </li>
-                </ul>
+                <div class="wrapper">
+                    <img
+                        src="@/assets/icons/logo.svg"
+                        alt="logo"
+                        class="header__logo"
+                        @click="mainLink()"
+                    />
+                    <ul class="header__nav">
+                        <li class="header__item">
+                            <router-link to="/about" class="header__link"> О нас </router-link>
+                        </li>
+                        <li class="header__item">
+                            <router-link to="/blog" class="header__link"> Блог </router-link>
+                        </li>
+                        <li class="header__item">
+                            <router-link to="/webinar/webinars" class="header__link">
+                                Вебинар
+                            </router-link>
+                        </li>
+                    </ul>
+                </div>
+                <div v-if="getUserInfo" class="header__user-info">
+                    <HeaderUserInfo />
+                </div>
                 <div class="header__block">
                     <BtnComponent
                         v-if="!getUser"
@@ -70,17 +57,17 @@
                         @click="$router.push('/lk/profile')"
                     >
                         <img
-                            v-if="getUser.avatar"
+                            v-if="getUser?.avatar"
                             :src="getUrl"
                             alt="user"
                             class="btn__profile-img"
-                        >
+                        />
                         <img
                             v-else
                             src="@/assets/icons/header/user.svg"
                             alt="user"
                             class="btn__profile-img"
-                        >
+                        />
                     </button>
                     <BtnComponent
                         v-if="getAutotizationBtn === 'lk'"
@@ -91,10 +78,7 @@
                         Выход
                     </BtnComponent>
                 </div>
-                <div
-                    v-if="getCategory"
-                    class="header__trend"
-                >
+                <div v-if="getCategory" class="header__trend">
                     <div class="header__trend-decor" />
                     <router-link
                         v-for="item in getCategory"
@@ -118,6 +102,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { useNewsStore } from '@/stores/newsStore'
 import BtnComponent from '../btns/BtnComponent.vue'
 import { useUserStore } from '@/stores/userStore'
+import HeaderUserInfo from './HeaderUserInfo.vue'
 
 const userStore = useUserStore()
 const newsStore = useNewsStore()
@@ -142,6 +127,20 @@ const getSuccessRes = computed(() => {
     return userStore.getSuccessRes
 })
 
+const getUserInfo = computed(() => {
+    if (getUser.value) {
+        return (
+            getUser.value.name &&
+            getUser.value.surname &&
+            getUser.value.email &&
+            getUser.value.place_work &&
+            route.path.includes('/lk/')
+        )
+    } else {
+        return false
+    }
+})
+
 const getUrl = computed(() => {
     return import.meta.env.VITE_SERVER_URL + getUser.value?.avatar
 })
@@ -159,20 +158,20 @@ onMounted(() => {
     newsStore.getCategoryDb()
 })
 
-function setCategoryId (id) {
+function setCategoryId(id) {
     newsStore.setCategoryId(id)
 }
 
-function setMenuAcive () {
+function setMenuAcive() {
     btnMenu.value = !btnMenu.value
     menuActive.value = !menuActive.value
 }
 
-function mainLink () {
+function mainLink() {
     router.push('/')
 }
 
-function logout () {
+function logout() {
     userStore.logout()
 }
 
@@ -218,14 +217,21 @@ watch(getSuccessRes, () => {
 
 .header {
     display: grid;
-    grid-template-columns: 161px 212px 100px;
-    grid-template-rows: 40px auto;
+    grid-template-columns: 1fr auto auto;
+    grid-template-rows: 40px auto auto;
     align-items: center;
     justify-content: space-between;
     grid-template-areas:
-        'logo menu block'
-        'trend trend trend';
+        'logo  block'
+        'trend  trend';
     gap: 14px 24px;
+
+    &__user-info {
+        grid-template-areas:
+            'logo  block'
+            'info  info'
+            'trend  trend';
+    }
 
     &__mobile {
         display: flex;
@@ -240,14 +246,20 @@ watch(getSuccessRes, () => {
 
     @media (max-width: $lg) {
         display: none;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto;
+        grid-template-rows: auto auto auto;
+        grid-template-columns: auto auto auto;
         align-items: center;
         justify-content: space-between;
         grid-template-areas:
-            'menu block'
-            'trend trend';
-        gap: 20px 20px;
+            'menu menu menu'
+            'trend trend trend';
+
+        &__user-info {
+            grid-template-areas:
+                'menu menu menu'
+                'info info block'
+                'trend trend trend';
+        }
 
         &.menu-active {
             display: grid;
@@ -260,6 +272,30 @@ watch(getSuccessRes, () => {
             'trend '
             'menu';
         gap: 16px 0;
+        grid-template-columns: 1fr;
+
+        &__user-info {
+            grid-template-areas:
+                'block'
+                'info'
+                'trend '
+                'menu';
+        }
+    }
+
+    :deep(.btn-gradient) {
+        position: absolute;
+    }
+}
+
+.wrapper {
+    display: flex;
+    gap: 80px;
+    align-items: center;
+
+    @media (max-width: $lg) {
+        justify-content: center;
+        grid-column: span 3;
     }
 
     & > .header__logo {
@@ -344,19 +380,27 @@ watch(getSuccessRes, () => {
     }
 }
 
+.header__user-info {
+    grid-area: info;
+}
+
 .header__nav {
     grid-area: menu;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
     gap: 32px;
 
     @media (max-width: $lg) {
-        justify-content: flex-start;
+        justify-content: center;
+        grid-column: span 3;
     }
 
     @media (max-width: $sm) {
-        flex-direction: column;
-        gap: 16px;
+        display: grid;
+        grid-template-columns: 1fr;
         align-items: center;
+        text-align: center;
+        gap: 16px;
     }
 }
 
@@ -509,5 +553,6 @@ watch(getSuccessRes, () => {
     width: 100%;
     height: 100%;
     border-radius: 100%;
+    object-fit: cover;
 }
 </style>
