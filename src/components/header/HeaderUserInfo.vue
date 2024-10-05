@@ -21,14 +21,14 @@
             <span>Педагог</span>
         </div>
         <div v-if="getUser" class="header__info">
-            <a href="#" class="header__info-text header__info-text--mail">{{ getUser.email }}</a>
-            <a v-if="getUser.phone" href="#" class="header__info-text header__info-text--number">{{
-                getUser.phone
-            }}</a>
+            <p class="header__info-text header__info-text--mail">{{ getUser.email }}</p>
+            <p v-if="getUser.phone" class="header__info-text header__info-text--number">
+                {{ getUser.phone }}
+            </p>
         </div>
         <div v-else class="header__info">
-            <a href="#" class="header__info-text header__info-text--mail">maria@mail.ru</a>
-            <a href="#" class="header__info-text header__info-text--number">+7 (954) 123-45-67</a>
+            <p class="header__info-text header__info-text--mail">maria@mail.ru</p>
+            <p class="header__info-text header__info-text--number">+7 (954) 123-45-67</p>
         </div>
     </div>
 </template>
@@ -56,8 +56,11 @@ watch(getUser, () => {}, { deep: true })
     gap: 16px;
     grid-template-rows: 1fr;
     grid-template-columns: auto 1fr 1fr;
+    border-top: 1px solid #5b94ea;
 
     @media (max-width: $lg) {
+        border-top: none;
+
         grid-template-areas:
             'avatar hero-info'
             'info info';
@@ -66,6 +69,7 @@ watch(getUser, () => {}, { deep: true })
     @media (max-width: $sm) {
         display: flex;
         flex-direction: column;
+        padding: 0;
     }
 }
 
@@ -138,7 +142,7 @@ watch(getUser, () => {}, { deep: true })
     justify-content: flex-end;
     align-items: center;
     &::after {
-        content: url(../../../assets/images/cabinet/cabinetHeader/mail-svg.svg);
+        content: url('../../assets/images/cabinet/cabinetHeader/mail-svg.svg');
         height: 24px;
     }
     @media (max-width: $lg) {
@@ -149,7 +153,7 @@ watch(getUser, () => {}, { deep: true })
             height: auto;
         }
         &::before {
-            content: url(../../../assets/images/cabinet/cabinetHeader/mail-svg.svg);
+            content: url('../../assets/images/cabinet/cabinetHeader/mail-svg.svg');
             height: 24px;
         }
     }
@@ -162,18 +166,22 @@ watch(getUser, () => {}, { deep: true })
             height: auto;
         }
         &::after {
-            content: url(../../../assets/images/cabinet/cabinetHeader/mail-svg.svg);
+            content: url('../../assets/images/cabinet/cabinetHeader/mail-svg.svg');
             height: 24px;
         }
     }
 }
 .header__info-text--number {
     &::after {
-        content: url(../../../assets/images/cabinet/cabinetHeader/phone-svg.svg);
+        content: url('../../assets/images/cabinet/cabinetHeader/phone-svg.svg');
     }
     @media (max-width: $lg) {
         position: absolute;
         right: 40px;
+
+        &::after {
+            content: url('../../assets/images/cabinet/cabinetHeader/phone-svg.svg');
+        }
     }
     @media (max-width: $sm) {
         justify-content: center;

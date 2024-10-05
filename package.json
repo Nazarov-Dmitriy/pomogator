@@ -19,9 +19,11 @@
     "pinia": "^2.1.7",
     "swiper": "^11.1.4",
     "vue": "^3.4.21",
+    "vue-html2pdf": "^1.8.0",
     "vue-router": "^4.3.0",
     "vue-spinner": "^1.0.4",
-    "vue-yandex-maps": "^2.1.3"
+    "vue-yandex-maps": "^2.1.3",
+    "vue3-html2pdf": "^1.1.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",

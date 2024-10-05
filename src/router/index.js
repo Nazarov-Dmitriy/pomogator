@@ -156,16 +156,16 @@ const router = createRouter({
     }
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.matched.some((route) => route.meta.protected)) {
-        if (localStorage.getItem('token')) {
-            next()
-            return
-        }
-        next('/')
-    } else {
-        next()
-    }
-})
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some((route) => route.meta.protected)) {
+//         if (localStorage.getItem('token')) {
+//             next()
+//             return
+//         }
+//         next('/')
+//     } else {
+//         next()
+//     }
+// })
 
 export default router

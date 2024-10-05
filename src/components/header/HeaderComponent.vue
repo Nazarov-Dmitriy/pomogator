@@ -69,14 +69,15 @@
                             class="btn__profile-img"
                         />
                     </button>
-                    <BtnComponent
+
+                    <div
                         v-if="getAutotizationBtn === 'lk'"
-                        class="btn__header"
-                        emit-name="action"
-                        @action="logout()"
+                        class="btn__header flex gap-4 items-center"
+                        @click="logout()"
                     >
-                        Выход
-                    </BtnComponent>
+                        <span>Выход</span>
+                        <img src="/image/header/exit.svg" alt="" />
+                    </div>
                 </div>
                 <div v-if="getCategory" class="header__trend">
                     <div class="header__trend-decor" />
@@ -191,6 +192,7 @@ watch(getSuccessRes, () => {
     }
 })
 </script>
+
 <style lang="scss">
 .header__contaner {
     background: $gradient-background;
@@ -217,7 +219,7 @@ watch(getSuccessRes, () => {
 
 .header {
     display: grid;
-    grid-template-columns: 1fr auto auto;
+    // grid-template-columns: 1fr auto auto;
     grid-template-rows: 40px auto auto;
     align-items: center;
     justify-content: space-between;
@@ -263,6 +265,9 @@ watch(getSuccessRes, () => {
 
         &.menu-active {
             display: grid;
+            @media (max-width: $sm) {
+                padding: 0 16px;
+            }
         }
     }
 
@@ -296,6 +301,16 @@ watch(getSuccessRes, () => {
     @media (max-width: $lg) {
         justify-content: center;
         grid-column: span 3;
+        position: relative;
+
+        &::after {
+            content: '';
+            width: calc(100% + 80px);
+            height: 1px;
+            background-color: #5b94ea;
+            position: absolute;
+            bottom: -16px;
+        }
     }
 
     & > .header__logo {
@@ -538,8 +553,23 @@ watch(getSuccessRes, () => {
 }
 
 .btn__header {
+    cursor: pointer;
+    & span {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 32px;
+        color: #5b94ea;
+
+        @media (max-width: $lg) {
+            display: none;
+        }
+    }
+
     @media (max-width: $sm) {
         flex: 1 0 100px;
+        justify-content: flex-end;
+        position: absolute;
+        top: 27px;
     }
 }
 

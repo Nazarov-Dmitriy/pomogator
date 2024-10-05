@@ -49,7 +49,7 @@ function handleSelect(option) {
         padding: 0;
     }
     :deep(.dropdown-selected-text) {
-        font-family: var(--third-family);
+        font-family: 'Kreadon-Demi';
         font-weight: 600;
         font-size: 48px;
         line-height: 56px;
@@ -71,36 +71,61 @@ function handleSelect(option) {
 
     :deep(.dropdown-icon) {
         right: -17px;
+        top: 47%;
     }
     :deep(.option-wrapper) {
         border-radius: 32px;
         padding: 0px 24px;
         box-sizing: border-box;
         background: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
-        width: auto;
-        top: 10px;
+        width: max-content;
+        top: 0;
 
-        @media(max-width: $lg){
-            
+        @media (max-width: $lg) {
+            width: auto;
+            left: 0;
+            transform: translate(-30%, 0);
         }
     }
 
+    :deep(.dashboard__dropdown-wrapper) {
+        width: 100%;
+    }
     :deep(.option) {
-        font-family: var(--third-family);
+        font-family: 'Kreadon-Demi';
         font-weight: 600;
         font-size: 48px;
         line-height: 56px;
         color: #5b94ea;
         padding: 0;
         border: none;
+        padding: 10px 0;
 
         &:not(:last-child) {
             border-bottom: 1px solid #4360f8;
         }
     }
+
+    :deep(.option:first-child) {
+        position: relative;
+        padding-right: 40px;
+
+        &::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
+            width: 24px;
+            height: 24px;
+            background-image: url('/src/assets/icons/appearance.svg');
+            background-size: cover;
+            background-position: center; 
+        }
+    }
 }
 .my-data__text {
-    font-family: var(--third-family);
+    font-family: 'Kreadon-Demi';
     font-weight: 600;
     font-size: 48px;
     line-height: 56px;

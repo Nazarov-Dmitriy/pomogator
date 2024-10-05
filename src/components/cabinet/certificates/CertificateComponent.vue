@@ -1,18 +1,15 @@
 <template>
     <div
-        v-for="(certificate, index) in props.certificateData"
+        v-for="(certificate, index) in certificateData"
         :key="certificate.id"
         class="certificate"
+        :ref="`certificate-${index}`"
     >
         <div class="certificate__wrapper">
             <div class="certificate__main">
-                <h2 class="certificate__title">
-                    Сертификат
-                </h2>
+                <h2 class="certificate__title">Сертификат</h2>
                 <div class="certificate__info">
-                    <p class="certificate__text">
-                        Подтверждает, что
-                    </p>
+                    <p class="certificate__text">Подтверждает, что</p>
                     <h2 class="certificate__student-name">
                         {{ certificate.studentData }}
                     </h2>
@@ -22,16 +19,14 @@
                 </div>
 
                 <div class="certificate__main-bottom">
-                    <img
-                        src="/public/image/cabinet/cabinetCertificates/small-logo.svg"
-                        alt=""
-                    >
+                    <img src="/public/image/cabinet/cabinetCertificates/small-logo.svg" alt="" />
                     <div class="span-wrapper">
                         <span>Дата вебинара</span>
                         <span>{{ certificate.date }}</span>
                     </div>
                 </div>
             </div>
+
             <div class="certificate__footer">
                 <h2 class="certificate__footer-title">
                     {{ certificate.certificateName }}
@@ -41,14 +36,14 @@
                         <img
                             src="/public/image/cabinet/cabinetCertificates/download.svg"
                             alt=""
-                            @click="downloadCertificate(certificate)"
-                        >
+                            @click="generatePdf(index)"
+                        />
                         <CertificateShare />
                         <img
                             src="/public/image/cabinet/cabinetCertificates/print.png"
                             alt=""
-                            @click="printCertificate(index)"
-                        >
+                            @click="generatePdf(index)"
+                        />
                     </div>
 
                     <span class="certificate__data">{{ certificate.date }}</span>
@@ -56,12 +51,10 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup>
-import PrintCertificate from './PrintCertificate.vue'
-import { createVNode, ref, render } from 'vue'
+import html2pdf from 'html2pdf.js'
 import CertificateShare from './CertificateShare.vue'
 
 const props = defineProps({
@@ -71,41 +64,22 @@ const props = defineProps({
     }
 })
 
-const showMenu = ref(true)
+function generatePdf(index) {
+    const element = document.querySelector(`.certificate:nth-child(${index + 1})`)
 
-function downloadCertificate (certificate) {
-    const link = document.createElement('a')
-    link.href = certificate.downloadUrl
-    link.download = `${certificate.studentData}-certificate.pdf`
-    link.click()
-}
-
-function printCertificate (index) {
-    const certificate = props.certificateData[index]
-
-    const printWindow = window.open('', '_blank')
-
-    const vnode = createVNode(PrintCertificate, { certificate })
-
-    printWindow.document.open()
-    printWindow.document.write(
-        '<html><head><title>Print</title><style>body{margin:0;}</style></head><body>'
-    )
-    printWindow.document.write('<div id="print-container"></div>')
-    printWindow.document.write('</body></html>')
-    printWindow.document.close()
-
-    const printContainer = printWindow.document.getElementById('print-container')
-    render(vnode, printContainer)
-
-    printWindow.onload = () => {
-        printWindow.focus()
-        printWindow.print()
+    const opt = {
+        margin: 1,
+        filename: `Сертификат.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     }
+
+    html2pdf().from(element).set(opt).save()
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .certificate {
     border: 2px solid $blue;
     border-radius: 24px;
