@@ -220,7 +220,7 @@ watch(getSuccessRes, () => {
 .header {
     display: grid;
     // grid-template-columns: 1fr auto auto;
-    grid-template-rows: 40px auto auto;
+    // grid-template-rows: 40px auto auto;
     align-items: center;
     justify-content: space-between;
     grid-template-areas:

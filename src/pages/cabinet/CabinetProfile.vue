@@ -24,10 +24,10 @@ import MyData from '@/components/cabinet/profile/MyData.vue'
 import MainLayots from '@/layouts/MainLayots.vue'
 
 const componentsMap = {
-    данные: null,
-    материалы: CabinetMaterials,
+    'данные': null,
+    'материалы': CabinetMaterials,
     'избранные материалы': CabinetFavorites,
-    сертификаты: CabinetCertificates
+    'сертификаты': CabinetCertificates
 }
 
 const selectedComponent = ref(null)
