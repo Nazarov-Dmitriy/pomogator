@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col p-10 w-full gap-4">
+    <div class="edit flex flex-col p-10 w-full gap-4">
         <template v-if="!isLoad">
             <Loader />
         </template>
@@ -8,12 +8,13 @@
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <label for="title" class="field__label" :class="{ error: getErrors?.title }"
-                        >Заголовк статьи</label
+                        >Заголовк материала</label
                     >
                     <label for="" class="text-base"></label>
                     <input
                         id="title"
                         v-model="dataNews.title"
+                        placeholder="IT технологии"
                         type="text"
                         class="input !bg-none w-full p-2 rounded-md"
                         :class="{ error: getErrors?.title }"
@@ -32,46 +33,59 @@
                     <input
                         id="annotation"
                         v-model="dataNews.annotation"
+                        placeholder="Краткое описание материала"
                         type="text"
-                        class="input !bg-none w-full p-2 rounded-md"
+                        class="input-annotation input !bg-none w-full p-2 rounded-md"
                         :class="{ error: getErrors?.annotation }"
                     />
                     <p v-if="getErrors?.annotation" class="error-text">
                         {{ getErrors?.annotation }}
                     </p>
                 </div>
-                <div class="flex flex-col gap-2">
-                    <label class="field__label" :class="{ error: getErrors?.category }"
-                        >Категория</label
-                    >
-                    <DropdownComponent
-                        v-model:modelValue="dataNews.category"
-                        :options="getCategory"
-                        :placeholder="'Выбирите категорию'"
-                        :error="!!getErrors?.category"
-                    />
-                    <p v-if="getErrors?.category" class="error-text">
-                        {{ getErrors?.category }}
-                    </p>
-                </div>
-                <div class="flex flex-col gap-2">
-                    <label class="field__label" :class="{ error: getErrors?.tags }">Теги</label>
-                    <DropdownComponent
-                        v-model:modelValue="dataNews.tags"
-                        :options="getTags"
-                        :multi="true"
-                        :placeholder="'Выбирите теги'"
-                        :error="!!getErrors?.tags"
-                    />
-                    <p v-if="getErrors?.tags" class="error-text">
-                        {{ getErrors?.tags }}
-                    </p>
+                <div class="category flex justify-between items-center gap-4">
+                    <div class="flex flex-col gap-2 w-full">
+                        <label class="field__label" :class="{ error: getErrors?.category }"
+                            >Категория</label
+                        >
+                        <DropdownComponent
+                            v-model:modelValue="dataNews.category"
+                            :options="getCategory"
+                            :placeholder="'Выбирите категорию'"
+                            :error="!!getErrors?.category"
+                        />
+                        <p v-if="getErrors?.category" class="error-text">
+                            {{ getErrors?.category }}
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-2 w-full">
+                        <label class="field__label" :class="{ error: getErrors?.tags }">Теги</label>
+                        <DropdownComponent
+                            v-model:modelValue="dataNews.tags"
+                            :options="getTags"
+                            :multi="true"
+                            :placeholder="'Выбирите теги'"
+                            :error="!!getErrors?.tags"
+                        />
+                        <p v-if="getErrors?.tags" class="error-text">
+                            {{ getErrors?.tags }}
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <div class="flex flex-col gap-2">
+                <label for="" class="text-base">Ссылка на источник</label>
+                <input
+                    v-model="dataNews.link_to_source"
+                    type="text"
+                    placeholder="сайт_источник.ру"
+                    class="link text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
+                />
+            </div>
+
+            <div class="flex flex-col gap-2">
                 <label class="field__label" :class="{ error: getErrors?.article }"
-                    >Текст статьи</label
+                    >Описание материала</label
                 >
                 <div class="ck-editor-wrapper" :class="{ error: getErrors?.article }">
                     <ckeditor v-model="dataNews.article" :editor="editor" :config="editorConfig" />
@@ -81,51 +95,64 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-2">
-                <label for="" class="text-base">Ссылка на источник</label>
-                <input
-                    v-model="dataNews.link_to_source"
-                    type="text"
-                    class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
-                />
+            <div
+                :class="{ 'file-wrapper': isArticleImage === 1 }"
+                class="video-wrapper flex gap-4 justify-between items-center"
+            >
+                <div class="file-dropdown flex flex-col gap-2 w-full">
+                    <label for="" class="text-base">Теги</label>
+                    <DropdownComponent
+                        v-model:modelValue="isArticleImage"
+                        :options="optionArticleImageDropdown"
+                        :placeholder="'Выбирите теги'"
+                    />
+                </div>
+                <div v-if="previewImage" class="preview-img">
+                    <img :src="getPreviewPath" alt="preview" />
+                </div>
+                <div v-if="isArticleImage === 1" class="flex flex-col gap-2">
+                    <label for="" class="text-base hidden">Картинка</label>
+                    <input
+                        type="file"
+                        class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600 hidden"
+                        @change="onFileChange"
+                        ref="addInputImg"
+                    />
+
+                    <p v-if="getErrors?.file" class="error-text">
+                        {{ getErrors?.file }}
+                    </p>
+                </div>
+                <div v-else class="video-input flex flex-col gap-2 w-full">
+                    <label for="video" class="field__label" :class="{ error: getErrors?.file }"
+                        >Ссылка на видеоматериал</label
+                    >
+                    <input
+                        id="video"
+                        v-model="dataNews.video"
+                        type="text"
+                        class="input !bg-none w-full p-2 rounded-md"
+                        placeholder="видео_материал.ру"
+                        :class="{ error: getErrors?.file }"
+                    />
+                    <p v-if="getErrors?.file" class="error-text">
+                        {{ getErrors?.file }}
+                    </p>
+                </div>
+            </div>
+            <div
+                v-if="isArticleImage === 1"
+                @click="addImg"
+                class="file-input flex gap-2 items-center"
+            >
+                <span>Прикрепить файл</span>
+                <img src="/image/edit-news/file.svg" alt="" />
             </div>
 
-            <div class="flex flex-col gap-2">
-                <label for="" class="text-base">Теги</label>
-                <DropdownComponent
-                    v-model:modelValue="isArticleImage"
-                    :options="optionArticleImageDropdown"
-                    :placeholder="'Выбирите теги'"
-                />
-            </div>
-
-            <div v-if="previewImage" class="preview-img">
-                <img :src="getPreviewPath" alt="preview" />
-            </div>
-            <div v-if="isArticleImage === 1" class="flex flex-col gap-2">
-                <label for="" class="text-base">Картинка</label>
-                <input
-                    type="file"
-                    class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
-                    @change="onFileChange"
-                />
-                <p v-if="getErrors?.file" class="error-text">
-                    {{ getErrors?.file }}
-                </p>
-            </div>
-            <div v-else class="flex flex-col gap-2">
-                <label for="video" class="field__label" :class="{ error: getErrors?.file }"
-                    >Ссылка на видеоматериал</label
-                >
-                <input
-                    id="video"
-                    v-model="dataNews.video"
-                    type="text"
-                    class="input !bg-none w-full p-2 rounded-md"
-                    :class="{ error: getErrors?.file }"
-                />
-                <p v-if="getErrors?.file" class="error-text">
-                    {{ getErrors?.file }}
+            <div class="policy">
+                <p class="policy__text">
+                    Нажимая на кнопку «Отправить», я соглашаюсь с
+                    <span>политикой обработки персональных данных</span>
                 </p>
             </div>
             <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
@@ -273,6 +300,7 @@ const getErrors = computed(() => {
 const isLoad = ref(false)
 const isArticleImage = ref(1)
 const previewImage = ref(null)
+const addInputImg = ref(null)
 
 const getPreviewPath = computed(() => {
     if (previewImage.value.includes('base64')) {
@@ -310,17 +338,20 @@ onMounted(() => {
 })
 
 function onFileChange(e) {
-    let file = e.target.files || e.dataTransfer.files
-    if (file && file[0].type.match('image.*')) {
-        dataNews.file = file[0]
-        if (pageType.value) {
-            const reader = new FileReader()
-            reader.readAsDataURL(file[0])
-            reader.onload = (e) => {
-                previewImage.value = e.target.result
-            }
+    const file = event.target.files[0]
+    if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = (e) => {
+            previewImage.value = e.target.result
         }
+    } else {
+        previewImage.value = null
     }
+}
+
+function addImg() {
+    addInputImg.value.click()
 }
 
 function submit() {
@@ -387,7 +418,14 @@ watch(isArticleImage, (newVal) => {
     }
 })
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.edit {
+    @media (max-width: $sm) {
+        padding: 32px 16px;
+        box-sizing: border-box;
+    }
+}
+
 .news__textarea {
     height: 500px;
     border: 1px solid $blue;
@@ -397,6 +435,40 @@ watch(isArticleImage, (newVal) => {
 }
 
 .ck-editor-wrapper {
+    :deep(.ck-toolbar__items) {
+        border-bottom: 2px solid #5b94ea;
+        padding: 16px;
+        box-sizing: border-box;
+        background: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
+        width: 100%;
+        border-radius: 32px 32px 0 0;
+    }
+
+    :deep(.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused)) {
+        border-radius: 0 0 32px 32px;
+        padding: 0 0 700px 0;
+        box-sizing: border-box;
+        border: 2px solid #a0b1ed;
+        border-top: none;
+    }
+
+    :deep(
+            .ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content,
+            .ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content.ck-rounded-corners
+        ) {
+        position: relative;
+    }
+    :deep(.ck.ck-editor__editable_inline) {
+        border-radius: 0 0 32px 32px;
+        padding: 16px 0 700px 16px;
+        box-sizing: border-box;
+        transform: scale(0.99);
+
+        @media (max-width: $sm) {
+            transform: scale(0.97) translate(0, -11px);
+        }
+    }
+
     .ck {
         .ck-powered-by {
             display: none;
@@ -435,5 +507,115 @@ watch(isArticleImage, (newVal) => {
     line-height: 1.5;
     font-weight: 500;
     color: $black;
+}
+
+.ck-editor-wrapper {
+    :deep(.ck.ck-editor__top .ck-sticky-panel .ck-sticky-panel__content) {
+        border: none;
+    }
+}
+
+.input-annotation {
+    padding: 12px 16px 100px 12px;
+}
+
+.category {
+    :deep(.dashboard__dropdown-wrapper) {
+        max-width: 100%;
+        width: 100%;
+        border: 2px solid #a0b1ed;
+        border-radius: 32px;
+        padding: 12px 16px;
+    }
+    :deep(.dropdown-selected-text) {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: #a0b1ed;
+    }
+    :deep(.option-wrapper) {
+        border: 2px solid #4360f8;
+        border-radius: 24px;
+        padding: 12px 0px;
+        top: 0;
+    }
+
+    @media (max-width: $sm) {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.file-wrapper {
+    max-width: 50%;
+    @media (max-width: $lg) {
+        max-width: 100%;
+        width: 100%;
+        flex-direction: column;
+    }
+}
+.video-wrapper {
+    @media (max-width: $lg) {
+        max-width: 100%;
+        width: 100%;
+        flex-direction: column;
+    }
+}
+
+.link {
+    border: 2px solid #a0b1ed;
+    border-radius: 32px;
+    padding: 12px 16px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #a0b1ed;
+}
+
+.file-dropdown {
+    :deep(.dashboard__dropdown-wrapper) {
+        max-width: 100%;
+        width: 100%;
+        border: 2px solid #a0b1ed;
+        border-radius: 32px;
+        padding: 12px 16px;
+        box-sizing: border-box;
+    }
+
+    :deep(.option-wrapper) {
+        border: 2px solid #4360f8;
+        border-radius: 24px;
+        padding: 12px 0px;
+        top: 0;
+    }
+    :deep(.dropdown-selected-text) {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: #a0b1ed;
+    }
+}
+
+.file-input {
+    & span {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 150%;
+        color: #4360f8;
+    }
+}
+
+.policy {
+    &__text {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 150%;
+        color: #5b94ea;
+        & span {
+            text-decoration: underline;
+            text-decoration-skip-ink: none;
+        }
+    }
 }
 </style>

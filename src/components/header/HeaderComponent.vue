@@ -18,7 +18,7 @@
                 class="header"
                 :class="{ 'menu-active': menuActive, 'header__user-info': getUserInfo }"
             >
-                <div class="wrapper">
+                <div class="wrapper" :class="{ lk: activeLkClass }">
                     <img
                         src="@/assets/icons/logo.svg"
                         alt="logo"
@@ -112,6 +112,14 @@ const menuActive = ref(false)
 const router = useRouter()
 const route = useRoute()
 
+const activeLkClass = ref(false)
+
+function checkPage() {
+    if (route.path === '/lk/profile' && getUserInfo) {
+        activeLkClass.value = true
+    }
+}
+
 const getCategory = computed(() => {
     return newsStore.getCategory
 })
@@ -157,6 +165,7 @@ const getAutotizationBtn = computed(() => {
 
 onMounted(() => {
     newsStore.getCategoryDb()
+    checkPage()
 })
 
 function setCategoryId(id) {
@@ -248,13 +257,17 @@ watch(getSuccessRes, () => {
 
     @media (max-width: $lg) {
         display: none;
-        grid-template-rows: auto auto auto;
-        grid-template-columns: auto auto auto;
+        // grid-template-rows: auto auto auto;
+        // grid-template-columns: auto auto auto;
+        grid-template-columns: auto auto;
         align-items: center;
         justify-content: space-between;
+        // grid-template-areas:
+        //     'menu menu menu'
+        //     'trend trend trend';
         grid-template-areas:
-            'menu menu menu'
-            'trend trend trend';
+            'menu block'
+            'trend trend';
 
         &__user-info {
             grid-template-areas:
@@ -299,18 +312,24 @@ watch(getSuccessRes, () => {
     align-items: center;
 
     @media (max-width: $lg) {
-        justify-content: center;
-        grid-column: span 3;
-        position: relative;
+        &.lk {
+            justify-content: center;
+            grid-column: span 3;
 
-        &::after {
-            content: '';
-            width: calc(100% + 80px);
-            height: 1px;
-            background-color: #5b94ea;
-            position: absolute;
-            bottom: -16px;
+            &::after {
+                content: '';
+                width: calc(100% + 80px);
+                height: 1px;
+                background-color: #5b94ea;
+                position: absolute;
+                bottom: -16px;
+            }
         }
+
+        position: relative;
+    }
+    @media(max-width: $lg){
+        justify-content: center;
     }
 
     & > .header__logo {
