@@ -45,7 +45,6 @@
                             @click="generatePdf(index)"
                         />
                     </div>
-
                     <span class="certificate__data">{{ certificate.date }}</span>
                 </div>
             </div>
@@ -65,17 +64,53 @@ const props = defineProps({
 })
 
 function generatePdf(index) {
-    const element = document.querySelector(`.certificate:nth-child(${index + 1})`)
+    const certificate = props.certificateData[index]
+
+    const tempElement = document.createElement('div')
+    tempElement.classList.add('certificate-pdf')
+
+    tempElement.innerHTML = `
+         <div class="certificate__main-print">
+                <h2 class="certificate__title-print">Сертификат</h2>
+                <div class="certificate__info">
+                    <p class="certificate__text">Подтверждает, что</p>
+                    <h2 class="certificate__student-name-print">
+                        ${certificate.studentData}
+                    </h2>
+                    <p class="certificate__text">
+                        Участвовал в вебинаре по IT технологиям для преподавателей
+                    </p>
+                </div>
+
+                <div class="certificate__main-bottom">
+                    <img src="/public/image/cabinet/cabinetCertificates/small-logo.svg" alt="" />
+                    <div class="span-wrapper">
+                        <span>Дата вебинара</span>
+                        <span>${certificate.date}</span>
+                    </div>
+                </div>
+            </div>
+    `
+    document.body.appendChild(tempElement)
 
     const opt = {
-        margin: 1,
-        filename: `Сертификат.pdf`,
+        margin: 0,
+        filename: `Сертификат-${index + 1}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
     }
 
-    html2pdf().from(element).set(opt).save()
+    html2pdf()
+        .from(tempElement)
+        .set(opt)
+        .save()
+        .then(() => {
+            document.body.removeChild(tempElement)
+        })
+        .catch((err) => {
+            console.error('Ошибка генерации PDF:', err)
+        })
 }
 </script>
 
@@ -101,12 +136,35 @@ function generatePdf(index) {
     background-position: top;
 }
 
+.certificate__main-print {
+    position: relative;
+    background-image: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
+    background-position: top;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 69vh;
+    width: 100%;
+}
+
 .certificate__title {
     font-family: 'Kreadon-Demi';
     font-weight: 600;
     font-size: 26px;
     line-height: 117%;
     background: linear-gradient(149deg, #f84343 35%, #4360f8 70%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-top: 17px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.certificate__title-print {
+    font-family: 'Kreadon-Demi';
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 117%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -140,6 +198,26 @@ function generatePdf(index) {
         content: '';
         position: absolute;
         top: 100%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        height: 1px;
+        background-color: $blue-primary;
+    }
+}
+.certificate__student-name-print {
+    font-family: 'Kreadon-Demi';
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 16px;
+    color: $blue-primary;
+    text-align: center;
+    position: relative;
+    padding: 2px;
+    &::after {
+        content: '';
+        position: absolute;
+        top: 120%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 70%;
