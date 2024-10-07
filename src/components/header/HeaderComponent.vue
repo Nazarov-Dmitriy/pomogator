@@ -75,7 +75,7 @@
                         class="btn__header flex gap-4 items-center"
                         @click="logout()"
                     >
-                        <span>Выход</span>
+                        <span :class="{ lk: activeLkClass }">Выход</span>
                         <img src="/image/header/exit.svg" alt="" />
                     </div>
                 </div>
@@ -328,7 +328,7 @@ watch(getSuccessRes, () => {
 
         position: relative;
     }
-    @media(max-width: $lg){
+    @media (max-width: $lg) {
         justify-content: center;
     }
 
@@ -573,7 +573,7 @@ watch(getSuccessRes, () => {
 
 .btn__header {
     cursor: pointer;
-    & span {
+    & span.lk {
         font-weight: 500;
         font-size: 24px;
         line-height: 32px;
