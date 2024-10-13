@@ -4,6 +4,7 @@
             <Loader />
         </template>
         <template v-else-if="getUser?.completed_profile">
+            {{ dataNews }}
             <h1 class="font-medium text-2xl">Добавить новость</h1>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
@@ -42,7 +43,7 @@
                         {{ getErrors?.annotation }}
                     </p>
                 </div>
-                <div class="category flex justify-between items-center gap-4">
+                <div class="category flex justify-between items-start gap-4">
                     <div class="flex flex-col gap-2 w-full">
                         <label class="field__label" :class="{ error: getErrors?.category }"
                             >Категория</label
@@ -51,7 +52,7 @@
                             v-model:modelValue="dataNews.category"
                             :options="getCategory"
                             :placeholder="'Выбирите категорию'"
-                            :error="!!getErrors?.category"
+                            :error="getErrors?.category"
                         />
                         <p v-if="getErrors?.category" class="error-text">
                             {{ getErrors?.category }}
@@ -111,19 +112,18 @@
                     <img :src="getPreviewPath" alt="preview" />
                 </div>
                 <div v-if="isArticleImage === 1" class="flex flex-col gap-2">
-                    <label for="" class="text-base hidden">Картинка</label>
                     <input
+                        ref="addInputImg"
                         type="file"
                         class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600 hidden"
                         @change="onFileChange"
-                        ref="addInputImg"
                     />
 
                     <p v-if="getErrors?.file" class="error-text">
                         {{ getErrors?.file }}
                     </p>
                 </div>
-                <div v-else class="video-input flex flex-col gap-2 w-full">
+                <div v-if="isArticleImage === 2" class="video-input flex flex-col gap-2 w-full">
                     <label for="video" class="field__label" :class="{ error: getErrors?.file }"
                         >Ссылка на видеоматериал</label
                     >
@@ -142,8 +142,8 @@
             </div>
             <div
                 v-if="isArticleImage === 1"
-                @click="addImg"
                 class="file-input flex gap-2 items-center"
+                @click="addImg"
             >
                 <span>Прикрепить файл</span>
                 <img src="/image/edit-news/file.svg" alt="" />
@@ -163,12 +163,30 @@
             </div>
         </template>
         <template v-else>
-            <div class="flex flex-col gap-4">
-                <h2 class="edit__empty-profile">Для добавление статьи заполните профиль</h2>
-            </div>
-            <BtnComponent emit-name="action" class="" @action="$router.push('/lk/profile')">
-                Перейти в профиль
-            </BtnComponent>
+            <template v-if="getUser">
+                <div class="flex flex-col gap-4">
+                    <h2 class="edit__empty-profile">Для добавление статьи заполните профиль</h2>
+                </div>
+                <BtnComponent
+                    emit-name="action"
+                    class="w-fit"
+                    @action="$router.push('/lk/profile')"
+                >
+                    Перейти в профиль
+                </BtnComponent>
+            </template>
+            <template v-else>
+                <div class="flex flex-col gap-4">
+                    <h2 class="edit__empty-profile">Для добавление статьи авторизуйтесь</h2>
+                </div>
+                <BtnComponent
+                    emit-name="action"
+                    class="w-fit"
+                    @action="$router.push('/auth/login')"
+                >
+                    Авторизоваться
+                </BtnComponent>
+            </template>
         </template>
     </div>
 </template>
@@ -338,8 +356,10 @@ onMounted(() => {
 })
 
 function onFileChange(e) {
-    const file = event.target.files[0]
+    const file = e.target.files[0]
+
     if (file && file.type.startsWith('image/')) {
+        dataNews.file = file
         const reader = new FileReader()
         reader.readAsDataURL(file)
         reader.onload = (e) => {
@@ -410,6 +430,7 @@ watch(getUser, () => {
 watch(isArticleImage, (newVal) => {
     dataNews.file = null
     dataNews.video = null
+    previewImage.value = null
     if (pageType.value === 'edit' && newVal === 1) {
         previewImage.value = getArticle.value.file
     } else if (pageType.value === 'edit' && newVal === 2) {

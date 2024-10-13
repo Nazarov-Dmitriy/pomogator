@@ -148,7 +148,7 @@ watch(
     border-radius: 12px;
 
     &.error {
-        border-color: $primary-red;
+        border-color: $primary-red !important;
     }
 }
 

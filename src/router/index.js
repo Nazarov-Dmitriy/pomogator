@@ -11,7 +11,7 @@ import CabinetCertificates from '../pages/cabinet/CabinetCertificates.vue'
 import CabinetMaterials from '../pages/cabinet/CabinetMaterials.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
-import EditArticlePage from '@/pages/article/EditArticlePage.vue'
+import EditArticlePage from '@/pages/edit-material/EditArticlePage.vue'
 import WebinarPage from '@/pages/webinar/WebinarPage.vue'
 import FutureWebinar from '@/components/webinar/WebinarHeader.vue'
 import OnlineWebinar from '@/components/webinar/OnlineWebinar.vue'
@@ -116,14 +116,12 @@ const router = createRouter({
                 {
                     path: 'add',
                     name: 'add-article',
-                    component: EditArticlePage,
-                    meta: { protected: true }
+                    component: EditArticlePage
                 },
                 {
                     path: 'edit/:id',
                     name: 'edit-article',
-                    component: EditArticlePage,
-                    meta: { protected: true }
+                    component: EditArticlePage
                 }
             ]
         },
@@ -156,16 +154,16 @@ const router = createRouter({
     }
 })
 
-// router.beforeEach((to, from, next) => {
-//     if (to.matched.some((route) => route.meta.protected)) {
-//         if (localStorage.getItem('token')) {
-//             next()
-//             return
-//         }
-//         next('/')
-//     } else {
-//         next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((route) => route.meta.protected)) {
+        if (localStorage.getItem('token')) {
+            next()
+            return
+        }
+        next('/')
+    } else {
+        next()
+    }
+})
 
 export default router
