@@ -1,17 +1,16 @@
 <template>
     <div class="subscribe">
-        <div class="subscribe__container">
-            <p class="subscribe__subtile">
-                Подпишитесь на рассылку, чтобы не пропустить вебинар
-            </p>
+        <div v-if="!resultSubsribe" class="subscribe__container">
+            <p class="subscribe__subtile">Подпишитесь на рассылку, чтобы не пропустить вебинар</p>
             <div class="subscribe__block">
                 <div class="subscribe__group">
                     <div class="subscribe__email">
                         <label
                             for="email"
                             class="form-main__label"
-                            :class="{ 'error': formField.emailError }"
-                        >E-mail</label>
+                            :class="{ error: formField.emailError }"
+                            >E-mail</label
+                        >
                         <div class="form-item__group">
                             <input
                                 id="email"
@@ -21,7 +20,7 @@
                                 class="form-main-input"
                                 @input="changeEmail($event)"
                                 @keypress.enter="validateField($event, 'event')"
-                            >
+                            />
                             <span class="form-item__icon">
                                 <svg
                                     width="24"
@@ -39,76 +38,88 @@
                                         fill="#A0B1ED"
                                     />
                                 </svg>
-
                             </span>
                         </div>
-                        <div
-                            v-if="formField.emailError"
-                            class="form-main__error"
-                        >
-                            <img
-                                src="@/assets/icons/error.svg"
-                                alt="icon"
-                            >
-                            <p class="form-main__error-text">
-                                Поле заполненно некорректно
-                            </p>
+                        <div v-if="formField.emailError" class="form-main__error">
+                            <img src="@/assets/icons/error.svg" alt="icon" />
+                            <p class="form-main__error-text">Поле заполненно некорректно</p>
                         </div>
                     </div>
-                    <BtnBackgroud
-                        emit-name="subscribe"
-                        @subscribe="validateForm()"
-                    >
+                    <BtnBackgroud emit-name="subscribe" @subscribe="validateForm()">
                         Подписаться
                     </BtnBackgroud>
                 </div>
                 <div class="subscribe__policy">
-                    Нажимая кнопку “Подписаться” вы соглашаетесь с <a
-                        href=""
-                        class="subscribe__policy-link"
-                    > политикой
-                        обработки персональных данных</a>
+                    Нажимая кнопку “Подписаться” вы соглашаетесь с
+                    <a href="" class="subscribe__policy-link">
+                        политикой обработки персональных данных</a
+                    >
+                </div>
+            </div>
+        </div>
+        <div v-else class="news__success news__container">
+            <div class="news__success-wrapper">
+                <h2 class="news__success-title">
+                    {{ resultSubsribe == 'added' ? 'Ваши данные приняты' : 'Вы уже подписаны' }}
+                </h2>
+                <div class="news__success-svg">
+                    <img src="../../assets/images/main/news/success.svg" alt="" />
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
-
+import { computed, onUnmounted, reactive } from 'vue'
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import { useSubsribeStore } from '@/stores/subsribeStore'
+const subsribeStore = useSubsribeStore()
 
 const formField = reactive({
     email: '',
     emailError: false,
-    validateSubscribe: false,
+    validateSubscribe: false
 })
 
+const resultSubsribe = computed(() => {
+    return subsribeStore.getSubscribe
+})
 
-function validateField (param, event) {
-    let target;
+onUnmounted(() => {
+    subsribeStore.setSubsribe()
+})
+
+function validateField(param, event) {
+    let target
     if (event === 'event') {
-        target = param.target.value.trim();
+        target = param.target.value.trim()
     } else {
         target = param.trim()
     }
-    let email_regexp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-    !email_regexp.test(String(target).toLowerCase()) ? formField.emailError = true : formField.emailError = false;
 
-};
-
-function changeEmail (event) {
-    let target = event.target;
-    let x = target.value.match(/([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/);
-    target.value = x ? (x[1] + x[2] + x[3] + x[4] + x[5] + x[6]) : '';
-    formField.email = target.value;
-};
-
-
-function validateForm () {
-    validateField(formField.email, 'validate')
+    let email_regexp =
+        /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+    !email_regexp.test(String(target).toLowerCase())
+        ? ((formField.emailError = true), (formField.validateSubscribe = false))
+        : ((formField.emailError = false), (formField.validateSubscribe = true))
 }
 
+function changeEmail(event) {
+    let target = event.target
+    let x = target.value.match(
+        /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
+    )
+    target.value = x ? x[1] + x[2] + x[3] + x[4] + x[5] + x[6] : ''
+    formField.email = target.value
+}
+
+function validateForm() {
+    validateField(formField.email, 'validate')
+    if (formField.validateSubscribe) {
+        console.log(111)
+        subsribeStore.addSubscribe(formField.email)
+    }
+}
 </script>
 <style lang="scss">
 .subscribe {
@@ -154,7 +165,6 @@ function validateForm () {
         font-size: 20px;
         line-height: 24px;
     }
-
 }
 
 .subscribe__block {
@@ -169,14 +179,14 @@ function validateForm () {
     }
 }
 
-
 .subscribe__group {
     display: flex;
     align-items: flex-end;
     gap: 16px;
 
     @media (max-width: $sm) {
-flex-wrap: wrap;    }
+        flex-wrap: wrap;
+    }
 }
 
 .subscribe__email {
@@ -194,6 +204,32 @@ flex-wrap: wrap;    }
 
 .subscribe__policy-link {
     text-decoration: underline;
+    color: $black;
+}
+
+.news__success {
+    padding: 0;
+}
+
+.news__success-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    border: 2px solid $blue-primary;
+    border-radius: 32px;
+    padding: 24px 0;
+
+    @media (max-width: $sm) {
+        gap: 10px;
+        padding: 24px;
+    }
+}
+
+.news__success-title {
+    font-size: 24px;
+    line-height: 133%;
+    text-align: center;
     color: $black;
 }
 </style>

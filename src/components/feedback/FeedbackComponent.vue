@@ -1,24 +1,14 @@
 <template>
-    <div
-        class="news__info"
-        :class="{ sent: isEmailSent }"
-    >
-        <div
-            v-if="!formField.validateSubscribe"
-            class="news__info-wrapper"
-        >
+    <div class="news__info" :class="{ sent: isEmailSent }">
+        <div v-if="!formField.validateSubscribe" class="news__info-wrapper">
             <div class="news__text news__container">
                 Подпишитесь на рассылку, чтобы не пропустить актуальный для вас вебинар или новость
                 дня
             </div>
-            <form
-                class="news__form news__container"
-                @submit.prevent="sendMail"
-            >
-                <label
-                    :class="{ 'invalid-text': formField.emailError }"
-                    for="news__input-id"
-                >E-mail</label>
+            <form class="news__form news__container" @submit.prevent="sendMail">
+                <label :class="{ 'invalid-text': formField.emailError }" for="news__input-id"
+                    >E-mail</label
+                >
                 <div class="news__input-wrapper">
                     <div class="input-wrapper">
                         <input
@@ -29,23 +19,15 @@
                             placeholder="mariaivanova@mail.ru"
                             @input="changeEmail($event)"
                             @keypress.enter="validateField($event, 'event')"
-                        >
-                        <div
-                            v-if="formField.emailError"
-                            class="validate-danger"
-                        >
+                        />
+                        <div v-if="formField.emailError" class="validate-danger">
                             <div class="validate-svg">
-                                <img
-                                    src="../../assets/icons/main/news/validate.svg"
-                                    alt=""
-                                >
+                                <img src="../../assets/icons/main/news/validate.svg" alt="" />
                             </div>
                             <span>Поле заполненно некорректно</span>
                         </div>
                     </div>
-                    <BtnBackgroud class="news__form-button">
-                        Отправить
-                    </BtnBackgroud>
+                    <BtnBackgroud class="news__form-button"> Отправить </BtnBackgroud>
                     <p class="news__text news__form-text">
                         Нажимая кнопку “Подписаться” вы соглашаетесь с
                         <a href="#"> <span>политикой обработки персональных данных</span></a>
@@ -53,19 +35,11 @@
                 </div>
             </form>
         </div>
-        <div
-            v-if="formField.validateSubscribe"
-            class="news__success news__container"
-        >
+        <div v-if="formField.validateSubscribe" class="news__success news__container">
             <div class="news__success-wrapper">
-                <h2 class="news__success-title">
-                    Ваши данные приняты
-                </h2>
+                <h2 class="news__success-title">Ваши данные приняты</h2>
                 <div class="news__success-svg">
-                    <img
-                        src="../../assets/images/main/news/success.svg"
-                        alt=""
-                    >
+                    <img src="../../assets/images/main/news/success.svg" alt="" />
                 </div>
             </div>
         </div>
@@ -77,7 +51,6 @@ import { onMounted, reactive, ref } from 'vue'
 import BtnGradient from '../btns/BtnComponent.vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { randomArticle } from '../../db/db.js'
-import { useRouter } from 'vue-router'
 
 const props = defineProps({
     isVisible: {
@@ -88,7 +61,6 @@ const props = defineProps({
 
 const isEmailSent = ref(false)
 
-const router = useRouter()
 const atricleData = ref([])
 
 const formField = reactive({
@@ -101,7 +73,7 @@ onMounted(() => {
     atricle()
 })
 
-function atricle () {
+function atricle() {
     atricleData.value = randomArticle(null, 3)
 }
 
@@ -109,11 +81,7 @@ const sendMail = () => {
     validateForm()
 }
 
-function linkArticle (id, trend) {
-    router.push({ path: `/trend/${trend}/${id}` })
-}
-
-function validateField (param, event) {
+function validateField(param, event) {
     formField.validateSubscribe = false
     let target
     if (event === 'event') {
@@ -134,7 +102,7 @@ function validateField (param, event) {
     }
 }
 
-function changeEmail (event) {
+function changeEmail(event) {
     let target = event.target
     let x = target.value.match(
         /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
@@ -143,7 +111,7 @@ function changeEmail (event) {
     formField.email = target.value
 }
 
-function validateForm () {
+function validateForm() {
     validateField(formField.email, 'validate')
 }
 </script>

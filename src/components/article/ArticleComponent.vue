@@ -170,7 +170,6 @@ import ShareComponent from './ShareComponent.vue'
 import { useNewsStore } from '@/stores/newsStore'
 import VideoComponent from '../video/VideoComponent.vue'
 import { useUserStore } from '@/stores/userStore'
-// import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
 const props = defineProps({
     article: {

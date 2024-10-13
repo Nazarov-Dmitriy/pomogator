@@ -43,12 +43,12 @@
                 </div>
             </div>
             <div class="news__info">
-                <div v-if="!formField.validateSubscribe" class="news__info-wrapper">
+                <div v-if="!resultSubsribe" class="news__info-wrapper">
                     <div class="news__text news__container">
                         Подпишитесь на рассылку, чтобы не пропустить актуальный для вас вебинар или
                         новость дня
                     </div>
-                    <form class="news__form news__container" @submit.prevent="sendMail">
+                    <form class="news__form news__container" @submit.prevent>
                         <label
                             :class="{ 'invalid-text': formField.emailError }"
                             for="news__input-id"
@@ -75,7 +75,13 @@
                                     <span>Поле заполненно некорректно</span>
                                 </div>
                             </div>
-                            <BtnBackgroud class="news__form-button"> Отправить </BtnBackgroud>
+                            <BtnBackgroud
+                                class="news__form-button"
+                                emit-name="action"
+                                @action="sendMail()"
+                            >
+                                Отправить
+                            </BtnBackgroud>
                             <p class="news__text news__form-text">
                                 Нажимая кнопку “Подписаться” вы соглашаетесь с
                                 <a href="#">
@@ -85,9 +91,15 @@
                         </div>
                     </form>
                 </div>
-                <div v-if="formField.validateSubscribe" class="news__success news__container">
+                <div v-else class="news__success news__container">
                     <div class="news__success-wrapper">
-                        <h2 class="news__success-title">Ваши данные приняты</h2>
+                        <h2 class="news__success-title">
+                            {{
+                                resultSubsribe == 'added'
+                                    ? 'Ваши данные приняты'
+                                    : 'Вы уже подписаны'
+                            }}
+                        </h2>
                         <div class="news__success-svg">
                             <img src="../../assets/images/main/news/success.svg" alt="" />
                         </div>
@@ -99,21 +111,21 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import BtnGradient from '../btns/BtnComponent.vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { randomArticle } from '../../db/db.js'
 import { useRouter } from 'vue-router'
-
-const props = defineProps({
-    isVisible: {
-        type: Boolean,
-        default: null
-    }
-})
+import { useSubsribeStore } from '@/stores/subsribeStore'
 
 const router = useRouter()
 const atricleData = ref([])
+
+const subsribeStore = useSubsribeStore()
+
+const resultSubsribe = computed(() => {
+    return subsribeStore.getSubscribe
+})
 
 const formField = reactive({
     email: '',
@@ -125,12 +137,19 @@ onMounted(() => {
     atricle()
 })
 
+onUnmounted(() => {
+    subsribeStore.setSubsribe()
+})
+
 function atricle() {
     atricleData.value = randomArticle(null, 3)
 }
 
 const sendMail = () => {
     validateForm()
+    if (formField.validateSubscribe) {
+        subsribeStore.addSubscribe(formField.email)
+    }
 }
 
 function linkArticle(id, trend) {
