@@ -18,6 +18,7 @@ import OnlineWebinar from '@/components/webinar/OnlineWebinar.vue'
 import WebinarsComponent from '@/components/webinar/WebinarsComponent.vue'
 import WebinarsPage from '@/pages/webinar/WebinarsPage.vue'
 import CurrentWebinar from '@/pages/webinar/CurrentWebinar.vue'
+import NotFound from '@/pages/not-found/NotFound.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -140,7 +141,8 @@ const router = createRouter({
                     component: CurrentWebinar
                 }
             ]
-        }
+        },
+        { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
     ],
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {

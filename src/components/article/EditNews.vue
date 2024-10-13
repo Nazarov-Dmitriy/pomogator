@@ -4,7 +4,6 @@
             <Loader />
         </template>
         <template v-else-if="getUser?.completed_profile">
-            {{ dataNews }}
             <h1 class="font-medium text-2xl">Добавить новость</h1>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">

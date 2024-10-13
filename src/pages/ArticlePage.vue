@@ -36,11 +36,13 @@ import OtherTrend from '../components/trend/OtherTrend.vue'
 import OtherArticle from '../components/article/OtherArticle.vue'
 import Loader from '@/components/loader/Loader.vue'
 import { useUserStore } from '@/stores/userStore'
+import { useRouter } from 'vue-router'
 
 const isLoad = ref(false)
 const newsStore = useNewsStore()
 const userStore = useUserStore()
 const route = useRoute()
+const router = useRouter()
 const articleId = ref()
 const article = ref(null)
 const otherAtricle = ref([])
@@ -62,6 +64,10 @@ const getNews = computed(() => {
 
 const getUser = computed(() => {
     return userStore.getUser
+})
+
+const getErrors = computed(() => {
+    return newsStore.getErrors
 })
 
 onMounted(async () => {
@@ -131,6 +137,12 @@ watch(getUser, async () => {
         news_id: articleId.value,
         user_id: getUser.value.id
     })
+})
+
+watch(getErrors, () => {
+    if (getErrors.value === 'not found') {
+        router.push({ name: 'NotFound' })
+    }
 })
 </script>
 

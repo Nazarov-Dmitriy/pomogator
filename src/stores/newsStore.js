@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import axiosR from '@/api/http'
-
 import { reactive, ref } from 'vue'
 
 export const useNewsStore = defineStore('newsStore', {
@@ -73,13 +72,19 @@ export const useNewsStore = defineStore('newsStore', {
             }
         },
         getNewsDb(params) {
-            try {
-                axiosR.get(`/news/` + params).then((res) => {
-                    this.news = res.data
+            axiosR
+                .get(`/news/` + params)
+                .then((res) => {
+                    if (res?.status === 200) {
+                        this.news = res.data
+                    }
                 })
-            } catch (err) {
-                console.log(err)
-            }
+                .catch((err) => {
+                    if (err.status === 404) {
+                        this.errors = 'not found'
+                        console.log(this.errors)
+                    }
+                })
         },
         getLisParamstDb(param) {
             try {
