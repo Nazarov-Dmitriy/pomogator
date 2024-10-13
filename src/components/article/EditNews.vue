@@ -101,7 +101,7 @@
                 class="video-wrapper flex gap-4 justify-between items-center"
             >
                 <div class="file-dropdown flex flex-col gap-2 w-full">
-                    <label for="" class="text-base">Теги</label>
+                    <label for="" class="text-base">Добавить</label>
                     <DropdownComponent
                         v-model:modelValue="isArticleImage"
                         :options="optionArticleImageDropdown"
@@ -467,7 +467,8 @@ watch(isArticleImage, (newVal) => {
 
     :deep(.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused)) {
         border-radius: 0 0 32px 32px;
-        padding: 0 0 700px 0;
+        height: 500px;
+        padding: 10px;
         box-sizing: border-box;
         border: 2px solid #a0b1ed;
         border-top: none;
@@ -481,9 +482,10 @@ watch(isArticleImage, (newVal) => {
     }
     :deep(.ck.ck-editor__editable_inline) {
         border-radius: 0 0 32px 32px;
-        padding: 16px 0 700px 16px;
+        padding: 16px 0 0 16px;
         box-sizing: border-box;
-        transform: scale(0.99);
+        height: 500px;
+        border-top: none;
 
         @media (max-width: $sm) {
             transform: scale(0.97) translate(0, -11px);
@@ -508,13 +510,21 @@ watch(isArticleImage, (newVal) => {
     }
 }
 
+.error :deep(.ck.ck-editor__main > .ck-editor__editable:not(.ck-focused)) {
+    border: 2px solid $primary-red;
+}
+
 .article-h1 {
     font-size: 40px;
 }
 
 .preview-img {
-    width: 300px;
-    height: 300px;
+    max-width: 300px;
+    width: 100%;
+    max-height: 300px;
+    height: 100%;
+    object-fit: cover;
+    aspect-ratio: 1 / 1;
 
     img {
         width: 100%;
@@ -536,6 +546,10 @@ watch(isArticleImage, (newVal) => {
     }
 }
 
+.error :deep(.ck-toolbar__items) {
+    background: $primary-red;
+    border: 2px solid $primary-red;
+}
 .input-annotation {
     padding: 12px 16px 100px 12px;
 }
@@ -546,8 +560,14 @@ watch(isArticleImage, (newVal) => {
         width: 100%;
         border: 2px solid #a0b1ed;
         border-radius: 32px;
+        height: 48px;
         padding: 12px 16px;
+
+        @media (max-width: $lg) {
+            padding: 10px 16px;
+        }
     }
+
     :deep(.dropdown-selected-text) {
         font-weight: 400;
         font-size: 16px;
@@ -557,8 +577,21 @@ watch(isArticleImage, (newVal) => {
     :deep(.option-wrapper) {
         border: 2px solid #4360f8;
         border-radius: 24px;
-        padding: 12px 0px;
-        top: 0;
+        top: -2px;
+        width: 101%;
+    }
+    :deep(.dropdown-icon) {
+        top: 15px;
+    }
+    :deep(.option) {
+        border: none;
+        border-bottom: 1px solid #4360f8;
+        &:last-child {
+            border: none;
+        }
+        &:first-child {
+            border-top: none;
+        }
     }
 
     @media (max-width: $sm) {
@@ -569,6 +602,10 @@ watch(isArticleImage, (newVal) => {
 
 .file-wrapper {
     max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: start;
     @media (max-width: $lg) {
         max-width: 100%;
         width: 100%;
@@ -600,15 +637,31 @@ watch(isArticleImage, (newVal) => {
         width: 100%;
         border: 2px solid #a0b1ed;
         border-radius: 32px;
+        height: 48px;
         padding: 12px 16px;
-        box-sizing: border-box;
-    }
 
+        @media (max-width: $lg) {
+            padding: 10px 16px;
+        }
+    }
+    :deep(.dropdown-icon) {
+        top: 15px;
+    }
     :deep(.option-wrapper) {
         border: 2px solid #4360f8;
         border-radius: 24px;
-        padding: 12px 0px;
-        top: 0;
+        top: -2px;
+        width: 101%;
+    }
+    :deep(.option) {
+        border: none;
+        border-bottom: 1px solid #4360f8;
+        &:last-child {
+            border: none;
+        }
+        &:first-child {
+            border-top: none;
+        }
     }
     :deep(.dropdown-selected-text) {
         font-weight: 400;
@@ -619,6 +672,7 @@ watch(isArticleImage, (newVal) => {
 }
 
 .file-input {
+    width: max-content;
     & span {
         font-weight: 400;
         font-size: 12px;

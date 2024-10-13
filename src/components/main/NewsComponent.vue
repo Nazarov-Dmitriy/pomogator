@@ -442,6 +442,7 @@ function validateForm() {
     background-repeat: no-repeat;
     background-position: right 16px top 10px;
     height: 48px;
+    color: $black;
 
     &::placeholder {
         color: #a0b1ed;
