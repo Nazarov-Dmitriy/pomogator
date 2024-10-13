@@ -6,7 +6,6 @@
                 :certificate-data="currentCertificates"
                 :is-search-visible="isSearchVisible"
             />
-            <!-- <PrintCertificate :certificate-data="certificateData" /> -->
         </div>
         <PaginationComponent
             :perpage="6"
@@ -21,7 +20,6 @@ import { ref } from 'vue'
 import CertificateComponent from './CertificateComponent.vue'
 import SearchPanel from '../../searchPanel/SearchPanel.vue'
 import PaginationComponent from '../../pagination/PaginationComponent.vue'
-import PrintCertificate from './PrintCertificate.vue'
 
 const isSearchVisible = ref(false)
 

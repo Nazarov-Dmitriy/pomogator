@@ -16,7 +16,7 @@
             </div>
             <div
                 class="header"
-                :class="{ 'menu-active': menuActive, 'header__user-info': getUserInfo }"
+                :class="{ 'menu-active': menuActive, 'header__user-info': getUserInfo, lk: !getUserInfo }"
             >
                 <div class="wrapper" :class="{ lk: activeLkClass }">
                     <img
@@ -42,7 +42,10 @@
                 <div v-if="getUserInfo" class="header__user-info">
                     <HeaderUserInfo />
                 </div>
-                <div class="header__block">
+                <div
+                    class="header__block"
+                    :class="[{ lk: activeLkClass }, { 'static-btn': !getUserInfo }]"
+                >
                     <BtnComponent
                         v-if="!getUser"
                         class="btn__header"
@@ -75,7 +78,7 @@
                         class="btn__header flex gap-4 items-center"
                         @click="logout()"
                     >
-                        <span>Выход</span>
+                        <span :class="{ lk: activeLkClass }">Выход</span>
                         <img src="/image/header/exit.svg" alt="" />
                     </div>
                 </div>
@@ -279,7 +282,9 @@ watch(getSuccessRes, () => {
         &.menu-active {
             display: grid;
             @media (max-width: $sm) {
-                padding: 0 16px;
+                &.lk{
+                    grid-template-rows: 60px auto auto;
+                }
             }
         }
     }
@@ -328,7 +333,7 @@ watch(getSuccessRes, () => {
 
         position: relative;
     }
-    @media(max-width: $lg){
+    @media (max-width: $lg) {
         justify-content: center;
     }
 
@@ -470,6 +475,13 @@ watch(getSuccessRes, () => {
 
     @media (max-width: $sm) {
         flex-wrap: wrap;
+        justify-content: center;
+
+        &.lk {
+            justify-content: flex-end;
+        }
+        &.static-btn {
+        }
     }
 }
 
@@ -573,7 +585,7 @@ watch(getSuccessRes, () => {
 
 .btn__header {
     cursor: pointer;
-    & span {
+    & span.lk {
         font-weight: 500;
         font-size: 24px;
         line-height: 32px;

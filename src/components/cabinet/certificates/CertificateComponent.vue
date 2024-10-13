@@ -73,32 +73,33 @@ function generatePdf(index) {
          <div class="certificate__main-print">
                 <h2 class="certificate__title-print">Сертификат</h2>
                 <div class="certificate__info">
-                    <p class="certificate__text">Подтверждает, что</p>
+                    <p class="certificate__text-print">Подтверждает, что</p>
                     <h2 class="certificate__student-name-print">
                         ${certificate.studentData}
                     </h2>
-                    <p class="certificate__text">
+                    <p class="certificate__text-print">
                         Участвовал в вебинаре по IT технологиям для преподавателей
                     </p>
                 </div>
 
                 <div class="certificate__main-bottom">
                     <img src="/public/image/cabinet/cabinetCertificates/small-logo.svg" alt="" />
-                    <div class="span-wrapper">
+                    <div class="span-wrapper span-wrapper--print">
                         <span>Дата вебинара</span>
                         <span>${certificate.date}</span>
                     </div>
                 </div>
             </div>
     `
+
     document.body.appendChild(tempElement)
 
     const opt = {
-        margin: 0,
+        margin: [0, 0, 0, 0],
         filename: `Сертификат-${index + 1}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
     }
 
     html2pdf()
@@ -136,17 +137,6 @@ function generatePdf(index) {
     background-position: top;
 }
 
-.certificate__main-print {
-    position: relative;
-    background-image: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
-    background-position: top;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    height: 69vh;
-    width: 100%;
-}
-
 .certificate__title {
     font-family: 'Kreadon-Demi';
     font-weight: 600;
@@ -160,18 +150,7 @@ function generatePdf(index) {
     text-align: center;
     margin-bottom: 30px;
 }
-.certificate__title-print {
-    font-family: 'Kreadon-Demi';
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 117%;
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    padding-top: 17px;
-    text-align: center;
-    margin-bottom: 30px;
-}
+
 .certificate__info {
     display: flex;
     flex-direction: column;
@@ -205,26 +184,6 @@ function generatePdf(index) {
         background-color: $blue-primary;
     }
 }
-.certificate__student-name-print {
-    font-family: 'Kreadon-Demi';
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 16px;
-    color: $blue-primary;
-    text-align: center;
-    position: relative;
-    padding: 2px;
-    &::after {
-        content: '';
-        position: absolute;
-        top: 120%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 70%;
-        height: 1px;
-        background-color: $blue-primary;
-    }
-}
 
 .certificate__main-bottom {
     display: flex;
@@ -232,9 +191,9 @@ function generatePdf(index) {
     align-items: center;
     padding: 58px 52px 9px 52px;
     position: relative;
-    background-image: url('/public/image/cabinet/cabinetCertificates/certificate-bg-bottom.svg');
+    background-image: url('/public/image/cabinet/cabinetCertificates/pdf-certificate-bottom.png.svg');
     background-repeat: no-repeat;
-    background-position: 0 30px;
+    background-position: 0 0;
 }
 
 .span-wrapper {
@@ -281,5 +240,61 @@ function generatePdf(index) {
     line-height: 1.5;
     text-align: right;
     color: $blue;
+}
+
+.certificate__main-print {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px;
+    background: linear-gradient(165deg, #daebff 0%, #edf5ff 100%);
+}
+
+.certificate__title-print {
+    font-family: 'Kreadon-Demi';
+    font-weight: 600;
+    font-size: 80px;
+    text-align: center;
+    color: #4360f8;
+}
+
+.certificate__text-print {
+    font-family: 'Kreadon-Demi';
+    font-weight: 600;
+    font-size: 40px;
+    text-align: center;
+    color: black;
+}
+
+.certificate__student-name-print {
+    font-family: 'Kreadon-Demi';
+    font-weight: 600;
+    font-size: 66px;
+    color: #4360f8;
+    text-align: center;
+    position: relative;
+    padding: 2px;
+    margin-top: 20px;
+    &::after {
+        content: '';
+        position: absolute;
+        top: 120%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 70%;
+        height: 1px;
+        background-color: #4360f8;
+    }
+}
+
+.span-wrapper--print {
+    font-weight: 500;
+    font-size: 24px;
+    text-align: right;
+    color: #4360f8;
+    margin-top: 40px;
 }
 </style>

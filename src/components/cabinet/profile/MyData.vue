@@ -1,5 +1,5 @@
 <template>
-    <div class="my-data__wrapper">
+    <div class="my-data__wrapper" :class="{ 'active-favorite': isFavoriteComponent }">
         <p class="my-data__text">Мои</p>
         <DropdownComponent :options="options" placeholder="данные" @select="handleSelect" />
     </div>
@@ -7,7 +7,7 @@
 
 <script setup>
 import DropdownComponent from '@/components/dropdown/DropdownComponent.vue'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 const options = ref([
     { id: 1, name: 'данные' },
@@ -17,13 +17,29 @@ const options = ref([
 ])
 
 const selectedOption = ref(null)
+const isFavoriteComponent = ref(false)
 
 const emit = defineEmits(['select'])
 
 function handleSelect(option) {
     selectedOption.value = option.name
     emit('select', selectedOption.value)
+
+    isFavoriteComponent.value = selectedOption.value === 'избранные материалы'
 }
+
+watch(selectedOption, (newValue) => {
+    if (newValue === 'сертификаты') {
+        console.log('Компонент сертификатов активен')
+    }
+})
+
+onMounted(() => {
+    if (selectedOption.value === 'сертификаты') {
+        isFavoriteComponent.value = true
+        console.log('Сертификаты выбраны по умолчанию')
+    }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -81,10 +97,10 @@ function handleSelect(option) {
         width: max-content;
         top: 0;
 
-        @media (max-width: $lg) {
+        @media (max-width: $sm) {
             width: auto;
-            left: 0;
-            transform: translate(-30%, 0);
+            left: 50%;
+            transform: translate(-50%, 0);
         }
     }
 
@@ -104,6 +120,14 @@ function handleSelect(option) {
         &:not(:last-child) {
             border-bottom: 1px solid #4360f8;
         }
+        @media (max-width: $lg) {
+            font-size: 36px;
+            line-height: 40px;
+        }
+        @media (max-width: $sm) {
+            font-size: 30px;
+            line-height: 40px;
+        }
     }
 
     :deep(.option:first-child) {
@@ -120,8 +144,20 @@ function handleSelect(option) {
             height: 24px;
             background-image: url('/src/assets/icons/appearance.svg');
             background-size: cover;
-            background-position: center; 
+            background-position: center;
         }
+    }
+}
+
+.my-data__wrapper.active-favorite {
+    :deep(.dropdown-selected-text) {
+        @media (max-width: $sm) {
+            -webkit-line-clamp: 3;
+            text-align: center;
+        }
+    }
+    :deep(.dropdown-icon) {
+        right: 30px;
     }
 }
 .my-data__text {
