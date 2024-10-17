@@ -4,11 +4,11 @@
         <div v-if="renderList.length > 0" class="list-article">
             <div v-for="item in renderList" :key="item.id" class="card">
                 <div class="card-top">
-                    <div class="card-top__edit" @click="linkToEdit(item.id)">
+                    <div class="card-top__edit" @click="linkToEdit(item.id, item.type)">
                         <img src="@/assets/images/cabinet/cabinetProfile/edit.svg" alt="edit" />
                         <p>редактировать</p>
                     </div>
-                    <div class="card-top__delete" @click="removeArticle(item.id)">
+                    <div class="card-top__delete" @click="removeArticle(item.id, item.type)">
                         <p>удалить</p>
                         <img
                             src="@/assets/images/cabinet/cabinetProfile/bucket.png"
@@ -17,14 +17,24 @@
                         />
                     </div>
                 </div>
-                <div @click="linkArticle(item.id)">
+                <div @click="linkToMaterial(item.id, item.type)">
+                    <img
+                        v-if="item.preview_img"
+                        :src="getUrl(item.preview_img)"
+                        alt="img-card"
+                        class="card-img"
+                    />
                     <img
                         v-if="item.file"
                         :src="getUrl(item.file)"
                         alt="img-card"
                         class="card-img"
                     />
-                    <VideoComponent v-if="item.video" :src="item?.video" :preview="true" />
+                    <VideoComponent
+                        v-if="item.video && !item.preview_img"
+                        :src="item?.video"
+                        :preview="true"
+                    />
                     <div class="card-body">
                         <div class="card-contnent">
                             <div class="card-hashtags">
@@ -87,6 +97,7 @@ import { computed, ref, watch } from 'vue'
 import { defineProps } from 'vue'
 import VideoComponent from '../video/VideoComponent.vue'
 import { useNewsStore } from '@/stores/newsStore'
+import { useWebinarStore } from '@/stores/webinarStore'
 
 const modalShow = ref(false)
 
@@ -101,6 +112,7 @@ const emit = defineEmits(['remove-article'])
 
 const router = useRouter()
 const newsStore = useNewsStore()
+const webinarStore = useWebinarStore()
 
 const renderList = ref([])
 
@@ -120,19 +132,29 @@ function getRenderList(list) {
     renderList.value = list
 }
 
-function linkArticle(id) {
-    router.push(`/blog/article/${id}`)
+function linkToMaterial(id, type) {
+    if (type === 'article') {
+        router.push(`/blog/article/${id}`)
+    } else {
+        router.push(`/webinar/${id}`)
+    }
 }
 
-function linkToEdit(id) {
-    router.push(`/article/edit/${id}`)
+function linkToEdit(id, type) {
+    if (type === 'article') {
+        router.push(`/material/edit/article/${id}`)
+    } else {
+        router.push(`/material/edit/webinar/${id}`)
+    }
 }
 
-async function removeArticle(id) {
-    let res = await newsStore.removeArticle(id)
-
-    if (res) {
-        emit('remove-article')
+async function removeArticle(id, type) {
+    if (type === 'article') {
+        let resNews = await newsStore.removeArticle(id)
+        resNews && emit('remove-article')
+    } else {
+        let resWebinar = await webinarStore.removeWebinar(id)
+        resWebinar && emit('remove-article')
     }
 }
 

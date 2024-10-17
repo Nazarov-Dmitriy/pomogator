@@ -12,8 +12,7 @@
             allowFullScreen
             :class="props.className"
         ></iframe>
-        <!-- @mouseleave="mouseOver"
-            @mouseover="mouseLeave" -->
+
         <iframe
             v-if="typeLink === 'vk' && !preview"
             id="vk"
@@ -44,8 +43,7 @@
     </div>
 </template>
 <script setup>
-import { computed, onMounted, ref,  watch } from 'vue'
-// import axios from 'axios'
+import { computed, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
     src: {
@@ -87,73 +85,33 @@ const getLinkPreview = computed(() => {
     return null
 })
 
-function getTypeLink () {
+function getTypeLink() {
     if (new RegExp(/^https:\/\/rutube/).test(props.src)) {
         videoId.value = props.src.split('video/')[1].split('/')[0]
         typeLink.value = 'rutube'
-    } else if (new RegExp(/^https:\/\/vk.com/).test(props.src)) {
-        typeLink.value = 'vk'
-        videoId.value = props.src.split('video-')[1].split('%')[0]
     }
-    // console.log(props.src);
+    //  else if (new RegExp(/^https:\/\/vk.com\/video\/@id/).test(props.src)) {
+    //     videoId.value = props.src.split('=video')[1]?.split('%')[0].split('_')[0]
+    //     console.log(props.src.split('=video')[1]?.split('%')[0].split('_')[0])
+
+    //     // if()
+    //     // https://vk.com/video/@id144394519?z=video144394519_162600058%2Fpl_144394519_-2
+    //     // https://vk.com/video?z=video-29559271_456292291%2Fpl_cat_trends
+    //     // https://vk.com/video?z=video-99800441_456242091%2Fpl_cat_trends
+    //     typeLink.value = 'vk'
+    // }
+    else if (new RegExp(/^https:\/\/vk.com/).test(props.src)) {
+        typeLink.value = 'vk'
+        videoId.value = props.src.split('video-')[1]?.split('%')[0]
+    }
 }
 
-async function playerVk () {
-    // eslint-disable-next-line no-undef
-    const player = VK.VideoPlayer(document.getElementById('vk'))
-    //    await nextTick()
-    //     player.play()
-    //     player.setVolume(1)
+async function playerVk() {
+    // const player = VK.VideoPlayer(document.getElementById('vk'))
 }
-
-// async function mouseOver () {
-//     await nextTick()
-//     var player = videoRutube.value
-//     player.contentWindow.postMessage(
-//         JSON.stringify({
-//             type: 'player:pause',
-//             data: {}
-//         }),
-//         '*'
-//     )
-// }
-
-// async function mouseLeave () {
-//     await nextTick()
-//     var player = videoRutube.value
-//     console.dir(player.contentWindow.document);
-
-//     player.contentWindow.postMessage(
-//         JSON.stringify({
-//             type: 'player:play',
-//             data: {
-//                 volume: 0
-//             }
-//         }),
-//         '*'
-//     )
-// }
 
 onMounted(() => {
     getTypeLink()
-
-    // try {
-    //     axios.post(`https://api.vk.ru/method/video.get`, {
-    //         access_token: "378def6a378def6a378def6aeb349301ac3378d378def6a517ec3840a09ce5314c01aab",
-    //         owner_id: "-218772170",
-    //         videos: "-218772170_456239481"
-
-    //     }, {headers: {
-    //         'Access-Control-Allow-Origin': '*',
-    //         "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE, PUT",
-    //         "Access-Control-Allow-Headers": "Content-Type, x-requested-with",
-    //         'Access-Control-Allow-Credentials': true
-    //     }},).then((res) => {
-    //         this.newsList = []
-    //         this.newsList = [...res.data]
-    //     })
-    // } catch (err) {
-    // }
 })
 
 watch(videoVkRef, () => {

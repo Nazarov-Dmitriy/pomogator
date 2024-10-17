@@ -5,7 +5,7 @@ import { reactive, ref } from 'vue'
 export const useNewsStore = defineStore('newsStore', {
     state: () => ({
         newsList: reactive([]),
-        tags: reactive([]),
+        tags: [],
         category: reactive([]),
         categoryId: ref(),
         news: ref(null),
@@ -72,6 +72,7 @@ export const useNewsStore = defineStore('newsStore', {
             }
         },
         getNewsDb(params) {
+            this.isSuccess = false
             axiosR
                 .get(`/news/` + params)
                 .then((res) => {
@@ -209,7 +210,7 @@ export const useNewsStore = defineStore('newsStore', {
                 })
             return result
         },
-        getFNewsFavorite(id, params) {
+        getNewsFavorite(id, params) {
             axiosR
                 .get('/news/favorite/user/' + id, {
                     params: params

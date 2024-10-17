@@ -116,7 +116,6 @@ function changeEmail(event) {
 function validateForm() {
     validateField(formField.email, 'validate')
     if (formField.validateSubscribe) {
-        console.log(111)
         subsribeStore.addSubscribe(formField.email)
     }
 }

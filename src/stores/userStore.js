@@ -7,7 +7,8 @@ export const useUserStore = defineStore('userStore', {
         token: '',
         error: null,
         rigisterStepTwo: false,
-        successRes: false
+        successRes: false,
+        material: []
     }),
     getters: {
         getUser(state) {
@@ -24,6 +25,9 @@ export const useUserStore = defineStore('userStore', {
         },
         getRigisterStepTwo(state) {
             return state.rigisterStepTwo
+        },
+        getMyMaterial(state) {
+            return state.material
         }
     },
     actions: {
@@ -141,6 +145,22 @@ export const useUserStore = defineStore('userStore', {
                 })
                 .catch((err) => {
                     this.error = err.response.data
+                })
+        },
+        getMyMaterialDb(param) {
+            this.isSuccess = false
+            axiosR
+                .get('/user/material', {
+                    params: param
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                        this.material = []
+                        this.material = [...res.data]
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
                 })
         }
     }

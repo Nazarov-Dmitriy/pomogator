@@ -11,14 +11,13 @@ import CabinetCertificates from '../pages/cabinet/CabinetCertificates.vue'
 import CabinetMaterials from '../pages/cabinet/CabinetMaterials.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
-import EditArticlePage from '@/pages/edit-material/EditArticlePage.vue'
-import WebinarPage from '@/pages/webinar/WebinarPage.vue'
 import FutureWebinar from '@/components/webinar/WebinarHeader.vue'
 import OnlineWebinar from '@/components/webinar/OnlineWebinar.vue'
 import WebinarsComponent from '@/components/webinar/WebinarsComponent.vue'
 import WebinarsPage from '@/pages/webinar/WebinarsPage.vue'
 import CurrentWebinar from '@/pages/webinar/CurrentWebinar.vue'
 import NotFound from '@/pages/not-found/NotFound.vue'
+import EditMaterialPage from '@/pages/edit-material/EditMaterialPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -112,35 +111,35 @@ const router = createRouter({
             ]
         },
         {
-            path: '/article',
+            path: '/material',
             children: [
                 {
                     path: 'add',
-                    name: 'add-article',
-                    component: EditArticlePage
+                    name: 'add',
+                    component: EditMaterialPage
                 },
                 {
-                    path: 'edit/:id',
+                    path: 'edit/article/:id',
                     name: 'edit-article',
-                    component: EditArticlePage
+                    component: EditMaterialPage
+                },
+                {
+                    path: 'edit/webinar/:id',
+                    name: 'edit-webinar',
+                    component: EditMaterialPage
                 }
             ]
         },
+
         {
-            path: '/webinar',
-            component: WebinarPage,
-            children: [
-                {
-                    path: 'webinars',
-                    name: 'webinars',
-                    component: WebinarsPage
-                },
-                {
-                    path: 'current-webinar',
-                    name: 'current-webinar',
-                    component: CurrentWebinar
-                }
-            ]
+            path: '/webinars',
+            name: 'webinars',
+            component: WebinarsPage
+        },
+        {
+            path: '/webinar/:id',
+            name: 'webinar',
+            component: CurrentWebinar
         },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
     ],

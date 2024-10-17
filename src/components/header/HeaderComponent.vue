@@ -16,7 +16,11 @@
             </div>
             <div
                 class="header"
-                :class="{ 'menu-active': menuActive, 'header__user-info': getUserInfo, lk: !getUserInfo }"
+                :class="{
+                    'menu-active': menuActive,
+                    'header__user-info': getUserInfo,
+                    lk: !getUserInfo
+                }"
             >
                 <div class="wrapper" :class="{ lk: activeLkClass }">
                     <img
@@ -33,9 +37,7 @@
                             <router-link to="/blog" class="header__link"> Блог </router-link>
                         </li>
                         <li class="header__item">
-                            <router-link to="/webinar/webinars" class="header__link">
-                                Вебинар
-                            </router-link>
+                            <router-link to="/webinars" class="header__link"> Вебинар </router-link>
                         </li>
                     </ul>
                 </div>
@@ -282,7 +284,7 @@ watch(getSuccessRes, () => {
         &.menu-active {
             display: grid;
             @media (max-width: $sm) {
-                &.lk{
+                &.lk {
                     grid-template-rows: 60px auto auto;
                 }
             }

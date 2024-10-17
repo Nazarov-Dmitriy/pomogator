@@ -1,22 +1,10 @@
 <template>
     <div class="video-container">
-        <div class="video-wrapper">
-            <iframe
-                class="video"
-                src="https://www.youtube.com/embed/pFKwmEdwZZQ?autoplay=1&mute=1&loop=1&playlist=pFKwmEdwZZQ"
-                frameborder="0"
-                allow="autoplay; encrypted-media"
-                allowfullscreen
-            />
-        </div>
-        <div class="img-wrapper">
-            <img
-                class="video-prev-img"
-                src="/image/webinar/currentWebinar/video-bg.png"
-                alt="Custom Overlay Image"
-            />
-            <p class="video-text">Вебинар начнется 1 августа в 16:00 (МСК)</p>
-        </div>
+        <VideoWebinarComponent
+            :src="props.webinar?.video"
+            class-name="video-player"
+        ></VideoWebinarComponent>
+
         <div class="article__btns article__btns--webinar">
             <div class="article__raiting">
                 <button class="article__raiting-btn" @click="setLike('add')">
@@ -37,11 +25,14 @@
             </div>
             <ShareComponent :article="article" class="article__share" />
             <div
+                v-if="props.user"
                 class="article__favorites"
-                :class="{ active: favorites }"
-                @click="favorites = !favorites"
+                :class="{ active: favorites.active }"
+                @click="favoritesChange()"
             >
-                <p class="article__favorites-text">Добавить в избранное</p>
+                <p class="article__favorites-text">
+                    {{ favorites.active ? 'Удалить из избранного' : 'Добавить в избранное' }}
+                </p>
                 <svg
                     width="24"
                     height="24"
@@ -67,68 +58,110 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useNewsStore } from '@/stores/newsStore'
+import { ref, computed, reactive, watch } from 'vue'
 import ShareComponent from '../article/ShareComponent.vue'
-
-const newsStore = useNewsStore()
-const activeLike = ref(false)
+import VideoWebinarComponent from '../video/VideoWebinarComponent.vue'
+import { useWebinarStore } from '@/stores/webinarStore'
 
 const props = defineProps({
-    article: {
+    webinar: {
         type: Object,
         default: () => {}
     },
-    otherAtricle: {
+    user: {
         type: Object,
         default: () => {}
     },
-    page: {
-        type: String,
-        default: ''
+    isFavorite: {
+        type: Boolean
     }
 })
 
+const webinarStore = useWebinarStore()
+const activeLike = ref(false)
+
 const getLikes = computed(() => {
     if (!activeLike.value) {
-        return props.article?.likes
+        return props.webinar?.likes
     } else if (activeLike.value === 'add') {
-        return props.article?.likes + 1
+        return props.webinar?.likes + 1
     } else {
-        if (props.article?.likes - 1 > 0) {
-            return props.article?.likes - 1
+        if (props.webinar?.likes - 1 > 0) {
+            return props.webinar?.likes - 1
         } else {
             return 0
         }
     }
 })
+
+const favorites = reactive({
+    active: props.isFavorite ? props.isFavorite : false,
+    disabled: false
+})
+
 function setLike(param) {
     if (param === 'add') {
         if (activeLike.value !== 'add') {
             let count
 
-            if (props.article?.likes === 0) {
+            if (props.webinar?.likes === 0) {
                 count = 1
             } else {
                 count = activeLike.value === 'add' ? 2 : 1
             }
 
-            newsStore.setLike({
-                id: props.article.id,
+            webinarStore.setLike({
+                id: props.webinar.id,
                 like: count
             })
         }
         activeLike.value = 'add'
     } else {
         if (activeLike.value !== 'dis') {
-            newsStore.setLike({
-                id: props.article.id,
+            webinarStore.setLike({
+                id: props.webinar.id,
                 dislike: activeLike.value ? 2 : 1
             })
         }
         activeLike.value = 'dis'
     }
 }
+
+async function favoritesChange() {
+    if (favorites.disabled) {
+        return
+    }
+    favorites.disabled = true
+    let params = { webinar_id: props.webinar?.id, user_id: props.user?.id }
+
+    if (favorites.active) {
+        let res = await webinarStore.removeFaforite(params)
+        if (res) {
+            favorites.active = false
+            favorites.disabled = false
+        }
+        res ? (favorites.active = false) : null
+    } else {
+        let res = await webinarStore.addFaforite(params)
+        if (res) {
+            favorites.active = true
+            favorites.disabled = false
+        }
+    }
+}
+
+watch(
+    () => props.user,
+    () => {},
+    { deep: true }
+)
+
+watch(
+    () => props.isFavorite,
+    (newVal) => {
+        favorites.article = newVal
+    }
+)
 </script>
 
 <style lang="scss" scoped>

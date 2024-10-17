@@ -1,16 +1,17 @@
 <template>
-    <div class="edit flex flex-col p-10 w-full gap-4">
+    <div class="edit flex flex-col w-full gap-4">
         <template v-if="!isLoad">
             <Loader />
         </template>
         <template v-else-if="getUser?.completed_profile">
-            <h1 class="font-medium text-2xl">Добавить новость</h1>
+            <h1 class="font-medium text-2xl">
+                {{ pageType ? 'Редактировать новость' : 'Добавить новость' }}
+            </h1>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <label for="title" class="field__label" :class="{ error: getErrors?.title }"
-                        >Заголовк материала</label
+                        >Заголовок материала</label
                     >
-                    <label for="" class="text-base"></label>
                     <input
                         id="title"
                         v-model="dataNews.title"
@@ -345,8 +346,12 @@ const dataNews = reactive({
 })
 
 onMounted(() => {
-    newsStore.getTagsDb()
-    newsStore.getCategoryDb()
+    if (getTags.value.length === 0) {
+        newsStore.getTagsDb()
+    } else {
+        isLoad.value = true
+    }
+
     dataNews.author = getUser.value?.id
     if (route.name === 'edit-article') {
         pageType.value = 'edit'
@@ -356,7 +361,6 @@ onMounted(() => {
 
 function onFileChange(e) {
     const file = e.target.files[0]
-
     if (file && file.type.startsWith('image/')) {
         dataNews.file = file
         const reader = new FileReader()
@@ -394,8 +398,6 @@ function getArticleDb(id) {
     isLoad.value = false
     newsStore.getNewsDb(id)
 }
-
-isLoad.value = true
 
 watch([getTags, getCategory], () => {
     isLoad.value = true
@@ -440,9 +442,15 @@ watch(isArticleImage, (newVal) => {
 </script>
 <style lang="scss" scoped>
 .edit {
+    padding: 16px 60px;
+    box-sizing: border-box;
+
+    @media (max-width: $lg) {
+        padding: 16px 40px;
+    }
+
     @media (max-width: $sm) {
-        padding: 32px 16px;
-        box-sizing: border-box;
+        padding: 16px;
     }
 }
 
@@ -481,10 +489,11 @@ watch(isArticleImage, (newVal) => {
     }
     :deep(.ck.ck-editor__editable_inline) {
         border-radius: 0 0 32px 32px;
-        padding: 16px 0 0 16px;
+        padding: 10px;
         box-sizing: border-box;
         height: 500px;
         border-top: none;
+        margin: 0 4px;
 
         @media (max-width: $sm) {
             transform: scale(0.97) translate(0, -11px);
@@ -560,7 +569,7 @@ watch(isArticleImage, (newVal) => {
         border: 2px solid #a0b1ed;
         border-radius: 32px;
         height: 48px;
-        padding: 12px 16px;
+        padding: 10px 16px;
 
         @media (max-width: $lg) {
             padding: 10px 16px;

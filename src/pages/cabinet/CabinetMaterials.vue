@@ -7,7 +7,7 @@
     />
     <CabinetListArticle
         class="cabinet-trend__article-header"
-        :data="getNewsList"
+        :data="getMaterial"
         @remove-article="removeArticle()"
     />
     <Teleport to="body">
@@ -34,8 +34,8 @@ const getUser = computed(() => {
     return userStore.getUser
 })
 
-const getNewsList = computed(() => {
-    return newsStore.getNewsList
+const getMaterial = computed(() => {
+    return userStore.getMyMaterial
 })
 
 const getTags = computed(() => {
@@ -51,17 +51,17 @@ function setTags(id) {
 }
 
 function removeArticle() {
-    newsStore.getMyNewstDb({ id: getUser.value?.id })
+    userStore.getMyMaterialDb({ id: getUser.value?.id })
 }
 
 onMounted(() => {
     newsStore.getTagsDb()
     if (getUser.value) {
-        newsStore.getMyNewstDb({ id: getUser.value?.id })
+        userStore.getMyMaterialDb({ id: getUser.value?.id })
     }
 })
 
-watch([getNewsList, getTags], () => {
+watch([getTags, getMaterial], () => {
     setTimeout(() => {
         isLoad.value = true
     }, 500)
@@ -72,16 +72,16 @@ watch(
     (newVal) => {
         isLoad.value = false
         if (activeTags.value.length > 0) {
-            newsStore.getMyNewstDb({ id: getUser.value?.id, tags: newVal.toString() })
+            userStore.getMyMaterialDb({ id: getUser.value?.id, tags: newVal.toString() })
         } else {
-            newsStore.getMyNewstDb({ id: getUser.value?.id })
+            userStore.getMyMaterialDb({ id: getUser.value?.id })
         }
     },
     { deep: true }
 )
 
 watch(getUser, () => {
-    newsStore.getMyNewstDb({ id: getUser.value?.id })
+    userStore.getMyMaterialDb({ id: getUser.value?.id })
 })
 </script>
 <style scoped lang="scss">

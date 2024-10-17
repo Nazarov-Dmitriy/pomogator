@@ -6,6 +6,7 @@
             alt="atricle image"
             class="article__img"
         />
+        {{ article?.video }}
         <VideoComponent :src="article?.video" class-name="video-player" />
         <div class="article-layout">
             <div class="article__container">
@@ -130,12 +131,6 @@
                                     </svg>
                                 </div>
                             </div>
-                            <!-- <div class="article__download">
-                                <p class="article__download-text">
-                                    Зарегестрируйтесь, чтобы скачать материал
-                                </p>
-                                <BtnBackgroud class="article__btn"> Скачать </BtnBackgroud>
-                            </div> -->
                         </div>
                     </div>
 
@@ -193,6 +188,7 @@ const favorites = reactive({
     active: props.isFavorite ? props.isFavorite : false,
     disabled: false
 })
+
 const newsStore = useNewsStore()
 const userStore = useUserStore()
 const router = useRouter()
