@@ -24,7 +24,6 @@ const emit = defineEmits(['select'])
 function handleSelect(option) {
     selectedOption.value = option.name
     emit('select', selectedOption.value)
-
     isFavoriteComponent.value = selectedOption.value === 'избранные материалы'
 }
 

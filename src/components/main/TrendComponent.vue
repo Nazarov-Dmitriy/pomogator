@@ -93,9 +93,8 @@
             <BtnGradient
                 class="btn__proposal"
                 emit-name="offer"
-                @offer="$router.push('/article/add')"
+                @offer="$router.push('/material/add')"
             >
-                <!-- @offer="modalShow = true" -->
                 Предложить материал
             </BtnGradient>
         </div>

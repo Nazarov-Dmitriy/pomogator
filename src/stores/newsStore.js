@@ -1,12 +1,11 @@
 import { defineStore } from 'pinia'
 import axiosR from '@/api/http'
-
 import { reactive, ref } from 'vue'
 
 export const useNewsStore = defineStore('newsStore', {
     state: () => ({
         newsList: reactive([]),
-        tags: reactive([]),
+        tags: [],
         category: reactive([]),
         categoryId: ref(),
         news: ref(null),
@@ -73,13 +72,20 @@ export const useNewsStore = defineStore('newsStore', {
             }
         },
         getNewsDb(params) {
-            try {
-                axiosR.get(`/news/` + params).then((res) => {
-                    this.news = res.data
+            this.isSuccess = false
+            axiosR
+                .get(`/news/` + params)
+                .then((res) => {
+                    if (res?.status === 200) {
+                        this.news = res.data
+                    }
                 })
-            } catch (err) {
-                console.log(err)
-            }
+                .catch((err) => {
+                    if (err.status === 404) {
+                        this.errors = 'not found'
+                        console.log(this.errors)
+                    }
+                })
         },
         getLisParamstDb(param) {
             try {
@@ -204,7 +210,7 @@ export const useNewsStore = defineStore('newsStore', {
                 })
             return result
         },
-        getFNewsFavorite(id, params) {
+        getNewsFavorite(id, params) {
             axiosR
                 .get('/news/favorite/user/' + id, {
                     params: params

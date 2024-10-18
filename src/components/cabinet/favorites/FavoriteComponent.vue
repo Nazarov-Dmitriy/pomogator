@@ -1,6 +1,7 @@
 <template>
     <section class="cabinet-favorite">
         <div class="cabinet-favorite__container">
+            <CabinetTitle> Материалы</CabinetTitle>
             <SearchPanel
                 v-model="searchMyMaterialValue"
                 :is-search-visible="true"
@@ -10,7 +11,7 @@
             />
             <div class="cards">
                 <ListArticle
-                    :data="dataMyMatirial"
+                    :data="dataMyMatirialNews"
                     :is-offer-visible="false"
                     custom-btn="custom-card-btns"
                 />
@@ -20,11 +21,9 @@
                 <CabinetTitle> Вебинары</CabinetTitle>
                 <SearchPanel :is-search-visible="isSearchVisible" />
                 <ListArticle
-                    :data="[]"
+                    :data="dataMyMatirialWebinar"
                     :is-offer-visible="false"
-                    custom-article="custom-card"
-                    custom-text="custom-text-right"
-                    custom-btn="custom-card-btns"
+                    :webinar="true"
                 />
             </div>
         </div>
@@ -44,13 +43,16 @@ import ListArticle from '../../article/ListArticle.vue'
 import { useNewsStore } from '@/stores/newsStore'
 import { useUserStore } from '@/stores/userStore'
 import Loader from '@/components/loader/Loader.vue'
+import { useWebinarStore } from '@/stores/webinarStore'
 
 const newsStore = useNewsStore()
 const userStore = useUserStore()
+const webinarStore = useWebinarStore()
 const isLoad = ref(false)
 const searchMyMaterialValue = ref('')
 const activeTagsMyMaterial = ref([])
-const dataMyMatirial = ref([])
+const dataMyMatirialNews = ref([])
+const dataMyMatirialWebinar = ref([])
 
 const getUser = computed(() => {
     return userStore.getUser
@@ -60,8 +62,13 @@ const getNewsList = computed(() => {
     return newsStore.getNewsList
 })
 
+const getWebinarList = computed(() => {
+    return webinarStore.getWebinarList
+})
+
 onMounted(() => {
-    newsStore.getFNewsFavorite(getUser.value?.id)
+    newsStore.getNewsFavorite(getUser.value?.id)
+    webinarStore.getWebinarFavorite(getUser.value?.id)
 })
 
 function setTagsMyMaterial(id) {
@@ -73,7 +80,7 @@ function setTagsMyMaterial(id) {
 }
 
 function searchMyMaterial() {
-    dataMyMatirial.value = getNewsList.value.filter((el) => {
+    dataMyMatirialNews.value = getNewsList.value.filter((el) => {
         return el.title
             .toLocaleLowerCase()
             .includes(searchMyMaterialValue.value.toLocaleLowerCase())
@@ -95,13 +102,14 @@ watch(
 
 watch(searchMyMaterial, (newVal) => {
     if (newVal.trim() == '') {
-        dataMyMatirial.value = getNewsList.value
+        dataMyMatirialNews.value = getNewsList.value
     }
 })
 
-watch(getNewsList, () => {
+watch([getNewsList, getWebinarList], () => {
     isLoad.value = true
-    dataMyMatirial.value = getNewsList.value
+    dataMyMatirialNews.value = getNewsList.value
+    dataMyMatirialWebinar.value = getWebinarList.value
 })
 </script>
 

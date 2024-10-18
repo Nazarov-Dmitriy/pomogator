@@ -1,31 +1,32 @@
 <template>
     <section class="webinar">
-        <p class="article__back" @click="$router.push('/webinar/webinars')">
-            &#8592; Вернуться в "Вебинар"
-        </p>
+        <p class="article__back" @click="$router.go(-1)">&#8592; Вернуться в "Вебинар"</p>
         <div class="webinar__wrapper">
             <div class="webinar__info">
                 <h2 class="webinar__title">
-                    IT-технологии в химии: новые возможности для исследований
+                    {{ props.webinar?.title }}
                 </h2>
                 <div class="webinar__info-wrapper">
                     <p class="webinar__date">
                         Дата и время проведения
-                        <span v-if="props.webinarDate">{{ props.webinarDate }}</span>
-                        <span v-else>01.05.2024 в 16:00 (МСК)</span>
+                        <span>{{ props.webinar?.date_translation }} (МСК)</span>
                     </p>
                     <div class="webinar__tags">
-                        <span>#</span>
-                        <p class="webinar__tags-text">Химия</p>
+                        <div
+                            v-for="item in props.webinar?.tags"
+                            :key="item"
+                            class="article__tag-item"
+                        >
+                            <span class="article__tag-symbol">#</span>
+                            <p class="article__tag-text">
+                                {{ getTag(item) }}
+                            </p>
+                        </div>
                     </div>
                 </div>
                 <div class="webinar__line-bg" />
                 <p class="webinar__description">
-                    Приглашаем вас присоединиться к нашему практическому вебинару, посвященному
-                    применению IT-технологий в химии. Мы обсудим, как современные технологии
-                    открывают новые горизонты для исследований в области химии, делая процесс
-                    разработки новых материалов, лекарств и других продуктов более эффективным и
-                    точным.
+                    {{ props.webinar?.annotation }}
                 </p>
             </div>
             <div class="webinar__card">
@@ -107,14 +108,26 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import { useNewsStore } from '@/stores/newsStore'
 
 const props = defineProps({
-    webinarDate: {
-        type: String,
-        default: null
+    webinar: {
+        type: Object,
+        default: () => {}
     }
 })
+
+const newsStore = useNewsStore()
+
+const getTags = computed(() => {
+    return newsStore.getTags
+})
+
+function getTag(tag) {
+    return getTags?.value.filter((el) => el.id === tag)[0]?.name
+}
 </script>
 
 <style lang="scss" scoped>
