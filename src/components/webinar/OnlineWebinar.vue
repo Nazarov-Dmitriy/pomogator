@@ -1,3 +1,0 @@
-<template>
-    online webinar
-</template>

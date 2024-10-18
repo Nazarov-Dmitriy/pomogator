@@ -77,7 +77,7 @@
                             </li>
                             <li class="footer__list-item">
                                 <router-link
-                                    to="/webinar"
+                                    to="/webinars"
                                     class="footer__link"
                                 >
                                     Вебинар

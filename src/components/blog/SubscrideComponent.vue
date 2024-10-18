@@ -51,7 +51,11 @@
                 </div>
                 <div class="subscribe__policy">
                     Нажимая кнопку “Подписаться” вы соглашаетесь с
-                    <a href="" class="subscribe__policy-link">
+                    <a
+                        href="/public/documents/user_consultation_it.pdf"
+                        download
+                        class="subscribe__policy-link"
+                    >
                         политикой обработки персональных данных</a
                     >
                 </div>

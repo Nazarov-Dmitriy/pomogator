@@ -247,6 +247,7 @@ function updateActiveIndex(swiper) {
         border: 2px solid #5b94ea;
         aspect-ratio: 1 / 1;
         object-fit: cover;
+        max-width: 200px;
         @media (max-width: $xl) {
             width: 177px;
         }
