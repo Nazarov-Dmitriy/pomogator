@@ -3,19 +3,24 @@
         <div class="trend-about__container">
             <div class="trend-about__content">
                 <h2 class="trend-about__title">
-                    IT-технологии в преподавании химии, касается использования информационных технологий для улучшения
-                    образовательного процесса и стимуляции интереса учащихся к предмету.
+                    IT-технологии в преподавании химии, касается использования информационных
+                    технологий для улучшения образовательного процесса и стимуляции интереса
+                    учащихся к предмету.
                 </h2>
                 <img
                     src="@/assets/images/trend/description/img.svg"
                     alt="about-image"
                     class="trend-about__image"
-                >
+                />
                 <div class="trend-about__block">
                     <p class="trend-about__text">
                         Чтобы скачать материалы нужно зарегестрироваться
                     </p>
-                    <BtnBackgroud class="trend-about__btn">
+                    <BtnBackgroud
+                        emit-name="form-submit"
+                        @form-submit="$router.push('/auth/register')"
+                        class="trend-about__btn"
+                    >
                         Регистрация
                     </BtnBackgroud>
                 </div>
@@ -25,24 +30,20 @@
             src="@/assets/images/trend/description/bg.svg"
             alt="bg-image"
             class="trend-about__bg"
-        >
+        />
     </div>
 </template>
 <script setup>
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
-
-
-
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
 </script>
 <style lang="scss">
 .section-trend-about {
     position: relative;
-    background:$gradient-background;
+    background: $gradient-background;
 }
 
 .trend-about__container {
     padding: 60px 80px 136px 80px;
-
 
     @media (max-width: $lg) {
         padding: 40px;
@@ -58,14 +59,13 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     flex-direction: column;
     gap: 24px;
 
-
     @media (max-width: $sm) {
         gap: 15px;
     }
 }
 
 .trend-about__title {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 36px;
     line-height: 42px;
     width: 57.9%;
@@ -120,24 +120,24 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     }
 }
 
-.trend-about__btn{
+.trend-about__btn {
     @media (max-width: $sm) {
-                width: 100%;
+        width: 100%;
     }
 }
 
 .trend-about__bg {
     width: 101%;
     position: absolute;
-    bottom:-54px;
+    bottom: -54px;
     z-index: 0;
     left: -1px;
 
     @media (max-width: $lg) {
-        bottom:-45px;
+        bottom: -45px;
     }
     @media (max-width: $sm) {
-        bottom:0;
+        bottom: 0;
     }
 }
 </style>

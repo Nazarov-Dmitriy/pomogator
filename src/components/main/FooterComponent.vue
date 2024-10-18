@@ -240,12 +240,10 @@
     @media (max-width: $lg) {
         padding: 100px 40px 40px 40px;
         gap: 32px;
-        margin-top: 60px;
     }
 
     @media (max-width: $sm) {
-        padding: 132px 16px 40px 16px;
-        margin-top: 85px;
+        padding: 60px 16px 40px 16px;
     }
 }
 

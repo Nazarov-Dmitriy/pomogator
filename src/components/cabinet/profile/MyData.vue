@@ -154,10 +154,8 @@ onMounted(() => {
         @media (max-width: $sm) {
             -webkit-line-clamp: 3;
             text-align: center;
+            max-width: 200px;
         }
-    }
-    :deep(.dropdown-icon) {
-        right: 30px;
     }
 }
 .my-data__text {

@@ -1,30 +1,24 @@
 <template>
     <div class="cabinet-offer-material">
-        <p class="cabinet-offer-material__subtile">
-            Вы всегда можете предложить новый материал
-        </p>
+        <p class="cabinet-offer-material__subtile">Вы всегда можете предложить новый материал</p>
         <BtnBackgroud
             class="cabinet-offer-material__btn"
             emit-name="offer"
-            @offer="modalShow = true"
+            @offer="$router.push('/article/add')"
         >
             Предложить материал
         </BtnBackgroud>
     </div>
     <Teleport to="body">
-        <ModalComponent
-            :show="modalShow"
-            @close="modalShow = false"
-        />
+        <ModalComponent :show="modalShow" @close="modalShow = false" />
     </Teleport>
 </template>
 <script setup>
-import { ref } from 'vue';
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import ModalComponent from '../modal/ModalComponentMaterials.vue';
+import { ref } from 'vue'
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import ModalComponent from '../modal/ModalComponentMaterials.vue'
 
-const modalShow= ref(false)
-
+const modalShow = ref(false)
 </script>
 <style lang="scss">
 .cabinet-offer-material {
