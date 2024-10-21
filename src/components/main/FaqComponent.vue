@@ -275,7 +275,6 @@ function getCount(ind) {
     width: 100%;
     max-width: 50%;
     position: relative;
-    z-index: 1;
 
     @media (max-width: $xl) {
         max-width: 100%;
@@ -291,6 +290,7 @@ function getCount(ind) {
     top: 50%;
     transform: translate(0, -16px);
     background: $white;
+    z-index: 5;
 
     @media (max-width: $xl) {
         position: unset;
@@ -312,7 +312,10 @@ function getCount(ind) {
         line-height: 24px;
     }
 }
-
+.btn__proposal {
+    position: relative;
+    z-index: 2;
+}
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 1.5s ease;
