@@ -115,7 +115,7 @@ function generatePdf(index) {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .certificate {
     border: 2px solid $blue;
     border-radius: 24px;
@@ -232,6 +232,9 @@ function generatePdf(index) {
     gap: 36px;
     img {
         cursor: pointer;
+    }
+    :deep(.share-menu) {
+        top: 0;
     }
 }
 .certificate__data {
