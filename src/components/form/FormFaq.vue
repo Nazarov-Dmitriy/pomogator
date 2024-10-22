@@ -1,16 +1,12 @@
 <template>
     <div class="modal__form">
         <div class="form__header">
-            <h2 class="form__title">
-                Вопросы и предложения
-            </h2>
+            <h2 class="form__title">Вопросы и предложения</h2>
             <p class="form__subtitle">
-                Нам важно ваше мнение! Мы заинтересованы в качестве представленной на сайте информации.
+                Нам важно ваше мнение! Мы заинтересованы в качестве представленной на сайте
+                информации.
             </p>
-            <button
-                class="close-btn"
-                @click="$emit('close')"
-            >
+            <button class="close-btn" @click="$emit('close')">
                 <svg
                     width="24"
                     height="24"
@@ -35,18 +31,14 @@
         </div>
 
         <div class="form__body">
-            <form
-                class="form-field"
-                @submit.prevent
-                @keypress.enter.prevent
-            >
+            <form class="form-field" @submit.prevent @keypress.enter.prevent>
                 <div class="form-item form-item__name">
                     <label
                         for="name"
                         class="form-item__label"
-                        :class="{ 'error': formField.nameError }"
-                    >Как вас
-                        зовут?</label>
+                        :class="{ error: formField.nameError }"
+                        >Как вас зовут?</label
+                    >
                     <div class="form-item__group">
                         <input
                             id="name"
@@ -54,9 +46,9 @@
                             type="text"
                             placeholder="Мария Иванова"
                             class="form-item-input"
-                            :class="{ 'error': formField.nameError }"
+                            :class="{ error: formField.nameError }"
                             @keypress.enter="validateField($event, 'event', 'name')"
-                        >
+                        />
                         <span class="form-item__icon">
                             <svg
                                 width="22"
@@ -76,25 +68,18 @@
                             </svg>
                         </span>
                     </div>
-                    <div
-                        v-if="formField.nameError"
-                        class="form-item__error"
-                    >
-                        <img
-                            src="@/assets/icons/error.svg"
-                            alt="icon"
-                        >
-                        <p class="form-item__error-text">
-                            Поле заполненно некорректно
-                        </p>
+                    <div v-if="formField.nameError" class="form-item__error">
+                        <img src="@/assets/icons/error.svg" alt="icon" />
+                        <p class="form-item__error-text">Поле заполненно некорректно</p>
                     </div>
                 </div>
                 <div class="form-item form-item__phone">
                     <label
                         for="phone"
                         class="form-item__label"
-                        :class="{ 'error': formField.phoneError }"
-                    >Телефон</label>
+                        :class="{ error: formField.phoneError }"
+                        >Телефон</label
+                    >
                     <div class="form-item__group">
                         <input
                             id="phone"
@@ -102,10 +87,10 @@
                             type="text"
                             placeholder="+7 (922) 123 45 67"
                             class="form-item-input"
-                            :class="{ 'error': formField.phoneError }"
+                            :class="{ error: formField.phoneError }"
                             @input="changePhone($event)"
                             @keypress.enter="validateField($event, 'event', 'phone')"
-                        >
+                        />
                         <span class="form-item__icon">
                             <svg
                                 width="24"
@@ -121,25 +106,18 @@
                             </svg>
                         </span>
                     </div>
-                    <div
-                        v-if="formField.phoneError"
-                        class="form-item__error"
-                    >
-                        <img
-                            src="@/assets/icons/error.svg"
-                            alt="icon"
-                        >
-                        <p class="form-item__error-text">
-                            Поле заполненно некорректно
-                        </p>
+                    <div v-if="formField.phoneError" class="form-item__error">
+                        <img src="@/assets/icons/error.svg" alt="icon" />
+                        <p class="form-item__error-text">Поле заполненно некорректно</p>
                     </div>
                 </div>
                 <div class="form-item form-item__email">
                     <label
                         for="email"
                         class="form-item__label"
-                        :class="{ 'error': formField.emailError }"
-                    >E-mail</label>
+                        :class="{ error: formField.emailError }"
+                        >E-mail</label
+                    >
                     <div class="form-item__group">
                         <input
                             id="email"
@@ -147,10 +125,10 @@
                             type="text"
                             placeholder="mariaivanova@mail.ru"
                             class="form-item-input"
-                            :class="{ 'error': formField.emailError }"
+                            :class="{ error: formField.emailError }"
                             @input="changeEmail($event)"
                             @keypress.enter="validateField($event, 'event', 'email')"
-                        >
+                        />
                         <span class="form-item__icon">
                             <svg
                                 width="24"
@@ -168,76 +146,50 @@
                                     fill="#A0B1ED"
                                 />
                             </svg>
-
                         </span>
                     </div>
-                    <div
-                        v-if="formField.emailError"
-                        class="form-item__error"
-                    >
-                        <img
-                            src="@/assets/icons/error.svg"
-                            alt="icon"
-                        >
-                        <p class="form-item__error-text">
-                            Поле заполненно некорректно
-                        </p>
+                    <div v-if="formField.emailError" class="form-item__error">
+                        <img src="@/assets/icons/error.svg" alt="icon" />
+                        <p class="form-item__error-text">Поле заполненно некорректно</p>
                     </div>
                 </div>
                 <div class="form-item form-item__textarea">
                     <label
                         for="textarea"
                         class="form-item__label"
-                        :class="{ 'error': formField.textareaError }"
-                    >Ваши
-                        вопросы и предложения</label>
+                        :class="{ error: formField.textareaError }"
+                        >Ваши вопросы и предложения</label
+                    >
                     <textarea
                         id="textarea"
                         v-model="formField.textarea"
                         type="text"
                         placeholder="Напишите ваш вопрос или ваше предложение."
                         class="form-item-textearea"
-                        :class="{ 'error': formField.textareaError }"
+                        :class="{ error: formField.textareaError }"
                         @input="changeTextarea($event)"
                     />
-                    <div
-                        v-if="formField.textareaError"
-                        class="form-item__error"
-                    >
-                        <img
-                            src="@/assets/icons/error.svg"
-                            alt="icon"
-                        >
-                        <p class="form-item__error-text">
-                            Поле заполненно некорректно
-                        </p>
+                    <div v-if="formField.textareaError" class="form-item__error">
+                        <img src="@/assets/icons/error.svg" alt="icon" />
+                        <p class="form-item__error-text">Поле заполненно некорректно</p>
                     </div>
                 </div>
                 <div class="form-item form-item__upload">
-                    <label
-                        for="upload"
-                        class="form-item__label upload"
-                    >Прикрепить файл
-                        <svg
-                            class="upload-icon"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M12.7855 17.5809C12.8904 17.6854 12.9736 17.8096 13.0304 17.9463C13.0871 18.0831 13.1164 18.2297 13.1164 18.3777C13.1164 18.5258 13.0871 18.6724 13.0304 18.8092C12.9736 18.9459 12.8904 19.0701 12.7855 19.1746L12.2286 19.7315C11.1734 20.7867 9.74217 21.3795 8.24985 21.3795C6.75753 21.3795 5.32633 20.7867 4.2711 19.7315C3.21587 18.6762 2.62305 17.2451 2.62305 15.7527C2.62305 14.2604 3.21587 12.8292 4.2711 11.774L6.53235 9.51367C7.54624 8.49727 8.91039 7.907 10.3454 7.86378C11.7804 7.82055 13.1776 8.32764 14.2508 9.28117C14.3616 9.37966 14.4519 9.49901 14.5166 9.63241C14.5813 9.7658 14.619 9.91063 14.6277 10.0586C14.6364 10.2066 14.6159 10.3549 14.5673 10.4949C14.5187 10.635 14.443 10.7641 14.3445 10.8749C14.246 10.9857 14.1267 11.076 13.9933 11.1407C13.8599 11.2054 13.7151 11.2432 13.5671 11.2519C13.4191 11.2606 13.2708 11.24 13.1308 11.1915C12.9907 11.1429 12.8616 11.0672 12.7508 10.9687C12.1072 10.3971 11.2696 10.093 10.4092 10.1186C9.54884 10.1443 8.73078 10.4976 8.12235 11.1065L5.86297 13.364C5.22994 13.997 4.8743 14.8556 4.8743 15.7509C4.8743 16.6461 5.22994 17.5047 5.86297 18.1377C6.49601 18.7708 7.3546 19.1264 8.24985 19.1264C9.1451 19.1264 10.0037 18.7708 10.6367 18.1377L11.1936 17.5809C11.2981 17.4763 11.4222 17.3933 11.5587 17.3367C11.6953 17.28 11.8417 17.2509 11.9895 17.2509C12.1374 17.2509 12.2838 17.28 12.4203 17.3367C12.5569 17.3933 12.681 17.4763 12.7855 17.5809ZM19.7305 4.26836C18.6744 3.21475 17.2435 2.62305 15.7517 2.62305C14.2599 2.62305 12.8291 3.21475 11.773 4.26836L11.2161 4.82523C11.0048 5.03658 10.886 5.32322 10.886 5.62211C10.886 5.92099 11.0048 6.20764 11.2161 6.41898C11.4274 6.63033 11.7141 6.74906 12.013 6.74906C12.3119 6.74906 12.5985 6.63033 12.8098 6.41898L13.3667 5.86211C13.9998 5.22907 14.8583 4.87343 15.7536 4.87343C16.6489 4.87343 17.5074 5.22907 18.1405 5.86211C18.7735 6.49514 19.1291 7.35373 19.1292 8.24898C19.1292 9.14423 18.7735 10.0028 18.1405 10.6359L15.8802 12.8971C15.2712 13.5057 14.4527 13.8586 13.5921 13.8835C12.7315 13.9084 11.8939 13.6035 11.2508 13.0312C11.14 12.9327 11.0109 12.857 10.8708 12.8084C10.7307 12.7598 10.5825 12.7393 10.4345 12.748C10.2865 12.7567 10.1417 12.7944 10.0083 12.8591C9.87488 12.9238 9.75553 13.0141 9.65704 13.1249C9.55855 13.2357 9.48284 13.3648 9.43425 13.5049C9.38566 13.645 9.36513 13.7932 9.37384 13.9412C9.38254 14.0892 9.42031 14.234 9.48499 14.3674C9.54966 14.5008 9.63998 14.6202 9.75079 14.7187C10.8233 15.672 12.2195 16.1794 13.6538 16.137C15.0881 16.0947 16.452 15.5058 17.4664 14.4909L19.7277 12.2305C20.7825 11.1747 21.3753 9.74344 21.3758 8.25097C21.3763 6.7585 20.7846 5.32681 19.7305 4.27023V4.26836Z"
-                                fill="#5B94EA"
-                            />
-                        </svg>
-
-                    </label>
-                    <input
-                        id="upload"
-                        type="file"
-                        hidden
+                    <label for="upload" class="form-item__label upload">Прикрепить файл </label>
+                    <svg
+                        class="upload-icon"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
                     >
+                        <path
+                            d="M12.7855 17.5809C12.8904 17.6854 12.9736 17.8096 13.0304 17.9463C13.0871 18.0831 13.1164 18.2297 13.1164 18.3777C13.1164 18.5258 13.0871 18.6724 13.0304 18.8092C12.9736 18.9459 12.8904 19.0701 12.7855 19.1746L12.2286 19.7315C11.1734 20.7867 9.74217 21.3795 8.24985 21.3795C6.75753 21.3795 5.32633 20.7867 4.2711 19.7315C3.21587 18.6762 2.62305 17.2451 2.62305 15.7527C2.62305 14.2604 3.21587 12.8292 4.2711 11.774L6.53235 9.51367C7.54624 8.49727 8.91039 7.907 10.3454 7.86378C11.7804 7.82055 13.1776 8.32764 14.2508 9.28117C14.3616 9.37966 14.4519 9.49901 14.5166 9.63241C14.5813 9.7658 14.619 9.91063 14.6277 10.0586C14.6364 10.2066 14.6159 10.3549 14.5673 10.4949C14.5187 10.635 14.443 10.7641 14.3445 10.8749C14.246 10.9857 14.1267 11.076 13.9933 11.1407C13.8599 11.2054 13.7151 11.2432 13.5671 11.2519C13.4191 11.2606 13.2708 11.24 13.1308 11.1915C12.9907 11.1429 12.8616 11.0672 12.7508 10.9687C12.1072 10.3971 11.2696 10.093 10.4092 10.1186C9.54884 10.1443 8.73078 10.4976 8.12235 11.1065L5.86297 13.364C5.22994 13.997 4.8743 14.8556 4.8743 15.7509C4.8743 16.6461 5.22994 17.5047 5.86297 18.1377C6.49601 18.7708 7.3546 19.1264 8.24985 19.1264C9.1451 19.1264 10.0037 18.7708 10.6367 18.1377L11.1936 17.5809C11.2981 17.4763 11.4222 17.3933 11.5587 17.3367C11.6953 17.28 11.8417 17.2509 11.9895 17.2509C12.1374 17.2509 12.2838 17.28 12.4203 17.3367C12.5569 17.3933 12.681 17.4763 12.7855 17.5809ZM19.7305 4.26836C18.6744 3.21475 17.2435 2.62305 15.7517 2.62305C14.2599 2.62305 12.8291 3.21475 11.773 4.26836L11.2161 4.82523C11.0048 5.03658 10.886 5.32322 10.886 5.62211C10.886 5.92099 11.0048 6.20764 11.2161 6.41898C11.4274 6.63033 11.7141 6.74906 12.013 6.74906C12.3119 6.74906 12.5985 6.63033 12.8098 6.41898L13.3667 5.86211C13.9998 5.22907 14.8583 4.87343 15.7536 4.87343C16.6489 4.87343 17.5074 5.22907 18.1405 5.86211C18.7735 6.49514 19.1291 7.35373 19.1292 8.24898C19.1292 9.14423 18.7735 10.0028 18.1405 10.6359L15.8802 12.8971C15.2712 13.5057 14.4527 13.8586 13.5921 13.8835C12.7315 13.9084 11.8939 13.6035 11.2508 13.0312C11.14 12.9327 11.0109 12.857 10.8708 12.8084C10.7307 12.7598 10.5825 12.7393 10.4345 12.748C10.2865 12.7567 10.1417 12.7944 10.0083 12.8591C9.87488 12.9238 9.75553 13.0141 9.65704 13.1249C9.55855 13.2357 9.48284 13.3648 9.43425 13.5049C9.38566 13.645 9.36513 13.7932 9.37384 13.9412C9.38254 14.0892 9.42031 14.234 9.48499 14.3674C9.54966 14.5008 9.63998 14.6202 9.75079 14.7187C10.8233 15.672 12.2195 16.1794 13.6538 16.137C15.0881 16.0947 16.452 15.5058 17.4664 14.4909L19.7277 12.2305C20.7825 11.1747 21.3753 9.74344 21.3758 8.25097C21.3763 6.7585 20.7846 5.32681 19.7305 4.27023V4.26836Z"
+                            fill="#5B94EA"
+                        />
+                    </svg>
+                    <input id="upload" type="file" hidden />
                 </div>
             </form>
         </div>
@@ -245,8 +197,10 @@
         <div class="form-footer">
             <div class="form-item__submit">
                 <p class="form-item__policy">
-                    Нажимая на кнопку «Отправить», я соглашаюсь с <span class="form-item__policy-link">политикой
-                        обработки персональных данных</span>
+                    Нажимая на кнопку «Отправить», я соглашаюсь с
+                    <span class="form-item__policy-link"
+                        >политикой обработки персональных данных</span
+                    >
                 </p>
                 <BtnBackgroud
                     class="form-item__btn"
@@ -261,12 +215,12 @@
             src="@/assets/images/form/bg-material.svg"
             alt="bg-image"
             class="form-item__bg-line-tablet"
-        >
+        />
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue';
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
+import { reactive } from 'vue'
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
 defineEmits(['close'])
 
@@ -279,49 +233,56 @@ const formField = reactive({
     phoneError: false,
     emailError: false,
     textareaError: false,
-    falidateForm: false,
+    falidateForm: false
 })
 
-function validateField (param, event, nameParam) {
-    let target;
+function validateField(param, event, nameParam) {
+    let target
     if (event === 'event') {
-        target = param.target.value.trim();
+        target = param.target.value.trim()
     } else {
         target = param.trim()
     }
 
     if (nameParam === 'name') {
-        target.length < 3 ? formField.nameError = true : formField.nameError = false;
+        target.length < 3 ? (formField.nameError = true) : (formField.nameError = false)
     }
     if (nameParam === 'phone') {
-        target.length < 18 ? formField.phoneError = true : formField.phoneError = false;
+        target.length < 18 ? (formField.phoneError = true) : (formField.phoneError = false)
     }
     if (nameParam === 'email') {
-        let email_regexp = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-        !email_regexp.test(String(target).toLowerCase()) ? formField.emailError = true : formField.emailError = false;
+        let email_regexp =
+            /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
+        !email_regexp.test(String(target).toLowerCase())
+            ? (formField.emailError = true)
+            : (formField.emailError = false)
     }
     if (nameParam === 'textarea') {
-        target.length < 3 ? formField.textareaError = true : formField.textareaError = false;
+        target.length < 3 ? (formField.textareaError = true) : (formField.textareaError = false)
     }
-};
+}
 
-function changePhone (event) {
-    let target = event.target;
-    let x = target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-    x[1] = '+7';
-    target.value = !x[3] ? x[1] + '-(' + x[2] : x[1] + '-(' + x[2] + ')-' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '');
-    formField.phone = target.value;
-};
+function changePhone(event) {
+    let target = event.target
+    let x = target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/)
+    x[1] = '+7'
+    target.value = !x[3]
+        ? x[1] + '-(' + x[2]
+        : x[1] + '-(' + x[2] + ')-' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '')
+    formField.phone = target.value
+}
 
-function changeEmail (event) {
-    let target = event.target;
-    let x = target.value.match(/([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/);
-    target.value = x ? (x[1] + x[2] + x[3] + x[4] + x[5] + x[6]) : '';
-    formField.email = target.value;
-};
+function changeEmail(event) {
+    let target = event.target
+    let x = target.value.match(
+        /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
+    )
+    target.value = x ? x[1] + x[2] + x[3] + x[4] + x[5] + x[6] : ''
+    formField.email = target.value
+}
 
-function changeTextarea (event) {
-    let target = event.target;
+function changeTextarea(event) {
+    let target = event.target
     event.target.scrollBy(target.scrollHeight, 100)
 
     if (formField.textareaError && target.value.length > 3) {
@@ -329,14 +290,13 @@ function changeTextarea (event) {
     }
 }
 
-function validateForm () {
-    let validateFeildArr = ['name', 'phone', 'email', 'textarea'];
+function validateForm() {
+    let validateFeildArr = ['name', 'phone', 'email', 'textarea']
 
-    validateFeildArr.forEach(item => {
+    validateFeildArr.forEach((item) => {
         validateField(formField[item], 'validate', item)
     })
 }
-
 </script>
 <style lang="scss" scoped>
 .modal__form {
@@ -346,7 +306,6 @@ function validateForm () {
     gap: 32px;
     background: $gradient-background;
 
-        
     @media (max-width: $lg) {
         padding: 24px;
     }
@@ -364,7 +323,7 @@ function validateForm () {
 }
 
 .form__title {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 36px;
     line-height: 42px;
     color: $black;
@@ -399,19 +358,19 @@ function validateForm () {
         'name textarea'
         'phone textarea'
         'email textarea'
-        '. upload'    ;
+        '. upload';
     justify-content: space-between;
     gap: 16px 24px;
     width: 100%;
 
     @media (max-width: $lg) {
-        grid-template-columns: minmax(100px, 1fr);;
+        grid-template-columns: minmax(100px, 1fr);
         grid-template-areas:
-        'name'
-        'phone'
-        'email'
-        'textarea'
-        'upload' ;
+            'name'
+            'phone'
+            'email'
+            'textarea'
+            'upload';
     }
 }
 
@@ -421,22 +380,19 @@ function validateForm () {
 
 .form-item__phone {
     grid-area: phone;
-
 }
 
 .form-item__email {
     grid-area: email;
-
 }
 
 .form-item__textarea {
     grid-area: textarea;
-
 }
 
 .form-item__upload {
     grid-area: upload;
-
+    
 }
 
 .form-item {
@@ -454,7 +410,7 @@ function validateForm () {
     color: $black;
 
     &.error {
-        color: $primary-red
+        color: $primary-red;
     }
 }
 
@@ -486,9 +442,9 @@ function validateForm () {
         border-color: $blue-primary;
         color: $black;
 
-        &~.form-item__icon {
+        & ~ .form-item__icon {
             svg path {
-                fill: $blue-primary
+                fill: $blue-primary;
             }
         }
     }
@@ -497,8 +453,8 @@ function validateForm () {
         color: $secondary;
     }
 
-    &.error{
-        border: 2px solid $primary-red; 
+    &.error {
+        border: 2px solid $primary-red;
     }
 }
 
@@ -506,20 +462,20 @@ function validateForm () {
 .form-item-input:-webkit-autofill:hover,
 .form-item-input:-webkit-autofill:focus,
 .form-item-input:-webkit-autofill:active {
-  box-shadow: 0 0 0 30px #ffffff inset !important;
+    box-shadow: 0 0 0 30px #ffffff inset !important;
 }
 
 .form-item-input:-webkit-autofill {
-  -webkit-text-fill-color: $secondary !important;
-  font-size: 16px !important;
-  line-height: 1.5;
-  font-family: 'Inter';
+    -webkit-text-fill-color: $secondary !important;
+    font-size: 16px !important;
+    line-height: 1.5;
+    font-family: 'Inter';
 }
 .form-item-input:-webkit-autofill:focus {
-  -webkit-text-fill-color: $black !important;
-  font-size: 16px !important;
-  line-height: 1.5;
-  font-family: 'Inter';
+    -webkit-text-fill-color: $black !important;
+    font-size: 16px !important;
+    line-height: 1.5;
+    font-family: 'Inter';
 }
 
 .form-item__icon {
@@ -562,8 +518,8 @@ function validateForm () {
         min-height: 116px;
     }
 
-    &.error{
-        border: 2px solid $primary-red; 
+    &.error {
+        border: 2px solid $primary-red;
     }
 }
 
@@ -592,7 +548,7 @@ function validateForm () {
     flex: 0 1 300px;
     font-size: 12px;
     line-height: 18px;
-    color: #A8BFDC;
+    color: #a8bfdc;
     color: $blue-primary;
 
     @media (max-width: $sm) {
@@ -616,11 +572,11 @@ function validateForm () {
 }
 
 .form-item__bg-line-tablet {
-        position: absolute;
-        display: block;
-        bottom: -139px;
-        left: -68px;
-        rotate: 13deg;
+    position: absolute;
+    display: block;
+    bottom: -139px;
+    left: -68px;
+    rotate: 13deg;
 
     @media (max-width: $lg) {
         bottom: -189px;
@@ -645,21 +601,23 @@ function validateForm () {
 .form-item__error-text {
     font-size: 16px;
     line-height: 24px;
-    color: $primary-red
+    color: $primary-red;
 }
 
 .form-item__upload {
-    display: flex;
-    gap: 10px;    
+    display: grid;
+    grid-template-columns: max-content auto;
+    align-items: center;
+    gap: 10px;
 
-    .form-item__label.upload{
+    .form-item__label.upload {
         line-height: 18px;
-        color:  $blue-primary;
+        color: $blue-primary;
         font-size: 12px;
 
-        & svg{
+        & svg {
             margin-left: 10px;
         }
-    }  
+    }
 }
 </style>

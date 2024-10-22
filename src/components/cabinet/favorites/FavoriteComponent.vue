@@ -137,6 +137,14 @@ watch([getNewsList, getWebinarList], () => {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    margin-top: 60px;
+
+    @media(max-width: $lg){
+        margin-top: 40px;
+    }
+    @media(max-width: $sm){
+        margin-top: 32px;
+    }
 }
 
 .custom-card {
