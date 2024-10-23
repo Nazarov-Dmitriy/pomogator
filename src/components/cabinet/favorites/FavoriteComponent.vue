@@ -130,6 +130,10 @@ watch([getNewsList, getWebinarList], () => {
 
     :deep(.list-article) {
         grid-template-columns: repeat(2, 1fr);
+
+        @media (max-width: $sm) {
+            grid-template-columns: 1fr;
+        }
     }
 }
 .cards {
@@ -145,6 +149,13 @@ watch([getNewsList, getWebinarList], () => {
 
     :deep(.list-article) {
         grid-template-columns: repeat(3, 1fr);
+
+        @media (max-width: $lg) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        @media (max-width: $sm) {
+            grid-template-columns: 1fr;
+        }
     }
 
     @media (max-width: $lg) {
