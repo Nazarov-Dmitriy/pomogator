@@ -113,7 +113,7 @@ watch([getNewsList, getWebinarList], () => {
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .cabinet-favorite {
     padding: 60px 80px;
     @media (max-width: $lg) {
@@ -127,6 +127,10 @@ watch([getNewsList, getWebinarList], () => {
     display: flex;
     flex-direction: column;
     gap: 32px;
+
+    :deep(.list-article) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 .cards {
     display: grid;
@@ -139,10 +143,14 @@ watch([getNewsList, getWebinarList], () => {
     gap: 32px;
     margin-top: 60px;
 
-    @media(max-width: $lg){
+    :deep(.list-article) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: $lg) {
         margin-top: 40px;
     }
-    @media(max-width: $sm){
+    @media (max-width: $sm) {
         margin-top: 32px;
     }
 }

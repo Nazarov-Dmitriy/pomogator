@@ -236,13 +236,7 @@ function getTag(tag) {
     @media (max-width: $lg) {
         display: none;
 
-        &--mobile {
-            display: block;
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            z-index: 0;
-        }
+        
     }
 }
 

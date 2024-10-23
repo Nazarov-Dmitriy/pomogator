@@ -2,7 +2,6 @@
     <div class="edit flex flex-col p-10 w-full gap-4">
         <template v-if="!isLoad">
             <Loader />
-            <p>sssssssssssssssss</p>
         </template>
         <template v-else-if="getUser?.completed_profile">
             <h1 class="font-medium text-2xl">
@@ -44,7 +43,7 @@
                         {{ getErrors?.annotation }}
                     </p>
                 </div>
-                <div class="flex justify-between items-start gap-4">
+                <div class="flex flex-col md:flex-row justify-between items-start gap-4">
                     <div class="category flex flex-col gap-2 w-full">
                         <label class="field__label" :class="{ error: getErrors?.tags }">Теги</label>
                         <DropdownComponent
@@ -381,6 +380,17 @@ watch(getWebinar, () => {
         height: 48px;
         padding: 12px 16px;
 
+        &:hover,
+        &:active,
+        &:focus {
+            color: $black;
+            border: 2px solid $blue-primary;
+
+            &::placeholder {
+                color: $blue-primary;
+            }
+        }
+
         @media (max-width: $lg) {
             padding: 10px 16px;
         }
@@ -391,6 +401,19 @@ watch(getWebinar, () => {
         font-size: 16px;
         line-height: 150%;
         color: #a0b1ed;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: $blue-primary;
+        }
     }
     :deep(.option-wrapper) {
         border: 2px solid #4360f8;
@@ -526,6 +549,17 @@ watch(getWebinar, () => {
     --dp-icon-color: #a0b1ed;
     --dp-menu-min-width: 300px;
     --dp-action-row-padding: 12px 20px;
+
+    :deep(.dp__input_wrap) {
+        &:hover,
+        &:active,
+        &:focus {
+            border: 2px solid #4360f8;
+        }
+    }
+    :deep(.dp__pointer) {
+        height: 48px;
+    }
 
     &.error {
         :deep(.dp__input_wrap) {

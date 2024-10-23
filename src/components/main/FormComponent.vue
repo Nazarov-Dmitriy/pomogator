@@ -239,14 +239,14 @@ function changePhone(event) {
 function changeEmail(event) {
     let target = event.target
     let x = target.value.match(
-        /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
+        /([a-zA-Zа-яА-Я0-9._-]{1})([a-zA-Zа-яА-Я0-9._-]{0,19})([@]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,10})([.]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,5})/
     )
     target.value = x ? x[1] + x[2] + x[3] + x[4] + x[5] + x[6] : ''
     formField.email = target.value
 }
 
 function changeTextarea(event) {
-    let target = event.target
+    let target = event.targetт
     event.target.scrollBy(target.scrollHeight, 100)
 
     if (formField.textareaError && target.value.length > 3) {

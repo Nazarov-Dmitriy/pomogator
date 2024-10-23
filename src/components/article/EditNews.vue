@@ -494,10 +494,6 @@ watch(isArticleImage, (newVal) => {
         height: 500px;
         border-top: none;
         margin: 0 4px;
-
-        @media (max-width: $sm) {
-            transform: scale(0.97) translate(0, -11px);
-        }
     }
 
     .ck {
@@ -713,6 +709,13 @@ watch(isArticleImage, (newVal) => {
         font-size: 16px;
         line-height: 150%;
         color: #a0b1ed;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
 
         &:hover,
         &:active,
