@@ -131,7 +131,7 @@
                         id="video"
                         v-model="dataNews.video"
                         type="text"
-                        class="input !bg-none w-full p-2 rounded-md"
+                        class="input input-video !bg-none w-full p-2 rounded-md"
                         placeholder="видео_материал.ру"
                         :class="{ error: getErrors?.file }"
                     />
@@ -494,10 +494,6 @@ watch(isArticleImage, (newVal) => {
         height: 500px;
         border-top: none;
         margin: 0 4px;
-
-        @media (max-width: $sm) {
-            transform: scale(0.97) translate(0, -11px);
-        }
     }
 
     .ck {
@@ -571,6 +567,10 @@ watch(isArticleImage, (newVal) => {
         height: 48px;
         padding: 10px 16px;
 
+        &:hover {
+            border: 2px solid #4360f8;
+        }
+
         @media (max-width: $lg) {
             padding: 10px 16px;
         }
@@ -581,6 +581,12 @@ watch(isArticleImage, (newVal) => {
         font-size: 16px;
         line-height: 150%;
         color: #a0b1ed;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: $blue-primary;
+        }
     }
     :deep(.option-wrapper) {
         border: 2px solid #4360f8;
@@ -628,6 +634,8 @@ watch(isArticleImage, (newVal) => {
     }
 }
 
+.text-base {
+}
 .link {
     border: 2px solid #a0b1ed;
     border-radius: 32px;
@@ -637,6 +645,24 @@ watch(isArticleImage, (newVal) => {
     font-size: 16px;
     line-height: 150%;
     color: #a0b1ed;
+
+    &::placeholder {
+        color: $blue;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        border: 2px solid $blue-primary;
+        color: $black;
+
+        &::placeholder {
+            color: $blue-primary;
+        }
+    }
 }
 
 .file-dropdown {
@@ -648,8 +674,11 @@ watch(isArticleImage, (newVal) => {
         height: 48px;
         padding: 12px 16px;
 
-        @media (max-width: $lg) {
-            padding: 10px 16px;
+        &:hover,
+        &:active,
+        &:focus {
+            border: 2px solid $blue-primary;
+            color: $blue-primary;
         }
     }
     :deep(.dropdown-icon) {
@@ -660,10 +689,14 @@ watch(isArticleImage, (newVal) => {
         border-radius: 24px;
         top: -2px;
         width: 101%;
+        color: black;
     }
     :deep(.option) {
         border: none;
         border-bottom: 1px solid #4360f8;
+        &:hover {
+            color: #4360f8;
+        }
         &:last-child {
             border: none;
         }
@@ -676,6 +709,19 @@ watch(isArticleImage, (newVal) => {
         font-size: 16px;
         line-height: 150%;
         color: #a0b1ed;
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        &:hover,
+        &:active,
+        &:focus {
+            color: $blue-primary;
+        }
     }
 }
 
@@ -686,6 +732,18 @@ watch(isArticleImage, (newVal) => {
         font-size: 12px;
         line-height: 150%;
         color: #4360f8;
+    }
+}
+
+.input-video {
+    &:hover,
+    &:active,
+    &:focus {
+        color: $blue-primary;
+
+        &::placeholder {
+            color: $blue-primary;
+        }
     }
 }
 

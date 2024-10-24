@@ -50,6 +50,8 @@
                                     <p class="faq__answer-text">
                                         {{ item.answer }}
                                         <BtnBackgroud
+                                            emit-name="link"
+                                            @link="$router.push('/auth/register')"
                                             class="webinar__info-button"
                                             style="margin-top: 10px"
                                         >
@@ -63,9 +65,9 @@
                                     </p>
                                     <BtnComponent
                                         class="btn__proposal"
-                                        emit-name="offer"
+                                        emit-name="action"
+                                        @action="$router.push('/material/add')"
                                         style="margin-top: 10px"
-                                        @offer="modalShow = true"
                                     >
                                         Предложить материал
                                     </BtnComponent>
@@ -288,6 +290,7 @@ function getCount(ind) {
     top: 50%;
     transform: translate(0, -16px);
     background: $white;
+    z-index: 5;
 
     @media (max-width: $xl) {
         position: unset;
@@ -309,7 +312,10 @@ function getCount(ind) {
         line-height: 24px;
     }
 }
-
+.btn__proposal {
+    position: relative;
+    z-index: 2;
+}
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 1.5s ease;

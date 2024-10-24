@@ -1,9 +1,7 @@
 <template>
     <CertificatesComponent />
-    <FooterComponent />
 </template>
 <script setup>
-import FooterComponent from '@/components/main/FooterComponent.vue'
 import CertificatesComponent from '@/components/cabinet/certificates/CertificatesComponent.vue'
 </script>
 <style scoped lang="scss">

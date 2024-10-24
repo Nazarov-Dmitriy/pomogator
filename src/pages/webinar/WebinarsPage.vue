@@ -15,13 +15,9 @@
                 :is-offer-visible="false"
                 :search="searchValue"
                 :webinar="true"
-                custom-article="custom-card"
-                custom-text="custom-text-right"
-                custom-btn="custom-card-btns"
             />
         </div>
         <SubscrideComponent />
-
         <Teleport to="body">
             <template v-if="!isLoad">
                 <Loader />
@@ -102,6 +98,10 @@ watch([getWebinarList, getTags], () => {
 <style scoped lang="scss">
 .webinar__main {
     padding: 60px 80px;
+
+    :deep(.list-article){
+        grid-template-columns: repeat(3, 1fr);
+    }
     @media (max-width: $lg) {
         padding: 40px;
     }

@@ -1,9 +1,7 @@
 <template>
     <section class="teachers">
         <div class="teachers__container">
-            <h2 class="teachers__title">
-                Преподаватели
-            </h2>
+            <h2 class="teachers__title">Преподаватели</h2>
             <swiper
                 ref="swiperRef"
                 class="teachers__slider"
@@ -13,18 +11,15 @@
                 :navigation="navigationOptions"
                 @slide-change="updateActiveIndex"
             >
-                <swiper-slide
-                    v-for="(teacher, index) in teachers"
-                    :key="index"
-                >
+                <swiper-slide v-for="(teacher, index) in teachers" :key="index">
                     <div class="teachers__info">
                         <div class="teachers__info-description">
                             <div class="teachers__info-img-wrapper">
                                 <img
                                     class="teachers__info-img"
-                                    :src="getPath(teacher.image)"
+                                    :src="teacher.image"
                                     :alt="`Image of ${teacher.name}`"
-                                >
+                                />
                             </div>
                             <div
                                 class="teachers__info-description-wrapper teachers__info-description-wrapper--left"
@@ -39,21 +34,15 @@
                             <div
                                 class="teachers__info-description-wrapper teachers__info-description-wrapper--right"
                             >
-                                <p class="teachers__info-text">
-                                    Опыт работы
-                                </p>
+                                <p class="teachers__info-text">Опыт работы</p>
                                 <p class="teachers__info-text">
                                     {{ teacher.experience }}
                                 </p>
-                                <p class="teachers__info-text">
-                                    Место работы
-                                </p>
+                                <p class="teachers__info-text">Место работы</p>
                                 <p class="teachers__info-text">
                                     {{ teacher.workplace }}
                                 </p>
-                                <p class="teachers__info-text">
-                                    Должность
-                                </p>
+                                <p class="teachers__info-text">Должность</p>
                                 <p class="teachers__info-text">
                                     {{ teacher.position }}
                                 </p>
@@ -75,33 +64,27 @@
                                     class="teacher__info-slider-btn teacher__info-slider-btn--left"
                                     src="@/assets/images/about/teacher/slider-button.svg"
                                     alt="slider button"
-                                >
+                                />
                                 <img
                                     class="teacher__info-slider-btn teacher__info-slider-btn--right"
                                     src="@/assets/images/about/teacher/slider-button.svg"
                                     alt="slider button"
-                                >
+                                />
                             </div>
                             <div class="teachers__info-topic">
-                                <h2 class="teachers__info-topic-title">
-                                    Образование:
-                                </h2>
+                                <h2 class="teachers__info-topic-title">Образование:</h2>
                                 <p class="teachers__info-topic-text">
                                     {{ teacher.education }}
                                 </p>
                             </div>
                             <div class="teachers__info-topic">
-                                <h2 class="teachers__info-topic-title">
-                                    Профессиональные навыки:
-                                </h2>
+                                <h2 class="teachers__info-topic-title">Профессиональные навыки:</h2>
                                 <p class="teachers__info-topic-text">
                                     {{ teacher.skills }}
                                 </p>
                             </div>
                             <div class="teachers__info-topic">
-                                <h2 class="teachers__info-topic-title">
-                                    Достижения:
-                                </h2>
+                                <h2 class="teachers__info-topic-title">Достижения:</h2>
                                 <p class="teachers__info-topic-text">
                                     {{ teacher.achievements }}
                                 </p>
@@ -143,7 +126,7 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: 'teacher-hero.png'
+        image: '/image/about/teacher/teacherPhoto1.png'
     },
     {
         name: 'Иванов Михаил Дмитриевич',
@@ -156,7 +139,7 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: '/teacher-hero.png'
+        image: '/image/about/teacher/teacherPhoto1.png'
     },
     {
         name: 'Иванов Михаил Дмитриевич',
@@ -169,13 +152,13 @@ const teachers = ref([
         skills: 'Применение IT-технологий в обучении химии, разработка интерактивных заданий и тестов, организация проектной деятельности с использованием цифровых ресурсов',
         achievements:
             'Победитель конкурса «Учитель года» в номинации «Использование IT-технологий в образовании», автор методических разработок по применению IT-технологий в обучении химии',
-        image: 'teacher-hero.png'
+        image: '/image/about/teacher/teacherPhoto1.png'
     }
 ])
 
-function getPath (img){
-    return new URL("image/teacher/" + img, import.meta.url).href
-}
+// function getPath (img){
+//     return new URL("image/teacher/" + img, import.meta.url).href
+// }
 
 const activeIndex = ref(0)
 
@@ -184,7 +167,7 @@ const navigationOptions = {
     prevEl: '.teacher__info-slider-btn--left'
 }
 
-function updateActiveIndex (swiper) {
+function updateActiveIndex(swiper) {
     activeIndex.value = swiper.activeIndex % teachers.value.length
 }
 </script>
@@ -260,6 +243,11 @@ function updateActiveIndex (swiper) {
     left: -22px;
 
     img {
+        border-radius: 100%;
+        border: 2px solid #5b94ea;
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
+        max-width: 200px;
         @media (max-width: $xl) {
             width: 177px;
         }

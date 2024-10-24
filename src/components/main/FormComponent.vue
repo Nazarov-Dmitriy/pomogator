@@ -359,9 +359,6 @@ function validateForm() {
 
     @media (max-width: $sm) {
         padding: 24px 16px;
-        width: calc(100%);
-        left: -18px;
-        border-radius: 0;
     }
 }
 
@@ -584,7 +581,7 @@ function validateForm() {
 
 .form-main__btn {
     @media (max-width: $sm) {
-        width: 288px;
+        width: 100%;
     }
 }
 

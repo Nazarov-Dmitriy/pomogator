@@ -1,16 +1,11 @@
 <template>
     <section class="task">
         <div class="task__bg">
-            <img
-                src="/src/assets/images/trend/description/bg.svg"
-                alt=""
-            >
+            <img src="/src/assets/images/trend/description/bg.svg" alt="" />
         </div>
         <div class="task__wrapper">
             <div class="task__info">
-                <h2 class="task__info-title">
-                    Задачи и польза проекта
-                </h2>
+                <h2 class="task__info-title">Задачи и польза проекта</h2>
                 <ul class="task__info-list">
                     <li class="task__info-list-item">
                         Повышение цифровой компетентности педагогов, что позволит им эффективно
@@ -33,17 +28,19 @@
                     </li>
                 </ul>
 
-                <span class="task__info-text">Чтобы скачать материалы нужно зарегестрироваться</span>
-                <BtnBackgroud class="task__info-btn">
+                <span class="task__info-text"
+                    >Чтобы скачать материалы нужно зарегестрироваться</span
+                >
+                <BtnBackgroud
+                    emit-name="form-submit"
+                    @form-submit="$router.push('/auth/register')"
+                    class="task__info-btn"
+                >
                     Регистрация
                 </BtnBackgroud>
             </div>
             <div class="task__img-wrapper">
-                <img
-                    src="../../assets/images/about/tasks/tasks-img.png"
-                    alt=""
-                    class="task__img"
-                >
+                <img src="../../assets/images/about/tasks/tasks-img.png" alt="" class="task__img" />
             </div>
         </div>
     </section>
@@ -109,7 +106,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     color: $black;
     position: static;
     z-index: 1;
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
 
     @media (max-width: $lg) {
         font-size: 32px;

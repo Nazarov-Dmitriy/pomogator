@@ -5,7 +5,7 @@
                 src="../../assets/images/about/become/become-bg.png"
                 alt=""
                 class="become__background-img"
-            >
+            />
         </div>
         <div class="become__wrapper">
             <h2 class="become__title">
@@ -17,7 +17,11 @@
                 материалам, онлайн-консультациям экспертов и сети единомышленников, которые меняют
                 образование.
             </p>
-            <BtnBackground class="become__button">
+            <BtnBackground
+                emit-name="link"
+                @link="$router.push('/auth/register')"
+                class="become__button"
+            >
                 Регистрация
             </BtnBackground>
         </div>
@@ -71,7 +75,7 @@ import BtnBackground from '../btns/BtnBackgroud.vue'
     text-align: center;
     position: static;
     z-index: 2;
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
 
     @media (max-width: $lg) {
         font-size: 32px;

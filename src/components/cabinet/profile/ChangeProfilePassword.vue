@@ -1,10 +1,8 @@
 <template>
     <div class="profile__change">
-        <h2 class="profile__change-title">
-            Смена пароля
-        </h2>
+        <h2 class="profile__change-title">Смена пароля</h2>
         <form
-            class=" profile__change-form"
+            class="profile__change-form"
             @submit.prevent
             @keypress.enter.prevent="checkPasswordLength"
         >
@@ -15,7 +13,7 @@
                     :type="isOldPasswordVisible ? 'text' : 'password'"
                     class="profile__change-input"
                     placeholder="Введите старый пароль"
-                >
+                />
                 <img
                     v-if="oldPassword.length"
                     class="profile__change-input-img"
@@ -26,10 +24,10 @@
                     "
                     alt=""
                     @click="toggleOldPasswordVisibility"
-                >
+                />
 
                 <p>{{ getError?.password }}</p>
-                <p>{{ oldPasswordError ? "Длина пароля меньше 8 символов" : "" }}</p>
+                <p>{{ oldPasswordError ? 'Длина пароля меньше 8 символов' : '' }}</p>
             </div>
             <div class="profile__change-input-group">
                 <label class="profile__change-label">Новый пароль</label>
@@ -38,7 +36,7 @@
                     :type="isNewPasswordVisible ? 'text' : 'password'"
                     class="profile__change-input"
                     placeholder="Введите новый пароль"
-                >
+                />
                 <img
                     v-if="newPassword.length"
                     class="profile__change-input-img"
@@ -49,11 +47,8 @@
                     "
                     alt=""
                     @click="toggleNewPasswordVisibility"
-                >
-                <div
-                    v-if="isCorrectPassword === false"
-                    class="error"
-                >
+                />
+                <div v-if="isCorrectPassword === false" class="error">
                     <svg
                         width="20"
                         height="20"
@@ -79,7 +74,7 @@
                     :type="isRepeatedPasswordVisible ? 'text' : 'password'"
                     class="profile__change-input"
                     placeholder="Введите новый пароль еще раз"
-                >
+                />
                 <img
                     v-if="repeatNewPassword"
                     class="profile__change-input-img"
@@ -90,18 +85,15 @@
                     "
                     alt=""
                     @click="toggleRepeatedPasswordVisibility"
-                >
+                />
                 <img
                     v-else-if="type === 'password'"
                     class="profile__change-input-img"
                     src="/public/image/cabinet/cabinetProfile/password-visible.svg"
                     alt=""
                     @click="toggleRepeatedPasswordVisibility"
-                >
-                <div
-                    v-if="isPasswordEqual"
-                    class="error"
-                >
+                />
+                <div v-if="isPasswordEqual" class="error">
                     <p>Пароли не совпадают</p>
                 </div>
             </div>
@@ -121,7 +113,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
-import { useUserStore } from '@/stores/userStore';
+import { useUserStore } from '@/stores/userStore'
 import BtnBackgroud from '../../btns/BtnBackgroud.vue'
 
 const userStore = useUserStore()
@@ -134,8 +126,6 @@ const newPassword = ref('')
 const repeatNewPassword = ref('')
 const oldPasswordError = ref(false)
 
-
-
 const isNewPasswordVisible = ref(false)
 const isOldPasswordVisible = ref(false)
 const isRepeatedPasswordVisible = ref(false)
@@ -144,23 +134,22 @@ const getError = computed(() => {
     return userStore.getError
 })
 
-
-function toggleNewPasswordVisibility () {
+function toggleNewPasswordVisibility() {
     isNewPasswordVisible.value = !isNewPasswordVisible.value
 }
-function toggleOldPasswordVisibility () {
+function toggleOldPasswordVisibility() {
     isOldPasswordVisible.value = !isOldPasswordVisible.value
 }
-function toggleRepeatedPasswordVisibility () {
+function toggleRepeatedPasswordVisibility() {
     isRepeatedPasswordVisible.value = !isRepeatedPasswordVisible.value
 }
 
-function validatePassword (password) {
+function validatePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/
     return regex.test(password)
 }
 
-function checkPasswordEqual () {
+function checkPasswordEqual() {
     if (newPassword.value === repeatNewPassword.value) {
         isPasswordEqual.value = true
     } else {
@@ -168,27 +157,28 @@ function checkPasswordEqual () {
     }
 }
 
-function validateForm (){   
-    if (validatePassword(newPassword.value) ) {
+function validateForm() {
+    if (validatePassword(newPassword.value)) {
         isCorrectPassword.value = true
-    }else{
+    } else {
         isCorrectPassword.value = false
     }
 
     if (oldPassword.value.length >= 8) {
         oldPasswordError.value = false
-    }else{
+    } else {
         oldPasswordError.value = true
     }
-    checkPasswordEqual();
-
-
+    checkPasswordEqual()
 }
 
-function checkPasswordLength () {
-    validateForm();
-    if(isCorrectPassword.value && !oldPasswordError.value && isPasswordEqual.value){
-        userStore.userChangePassword({password: oldPassword.value, new_password: newPassword.value})
+function checkPasswordLength() {
+    validateForm()
+    if (isCorrectPassword.value && !oldPasswordError.value && isPasswordEqual.value) {
+        userStore.userChangePassword({
+            password: oldPassword.value,
+            new_password: newPassword.value
+        })
         isCorrectPassword.value = true
         oldPasswordError.value = false
         isPasswordEqual.value = null
@@ -309,13 +299,17 @@ const isFormValid = computed(() => {
         padding: 0;
     }
 
-    &:focus {
+    &:focus,
+    &:active {
         border-color: $blue-primary;
         color: $black;
     }
 
     &:hover {
         border-color: $blue-primary;
+        &::placeholder {
+            color: $blue-primary;
+        }
     }
 
     &.error {

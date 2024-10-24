@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import BtnBackgroud from '../btns/BtnBackgroud.vue'
-</script>
-
 <template>
     <section class="webinars">
         <div class="webinars__wrapper">
@@ -19,7 +15,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                 <p class="webinars__subtitle">
                     Чтобы участвовать в вебинаре нужно зарегестрироваться
                 </p>
-                <div class="webinars__btn-wrapper">
+                <div v-if="!userStore.getUser"class="webinars__btn-wrapper">
                     <BtnBackgroud
                         class="webinars__btn -my-2"
                         emit-name="form-submit"
@@ -40,7 +36,12 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
         </div>
     </section>
 </template>
+<script setup>
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import { useUserStore } from '@/stores/userStore'
 
+const userStore = useUserStore()
+</script>
 <style lang="scss" scoped>
 .webinars {
     padding: 60px 80px;
@@ -54,11 +55,10 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     }
 
     @media (max-width: $sm) {
-        padding: 32px 16px;
+        padding: 32px 16px 60px 16px;
     }
 }
-.webinars__bg {
-}
+
 .webinars__wrapper {
     display: flex;
     justify-content: space-between;
@@ -72,6 +72,10 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
 .webinars__info {
     position: relative;
     z-index: 1;
+
+    @media (max-width: $sm) {
+        gap: 16px;
+    }
 }
 .webinars__title {
     font-family: 'Kreadon-Demi';

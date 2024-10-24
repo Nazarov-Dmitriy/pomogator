@@ -4,7 +4,7 @@
         <BtnBackgroud
             class="cabinet-offer-material__btn"
             emit-name="offer"
-            @offer="modalShow = true"
+            @offer="$router.push('/material/add')"
         >
             Предложить материал
         </BtnBackgroud>
