@@ -3,7 +3,7 @@ import axiosR from '@/api/http'
 
 export const useSendMessageStore = defineStore('sendMessageStore', {
     state: () => ({
-        status: 200,
+        status: null,
         errors: null
     }),
     getters: {

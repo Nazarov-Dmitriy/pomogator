@@ -294,10 +294,7 @@ onUnmounted(() => {
 
 function validateField(param, event, nameParam) {
     let target
-function validateField(param, event, nameParam) {
-    let target
     if (event === 'event') {
-        target = param.target.value.trim()
         target = param.target.value.trim()
     } else {
         target = param.trim()
@@ -305,18 +302,11 @@ function validateField(param, event, nameParam) {
 
     if (nameParam === 'name') {
         target.length < 3 ? (formField.nameError = true) : (formField.nameError = false)
-        target.length < 3 ? (formField.nameError = true) : (formField.nameError = false)
     }
     if (nameParam === 'phone') {
         target.length < 18 ? (formField.phoneError = true) : (formField.phoneError = false)
-        target.length < 18 ? (formField.phoneError = true) : (formField.phoneError = false)
     }
     if (nameParam === 'email') {
-        let email_regexp =
-            /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
-        !email_regexp.test(String(target).toLowerCase())
-            ? (formField.emailError = true)
-            : (formField.emailError = false)
         let email_regexp =
             /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/
         !email_regexp.test(String(target).toLowerCase())
@@ -348,15 +338,6 @@ function changePhone(event) {
         : x[1] + '-(' + x[2] + ')-' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '')
     formField.phone = target.value
 }
-function changePhone(event) {
-    let target = event.target
-    let x = target.value.replace(/\D/g, '').match(/(\d{0,1})(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/)
-    x[1] = '+7'
-    target.value = !x[3]
-        ? x[1] + '-(' + x[2]
-        : x[1] + '-(' + x[2] + ')-' + x[3] + (x[4] ? '-' + x[4] : '') + (x[5] ? '-' + x[5] : '')
-    formField.phone = target.value
-}
 
 function changeEmail(event) {
     let target = event.target
@@ -367,8 +348,6 @@ function changeEmail(event) {
     formField.email = target.value
 }
 
-function changeTextarea(event) {
-    let target = event.target
 function changeTextarea(event) {
     let target = event.target
     event.target.scrollBy(target.scrollHeight, 100)
@@ -392,7 +371,6 @@ function onFileChange(e) {
 function validateForm() {
     let validateFeildArr = ['name', 'phone', 'email', 'question']
 
-    validateFeildArr.forEach((item) => {
     validateFeildArr.forEach((item) => {
         validateField(formField[item], 'validate', item)
     })
