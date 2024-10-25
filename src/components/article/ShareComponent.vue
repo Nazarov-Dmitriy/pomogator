@@ -180,6 +180,7 @@ onMounted(() => {
     border-radius: 16px;
     min-width: 379px;
     display: flex;
+    width: max-content;
 
     @media (max-width: $xl) {
         left: 0;

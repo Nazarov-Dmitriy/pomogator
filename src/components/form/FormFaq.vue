@@ -270,7 +270,7 @@
     </div>
 </template>
 <script setup>
-import { onMounted, onUnmounted, computed, onUnmounted, reactive } from 'vue'
+import { onMounted, onUnmounted, computed, reactive } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { useSendMessageStore } from '@/stores/sendMessageStore'
 
