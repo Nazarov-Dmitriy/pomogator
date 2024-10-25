@@ -134,7 +134,14 @@
             <div class="policy">
                 <p class="policy__text">
                     Нажимая на кнопку «Отправить», я соглашаюсь с
-                    <span>политикой обработки персональных данных</span>
+                    <span>
+                        <a
+                            href="/public/documents/user_consultation_it.pdf"
+                            download="/public/documents/user_consultation_it.pdf"
+                        >
+                            политикой обработки персональных данных</a
+                        >
+                    </span>
                 </p>
             </div>
             <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
@@ -513,8 +520,15 @@ watch(getWebinar, () => {
 }
 
 .file-input {
-    color: #4360f8;
+    color: #a0b1ed;
     width: max-content;
+    cursor: pointer;
+
+    &:hover {
+        & span {
+            color: $blue-primary;
+        }
+    }
 
     &.error {
         color: $primary-red;

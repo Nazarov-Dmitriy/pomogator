@@ -198,8 +198,13 @@
             <div class="form-item__submit">
                 <p class="form-item__policy">
                     Нажимая на кнопку «Отправить», я соглашаюсь с
-                    <span class="form-item__policy-link"
-                        >политикой обработки персональных данных</span
+                    <span class="form-item__policy-link">
+                        <a
+                            href="/public/documents/user_consultation_it.pdf"
+                            download="/public/documents/user_consultation_it.pdf"
+                        >
+                            политикой обработки персональных данных</a
+                        ></span
                     >
                 </p>
                 <BtnBackgroud
@@ -219,7 +224,7 @@
     </div>
 </template>
 <script setup>
-import { reactive } from 'vue'
+import { onMounted, onUnmounted, reactive } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
 defineEmits(['close'])
@@ -281,7 +286,6 @@ function changeEmail(event) {
     formField.email = target.value
 }
 
-
 function changeTextarea(event) {
     let target = event.target
     event.target.scrollBy(target.scrollHeight, 100)
@@ -298,8 +302,19 @@ function validateForm() {
         validateField(formField[item], 'validate', item)
     })
 }
+
+onMounted(() => {
+    document.body.classList.add('no-scroll')
+})
+onUnmounted(() => {
+    document.body.classList.remove('no-scroll')
+})
 </script>
 <style lang="scss" scoped>
+.no-scroll {
+    overflow: hidden;
+}
+
 .modal__form {
     padding: 32px;
     display: flex;
