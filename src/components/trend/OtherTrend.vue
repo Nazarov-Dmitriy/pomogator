@@ -1,12 +1,6 @@
 <template>
-    <div
-        class="other-trends"
-        :class="{ 'sidebar': position == 'sidebar' }"
-    >
-        <h2
-            v-if="position !== 'sidebar'"
-            class="other-trends__title"
-        >
+    <div class="other-trends" :class="{ sidebar: position == 'sidebar' }">
+        <h2 v-if="position !== 'sidebar'" class="other-trends__title">
             Вам могут понравиться другие направления
         </h2>
         <div class="other-trend__list">
@@ -31,10 +25,10 @@
     </div>
 </template>
 <script setup>
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import IconOtherTrend from './IconOtherTrend.vue';
-import ArticleSubcribe from '../article/ArticleSubcribe.vue';
+import IconOtherTrend from './IconOtherTrend.vue'
+import ArticleSubcribe from '../article/ArticleSubcribe.vue'
 
 const props = defineProps({
     position: {
@@ -60,14 +54,14 @@ const trend = [
     {
         title: 'Робототехника',
         name: 'robototekhnika'
-    },
+    }
 ]
 const currenTrend = ref('')
 const currenList = ref([])
 const hoverElement = ref('')
 
 onMounted(() => {
-    currenTrend.value = route.params.name;
+    currenTrend.value = route.params.name
     if (props.position === 'sidebar') {
         currenList.value = trend
     } else {
@@ -75,9 +69,9 @@ onMounted(() => {
     }
 })
 
-function getCurrentList () {
-    currenList.value = [];
-    currenList.value = trend.filter(el => el.name !== currenTrend.value);
+function getCurrentList() {
+    currenList.value = []
+    currenList.value = trend.filter((el) => el.name !== currenTrend.value)
 }
 
 watch(
@@ -103,14 +97,13 @@ watch(
         padding: 32px 16px;
     }
 
-    .other-trends__subcrube{
+    .other-trends__subcrube {
         display: none;
     }
-
 }
 
 .other-trends__title {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 32px;
     line-height: 40px;
     color: $blue-primary;
@@ -143,8 +136,6 @@ watch(
 
     &:hover {
         border: 2px solid $blue-primary;
-        ;
-
         .other-trend__subtitle {
             color: $blue-primary;
         }
@@ -175,7 +166,7 @@ watch(
         flex-direction: column;
     }
 
-    .other-trends__subcrube{
+    .other-trends__subcrube {
         display: flex;
     }
 }

@@ -372,7 +372,7 @@ function validateField(param, event, nameParam) {
 function changeEmail(event) {
     let target = event.target
     let x = target.value.match(
-        /([a-zA-Z]{1})([a-zA-Z0-9._-]{0,19})([@]{0,1})([a-zA-Z0-9._-]{0,10})([.]{0,1})([a-zA-Z0-9._-]{0,5})/
+        /([a-zA-Zа-яА-Я0-9]{1})([a-zA-Zа-яА-Я0-9._-]{0,19})([@]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,10})([.]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,5})/
     )
     target.value = x ? x[1] + x[2] + x[3] + x[4] + x[5] + x[6] : ''
     formField.email = target.value
