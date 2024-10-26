@@ -170,6 +170,9 @@ function validateForm() {
         oldPasswordError.value = true
     }
     checkPasswordEqual()
+    oldPassword.value = ''
+    newPassword.value = ''
+    repeatNewPassword.value = ''
 }
 
 function checkPasswordLength() {

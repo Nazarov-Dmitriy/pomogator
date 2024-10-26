@@ -243,12 +243,12 @@
                     <p class="form-item__policy">
                         Нажимая на кнопку «Отправить», я соглашаюсь с
                         <span class="form-item__policy-link">
-                        <a
-                            href="/public/documents/user_consultation_it.pdf"
-                            download="/public/documents/user_consultation_it.pdf"
+                            <a
+                                href="/public/documents/user_consultation_it.pdf"
+                                download="/public/documents/user_consultation_it.pdf"
                             >
-                            политикой обработки персональных данных</a
-                        ></span
+                                политикой обработки персональных данных</a
+                            ></span
                         >
                     </p>
                     <BtnBackgroud
@@ -265,7 +265,6 @@
             src="@/assets/images/form/bg-material.svg"
             alt="bg-image"
             class="form-item__bg-line-tablet"
-        />
         />
     </div>
 </template>

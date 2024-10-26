@@ -75,18 +75,22 @@
             </div>
             <div class="footer__contacts">
                 <div class="footer__contacts-social">
-                    <img
-                        src="@/assets/icons/footer/vk.svg"
-                        alt="vk"
-                        class="footer__vk"
-                        @click="some"
-                    />
-                    <img
-                        src="@/assets/icons/footer/globe.svg"
-                        alt="globe"
-                        class="footer__globe"
-                        @click="some"
-                    />
+                    <a href="https://vk.com/club4380657">
+                        <img
+                            src="@/assets/icons/footer/vk.svg"
+                            alt="vk"
+                            class="footer__vk"
+                            @click="some"
+                        />
+                    </a>
+                    <a href="https://shkolaketoskaya-r45.gosweb.gosuslugi.ru/ ">
+                        <img
+                            src="@/assets/icons/footer/globe.svg"
+                            alt="globe"
+                            class="footer__globe"
+                            @click="some"
+                        />
+                    </a>
                 </div>
                 <div class="footer__contact">
                     <div class="footer__contacts-phone">
@@ -107,7 +111,7 @@
                             class="footer__mail"
                             @click="some"
                         />
-                        <a class="footer__link" href="mailto:it-pomogator@mail.ru"
+                        <a class="footer__link" href="mailto:ketovo_school@mail.ru "
                             >it-pomogator@mail.ru</a
                         >
                     </div>
