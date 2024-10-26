@@ -159,7 +159,7 @@ watch(
 watch(
     () => props.isFavorite,
     (newVal) => {
-        favorites.article = newVal
+        favorites.active = newVal
     }
 )
 </script>

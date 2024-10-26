@@ -44,8 +44,12 @@
                 </div>
                 <div class="webinar__btn-wrapper">
                     <BtnBackgroud
+                        v-if="!user"
                         emit-name="form-submit"
-                        @form-submit="$router.push('/auth/register')"
+                        @form-submit="$router.push('/auth/login')"
+                        >Войти</BtnBackgroud
+                    >
+                    <BtnBackgroud v-else emit-name="submit" @submit="subscribe()"
                         >Зарегестрироваться на вебинар</BtnBackgroud
                     >
                 </div>
@@ -56,12 +60,16 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { useNewsStore } from '@/stores/newsStore'
 
 const props = defineProps({
     webinar: {
+        type: Object,
+        default: () => {}
+    },
+    user: {
         type: Object,
         default: () => {}
     }
@@ -76,6 +84,16 @@ const getTags = computed(() => {
 function getTag(tag) {
     return getTags?.value.filter((el) => el.id === tag)[0]?.name
 }
+
+function subscribe() {
+    console.log(11111)
+}
+
+watch(
+    () => props.user,
+    () => {},
+    { deep: true }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -204,6 +222,8 @@ function getTag(tag) {
     padding: 32px 16px;
     box-sizing: border-box;
     position: relative;
+    gap: 16px;
+
     @media (max-width: $lg) {
         display: grid;
         grid-template-columns: repeat(2, auto);
@@ -235,8 +255,6 @@ function getTag(tag) {
 
     @media (max-width: $lg) {
         display: none;
-
-        
     }
 }
 

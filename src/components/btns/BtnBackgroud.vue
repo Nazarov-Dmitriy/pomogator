@@ -1,5 +1,5 @@
 <template>
-    <button class="btn-bg" @click="submitEmit" :disabled="disabled">
+    <button class="btn-bg" :disabled="disabled" @click="submitEmit">
         <span class="btn-bg__text">
             <slot />
         </span>
@@ -13,7 +13,7 @@ const props = defineProps({
     },
     disabled: Boolean
 })
-const emit = defineEmits(['form-submit', 'offer', 'link', 'subscribe'])
+const emit = defineEmits(['form-submit', 'offer', 'link', 'subscribe', 'submit'])
 
 function submitEmit() {
     emit(props.emitName)

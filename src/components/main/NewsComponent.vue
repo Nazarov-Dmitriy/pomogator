@@ -4,24 +4,31 @@
             <h2 class="news__title news__container">Актуальные новости</h2>
             <div class="news__cards news__container">
                 <div
-                    v-for="item in atricleData"
+                    v-for="item in getNewsList"
                     :key="item.id"
                     class="news__card"
                     @click="linkArticle(item.id, item.trend)"
                 >
                     <div class="news__card-header">
                         <div class="news__card-img-wrapper">
-                            <img :src="item.img" alt="card img" class="news__card-img" />
+                            <img :src="getUrl(item.file)" alt="card img" class="news__card-img" />
                         </div>
+                        <VideoComponent
+                            v-if="item.video && !item.preview_img"
+                            :src="item?.video"
+                            :preview="true"
+                        />
                     </div>
                     <div class="news__card-body">
-                        <div class="news__card-body-tags">
-                            <span v-for="(el, ind) in item.tags" :key="ind">#{{ el }}</span>
+                        <div v-if="getTags.length > 0" class="news__card-body-tags">
+                            <p v-for="tag in item.tags" :key="tag" class="card-hashtag">
+                                #{{ getTag(tag) }}
+                            </p>
                         </div>
-                        <p class="news__text news__card-text">
+                        <p class="news__text news__card-text line-clamp-2">
                             {{ item.title }}
                         </p>
-                        <span>{{ item.publication_date }}</span>
+                        <span>{{ item.createdAt }}</span>
                     </div>
                 </div>
                 <div class="news__card">
@@ -108,23 +115,42 @@
             </div>
         </div>
     </section>
+    <Teleport to="body">
+        <template v-if="!isLoad">
+            <Loader />
+        </template>
+    </Teleport>
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import BtnGradient from '../btns/BtnComponent.vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
-import { randomArticle } from '../../db/db.js'
 import { useRouter } from 'vue-router'
 import { useSubsribeStore } from '@/stores/subsribeStore'
+import { useNewsStore } from '@/stores/newsStore'
+import Loader from '@/components/loader/Loader.vue'
 
 const router = useRouter()
-const atricleData = ref([])
+const isLoad = ref(false)
 
 const subsribeStore = useSubsribeStore()
+const newsStore = useNewsStore()
 
 const resultSubsribe = computed(() => {
     return subsribeStore.getSubscribe
+})
+
+const getNewsList = computed(() => {
+    return newsStore.getNewsList
+})
+
+const getErrors = computed(() => {
+    return newsStore.getErrors
+})
+
+const getTags = computed(() => {
+    return newsStore.getTags
 })
 
 const formField = reactive({
@@ -134,15 +160,20 @@ const formField = reactive({
 })
 
 onMounted(() => {
-    atricle()
+    newsStore.getListActualDb()
+    newsStore.getTagsDb()
 })
 
 onUnmounted(() => {
     subsribeStore.setSubsribe()
 })
 
-function atricle() {
-    atricleData.value = randomArticle(null, 3)
+function getUrl(url) {
+    return import.meta.env.VITE_SERVER_URL + url
+}
+
+function getTag(tag) {
+    return getTags.value.filter((el) => el.id === tag)[0].name
 }
 
 const sendMail = () => {
@@ -188,6 +219,13 @@ function changeEmail(event) {
 function validateForm() {
     validateField(formField.email, 'validate')
 }
+
+watch([getNewsList, getTags], () => {
+    isLoad.value = true
+})
+watch(getErrors, () => {
+    isLoad.value = true
+})
 </script>
 
 <style scoped lang="scss">

@@ -5,7 +5,7 @@
         <ObjectiveProjectComponent />
         <TrendComponent />
         <WebinarComponent />
-        <NewsComponent :is-visible="isVisible" />
+        <NewsComponent />
         <FaqComponent />
         <FormComponent />
         <FooterComponent />

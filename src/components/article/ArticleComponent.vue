@@ -6,7 +6,6 @@
             alt="atricle image"
             class="article__img"
         />
-        {{ article?.video }}
         <VideoComponent :src="article?.video" class-name="video-player" />
         <div class="article-layout">
             <div class="article__container">
@@ -296,7 +295,7 @@ watch(
 watch(
     () => props.isFavorite,
     (newVal) => {
-        favorites.article = newVal
+        favorites.active = newVal
     }
 )
 </script>

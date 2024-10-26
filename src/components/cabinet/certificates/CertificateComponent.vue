@@ -2,8 +2,8 @@
     <div
         v-for="(certificate, index) in certificateData"
         :key="certificate.id"
-        class="certificate"
         :ref="`certificate-${index}`"
+        class="certificate"
     >
         <div class="certificate__wrapper">
             <div class="certificate__main">
@@ -11,10 +11,10 @@
                 <div class="certificate__info">
                     <p class="certificate__text">Подтверждает, что</p>
                     <h2 class="certificate__student-name">
-                        {{ certificate.studentData }}
+                        {{ certificate.fullName }}
                     </h2>
                     <p class="certificate__text">
-                        Участвовал в вебинаре по IT технологиям для преподавателей
+                        Участвовал в вебинаре {{ certificate.certificateName }}
                     </p>
                 </div>
 
@@ -55,6 +55,7 @@
 <script setup>
 import html2pdf from 'html2pdf.js'
 import CertificateShare from './CertificateShare.vue'
+import { watch } from 'vue'
 
 const props = defineProps({
     certificateData: {

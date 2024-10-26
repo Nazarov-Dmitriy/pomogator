@@ -1,9 +1,9 @@
 <template>
     <MainLayots>
         <div class="page">
-            <WebinarHeader :webinar="webinar" />
+            <WebinarHeader :webinar="webinar" :user="getUser" />
             <WebinarVideo :webinar="webinar" :is-favorite="isFavorite" :user="getUser" />
-            <WebinarCertificate />
+            <WebinarCertificate :webinar="webinar" :user="getUser" />
             <SubscrideComponent />
         </div>
     </MainLayots>
