@@ -347,6 +347,10 @@ watch(
     justify-content: space-between;
     align-items: flex-start;
     z-index: 1;
+
+    @media(max-width: $lg){
+        flex-direction: column;
+    }
 }
 
 .article__block {
@@ -671,7 +675,6 @@ watch(
     align-content: flex-start;
 
     @media (max-width: $xl) {
-        display: none;
     }
 }
 

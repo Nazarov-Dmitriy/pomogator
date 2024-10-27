@@ -242,8 +242,13 @@
                 <div class="form-item__submit">
                     <p class="form-item__policy">
                         Нажимая на кнопку «Отправить», я соглашаюсь с
-                        <span class="form-item__policy-link"
-                            >политикой обработки персональных данных</span
+                        <span class="form-item__policy-link">
+                            <a
+                                href="/public/documents/user_consultation_it.pdf"
+                                download="/public/documents/user_consultation_it.pdf"
+                            >
+                                политикой обработки персональных данных</a
+                            ></span
                         >
                     </p>
                     <BtnBackgroud
@@ -264,7 +269,7 @@
     </div>
 </template>
 <script setup>
-import { computed, onUnmounted, reactive } from 'vue'
+import { onMounted, onUnmounted, computed, reactive } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { useSendMessageStore } from '@/stores/sendMessageStore'
 
@@ -341,7 +346,7 @@ function changePhone(event) {
 function changeEmail(event) {
     let target = event.target
     let x = target.value.match(
-        /([a-zA-Zа-яА-Я0-9._-]{1})([a-zA-Zа-яА-Я0-9._-]{0,19})([@]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,10})([.]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,5})/
+        /([a-zA-Zа-яА-Я0-9]{1})([a-zA-Zа-яА-Я0-9._-]{0,19})([@]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,10})([.]{0,1})([a-zA-Zа-яА-Я0-9._-]{0,5})/
     )
     target.value = x ? x[1] + x[2] + x[3] + x[4] + x[5] + x[6] : ''
     formField.email = target.value
@@ -386,8 +391,19 @@ function validateForm() {
         sendMessage.sendOfferMaterial(data)
     }
 }
+
+onMounted(() => {
+    document.body.classList.add('no-scroll')
+})
+onUnmounted(() => {
+    document.body.classList.remove('no-scroll')
+})
 </script>
 <style lang="scss" scoped>
+.no-scroll {
+    overflow: hidden;
+}
+
 .modal__form {
     padding: 32px;
     display: flex;

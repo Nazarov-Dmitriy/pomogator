@@ -38,7 +38,7 @@
                             alt=""
                             @click="generatePdf(index)"
                         />
-                        <CertificateShare />
+                        <CertificateShare class="share" />
                         <img
                             src="/public/image/cabinet/cabinetCertificates/print.png"
                             alt=""
@@ -244,6 +244,13 @@ function generatePdf(index) {
     line-height: 1.5;
     text-align: right;
     color: $blue;
+}
+
+.share{
+    :deep(.share-menu){
+        top: -10px;
+        left: -80px;
+    }
 }
 
 .certificate__main-print {
