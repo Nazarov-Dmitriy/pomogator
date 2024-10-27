@@ -1,7 +1,6 @@
 <template>
     <section class="webinar">
         <p class="article__back" @click="$router.go(-1)">&#8592; Вернуться в "Вебинар"</p>
-        {{ props }}
         <div class="webinar__wrapper" :class="isSubsribe ? 'full' : ''">
             <div class="webinar__info">
                 <h2 class="webinar__title">
