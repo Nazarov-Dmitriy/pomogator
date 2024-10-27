@@ -1,7 +1,7 @@
 <template>
     <MainLayots>
         <div class="page">
-            <WebinarHeader :webinar="webinar" :user="getUser" />
+            <WebinarHeader :webinar="webinar" :user="getUser" :subscribe="isSubscribes" />
             <WebinarVideo :webinar="webinar" :is-favorite="isFavorite" :user="getUser" />
             <WebinarCertificate :webinar="webinar" :user="getUser" />
             <SubscrideComponent />
@@ -35,7 +35,8 @@ const webinarId = ref()
 const route = useRoute()
 const webinar = ref(null)
 const router = useRouter()
-const isFavorite = ref(null)
+const isFavorite = ref(false)
+const isSubscribes = ref(false)
 
 const getTags = computed(() => {
     return newsStore.getTags
@@ -64,6 +65,12 @@ onMounted(async () => {
             webinar_id: webinarId.value,
             user_id: getUser.value.id
         })
+        webinarStore
+            .getSubsribeWebinar({
+                webinar_id: webinarId.value,
+                user: getUser.value.id
+            })
+            .then((res) => (isSubscribes.value = res))
     }
 })
 
@@ -85,10 +92,19 @@ watch([getTags, getWebinar], () => {
 })
 
 watch(getUser, async () => {
+    console.log(getUser.value)
+
     isFavorite.value = await webinarStore.getFaforite({
         webinar_id: webinarId.value,
         user_id: getUser.value.id
     })
+
+    webinarStore
+        .getSubsribeWebinar({
+            webinar_id: webinarId.value,
+            user: getUser.value.id
+        })
+        .then((res) => (isSubscribes.value = res))
 })
 
 watch(getErrors, () => {

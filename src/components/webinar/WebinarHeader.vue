@@ -1,7 +1,8 @@
 <template>
     <section class="webinar">
         <p class="article__back" @click="$router.go(-1)">&#8592; Вернуться в "Вебинар"</p>
-        <div class="webinar__wrapper">
+        {{ props }}
+        <div class="webinar__wrapper" :class="isSubsribe ? 'full' : ''">
             <div class="webinar__info">
                 <h2 class="webinar__title">
                     {{ props.webinar?.title }}
@@ -29,7 +30,7 @@
                     {{ props.webinar?.annotation }}
                 </p>
             </div>
-            <div class="webinar__card">
+            <div v-if="!isSubsribe" class="webinar__card">
                 <div class="webinar__card-bg webinar__card-bg--tablet">
                     <img src="/image/webinar/currentWebinar/webinar-bg-tablet.svg" alt="lines" />
                 </div>
@@ -49,7 +50,7 @@
                         @form-submit="$router.push('/auth/login')"
                         >Войти</BtnBackgroud
                     >
-                    <BtnBackgroud v-else emit-name="submit" @submit="subscribe()"
+                    <BtnBackgroud v-else emit-name="submit" @submit="setSubscribe()"
                         >Зарегестрироваться на вебинар</BtnBackgroud
                     >
                 </div>
@@ -60,9 +61,10 @@
 </template>
 
 <script setup>
-import { computed, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { useNewsStore } from '@/stores/newsStore'
+import { useWebinarStore } from '@/stores/webinarStore'
 
 const props = defineProps({
     webinar: {
@@ -72,10 +74,15 @@ const props = defineProps({
     user: {
         type: Object,
         default: () => {}
+    },
+    subscribe: {
+        type: Boolean
     }
 })
 
 const newsStore = useNewsStore()
+const webinarStore = useWebinarStore()
+const isSubsribe = ref(null)
 
 const getTags = computed(() => {
     return newsStore.getTags
@@ -85,13 +92,25 @@ function getTag(tag) {
     return getTags?.value.filter((el) => el.id === tag)[0]?.name
 }
 
-function subscribe() {
-    console.log(11111)
+async function setSubscribe() {
+    if (props.webinar?.id && props.user?.id) {
+        let params = { webinar_id: props.webinar.id, user: props.user.id }
+        let res = await webinarStore.subsribeWebinar(params)
+        if (res) {
+            isSubsribe.value = true
+        }
+    }
 }
 
+onMounted(() => {
+    isSubsribe.value = props.subscribe
+})
+
 watch(
-    () => props.user,
-    () => {},
+    () => props,
+    () => {
+        isSubsribe.value = props.subscribe
+    },
     { deep: true }
 )
 </script>
@@ -121,6 +140,10 @@ watch(
     gap: 16px;
 
     @media (max-width: $lg) {
+        grid-template-columns: 1fr;
+    }
+
+    &.full {
         grid-template-columns: 1fr;
     }
 }

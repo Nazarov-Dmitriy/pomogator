@@ -54,10 +54,7 @@ function setUserInfo() {
 function setDateWebinar() {
     if (props.webinar) {
         certificateData.value[0].certificateName = props.webinar.title
-        certificateData.value[0].date = formatISO(new Date(props.webinar.date_translation), {
-            format: 'extended',
-            representation: 'date'
-        })
+        certificateData.value[0].date = format(new Date(), 'dd.MM.yyyy', { locale: ru })
     }
 }
 
