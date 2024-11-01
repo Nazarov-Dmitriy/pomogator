@@ -244,8 +244,9 @@
                         Нажимая на кнопку «Отправить», я соглашаюсь с
                         <span class="form-item__policy-link">
                             <a
-                                href="/public/documents/user_consultation_it.pdf"
-                                download="/public/documents/user_consultation_it.pdf"
+                                href="/documents/user_consultation_it.pdf"
+                                target="_blank"
+                                rel="noopener noreferrer"
                             >
                                 политикой обработки персональных данных</a
                             ></span
@@ -411,7 +412,7 @@ onUnmounted(() => {
     gap: 32px;
     background: $gradient-background;
     max-height: calc(100vh - 40px);
-    overflow: scroll;
+    overflow: auto;
 
     @media (max-width: $lg) {
         padding: 24px;

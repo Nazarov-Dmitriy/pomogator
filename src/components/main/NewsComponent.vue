@@ -84,7 +84,10 @@
                             </BtnBackgroud>
                             <p class="news__text news__form-text">
                                 Нажимая кнопку “Подписаться” вы соглашаетесь с
-                                <a href="/public/documents/user_consultation_it.pdf" download
+                                <a
+                                    href="/documents/user_consultation_it.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     >> <span>политикой обработки персональных данных</span></a
                                 >
                             </p>
