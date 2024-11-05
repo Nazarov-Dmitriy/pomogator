@@ -109,7 +109,7 @@ export const useNewsStore = defineStore('newsStore', {
                     this.newsList = [...res.data]
                 })
                 .catch((err) => {
-                    this.errors = err.response.data
+                    this.errors = err.response?.data
                 })
         },
         addNewstDb(data) {
