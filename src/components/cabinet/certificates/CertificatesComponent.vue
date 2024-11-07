@@ -51,8 +51,6 @@ onMounted(async () => {
 })
 
 function updateCurrentCertificates(paginatedData) {
-    console.log(paginatedData)
-
     currentCertificates.value = paginatedData
 }
 

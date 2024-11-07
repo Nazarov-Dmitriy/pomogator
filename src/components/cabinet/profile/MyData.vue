@@ -27,16 +27,11 @@ function handleSelect(option) {
     isFavoriteComponent.value = selectedOption.value === 'избранные материалы'
 }
 
-watch(selectedOption, (newValue) => {
-    if (newValue === 'сертификаты') {
-        console.log('Компонент сертификатов активен')
-    }
-})
+watch(selectedOption, () => {})
 
 onMounted(() => {
     if (selectedOption.value === 'сертификаты') {
         isFavoriteComponent.value = true
-        console.log('Сертификаты выбраны по умолчанию')
     }
 })
 </script>

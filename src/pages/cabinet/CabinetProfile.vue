@@ -30,7 +30,7 @@ const componentsMap = {
     сертификаты: CabinetCertificates
 }
 
-const selectedComponent = ref(CabinetCertificates)
+const selectedComponent = ref(null)
 
 const updateSelectedComponent = (selection) => {
     selectedComponent.value = componentsMap[selection] || null
