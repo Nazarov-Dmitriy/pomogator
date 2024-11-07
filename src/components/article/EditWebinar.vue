@@ -157,7 +157,11 @@
                 <p class="policy__text">
                     Нажимая на кнопку «Отправить», я соглашаюсь с
                     <span>
-                        <a href="/public/documents/user_consultation_it.pdf" target="_blank">
+                        <a
+                            href="/documents/user_consultation_it.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
                             политикой обработки персональных данных</a
                         >
                     </span>

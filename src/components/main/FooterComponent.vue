@@ -7,7 +7,7 @@
                         src="@/assets/icons/logo.svg"
                         alt="logo"
                         class="footer__logo"
-                        @click="mainLink()"
+                        @click="$router.push('/')"
                     />
                     <p class="footer__header-text">
                         Повышение профессиональных компетенций учителей с применением цифровых
@@ -61,17 +61,23 @@
                         <ul class="footer__list">
                             <li class="footer__list-item">
                                 <a
-                                    class="footer__link"
-                                    href="/public/documents/user_consultation_it.pdf"
+                                    href="/documents/user_agreement.pdf"
                                     target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="footer__link"
                                 >
                                     Политика конфеденциальности
                                 </a>
                             </li>
                             <li class="footer__list-item">
-                                <router-link to="/" class="footer__link">
+                                <a
+                                    href="/documents/user_consultation_it.pdf"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="footer__link"
+                                >
                                     Пользовательское соглашение
-                                </router-link>
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -177,13 +183,7 @@
         <img src="../../assets/images/footer/bg.svg" alt="bg-line" class="footer-bg" />
     </section>
 </template>
-<script setup>
-import router from '@/router'
-
-function mainLink() {
-    router.push('/')
-}
-</script>
+<script setup></script>
 <style lang="scss">
 .footer__contaner {
     width: 100%;

@@ -156,13 +156,15 @@
                         <div class="form-main__submit">
                             <p class="form-item__policy">
                                 Нажимая на кнопку «Отправить», я соглашаюсь с
-                                <a
-                                    class="form-main__policy-link"
-                                    href="/public/documents/user_consultation_it.pdf"
-                                    target="_blank"
-                                >
-                                    политикой обработки персональных данных</a
-                                >
+                                <span class="form-main__policy-link"
+                                    ><a
+                                        href="/documents/user_consultation_it.pdf"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        политикой обработки персональных данных</a
+                                    >
+                                </span>
                             </p>
                             <BtnBackgroud
                                 class="form-main__btn"

@@ -92,10 +92,10 @@
                             <p class="news__text news__form-text">
                                 Нажимая кнопку “Подписаться” вы соглашаетесь с
                                 <a
-                                    href="/public/documents/user_consultation_it.pdf"
+                                    href="/documents/user_consultation_it.pdf"
                                     target="_blank"
-                                >
-                                    <span>политикой обработки персональных данных</span></a
+                                    rel="noopener noreferrer"
+                                    >> <span>политикой обработки персональных данных</span></a
                                 >
                             </p>
                         </div>
