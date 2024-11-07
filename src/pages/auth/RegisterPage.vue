@@ -113,7 +113,14 @@
                     <div class="text-wrapper mt-4">
                         <p class="text">
                             Нажимая на кнопку «Продолжить», я соглашаюсь с
-                            <span><a href="#">политикой обработки персональных данных</a></span>
+                            <span>
+                                <a
+                                    href="/public/documents/user_consultation_it.pdf"
+                                    target="_blank"
+                                >
+                                    политикой обработки персональных данных</a
+                                ></span
+                            >
                         </p>
                     </div>
                     <div class="btn-wrapper mb-4">

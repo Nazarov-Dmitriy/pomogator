@@ -60,9 +60,13 @@
                         <p class="footer__list-header">Документы</p>
                         <ul class="footer__list">
                             <li class="footer__list-item">
-                                <router-link to="/" class="footer__link">
+                                <a
+                                    class="footer__link"
+                                    href="/public/documents/user_consultation_it.pdf"
+                                    target="_blank"
+                                >
                                     Политика конфеденциальности
-                                </router-link>
+                                </a>
                             </li>
                             <li class="footer__list-item">
                                 <router-link to="/" class="footer__link">
@@ -173,7 +177,13 @@
         <img src="../../assets/images/footer/bg.svg" alt="bg-line" class="footer-bg" />
     </section>
 </template>
-<script setup></script>
+<script setup>
+import router from '@/router'
+
+function mainLink() {
+    router.push('/')
+}
+</script>
 <style lang="scss">
 .footer__contaner {
     width: 100%;

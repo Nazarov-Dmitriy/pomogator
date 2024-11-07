@@ -1,5 +1,5 @@
 <template>
-    <div class="video-container">
+    <div v-if="isValidateUrl" class="video-container">
         <VideoWebinarComponent
             :src="props.webinar?.video"
             class-name="video-player"
@@ -53,7 +53,24 @@
                 </svg>
             </div>
         </div>
+        <div
+            v-if="webinar.author.id === user?.id && webinar.status !== 'completed'"
+            class="flex justify-end"
+        >
+            <BtnComponent emit-name="action" @action="$emit('setStatus')">
+                Завершить вебинар</BtnComponent
+            >
+        </div>
         <div class="webinar__line-bg" />
+    </div>
+    <div v-else class="flex flex-col gap-2 video-container__error">
+        <p class="error-text kreadon">Ошибка некорректная ссылка на вебинар</p>
+        <p class="">
+            Связаться с организатором:
+            <a class="footer__link" :href="`mailto:${webinar?.author?.email}`">{{
+                webinar?.author?.email
+            }}</a>
+        </p>
     </div>
 </template>
 
@@ -62,6 +79,7 @@ import { ref, computed, reactive, watch } from 'vue'
 import ShareComponent from '../article/ShareComponent.vue'
 import VideoWebinarComponent from '../video/VideoWebinarComponent.vue'
 import { useWebinarStore } from '@/stores/webinarStore'
+import BtnComponent from '../btns/BtnComponent.vue'
 
 const props = defineProps({
     webinar: {
@@ -79,6 +97,16 @@ const props = defineProps({
 
 const webinarStore = useWebinarStore()
 const activeLike = ref(false)
+
+defineEmits(['setStatus'])
+
+const isValidateUrl = computed(() => {
+    try {
+        return !!new URL(props.webinar?.video)
+    } catch (_) {
+        return false
+    }
+})
 
 const getLikes = computed(() => {
     if (!activeLike.value) {
@@ -166,17 +194,28 @@ watch(
 
 <style lang="scss" scoped>
 .video-container {
-    padding: 60px 80px;
+    padding: 40px 80px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 40px;
 
     @media (max-width: $lg) {
-        padding: 60px 40px 40px 40px;
+        padding: 40px;
     }
     @media (max-width: $sm) {
-        padding: 0 16px 32px 16px;
+        padding: 40px 16px 32px 16px;
+    }
+
+    &__error {
+        padding: 16px 80px;
+
+        @media (max-width: $lg) {
+            padding: 16px 40px;
+        }
+        @media (max-width: $sm) {
+            padding: 16px;
+        }
     }
 }
 

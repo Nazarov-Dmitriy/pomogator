@@ -53,7 +53,7 @@
                     Нажимая кнопку “Подписаться” вы соглашаетесь с
                     <a
                         href="/public/documents/user_consultation_it.pdf"
-                        download
+                        target="_blank"
                         class="subscribe__policy-link"
                     >
                         политикой обработки персональных данных</a

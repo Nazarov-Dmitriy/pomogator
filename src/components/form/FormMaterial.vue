@@ -280,8 +280,12 @@
             <div class="form-materia-item__submit">
                 <p class="form-materia-item__policy">
                     Нажимая на кнопку «Отправить», я соглашаюсь с
-                    <span class="form-materia-item__policy-link"
-                        >политикой обработки персональных данных</span
+                    <a
+                        class="form-materia-item__policy-link"
+                        href="/public/documents/user_consultation_it.pdf"
+                        target="_blank"
+                    >
+                        политикой обработки персональных данных</a
                     >
                 </p>
                 <BtnBackgroud

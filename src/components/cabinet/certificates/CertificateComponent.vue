@@ -11,10 +11,10 @@
                 <div class="certificate__info">
                     <p class="certificate__text">Подтверждает, что</p>
                     <h2 class="certificate__student-name">
-                        {{ certificate.fullName }}
+                        {{ getFullName(certificate) }}
                     </h2>
                     <p class="certificate__text">
-                        Участвовал в вебинаре {{ certificate.certificateName }}
+                        Участвовал в вебинаре по IT технологиям для преподвателей
                     </p>
                 </div>
 
@@ -28,20 +28,21 @@
             </div>
 
             <div class="certificate__footer">
-                <h2 class="certificate__footer-title">
-                    {{ certificate.certificateName }}
+                <h2 class="certificate__footer-title text-center">
+                    {{ certificate.title }}
                 </h2>
-                <div class="certificate__footer-bottom">
-                    <div class="certificate__icons">
+                <div class="certificate__footer-bottom items-center">
+                    <div class="certificate__icons items-center">
                         <img
                             src="/public/image/cabinet/cabinetCertificates/download.svg"
                             alt=""
                             @click="generatePdf(index)"
                         />
-                        <CertificateShare class="share" />
+                        <CertificateShare class="share mt-1" />
                         <img
                             src="/public/image/cabinet/cabinetCertificates/print.png"
                             alt=""
+                            class="w-6 h-6"
                             @click="generatePdf(index)"
                         />
                     </div>
@@ -55,7 +56,6 @@
 <script setup>
 import html2pdf from 'html2pdf.js'
 import CertificateShare from './CertificateShare.vue'
-import { watch } from 'vue'
 
 const props = defineProps({
     certificateData: {
@@ -63,6 +63,10 @@ const props = defineProps({
         default: () => []
     }
 })
+
+const getFullName = (certificate) => {
+    return `${certificate.user.surname} ${certificate.user.name} ${certificate.user.patronymic}`
+}
 
 function generatePdf(index) {
     const certificate = props.certificateData[index]
@@ -246,8 +250,8 @@ function generatePdf(index) {
     color: $blue;
 }
 
-.share{
-    :deep(.share-menu){
+.share {
+    :deep(.share-menu) {
         top: -10px;
         left: -80px;
     }

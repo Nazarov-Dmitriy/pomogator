@@ -243,10 +243,7 @@
                     <p class="form-item__policy">
                         Нажимая на кнопку «Отправить», я соглашаюсь с
                         <span class="form-item__policy-link">
-                            <a
-                                href="/public/documents/user_consultation_it.pdf"
-                                download="/public/documents/user_consultation_it.pdf"
-                            >
+                            <a href="/public/documents/user_consultation_it.pdf" target="_blank">
                                 политикой обработки персональных данных</a
                             ></span
                         >

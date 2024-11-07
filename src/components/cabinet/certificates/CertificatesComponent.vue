@@ -8,71 +8,61 @@
             />
         </div>
         <PaginationComponent
+            v-if="getCertificatList"
             :perpage="6"
-            :data="certificateData"
+            :data="getCertificatList"
             @set-list="updateCurrentCertificates"
         />
     </section>
+    <Teleport to="body">
+        <template v-if="!isLoad">
+            <Loader />
+        </template>
+    </Teleport>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import CertificateComponent from './CertificateComponent.vue'
 import SearchPanel from '../../searchPanel/SearchPanel.vue'
 import PaginationComponent from '../../pagination/PaginationComponent.vue'
+import { useCertificatetore } from '@/stores/certificateStore'
+import { useUserStore } from '@/stores/userStore'
+import Loader from '@/components/loader/Loader.vue'
 
+const isLoad = ref(false)
 const isSearchVisible = ref(false)
-
-const certificateData = ref([
-    {
-        id: 1,
-        studentData: 'Иванов Иван Иванович',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    },
-    {
-        id: 2,
-        studentData: 'Иванов Иван Иванович',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    },
-    {
-        id: 3,
-        studentData: 'Иванов Иван Иванович',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    },
-    {
-        id: 4,
-        studentData: 'Иванов Иван Иванович',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    },
-    {
-        id: 5,
-        studentData: 'Иванов Иван Иванович',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    },
-    {
-        id: 6,
-        studentData: 'Иванов Иван Иванович6',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    },
-    {
-        id: 7,
-        studentData: 'Иванов Иван Иванович7',
-        date: '01.08.2024',
-        certificateName: 'Новые IT технологии в химии'
-    }
-])
-
 const currentCertificates = ref([])
+const certificateStore = useCertificatetore()
+const userStore = useUserStore()
+
+const getCertificatList = computed(() => {
+    return certificateStore.getCertificatList
+})
+
+const getUser = computed(() => {
+    return userStore.getUser
+})
+
+onMounted(async () => {
+    if (getUser.value) {
+        certificateStore.getCertificates(getUser.value.id)
+    }
+})
 
 function updateCurrentCertificates(paginatedData) {
+    console.log(paginatedData)
+
     currentCertificates.value = paginatedData
 }
+
+watch(certificateStore, () => {
+    isLoad.value = true
+})
+
+watch(getUser, () => {
+    certificateStore.getCertificates(getUser.value.id)
+})
 </script>
 <style scoped lang="scss">
 .certificates-section {

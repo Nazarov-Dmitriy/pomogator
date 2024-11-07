@@ -16,7 +16,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import CertificateComponent from '../cabinet/certificates/CertificateComponent.vue'
-import { format, formatISO } from 'date-fns'
+import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
 const props = defineProps({
