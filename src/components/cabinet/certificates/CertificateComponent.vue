@@ -65,7 +65,7 @@ const props = defineProps({
 })
 
 const getFullName = (certificate) => {
-    return `${certificate.user.surname} ${certificate.user.name} ${certificate.user.patronymic}`
+    return `${certificate.user?.surname} ${certificate.user?.name} ${certificate.user?.patronymic}`
 }
 
 function generatePdf(index) {
