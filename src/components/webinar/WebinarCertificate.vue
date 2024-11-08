@@ -4,7 +4,7 @@
             <h2 class="webinar-certificate__title">Сертификат</h2>
             <div class="webinar-certificate__info">
                 <div class="webinar-certificate__certificate">
-                    <CertificateComponent :certificateData="certificateData" />
+                    <CertificateComponent :certificate-data="certificateData" />
                 </div>
                 <p class="webinar-certificate__text">
                     После прохождения вебинара вам будет доступен сертификат о прохождении вебинара.
@@ -14,17 +14,54 @@
     </section>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import CertificateComponent from '../cabinet/certificates/CertificateComponent.vue'
+import { format, formatISO } from 'date-fns'
+import { ru } from 'date-fns/locale'
+
+const props = defineProps({
+    webinar: {
+        type: Object,
+        default: () => {}
+    },
+    user: {
+        type: Object,
+        default: () => {}
+    }
+})
 
 const certificateData = ref([
     {
         id: 1,
-        studentData: 'Иванов Иван Иванович21',
-        date: '01.08.2024',
+        fullName: 'Иванов Иван Иванович',
+        date: format(new Date(), 'dd.MM.yyyy', { locale: ru }),
         certificateName: 'Новые IT технологии в химии'
     }
 ])
+
+onMounted(() => {
+    setDateWebinar()
+    setUserInfo()
+})
+
+function setUserInfo() {
+    if (props.user) {
+        let user = props.user
+        certificateData.value[0].fullName = `${user.name} ${user.surname} ${user.patronymic}`
+    }
+}
+
+function setDateWebinar() {
+    if (props.webinar) {
+        certificateData.value[0].certificateName = props.webinar.title
+        certificateData.value[0].date = format(new Date(), 'dd.MM.yyyy', { locale: ru })
+    }
+}
+
+watch(props, () => {
+    setDateWebinar()
+    setUserInfo()
+})
 </script>
 <style lang="scss" scoped>
 .webinar-certificate {

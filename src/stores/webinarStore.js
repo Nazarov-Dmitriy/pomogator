@@ -159,6 +159,29 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                 }
             })
             return result
+        },
+        async subsribeWebinar(params) {
+            let result = await axiosR
+                .get(`/webinar/subscribe`, {
+                    params: params
+                })
+                .then((res) => {
+                    if (res.status == 200) {
+                        return true
+                    }
+                })
+            return result
+        },
+        getSubsribeWebinar(params) {
+            return axiosR
+                .get('/webinar/get-subscribe', {
+                    params: params
+                })
+                .then((res) => {
+                    if (res.status == 200) {
+                        return res.data
+                    }
+                })
         }
     }
 })

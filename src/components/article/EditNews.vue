@@ -173,7 +173,7 @@
         <template v-else>
             <template v-if="getUser">
                 <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавление статьи заполните профиль</h2>
+                    <h2 class="edit__empty-profile">Для добавления статьи заполните профиль</h2>
                 </div>
                 <BtnComponent
                     emit-name="action"
@@ -185,7 +185,7 @@
             </template>
             <template v-else>
                 <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавление статьи авторизуйтесь</h2>
+                    <h2 class="edit__empty-profile">Для добавления статьи авторизуйтесь</h2>
                 </div>
                 <BtnComponent
                     emit-name="action"

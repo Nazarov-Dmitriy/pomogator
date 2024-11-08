@@ -89,7 +89,8 @@
     </div>
 </template>
 <script setup>
-import OfferMaterial from '@/components/cabinet/CabinetOfferMaterial.vue'
+import OfferMaterial from '@/components/article/OfferMaterial.vue'
+
 import PaginationComponent from '../pagination/PaginationComponent.vue'
 import ModalComponent from '../modal/ModalComponentMaterials.vue'
 import { useRouter } from 'vue-router'

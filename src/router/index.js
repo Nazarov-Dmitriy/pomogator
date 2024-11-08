@@ -17,6 +17,7 @@ import WebinarsPage from '@/pages/webinar/WebinarsPage.vue'
 import CurrentWebinar from '@/pages/webinar/CurrentWebinar.vue'
 import NotFound from '@/pages/not-found/NotFound.vue'
 import EditMaterialPage from '@/pages/edit-material/EditMaterialPage.vue'
+import ErrorPage from '@/pages/error/ErrorPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -139,6 +140,11 @@ const router = createRouter({
             path: '/webinar/:id',
             name: 'webinar',
             component: CurrentWebinar
+        },
+        {
+            path: '/error',
+            name: 'error',
+            component: ErrorPage
         },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
     ],

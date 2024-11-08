@@ -1,11 +1,6 @@
 <template>
-    <div
-        class="share"
-        @click="setShow(!showMenu)"
-    >
-        <p class="share__text">
-            Поделиться
-        </p>  
+    <div class="share" @click="setShow(!showMenu)">
+        <p class="share__text">Поделиться</p>
         <svg
             class="share-icon"
             width="24"
@@ -14,18 +9,9 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
         >
-            <linearGradient
-                id="myGradientShare"
-                gradientTransform="rotate(45)"
-            >
-                <stop
-                    offset="30%"
-                    stop-color="#F12424"
-                />
-                <stop
-                    offset="100%"
-                    stop-color="#4360F8"
-                />
+            <linearGradient id="myGradientShare" gradientTransform="rotate(45)">
+                <stop offset="30%" stop-color="#F12424" />
+                <stop offset="100%" stop-color="#4360F8" />
             </linearGradient>
             <path
                 d="M22 11.9333L14.2222 4V8.53333C6.44444 9.66667 3.11111 15.3333 2 21C4.77778 17.0333 8.66667 15.22 14.2222 15.22V19.8667L22 11.9333Z"
@@ -33,73 +19,45 @@
             />
         </svg>
 
-
-        <div
-            v-if="showMenu"
-            ref="menu"
-            v-esc="() => setShow(false)"
-            class="share-menu"
-        >
+        <div v-if="showMenu" ref="menu" v-esc="() => setShow(false)" class="share-menu">
             <ul class="share__list">
                 <li class="share__item">
-                    <a
-                        :href="getTelgramLink"
-                        target="_blank"
-                        class="share__link"
-                    >
-                        <img
-                            src="@/assets/icons/social/tg.svg"
-                            alt="telegram"
-                            class="share-icon"
-                        >
+                    <a :href="getTelgramLink" target="_blank" class="share__link">
+                        <img src="@/assets/icons/social/tg.svg" alt="telegram" class="share-icon" />
                         <p class="share__link-text">Telegram</p>
                     </a>
                 </li>
                 <li class="share__item">
-                    <a
-                        :href="getVkLink"
-                        target="_blank"
-                        class="share__link"
-                    >
+                    <a :href="getVkLink" target="_blank" class="share__link">
                         <img
                             src="@/assets/icons/social/vk.svg"
                             alt="vcontakte"
                             class="share-icon"
-                        >
+                        />
                         <p class="share__link-text">вконтакте</p>
                     </a>
                 </li>
-                <li
-                    class="share__item"
-                    @click="copyText($event)"
-                >
-                    <img
-                        src="@/assets/icons/article/copy.svg"
-                        alt="copy-link"
-                        class="share-icon"
-                    >
-                    <p class="share__link-text">
-                        Копировать ссылку
-                    </p>
+                <li class="share__item" @click="copyText($event)">
+                    <img src="@/assets/icons/article/copy.svg" alt="copy-link" class="share-icon" />
+                    <p class="share__link-text">Копировать ссылку</p>
                 </li>
             </ul>
         </div>
     </div>
 </template>
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue'
 const props = defineProps({
     article: {
         type: Array,
         default: () => []
-    },
+    }
 })
 
 const showMenu = ref(false)
 const menu = ref(null)
 
-
-function setShow (param) {
+function setShow(param) {
     setTimeout(() => {
         showMenu.value = param
     })
@@ -111,24 +69,21 @@ const closeDropDown = (element) => {
     }
 }
 
-function copyText (event) {
-    event.preventDefault();
-    navigator.clipboard.writeText(window.location.href);
+function copyText(event) {
+    event.preventDefault()
+    navigator.clipboard.writeText(window.location.href)
 }
 
 const getTelgramLink = computed(() => {
-    return `https://t.me/share/url?url=${window.location.href}&text=${props.article?.title}`;
-});
+    return `https://t.me/share/url?url=${window.location.href}&text=${props.article?.title}`
+})
 const getVkLink = computed(() => {
-    return `http://vk.com/share.php?url=${window.location.href}&title=${props.article?.title}&image=${props.article?.img}`;
-});
-
+    return `http://vk.com/share.php?url=${window.location.href}&title=${props.article?.title}&image=${props.article?.img}`
+})
 
 onMounted(() => {
     window.addEventListener('click', closeDropDown)
 })
-
-
 </script>
 <style lang="scss">
 .share {
@@ -143,24 +98,24 @@ onMounted(() => {
     cursor: pointer;
     position: relative;
 
-    &:hover{
-        color:$blue-primary;
+    &:hover {
+        color: $blue-primary;
 
-        & svg path{
+        & svg path {
             fill: $blue-primary;
         }
     }
 
-    &:active{
-        color:$blue;
+    &:active {
+        color: $blue;
 
-        & svg path{
+        & svg path {
             fill: url(#myGradientShare);
         }
     }
 }
 
-.share__text{
+.share__text {
     @media (max-width: $md) {
         display: none;
     }

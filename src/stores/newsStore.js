@@ -101,6 +101,17 @@ export const useNewsStore = defineStore('newsStore', {
                 console.log(err)
             }
         },
+        getListActualDb() {
+            axiosR
+                .get(`/news/list-actial`)
+                .then((res) => {
+                    this.newsList = []
+                    this.newsList = [...res.data]
+                })
+                .catch((err) => {
+                    this.errors = err.response?.data
+                })
+        },
         addNewstDb(data) {
             this.isSuccess = false
             this.errors = null

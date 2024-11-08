@@ -4,6 +4,7 @@
             <Loader />
         </template>
         <template v-else-if="getUser?.completed_profile">
+            {{ dataWebinar }}
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать вебинар' : 'Добавить вебинар' }}
             </h1>
@@ -58,46 +59,97 @@
                         </p>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <label
-                            for="date_translation"
-                            class="field__label"
-                            :class="{ error: getErrors?.date_translation }"
-                            >Дата трансляции</label
+                        <label for="video" class="field__label" :class="{ error: getErrors?.video }"
+                            >Ссылка на вебинар</label
                         >
-                        <VueDatePicker
-                            id="date_translation"
-                            v-model="dataWebinar.date_translation"
-                            placeholder="дд.мм.гггг --:--"
-                            locale="ru"
-                            class="data-picker"
-                            :class="{ error: getErrors?.date_translation }"
-                            select-text="Выбрать"
-                            cancel-text="Закрыть"
-                            model-type="dd-MM-yyyy HH:mm"
-                            format="dd.MM.yyyy HH:mm"
-                            utc="true"
-                        ></VueDatePicker>
-                        <p v-if="getErrors?.date_translation" class="error-text">
-                            {{ getErrors?.date_translation }}
+                        <input
+                            id="video"
+                            v-model="dataWebinar.video"
+                            type="text"
+                            placeholder="Ссылка на вебинар"
+                            class="input !bg-none w-full p-2 rounded-md"
+                            :class="{ error: getErrors?.video }"
+                        />
+                        <p v-if="getErrors?.video" class="error-text">
+                            {{ getErrors?.video }}
                         </p>
                     </div>
                 </div>
 
                 <div class="flex flex-col gap-2">
-                    <label for="video" class="field__label" :class="{ error: getErrors?.video }"
-                        >Ссылка на вебинар</label
-                    >
-                    <input
-                        id="video"
-                        v-model="dataWebinar.video"
-                        type="text"
-                        placeholder="Ссылка на вебинар"
-                        class="input !bg-none w-full p-2 rounded-md"
-                        :class="{ error: getErrors?.video }"
-                    />
-                    <p v-if="getErrors?.video" class="error-text">
-                        {{ getErrors?.video }}
-                    </p>
+                    {{ date }}
+
+                    <div class="flex flex-col gap-2">
+                        <label
+                            for="date_translation"
+                            class="field__label flex items-center gap-1"
+                            :class="{ error: getErrors?.date_translation }"
+                            >Дата трансляции
+
+                            <TooltipComponent
+                                tooltip-text="Время проведения вебинара устанавливаются по Московскому времени"
+                            >
+                                <img
+                                    v-tooltip="'You have  new messages.'"
+                                    class="w-5 h-5"
+                                    src="/image/edit-news/info.svg"
+                                    alt=""
+                            /></TooltipComponent>
+                        </label>
+                        <!-- <v-popover offset="16">
+                            <button class="tooltip-target b3">Click me</button>
+
+                            <template #popover>
+                                <input
+                                    v-model="msg"
+                                    class="tooltip-content"
+                                    placeholder="Tooltip content"
+                                />
+                                <p>
+                                    {{ msg }}
+                                </p>
+
+                                <ExampleComponent char="=" />
+                            </template>
+                        </v-popover> -->
+                        <VueDatePicker
+                            id="date_translation"
+                            v-model="date"
+                            placeholder="дд.мм.гггг --:--"
+                            locale="ru"
+                            class="data-picker"
+                            select-text="Выбрать"
+                            cancel-text="Закрыть"
+                            auto-apply
+                            :class="{ error: getErrors?.date_translation }"
+                            format="dd.MM.yyyy HH:mm"
+                        ></VueDatePicker>
+                        <!-- :timezone="tz" format="dd.MM.yyyy HH:mm" -->
+
+                        <p v-if="getErrors?.date_translation" class="error-text">
+                            {{ getErrors?.date_translation }}
+                        </p>
+                    </div>
+
+                    <div v-if="dataWebinar.date_translation" class="tz-range-slider-wrap">
+                        <div>
+                            <p class="field__label">Московское время: {{ getDateMoscow }}</p>
+                        </div>
+                        <!-- <div>
+                            <span>Timezone: {{ activeTz.tz }}</span>
+                            <br />
+                            <span>Offset: {{ +activeTz.offset }}</span>
+                        </div>
+                        <div>
+                            <input
+                                v-model="selectedTz"
+                                class="tz-range-slider"
+                                type="range"
+                                min="0"
+                                max="7"
+                            />
+                        </div> -->
+                    </div>
                 </div>
             </div>
 
@@ -155,7 +207,7 @@
         <template v-else>
             <template v-if="getUser">
                 <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавление вебинара заполните профиль</h2>
+                    <h2 class="edit__empty-profile">Для добавления вебинара заполните профиль</h2>
                 </div>
                 <BtnComponent
                     emit-name="action"
@@ -167,7 +219,7 @@
             </template>
             <template v-else>
                 <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавление вебинара авторизуйтесь</h2>
+                    <h2 class="edit__empty-profile">Для добавления вебинара авторизуйтесь</h2>
                 </div>
                 <BtnComponent
                     emit-name="action"
@@ -192,9 +244,14 @@ import { useNewsStore } from '@/stores/newsStore'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
 import { useWebinarStore } from '@/stores/webinarStore'
+import { timezones } from '@/utils/timeZone'
+import { TZDate } from '@date-fns/tz'
+import { format } from 'date-fns'
+import TooltipComponent from '../ui/TooltipComponent.vue'
+
+console.log('---------')
 
 const isLoad = ref(true)
-
 const userStore = useUserStore()
 const newsStore = useNewsStore()
 const webinarStore = useWebinarStore()
@@ -202,16 +259,65 @@ const previewImage = ref(null)
 const addInputImg = ref(null)
 const route = useRoute()
 const pageType = ref(null)
+const isMscTz = ref(false)
+const timezone = ref({ timezone: undefined })
+const selectedTz = ref(1)
+
+const date = ref('')
+// const dataWebinar = reactive({
+//     id: null,
+//     title: null,
+//     annotation: null,
+//     tags: [],
+//     preview_img: null,
+//     date_translation: null,
+//     video: null,
+//     author: null
+// })
 
 const dataWebinar = reactive({
     id: null,
-    title: null,
-    annotation: null,
-    tags: [],
+    title: 'dddddddddd',
+    annotation: 'ddddddddddddd',
+    tags: [1],
     preview_img: null,
     date_translation: null,
-    video: null,
+    date_translation2: null,
+    date_translation3: null,
+    video: 'dddddddddd',
     author: null
+})
+
+watch(selectedTz, () => {
+    let new_date = new TZDate(new Date(date.value), activeTz.value.tz)
+    console.log(new_date)
+
+    dataWebinar.date_translation = new_date
+    dataWebinar.date_translation2 = new_date
+    dataWebinar.date_translation3 = new_date
+})
+
+watch(date, () => {
+    let new_date = new TZDate(new Date(date.value), activeTz.value.tz)
+    console.log(new_date)
+
+    dataWebinar.date_translation = new_date
+    dataWebinar.date_translation2 = new_date
+    dataWebinar.date_translation3 = new_date
+})
+
+watch(date, () => {
+    let new_date = new TZDate(new Date(date.value), activeTz.value.tz)
+    console.log(new_date)
+
+    dataWebinar.date_translation = new_date
+    dataWebinar.date_translation2 = new_date
+    dataWebinar.date_translation3 = new_date
+})
+
+const activeTz = computed(() => timezones[selectedTz.value])
+const tz = computed(() => {
+    return { ...timezone.value, timezone: activeTz.value.tz }
 })
 
 const getUser = computed(() => {
@@ -234,6 +340,12 @@ const getIsSuccses = computed(() => {
     return webinarStore.getIsSuccsesWebinar
 })
 
+const getDateMoscow = computed(() => {
+    let new_date = new TZDate(new Date(dataWebinar.date_translation), activeTz.value.tz)
+
+    return format(new_date, ' HH:mm')
+})
+
 onMounted(() => {
     newsStore.getTagsDb()
     dataWebinar.author = getUser.value?.id
@@ -241,6 +353,7 @@ onMounted(() => {
         pageType.value = 'edit'
         getWebinarDb(route.params.id)
     }
+    getMscTz()
 })
 
 function getWebinarDb(id) {
@@ -288,6 +401,13 @@ function submit() {
         webinarStore.editWebinarDb(data)
     } else {
         webinarStore.addWebinarDb(data)
+    }
+}
+
+function getMscTz() {
+    var date = new Date()
+    if (-date.getTimezoneOffset() / 60 === 3) {
+        isMscTz.value = true
     }
 }
 

@@ -1,30 +1,20 @@
 <template>
     <div class="offer-material">
-        <p class="offer-material__subtile">
-            Не нашли нужный материал? Оставьте свои предложения.
-        </p>
-        <BtnBackgroud
-            class="offer-material__btn"
-            emit-name="offer"
-            @offer="modalShow = true"
-        >
-            Предложить тему
+        <p class="offer-material__subtile">Не нашли нужный материал? Оставьте свои предложения.</p>
+        <BtnBackgroud class="offer-material__btn" emit-name="offer" @offer="modalShow = true">
+            Предложить материал
         </BtnBackgroud>
     </div>
     <Teleport to="body">
-        <ModalComponent
-            :show="modalShow"
-            @close="modalShow = false"
-        />
+        <ModalComponent :show="modalShow" @close="modalShow = false" />
     </Teleport>
 </template>
 <script setup>
-import { ref } from 'vue';
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
-import ModalComponent from '../modal/ModalComponentFaq.vue';
+import { ref } from 'vue'
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
+import ModalComponent from '../modal/ModalComponentFaq.vue'
 
-const modalShow= ref(false)
-
+const modalShow = ref(false)
 </script>
 <style lang="scss">
 .offer-material {

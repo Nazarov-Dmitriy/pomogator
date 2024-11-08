@@ -23,7 +23,7 @@
                     />
                 </button>
             </div>
-            <ShareComponent :article="article" class="article__share" />
+            <ShareComponent class="article__share" />
             <div
                 v-if="props.user"
                 class="article__favorites"
@@ -159,7 +159,7 @@ watch(
 watch(
     () => props.isFavorite,
     (newVal) => {
-        favorites.article = newVal
+        favorites.active = newVal
     }
 )
 </script>

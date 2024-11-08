@@ -430,8 +430,18 @@ function validateForm() {
     font-size: 16px;
     line-height: 1.5;
 
+    @media (max-width: $sm) {
+        width: 100%;
+    }
+
     &:hover {
         border-color: $blue-primary;
+
+        & ~ .form-item__icon {
+            svg path {
+                fill: $blue-primary;
+            }
+        }
     }
 
     &:focus {
@@ -513,6 +523,8 @@ function validateForm() {
     @media (max-width: $sm) {
         height: auto;
         min-height: 116px;
+        width: 100%;
+        padding: 12px 16px 12px 16px;
     }
 
     &.error {

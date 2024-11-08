@@ -13,9 +13,11 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.0.0",
+    "@date-fns/tz": "^1.2.0",
     "@vuepic/vue-datepicker": "^9.0.3",
     "axios": "^1.7.3",
     "ckeditor5": "^43.0.0",
+    "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",
     "pinia": "^2.1.7",
     "swiper": "^11.1.4",
