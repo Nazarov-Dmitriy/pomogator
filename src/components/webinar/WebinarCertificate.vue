@@ -16,7 +16,7 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import CertificateComponent from '../cabinet/certificates/CertificateComponent.vue'
-import { format, formatISO } from 'date-fns'
+import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 
 const props = defineProps({
@@ -33,7 +33,11 @@ const props = defineProps({
 const certificateData = ref([
     {
         id: 1,
-        fullName: 'Иванов Иван Иванович',
+        user: {
+            name: 'Иванов',
+            surname: 'Иван',
+            patronymic: 'Иванович'
+        },
         date: format(new Date(), 'dd.MM.yyyy', { locale: ru }),
         certificateName: 'Новые IT технологии в химии'
     }
@@ -47,7 +51,9 @@ onMounted(() => {
 function setUserInfo() {
     if (props.user) {
         let user = props.user
-        certificateData.value[0].fullName = `${user.name} ${user.surname} ${user.patronymic}`
+        certificateData.value[0].user.name = user.name
+        certificateData.value[0].user.surname = user?.surname
+        certificateData.value[0].user.patronymic = user?.patronymic
     }
 }
 
@@ -59,6 +65,8 @@ function setDateWebinar() {
 }
 
 watch(props, () => {
+    console.log(props)
+
     setDateWebinar()
     setUserInfo()
 })

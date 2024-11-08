@@ -1,11 +1,14 @@
 <template>
     <MainLayots>
-        <div class="page">
-            <WebinarHeader :webinar="webinar" :user="getUser" :subscribe="isSubscribes" />
-            <WebinarVideo :webinar="webinar" :is-favorite="isFavorite" :user="getUser" />
-            <WebinarCertificate :webinar="webinar" :user="getUser" />
-            <SubscrideComponent />
-        </div>
+        <WebinarHeader :webinar="webinar" :user="getUser" :subscribe="isSubscribes" />
+        <WebinarVideo
+            :webinar="webinar"
+            :is-favorite="isFavorite"
+            :user="getUser"
+            @set-status="setComplitedStatus()"
+        />
+        <WebinarCertificate :webinar="webinar" :user="getUser" />
+        <SubscrideComponent />
     </MainLayots>
     <Teleport to="body">
         <template v-if="!isLoad">
@@ -54,6 +57,14 @@ const getErrors = computed(() => {
     return newsStore.getErrors
 })
 
+const isSuccessComplited = computed(() => {
+    return webinarStore.getIsSuccsesWebinar
+})
+
+function setComplitedStatus() {
+    webinarStore.setComplitedStatusWebinar({ webinar_id: webinar.value.id })
+}
+
 onMounted(async () => {
     webinarId.value = +route.params.id
     newsStore.getTagsDb()
@@ -92,8 +103,6 @@ watch([getTags, getWebinar], () => {
 })
 
 watch(getUser, async () => {
-    console.log(getUser.value)
-
     isFavorite.value = await webinarStore.getFaforite({
         webinar_id: webinarId.value,
         user_id: getUser.value.id
@@ -111,6 +120,10 @@ watch(getErrors, () => {
     if (getErrors.value === 'not found') {
         router.push({ name: 'NotFound' })
     }
+})
+
+watch(isSuccessComplited, () => {
+    webinarStore.getWebinarDb(webinarId.value)
 })
 </script>
 

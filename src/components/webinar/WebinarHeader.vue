@@ -9,7 +9,7 @@
                 <div class="webinar__info-wrapper">
                     <p class="webinar__date">
                         Дата и время проведения
-                        <span>{{ props.webinar?.date_translation }} (МСК)</span>
+                        <span>{{ getDateTranslation }} </span>
                     </p>
                     <div class="webinar__tags">
                         <div
@@ -64,6 +64,10 @@ import { computed, onMounted, ref, watch } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { useNewsStore } from '@/stores/newsStore'
 import { useWebinarStore } from '@/stores/webinarStore'
+import { timezones } from '@/utils/timeZone'
+import { TZDate } from '@date-fns/tz'
+import { format } from 'date-fns'
+import { ru } from 'date-fns/locale'
 
 const props = defineProps({
     webinar: {
@@ -82,9 +86,23 @@ const props = defineProps({
 const newsStore = useNewsStore()
 const webinarStore = useWebinarStore()
 const isSubsribe = ref(null)
+const selectedTz = ref(1)
+
+const activeTz = computed(() => timezones[selectedTz.value])
 
 const getTags = computed(() => {
     return newsStore.getTags
+})
+
+const getDateTranslation = computed(() => {
+    if (props.webinar?.date_translation) {
+        let new_date = new TZDate(new Date(props.webinar?.date_translation), activeTz.value.tz)
+        return props.webinar.status === 'completed'
+            ? format(new_date, 'dd.MM.yyyy')
+            : format(new_date, 'dd.MM.yyyy HH:mm') + `(${activeTz.value.label})`
+    } else {
+        return ''
+    }
 })
 
 function getTag(tag) {
@@ -116,15 +134,15 @@ watch(
 
 <style lang="scss" scoped>
 .webinar {
-    padding: 60px 80px;
+    padding: 60px 80px 0 60px;
     box-sizing: border-box;
     position: relative;
 
     @media (max-width: $lg) {
-        padding: 60px 40px 40px 40px;
+        padding: 60px 40px 0 40px;
     }
     @media (max-width: $sm) {
-        padding: 60px 16px 32px 16px;
+        padding: 60px 16px 0 16px;
     }
 }
 .article__back {

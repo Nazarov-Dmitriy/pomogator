@@ -39,7 +39,7 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                     }
                 })
                 .catch((err) => {
-                    this.errors = err.response.data
+                    this.errors = err.data
                 })
         },
         getLisParamstDb(param) {
@@ -181,6 +181,22 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                     if (res.status == 200) {
                         return res.data
                     }
+                })
+        },
+        setComplitedStatusWebinar(params) {
+            this.isSuccess = false
+            this.errors = null
+            axiosR
+                .get('/webinar/set-status', {
+                    params: params
+                })
+                .then((res) => {
+                    if (res.status == 200) {
+                        this.isSuccess = true
+                    }
+                })
+                .catch((err) => {
+                    this.errors = err.data
                 })
         }
     }

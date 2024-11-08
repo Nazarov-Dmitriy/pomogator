@@ -10,8 +10,6 @@ const tooltipDirective = (app) => {
 }
 
 function init(el, binding) {
-    console.log(el)
-
     let position = binding.arg || 'top'
     let tooltipText = binding.value || 'Tooltip text'
     el.setAttribute('position', position)
