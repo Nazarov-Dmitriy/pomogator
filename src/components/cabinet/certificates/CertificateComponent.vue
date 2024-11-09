@@ -1,26 +1,44 @@
 <template>
-    <div
-        v-for="(certificate, index) in certificateData"
-        :key="certificate.id"
-        :ref="`certificate-${index}`"
-        class="certificate"
-    >
-        <div class="certificate__wrapper">
-            <div class="certificate__main">
-                <h2 class="certificate__title">Сертификат</h2>
+    <div v-for="(certificate, index) in certificateData" :key="certificate.id">
+        <div class="certificate">
+            <div class="certificate__wrapper">
+                <div ref="certificate" class="certificate__main">
+                    <h2 class="certificate__title">Сертификат</h2>
+                    <div class="certificate__info">
+                        <p class="certificate__text">Подтверждает, что</p>
+                        <h2 class="certificate__student-name">
+                            {{ getFullName(certificate) }}
+                        </h2>
+                        <p class="certificate__text">
+                            {{ certificate.title }}
+                        </p>
+                    </div>
+                    <div class="certificate__main-bottom">
+                        <img
+                            src="/public/image/cabinet/cabinetCertificates/small-logo.svg"
+                            alt=""
+                        />
+                        <div class="span-wrapper">
+                            <span>Дата вебинара</span>
+                            <span>{{ certificate.date }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="certificate__main-print" v-show="showPrintVersion">
+                <h2 class="certificate__title-print">Сертификат</h2>
                 <div class="certificate__info">
-                    <p class="certificate__text">Подтверждает, что</p>
-                    <h2 class="certificate__student-name">
-                        {{ getFullName(certificate) }}
-                    </h2>
-                    <p class="certificate__text">
-                        Участвовал в вебинаре по IT технологиям для преподвателей
+                    <p class="certificate__text-print">Подтверждает, что</p>
+                    <h2 class="certificate__student-name-print">{{ getFullName(certificate) }}</h2>
+                    <p class="certificate__text-print">
+                        {{ certificate.title }}
                     </p>
                 </div>
 
                 <div class="certificate__main-bottom">
                     <img src="/public/image/cabinet/cabinetCertificates/small-logo.svg" alt="" />
-                    <div class="span-wrapper">
+                    <div class="span-wrapper span-wrapper--print">
                         <span>Дата вебинара</span>
                         <span>{{ certificate.date }}</span>
                     </div>
@@ -28,17 +46,15 @@
             </div>
 
             <div class="certificate__footer">
-                <h2 class="certificate__footer-title text-center">
-                    {{ certificate.title }}
-                </h2>
+                <h2 class="certificate__footer-title text-center">{{ certificate.title }}</h2>
                 <div class="certificate__footer-bottom items-center">
                     <div class="certificate__icons items-center">
                         <img
                             src="/public/image/cabinet/cabinetCertificates/download.svg"
                             alt=""
-                            @click="generatePdf(index)"
+                            @click="getPdf"
                         />
-                        <CertificateShare class="share mt-1" />
+                        <CertificateShare :pdf-url="pdfUrls" class="share mt-1" />
                         <img
                             src="/public/image/cabinet/cabinetCertificates/print.png"
                             alt=""
@@ -56,6 +72,7 @@
 <script setup>
 import html2pdf from 'html2pdf.js'
 import CertificateShare from './CertificateShare.vue'
+import { ref, nextTick } from 'vue'
 
 const props = defineProps({
     certificateData: {
@@ -64,68 +81,60 @@ const props = defineProps({
     }
 })
 
+const element = ref(null)
+
+const showPrintVersion = ref(false)
+const pdfUrls = ref('')
+
 const getFullName = (certificate) => {
     return `${certificate.user?.surname} ${certificate.user?.name} ${certificate.user?.patronymic}`
 }
-
 function generatePdf(index) {
-    const certificate = props.certificateData[index]
+    showPrintVersion.value = true
 
-    const tempElement = document.createElement('div')
-    tempElement.classList.add('certificate-pdf')
+    const pdfElement = document.querySelectorAll('.certificate__main-print')[index]
 
-    tempElement.innerHTML = `
-         <div class="certificate__main-print">
-                <h2 class="certificate__title-print">Сертификат</h2>
-                <div class="certificate__info">
-                    <p class="certificate__text-print">Подтверждает, что</p>
-                    <h2 class="certificate__student-name-print">
-                        ${certificate.studentData}
-                    </h2>
-                    <p class="certificate__text-print">
-                        Участвовал в вебинаре по IT технологиям для преподавателей
-                    </p>
-                </div>
+    nextTick(() => {
+        if (pdfElement) {
+            const options = {
+                margin: 0,
+                filename: `certificate-${index + 1}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 1 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            }
 
-                <div class="certificate__main-bottom">
-                    <img src="/public/image/cabinet/cabinetCertificates/small-logo.svg" alt="" />
-                    <div class="span-wrapper span-wrapper--print">
-                        <span>Дата вебинара</span>
-                        <span>${certificate.date}</span>
-                    </div>
-                </div>
-            </div>
-    `
+            html2pdf()
+                .set(options)
+                .from(pdfElement)
+                .toPdf()
+                .get('pdf')
+                // .then((pdf) => {
+                //     const file = pdf.output('blob')
+                //     const url = URL.createObjectURL(file)
+                //     pdfUrls.value = url // Сохраняем URL PDF
+                //     console.log(pdfUrls.value)
+                // })
+                .save()
+        }
+    })
 
-    document.body.appendChild(tempElement)
-
-    const opt = {
-        margin: [0, 0, 0, 0],
-        filename: `Сертификат-${index + 1}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
-    }
-
-    html2pdf()
-        .from(tempElement)
-        .set(opt)
-        .save()
-        .then(() => {
-            document.body.removeChild(tempElement)
-        })
-        .catch((err) => {
-            console.error('Ошибка генерации PDF:', err)
-        })
+    nextTick(() => {
+        showPrintVersion.value = false
+    })
 }
 </script>
 
 <style lang="scss" scoped>
 .certificate {
-    border: 2px solid $blue;
+    border: 2px solid #5b94ea;
     border-radius: 24px;
     max-width: 416px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
 }
 .certificate__wrapper {
     display: flex;
@@ -260,7 +269,7 @@ function generatePdf(index) {
 .certificate__main-print {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: 1050px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -271,9 +280,10 @@ function generatePdf(index) {
 .certificate__title-print {
     font-family: 'Kreadon-Demi';
     font-weight: 600;
-    font-size: 80px;
+    font-size: 40px;
     text-align: center;
     color: #4360f8;
+    text-align: center;
 }
 
 .certificate__text-print {
@@ -307,7 +317,7 @@ function generatePdf(index) {
 
 .span-wrapper--print {
     font-weight: 500;
-    font-size: 24px;
+    font-size: 40px;
     text-align: right;
     color: #4360f8;
     margin-top: 40px;

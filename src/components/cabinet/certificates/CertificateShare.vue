@@ -36,6 +36,7 @@
                         <p class="share__link-text">вконтакте</p>
                     </a>
                 </li>
+
                 <li class="share__item" @click="copyText($event)">
                     <img src="@/assets/icons/article/copy.svg" alt="copy-link" class="share-icon" />
                     <p class="share__link-text">Копировать ссылку</p>
@@ -44,15 +45,22 @@
         </div>
     </div>
 </template>
+
 <script setup>
 import { computed, onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+
 const props = defineProps({
     article: {
         type: Array,
         default: () => []
+    },
+    pdfUrl: {
+        type: String,
+        required: false
     }
 })
-
+const route = useRoute()
 const showMenu = ref(false)
 const menu = ref(null)
 
@@ -73,17 +81,33 @@ function copyText(event) {
     navigator.clipboard.writeText(window.location.href)
 }
 
+const isLk = ref(false)
+
+function checkPath() {
+    if (route.path.includes('/lk')) {
+        isLk.value = true
+    } else {
+        isLk.value = false
+    }
+}
+
 const getTelgramLink = computed(() => {
     return `https://t.me/share/url?url=${window.location.href}&text=${props.article?.title}`
 })
 const getVkLink = computed(() => {
-    return `http://vk.com/share.php?url=${window.location.href}&title=${props.article?.title}&image=${props.article?.img}`
+    if (isLk.value) {
+        return `http://vk.com/share.php?url=${window.location.href}&title=${props.article?.title}&image=${props.article?.img}`
+    } else {
+        return `http://vk.com/share.php?url=${window.location.href}&title=${props.pdfUrl}&image=${props.pdfUrl}`
+    }
 })
 
 onMounted(() => {
     window.addEventListener('click', closeDropDown)
+    checkPath()
 })
 </script>
+
 <style lang="scss" scoped>
 .share {
     display: flex;
