@@ -31,12 +31,12 @@
                         :class="{ error: getErrors?.annotation }"
                         >Аннотация</label
                     >
-                    <input
+                    <textarea
                         id="annotation"
                         v-model="dataNews.annotation"
                         placeholder="Краткое описание материала"
                         type="text"
-                        class="input-annotation input !bg-none w-full p-2 rounded-md"
+                        class="input-annotation input-annotation-textarea input !bg-none w-full p-2 rounded-md"
                         :class="{ error: getErrors?.annotation }"
                     />
                     <p v-if="getErrors?.annotation" class="error-text">
@@ -781,6 +781,25 @@ watch(isArticleImage, (newVal) => {
             text-decoration: underline;
             text-decoration-skip-ink: none;
         }
+    }
+}
+
+.input-annotation-textarea {
+    resize: none;
+    overflow: hidden;
+    outline: none;
+    border: 2px solid #a0b1ed;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: $black;
+        border: 2px solid $blue-primary;
+        outline: none;
+    }
+
+    @media (max-width: $lg) {
+        padding: 10px 16px;
     }
 }
 </style>
