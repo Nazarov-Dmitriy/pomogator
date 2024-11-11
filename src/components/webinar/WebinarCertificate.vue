@@ -120,8 +120,8 @@ watch(props, () => {
     }
 
     @media (max-width: $sm) {
-        display: flex;
-        justify-content: center;
+        // display: flex;
+        // justify-content: center;
     }
 }
 .webinar-certificate__text {

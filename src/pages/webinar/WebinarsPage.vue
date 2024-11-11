@@ -99,8 +99,24 @@ watch([getWebinarList, getTags], () => {
 .webinar__main {
     padding: 60px 80px;
 
-    :deep(.list-article){
+    :deep(.list-article) {
         grid-template-columns: repeat(3, 1fr);
+
+        @media (max-width: $lg) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @media (max-width: $sm) {
+            grid-template-columns: 1fr;
+        }
+    }
+    :deep(.card-date) {
+        text-align: right;
+    }
+    :deep(.card-btns) {
+        @media (max-width: $lg) {
+            gap: 20px;
+        }
     }
     @media (max-width: $lg) {
         padding: 40px;
