@@ -485,6 +485,7 @@ watch(getWebinar, () => {
     }
     :deep(.dropdown-icon) {
         top: 15px;
+        z-index: 999;
     }
     :deep(.option) {
         border: none;
