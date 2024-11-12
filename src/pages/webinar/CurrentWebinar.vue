@@ -8,7 +8,9 @@
             @set-status="setComplitedStatus()"
         />
         <WebinarCertificate :webinar="webinar" :user="getUser" />
-        <SubscrideComponent />
+        <div class="webinar-subscribe">
+            <SubscrideComponent />
+        </div>
     </MainLayots>
     <Teleport to="body">
         <template v-if="!isLoad">
@@ -142,5 +144,6 @@ watch(isSuccessComplited, () => {
             margin-left: 16px;
         }
     }
+    
 }
 </style>

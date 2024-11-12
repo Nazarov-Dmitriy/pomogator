@@ -45,7 +45,7 @@
                             <p class="form-main__error-text">Поле заполненно некорректно</p>
                         </div>
                     </div>
-                    <BtnBackgroud emit-name="subscribe" @subscribe="validateForm()">
+                    <BtnBackgroud class="btn-bg" emit-name="subscribe" @subscribe="validateForm()">
                         Подписаться
                     </BtnBackgroud>
                 </div>
@@ -235,5 +235,10 @@ function validateForm() {
     line-height: 133%;
     text-align: center;
     color: $black;
+}
+.btn-bg{
+    @media(max-width: $sm){
+        width: 100%;
+    }
 }
 </style>

@@ -193,6 +193,7 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+
 .video-container {
     padding: 40px 80px;
     box-sizing: border-box;
@@ -299,5 +300,8 @@ watch(
     border: 1px solid $blue;
     width: 100%;
     height: 1px;
+}
+.article__favorites.active{
+    flex: 0 0 auto;
 }
 </style>
