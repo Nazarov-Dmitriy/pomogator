@@ -84,7 +84,7 @@ watch(getUser, () => {
     gap: 16px;
 
     @media (max-width: $lg) {
-        grid-template-columns: repeat(2, auto);
+        grid-template-columns: repeat(2, 1fr);
     }
 
     @media (max-width: $sm) {

@@ -8,8 +8,8 @@
                         <img src="@/assets/images/cabinet/cabinetProfile/edit.svg" alt="edit" />
                         <p>редактировать</p>
                     </div>
-                    <div class="card-top__delete" @click="removeArticle(item.id, item.type)">
-                        <p>удалить</p>
+                    <div class="card-top__delete">
+                        <p @click="toggleDialog(item)">удалить</p>
                         <img
                             src="@/assets/images/cabinet/cabinetProfile/bucket.png"
                             alt="delete"
@@ -85,12 +85,17 @@
         <PaginationComponent :perpage="8" :data="props.data" @set-list="getRenderList" />
         <Teleport to="body">
             <ModalComponent :show="modalShow" @close="modalShow = false" />
+            <DialogComponent
+                :show="dialogShow"
+                @close-dialog="toggleDialog"
+                @delete="removeArticle(selectedItem.id, selectedItem.type)"
+            />
         </Teleport>
     </div>
 </template>
+
 <script setup>
 import OfferMaterial from '@/components/article/OfferMaterial.vue'
-
 import PaginationComponent from '../pagination/PaginationComponent.vue'
 import ModalComponent from '../modal/ModalComponentMaterials.vue'
 import { useRouter } from 'vue-router'
@@ -99,8 +104,11 @@ import { defineProps } from 'vue'
 import VideoComponent from '../video/VideoComponent.vue'
 import { useNewsStore } from '@/stores/newsStore'
 import { useWebinarStore } from '@/stores/webinarStore'
+import DialogComponent from '../modal/DialogComponent.vue'
 
 const modalShow = ref(false)
+const dialogShow = ref(false)
+const selectedItem = ref(null)
 
 const props = defineProps({
     data: {
@@ -116,6 +124,11 @@ const newsStore = useNewsStore()
 const webinarStore = useWebinarStore()
 
 const renderList = ref([])
+
+function toggleDialog(item = null) {
+    selectedItem.value = item
+    dialogShow.value = !dialogShow.value
+}
 
 function getUrl(url) {
     return import.meta.env.VITE_SERVER_URL + url
@@ -151,11 +164,17 @@ function linkToEdit(id, type) {
 
 async function removeArticle(id, type) {
     if (type === 'article') {
-        let resNews = await newsStore.removeArticle(id)
-        resNews && emit('remove-article')
+        const resNews = await newsStore.removeArticle(id)
+        if (resNews) {
+            emit('remove-article')
+        }
+        dialogShow.value = false
     } else {
-        let resWebinar = await webinarStore.removeWebinar(id)
-        resWebinar && emit('remove-article')
+        const resWebinar = await webinarStore.removeWebinar(id)
+        if (resWebinar) {
+            emit('remove-article')
+        }
+        dialogShow.value = false
     }
 }
 
@@ -164,6 +183,7 @@ watch(
     () => {}
 )
 </script>
+
 <style lang="scss">
 .list-article__container {
     display: flex;
