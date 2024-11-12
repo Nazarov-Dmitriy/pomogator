@@ -52,14 +52,13 @@
                         <img
                             src="/public/image/cabinet/cabinetCertificates/download.svg"
                             alt=""
-                            @click="getPdf"
+                            @click="generatePdf(index)"
                         />
-                        <CertificateShare :pdf-url="pdfUrls" class="share mt-1" />
                         <img
                             src="/public/image/cabinet/cabinetCertificates/print.png"
                             alt=""
                             class="w-6 h-6"
-                            @click="generatePdf(index)"
+                            @click="printPdf(index)"
                         />
                     </div>
                     <span class="certificate__data">{{ certificate.date }}</span>
@@ -71,7 +70,6 @@
 
 <script setup>
 import html2pdf from 'html2pdf.js'
-import CertificateShare from './CertificateShare.vue'
 import { ref, nextTick } from 'vue'
 
 const props = defineProps({
@@ -116,6 +114,42 @@ function generatePdf(index) {
                 //     console.log(pdfUrls.value)
                 // })
                 .save()
+        }
+    })
+
+    nextTick(() => {
+        showPrintVersion.value = false
+    })
+}
+
+function printPdf(index) {
+    showPrintVersion.value = true
+
+    const pdfElement = document.querySelectorAll('.certificate__main-print')[index]
+
+    nextTick(() => {
+        if (pdfElement) {
+            const options = {
+                margin: 0,
+                filename: `certificate-${index + 1}.pdf`,
+                image: { type: 'jpeg', quality: 1 },
+                html2canvas: { scale: 1 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            }
+
+            html2pdf()
+                .set(options)
+                .from(pdfElement)
+                .toPdf()
+                .output('blob')
+                .then((pdfBlob) => {
+                    const pdfUrl = URL.createObjectURL(pdfBlob)
+                    const printWindow = window.open(pdfUrl)
+
+                    printWindow.addEventListener('load', () => {
+                        printWindow.print()
+                    })
+                })
         }
     })
 
