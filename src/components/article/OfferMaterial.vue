@@ -1,7 +1,7 @@
 <template>
     <div class="offer-material">
         <p class="offer-material__subtile">Не нашли нужный материал? Оставьте свои предложения.</p>
-        <BtnBackgroud class="offer-material__btn" emit-name="offer" @offer="modalShow = true">
+        <BtnBackgroud class="offer-material__btn" emit-name="offer" @offer="checkPage">
             Предложить материал
         </BtnBackgroud>
     </div>
@@ -13,8 +13,19 @@
 import { ref } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import ModalComponent from '../modal/ModalComponentFaq.vue'
+import { useRoute, useRouter } from 'vue-router'
 
+const route = useRoute()
+const router = useRouter()
 const modalShow = ref(false)
+
+function checkPage() {
+    if (route.path.includes('/lk/profile')) {
+        router.push('/material/add')
+    } else {
+        modalShow.value = true
+    }
+}
 </script>
 <style lang="scss">
 .offer-material {

@@ -136,7 +136,7 @@ onMounted(() => {
             transform: translateY(-50%) rotate(180deg);
             width: 24px;
             height: 24px;
-            background-image: url('/src/assets/icons/appearance.svg');
+            background-image: url('../../../assets/icons/appearence-blue.svg');
             background-size: cover;
             background-position: center;
         }

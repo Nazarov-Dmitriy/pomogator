@@ -6,7 +6,7 @@
             </p>
             <img
                 class="dropdown-icon"
-                src="../../assets/icons/appearance.svg"
+                src="../../assets/icons/appearence-blue.svg"
                 alt="icon-appearance"
                 :class="{ active: isDropDownVisible }"
             />
@@ -29,7 +29,7 @@
             </p>
             <img
                 class="dropdown-icon"
-                src="../../assets/icons/appearance.svg"
+                src="../../assets/icons/appearence-blue.svg"
                 alt="icon-appearance"
                 :class="{ active: isDropDownVisible }"
             />

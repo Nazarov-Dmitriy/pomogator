@@ -132,7 +132,7 @@
                         id="video"
                         v-model="dataNews.video"
                         type="text"
-                        class="input input-video !bg-none w-full p-2 rounded-md"
+                        class="link text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600"
                         placeholder="видео_материал.ру"
                         :class="{ error: getErrors?.file }"
                     />
@@ -612,6 +612,7 @@ watch(isArticleImage, (newVal) => {
     }
     :deep(.dropdown-icon) {
         top: 15px;
+        z-index: 99;
     }
     :deep(.option) {
         border: none;
