@@ -50,15 +50,15 @@
                     </BtnBackgroud>
                 </div>
                 <div class="subscribe__policy">
-                    Нажимая кнопку “Подписаться” вы соглашаетесь с
+                    Нажимая кнопку «Подписаться» вы соглашаетесь с
                     <a
                         href="/documents/user_consultation_it.pdf"
                         target="_blank"
                         rel="noopener noreferrer"
                         class="subscribe__policy-link"
                     >
-                        политикой обработки персональных данных</a
-                    >
+                        <span>политикой обработки персональных данных</span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -236,8 +236,8 @@ function validateForm() {
     text-align: center;
     color: $black;
 }
-.btn-bg{
-    @media(max-width: $sm){
+.btn-bg {
+    @media (max-width: $sm) {
         width: 100%;
     }
 }

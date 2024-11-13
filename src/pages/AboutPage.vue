@@ -3,6 +3,7 @@
         <HeaderComponent />
         <TasksComponent />
         <TeacherComponent />
+        <PartnersComponent />
         <EquipmentComponent />
         <BecomeComponent />
         <ReviewsComponent />
@@ -22,6 +23,7 @@ import ReviewsComponent from '../components/about/ReviewsComponent.vue'
 import ContactComponent from '../components/about/ContactComponent.vue'
 import FormComponent from '../components/main/FormComponent.vue'
 import FooterComponent from '../components/main/FooterComponent.vue'
+import PartnersComponent from '@/components/about/PartnersComponent.vue'
 </script>
 <style scoped lang="scss">
 .page {
