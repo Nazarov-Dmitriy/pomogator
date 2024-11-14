@@ -6,7 +6,7 @@
             class="dialog-modal-wrapper fixed z-[999] inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4"
         >
             <div
-                class="dialog-container flex flex-col md:gap-16 gap-4 bg-white w-[500px] md:p-20 py-10 px-10 rounded-lg shadow-lg relative rounded-[32px]"
+                class="dialog-container flex flex-col md:gap-16 gap-4 bg-white w-[500px] md:p-20 py-10 px-10 shadow-lg relative yrounded-[32px]"
             >
                 <div class="absolute top-3 right-3">
                     <button @click="handleClose">X</button>
@@ -68,9 +68,9 @@ watch(
 }
 
 .dialog-container {
-    :deep(.btn-bg){
-        @media(max-width: $sm){
-            width: max-content
+    :deep(.btn-bg) {
+        @media (max-width: $sm) {
+            width: max-content;
         }
     }
 }
