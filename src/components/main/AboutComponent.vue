@@ -4,19 +4,24 @@
             <div class="about__container">
                 <div class="about__content">
                     <h1 class="about__title">
-                        IT помогатор повышает квалификацию в области применения цифровых технологий в образовательном
-                        процессе
+                        IT помогатор повышает квалификацию в области применения цифровых технологий
+                        в образовательном процессе
                     </h1>
                     <div class="about__register-panel">
                         <BtnBackgroud
+                            v-if="!props.user"
                             class="about__btn"
                             emit-name="link"
                             @link="$router.push('/auth/register')"
                         >
                             Регистрация
                         </BtnBackgroud>
-                        <p class="about__register-decription">
-                            Регистрация позволит скачивать материалы и участвовать в вебинарах с получением сертификата
+                        <p
+                            class="about__register-decription"
+                            :class="props.user && '!text-transparent'"
+                        >
+                            Регистрация позволит скачивать материалы и участвовать в вебинарах с
+                            получением сертификата
                         </p>
                     </div>
                 </div>
@@ -25,27 +30,27 @@
                         src="@/assets/images/main/about/about-all.png"
                         alt="icon-card"
                         class="about__image-full"
-                    >
+                    />
                     <img
                         src="@/assets/images/main/about/img1.svg"
                         alt="icon-card"
                         class="about__image-one"
-                    >
+                    />
                     <img
                         src="@/assets/images/main/about/img2.svg"
                         alt="icon-card"
                         class="about__image-one"
-                    >
+                    />
                     <img
                         src="@/assets/images/main/about/img3.svg"
                         alt="icon-card"
                         class="about__image-one"
-                    >
+                    />
                     <img
                         src="@/assets/images/main/about/img4.svg"
                         alt="icon-card"
                         class="about__image-one"
-                    >
+                    />
                 </div>
             </div>
             <div class="about__cards">
@@ -54,53 +59,50 @@
                         src="@/assets/images/main/about/practicum.svg"
                         alt="icon-card"
                         class="about__card-img"
-                    >
-                    <p class="about__card-content">
-                        Онлайн практикумы
-                    </p>
+                    />
+                    <p class="about__card-content">Онлайн практикумы</p>
                 </div>
                 <div class="about__card">
                     <img
                         src="@/assets/images/main/about/certificate.svg"
                         alt="icon-card"
                         class="about__card-img"
-                    >
-                    <p class="about__card-content">
-                        Сертификаты
-                    </p>
+                    />
+                    <p class="about__card-content">Сертификаты</p>
                 </div>
                 <div class="about__card">
                     <img
                         src="@/assets/images/main/about/video-materials.svg"
                         alt="icon-card"
                         class="about__card-img"
-                    >
-                    <p class="about__card-content">
-                        Видео материалы
-                    </p>
+                    />
+                    <p class="about__card-content">Видео материалы</p>
                 </div>
                 <div class="about__card">
                     <img
                         src="@/assets/images/main/about/news.svg"
                         alt="icon-card"
                         class="about__card-img"
-                    >
-                    <p class="about__card-content">
-                        Актуальные новости
-                    </p>
+                    />
+                    <p class="about__card-content">Актуальные новости</p>
                 </div>
             </div>
         </div>
     </section>
 </template>
 <script setup>
-import BtnBackgroud from '../btns/BtnBackgroud.vue';
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
-
+const props = defineProps({
+    user: {
+        type: Object,
+        default: () => {}
+    }
+})
 </script>
 <style lang="scss">
 .about__section {
-    background: $gradient-background; 
+    background: $gradient-background;
 }
 
 .about {
@@ -137,7 +139,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
 }
 
 .about__title {
-    font-family: "Kreadon-Demi";
+    font-family: 'Kreadon-Demi';
     font-size: 48px;
     line-height: 56px;
     width: 54%;
@@ -317,9 +319,9 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue';
     }
 }
 
-.about__btn{
+.about__btn {
     @media (max-width: $sm) {
-       width: 100%;
+        width: 100%;
     }
 }
 </style>

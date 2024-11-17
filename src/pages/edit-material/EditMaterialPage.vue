@@ -22,8 +22,7 @@ import EditWebinar from '@/components/article/EditWebinar.vue'
 import MainLayots from '@/layouts/MainLayots.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-// const type = ref('article')
-const type = ref('webinar')
+const type = ref('article')
 const hiddenBtns = ref(false)
 const route = useRoute()
 

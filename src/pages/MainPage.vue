@@ -1,10 +1,10 @@
 <template>
     <div class="page">
         <HeaderComponent />
-        <AboutComponent />
+        <AboutComponent :user="getUser" />
         <ObjectiveProjectComponent />
         <TrendComponent />
-        <WebinarComponent />
+        <WebinarComponent :user="getUser" />
         <NewsComponent />
         <FaqComponent />
         <FormComponent />
@@ -21,6 +21,16 @@ import WebinarComponent from '../components/main/WebinarComponent.vue'
 import NewsComponent from '../components/main/NewsComponent.vue'
 import FormComponent from '../components/main/FormComponent.vue'
 import FooterComponent from '../components/main/FooterComponent.vue'
+import { useUserStore } from '@/stores/userStore'
+import { computed, watch } from 'vue'
+
+const userStore = useUserStore()
+
+const getUser = computed(() => {
+    return userStore.getUser
+})
+
+watch(getUser, () => {})
 </script>
 <style scoped lang="scss">
 .page {

@@ -11,13 +11,12 @@ import CabinetCertificates from '../pages/cabinet/CabinetCertificates.vue'
 import CabinetMaterials from '../pages/cabinet/CabinetMaterials.vue'
 import RegisterPage from '../pages/auth/RegisterPage.vue'
 import LoginPage from '../pages/auth/LoginPage.vue'
-import FutureWebinar from '@/components/webinar/WebinarHeader.vue'
-import WebinarsComponent from '@/components/webinar/WebinarsComponent.vue'
 import WebinarsPage from '@/pages/webinar/WebinarsPage.vue'
 import CurrentWebinar from '@/pages/webinar/CurrentWebinar.vue'
 import NotFound from '@/pages/not-found/NotFound.vue'
 import EditMaterialPage from '@/pages/edit-material/EditMaterialPage.vue'
 import ErrorPage from '@/pages/error/ErrorPage.vue'
+import ForgotPassword from '@/pages/auth/ForgotPassword.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -76,6 +75,11 @@ const router = createRouter({
                     path: 'register',
                     name: 'register',
                     component: RegisterPage
+                },
+                {
+                    path: 'for-got-password',
+                    name: 'for-got-password',
+                    component: ForgotPassword
                 }
             ]
         },

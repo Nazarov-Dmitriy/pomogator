@@ -364,7 +364,6 @@ function changeTextarea(event) {
 
 function onFileChange(e) {
     const file = e.target.files[0]
-    console.log(file)
 
     if (file) {
         formField.file = file

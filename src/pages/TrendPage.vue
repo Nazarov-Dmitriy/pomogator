@@ -1,8 +1,7 @@
 <template>
     <div class="page">
         <HeaderComponent />
-        <TrendAbout />
-
+        <TrendAbout :user="getUser" />
         <SearchPanel
             v-model="searchValue"
             is-search-visible="true"
@@ -37,6 +36,7 @@ import FooterComponent from '../components/main/FooterComponent.vue'
 import { useNewsStore } from '@/stores/newsStore'
 import Loader from '@/components/loader/Loader.vue'
 import { useRoute } from 'vue-router'
+import { useUserStore } from '@/stores/userStore'
 
 const newsStore = useNewsStore()
 const isLoad = ref(false)
@@ -45,6 +45,11 @@ const dataTrend = ref([])
 const data = ref([])
 const activeTags = ref([])
 const route = useRoute()
+const userStore = useUserStore()
+
+const getUser = computed(() => {
+    return userStore.getUser
+})
 
 const getNewsList = computed(() => {
     return newsStore.getNewsList
@@ -89,6 +94,8 @@ watch(searchValue, (newVal) => {
         data.value = dataTrend.value
     }
 })
+
+watch(getUser, () => {})
 
 watch(
     activeTags,

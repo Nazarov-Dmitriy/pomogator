@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-            <div class="certificate__main-print" v-show="showPrintVersion">
+            <div v-show="showPrintVersion" class="certificate__main-print">
                 <h2 class="certificate__title-print">Сертификат</h2>
                 <div class="certificate__info">
                     <p class="certificate__text-print">Подтверждает, что</p>
@@ -102,18 +102,7 @@ function generatePdf(index) {
                 jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
             }
 
-            html2pdf()
-                .set(options)
-                .from(pdfElement)
-                .toPdf()
-                .get('pdf')
-                // .then((pdf) => {
-                //     const file = pdf.output('blob')
-                //     const url = URL.createObjectURL(file)
-                //     pdfUrls.value = url // Сохраняем URL PDF
-                //     console.log(pdfUrls.value)
-                // })
-                .save()
+            html2pdf().set(options).from(pdfElement).toPdf().get('pdf').save()
         }
     })
 

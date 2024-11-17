@@ -128,6 +128,7 @@
                         Сохранить изменения
                     </BtnBackgroud>
                 </div>
+                <div v-if="getSuccessRes" style="color: green">Данные успешно обновленны</div>
             </form>
         </div>
     </section>
@@ -142,6 +143,10 @@ const userStore = useUserStore()
 
 const getUser = computed(() => {
     return userStore.getUser
+})
+
+const getSuccessRes = computed(() => {
+    return userStore.getSuccessResUserInfo
 })
 
 const formField = reactive({
@@ -223,44 +228,8 @@ function validateField(nameParam, validateForm) {
             const emailRegexp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
             formField.emailError = !emailRegexp.test(value)
         }
-        // if (nameParam === 'date_birth') {
-        //     const dateRegexp = /^\d{4}-\d{2}-\d{2}$/
-        //     formField.dateError = !dateRegexp.test(value)
-        // }
     }
 }
-
-// function handleDateInput(event) {
-//     let input = event.target.value.replace(/\D/g, '')
-
-//     if (input.length > 2) input = input.slice(0, 2) + '.' + input.slice(2)
-//     if (input.length > 5) input = input.slice(0, 5) + '.' + input.slice(5, 9)
-
-//     formField.date_birth = input
-// }
-
-// function validateDate() {
-//     const dateRegexp = /^\d{4}\.\d{2}\.\d{2}$/
-
-//     if (!dateRegexp.test(formField.date_birth)) {
-//         formField.dateError = true
-//     } else {
-//         const [day, month, year] = formField.date_birth.split('.').map(Number)
-
-//         if (
-//             day < 1 ||
-//             day > 31 ||
-//             month < 1 ||
-//             month > 12 ||
-//             year < 1940 ||
-//             year > new Date().getFullYear()
-//         ) {
-//             formField.dateError = true
-//         } else {
-//             formField.dateError = false
-//         }
-//     }
-// }
 
 function changePhone(event) {
     const target = event.target
@@ -311,8 +280,6 @@ watch(
     },
     { deep: true }
 )
-
-
 </script>
 
 <style lang="scss" scoped>

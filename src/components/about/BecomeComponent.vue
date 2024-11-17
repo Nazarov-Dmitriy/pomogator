@@ -18,9 +18,10 @@
                 образование.
             </p>
             <BtnBackground
+                v-if="!props.user"
                 emit-name="link"
-                @link="$router.push('/auth/register')"
                 class="become__button"
+                @link="$router.push('/auth/register')"
             >
                 Регистрация
             </BtnBackground>
@@ -30,6 +31,13 @@
 
 <script setup>
 import BtnBackground from '../btns/BtnBackgroud.vue'
+
+const props = defineProps({
+    user: {
+        type: Object,
+        default: () => {}
+    }
+})
 </script>
 
 <style scoped lang="scss">

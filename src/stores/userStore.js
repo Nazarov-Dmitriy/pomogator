@@ -8,6 +8,9 @@ export const useUserStore = defineStore('userStore', {
         error: null,
         rigisterStepTwo: false,
         successRes: false,
+        successResUserInfo: false,
+        successResUserPassword: false,
+        successForGotPassword: false,
         material: []
     }),
     getters: {
@@ -16,6 +19,12 @@ export const useUserStore = defineStore('userStore', {
         },
         getSuccessRes(state) {
             return state.successRes
+        },
+        getSuccessResUserInfo(state) {
+            return state.successResUserInfo
+        },
+        getSuccessResUserPAssword(state) {
+            return state.successResUserPassword
         },
         getToken(state) {
             return state.token
@@ -41,7 +50,7 @@ export const useUserStore = defineStore('userStore', {
                     localStorage.setItem('token', res.data.token)
                 })
                 .catch((err) => {
-                    this.error = err.response.data
+                    this.error = err.data
                 })
         },
         registerUser(data, result) {
@@ -58,7 +67,7 @@ export const useUserStore = defineStore('userStore', {
                     }
                 })
                 .catch((err) => {
-                    this.error = err.response?.data || 'Ошибка регистрации'
+                    this.error = err.data || 'Ошибка регистрации'
                 })
         },
         registerUserInfo(data) {
@@ -71,7 +80,7 @@ export const useUserStore = defineStore('userStore', {
                     this.user = res.data
                 })
                 .catch((err) => {
-                    this.error = err.response.data
+                    this.error = err.data
                 })
         },
         autoLigon() {
@@ -88,6 +97,7 @@ export const useUserStore = defineStore('userStore', {
             }
         },
         userUpdateInfo(data) {
+            this.successRes = false
             axiosR
                 .post(`/user/info`, data)
                 .then((res) => {
@@ -95,17 +105,23 @@ export const useUserStore = defineStore('userStore', {
                     if (res.data.token !== '') {
                         localStorage.setItem('token', res.data.token)
                     }
+                    this.successResUserInfo = true
                 })
                 .catch((err) => {
-                    this.error = err.response.data
+                    this.error = err.data
                 })
         },
         userChangePassword(data) {
+            this.successResUserPassword = false
             axiosR
                 .post(`/user/change-password`, data)
-                .then(() => {})
+                .then((res) => {
+                    if (res.status === 200) {
+                        this.successResUserPassword = true
+                    }
+                })
                 .catch((err) => {
-                    this.error = err.response.data
+                    this.error = err.data
                 })
         },
         logout() {
@@ -124,6 +140,9 @@ export const useUserStore = defineStore('userStore', {
         },
         resetSuccessRes() {
             this.successRes = false
+            this.successResUserInfo = false
+            this.successResUserPassword = false
+            this.successForGotPassword = false
         },
         userAddAvatar(data) {
             axiosR
@@ -132,7 +151,19 @@ export const useUserStore = defineStore('userStore', {
                     this.user.avatar = res.data
                 })
                 .catch((err) => {
-                    this.error = err.response.data
+                    this.error = err.data
+                })
+        },
+        userForGotPassword(data) {
+            this.successForGotPassword = false
+            axiosR
+                .post(`/user/for-got-password`, data)
+                .then(() => {
+                    this.error = null
+                    this.successForGotPassword = true
+                })
+                .catch((err) => {
+                    this.error = err.data
                 })
         },
         userRemoveAvatar() {
@@ -144,7 +175,7 @@ export const useUserStore = defineStore('userStore', {
                     }
                 })
                 .catch((err) => {
-                    this.error = err.response.data
+                    this.error = err.data
                 })
         },
         getMyMaterialDb(param) {

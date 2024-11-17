@@ -13,13 +13,14 @@
                     class="trend-about__image"
                 />
                 <div class="trend-about__block">
-                    <p class="trend-about__text">
+                    <p class="trend-about__text" :class="props.user && '!text-transparent'">
                         Чтобы скачать материалы нужно зарегестрироваться
                     </p>
                     <BtnBackgroud
+                        v-if="!props.user"
                         emit-name="form-submit"
-                        @form-submit="$router.push('/auth/register')"
                         class="trend-about__btn"
+                        @form-submit="$router.push('/auth/register')"
                     >
                         Регистрация
                     </BtnBackgroud>
@@ -35,6 +36,13 @@
 </template>
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
+
+const props = defineProps({
+    user: {
+        type: Object,
+        default: () => {}
+    }
+})
 </script>
 <style lang="scss">
 .section-trend-about {

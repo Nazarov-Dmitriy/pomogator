@@ -93,7 +93,7 @@
                     alt=""
                     @click="toggleRepeatedPasswordVisibility"
                 />
-                <div v-if="isPasswordEqual" class="error">
+                <div v-if="!isPasswordEqual" class="error">
                     <p>Пароли не совпадают</p>
                 </div>
             </div>
@@ -107,6 +107,7 @@
                     Сохранить пароль
                 </BtnBackgroud>
             </div>
+            <div v-if="getSuccessRes" class="-mt-4" style="color: green">Пароль изменен</div>
         </form>
     </div>
 </template>
@@ -130,6 +131,10 @@ const isNewPasswordVisible = ref(false)
 const isOldPasswordVisible = ref(false)
 const isRepeatedPasswordVisible = ref(false)
 
+const getSuccessRes = computed(() => {
+    return userStore.successResUserPassword
+})
+
 const getError = computed(() => {
     return userStore.getError
 })
@@ -150,6 +155,9 @@ function validatePassword(password) {
 }
 
 function checkPasswordEqual() {
+    console.log(newPassword.value)
+    console.log(repeatNewPassword.value)
+
     if (newPassword.value === repeatNewPassword.value) {
         isPasswordEqual.value = true
     } else {
@@ -170,9 +178,9 @@ function validateForm() {
         oldPasswordError.value = true
     }
     checkPasswordEqual()
-    oldPassword.value = ''
-    newPassword.value = ''
-    repeatNewPassword.value = ''
+    // oldPassword.value = ''
+    // newPassword.value = ''
+    // repeatNewPassword.value = ''
 }
 
 function checkPasswordLength() {

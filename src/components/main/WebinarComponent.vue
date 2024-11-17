@@ -1,7 +1,3 @@
-<script setup>
-import BtnBackgroud from '../btns/BtnBackgroud.vue'
-</script>
-
 <template>
     <section class="webinar">
         <div class="webinar__container">
@@ -11,12 +7,10 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                         src="../../assets/images/main/webinar/webinar-hero.png"
                         alt="webinar hero"
                         class="webinar__hero-img"
-                    >
+                    />
                 </div>
                 <div class="webinar__info">
-                    <h2 class="webinar__info-title">
-                        Вебинары онлайн
-                    </h2>
+                    <h2 class="webinar__info-title">Вебинары онлайн</h2>
                     <div class="webinar__info-wrap">
                         <p class="webinar__info-subtitle">
                             Для зарегистрированных пользователей есть уникальная возможность
@@ -28,7 +22,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                                     <img
                                         src="../../assets/images/main/webinar/webinar-example.png"
                                         alt=""
-                                    >
+                                    />
                                 </div>
                                 <p class="webinar__info-card-subtitle">
                                     Использование цифровых технологий в обучении
@@ -39,7 +33,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                                     <img
                                         src="../../assets/images/main/webinar/webinar-topic.png"
                                         alt=""
-                                    >
+                                    />
                                 </div>
                                 <p class="webinar__info-card-subtitle">
                                     Возможность задавать вопросы лектору во время эфира
@@ -50,7 +44,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                                     <img
                                         src="../../assets/images/main/webinar/webinar-login.png"
                                         alt=""
-                                    >
+                                    />
                                 </div>
                                 <p class="webinar__info-card-subtitle">
                                     Все зарегистрированные пользователи получают сертификат
@@ -59,6 +53,7 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
                         </div>
                         <div class="webinar__info-button-wrap">
                             <BtnBackgroud
+                                v-if="!props.user"
                                 class="webinar__info-button"
                                 emit-name="link"
                                 @link="$router.push('/auth/register')"
@@ -72,14 +67,20 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
         </div>
 
         <div class="webinar__background-svg">
-            <img
-                src="../../assets/images/main/webinar/webinar-lines.png"
-                alt=""
-            >
+            <img src="../../assets/images/main/webinar/webinar-lines.png" alt="" />
         </div>
     </section>
 </template>
+<script setup>
+import BtnBackgroud from '../btns/BtnBackgroud.vue'
 
+const props = defineProps({
+    user: {
+        type: Object,
+        default: () => {}
+    }
+})
+</script>
 <style scoped lang="scss">
 @import '@/assets/styles/_variables.scss';
 
@@ -221,7 +222,6 @@ import BtnBackgroud from '../btns/BtnBackgroud.vue'
     justify-content: flex-end;
 }
 .webinar__info-button {
-
     @media (max-width: 576px) {
         width: 100%;
         text-align: center;

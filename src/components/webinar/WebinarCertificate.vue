@@ -65,8 +65,6 @@ function setDateWebinar() {
 }
 
 watch(props, () => {
-    console.log(props)
-
     setDateWebinar()
     setUserInfo()
 })

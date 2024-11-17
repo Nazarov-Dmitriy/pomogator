@@ -89,18 +89,7 @@ function getTypeLink() {
     if (new RegExp(/^https:\/\/rutube/).test(props.src)) {
         videoId.value = props.src.split('video/')[1].split('/')[0]
         typeLink.value = 'rutube'
-    }
-    //  else if (new RegExp(/^https:\/\/vk.com\/video\/@id/).test(props.src)) {
-    //     videoId.value = props.src.split('=video')[1]?.split('%')[0].split('_')[0]
-    //     console.log(props.src.split('=video')[1]?.split('%')[0].split('_')[0])
-
-    //     // if()
-    //     // https://vk.com/video/@id144394519?z=video144394519_162600058%2Fpl_144394519_-2
-    //     // https://vk.com/video?z=video-29559271_456292291%2Fpl_cat_trends
-    //     // https://vk.com/video?z=video-99800441_456242091%2Fpl_cat_trends
-    //     typeLink.value = 'vk'
-    // }
-    else if (new RegExp(/^https:\/\/vk.com/).test(props.src)) {
+    } else if (new RegExp(/^https:\/\/vk.com/).test(props.src)) {
         typeLink.value = 'vk'
         videoId.value = props.src.split('video-')[1]?.split('%')[0]
     }

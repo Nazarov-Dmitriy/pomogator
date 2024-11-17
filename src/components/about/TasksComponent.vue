@@ -28,13 +28,11 @@
                     </li>
                 </ul>
 
-                <span class="task__info-text"
-                    >Чтобы скачать материалы нужно зарегестрироваться</span
-                >
                 <BtnBackgroud
+                    v-if="!props.user"
                     emit-name="form-submit"
-                    @form-submit="$router.push('/auth/register')"
                     class="task__info-btn"
+                    @form-submit="$router.push('/auth/register')"
                 >
                     Регистрация
                 </BtnBackgroud>
@@ -48,6 +46,13 @@
 
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
+
+const props = defineProps({
+    user: {
+        type: Object,
+        default: () => {}
+    }
+})
 </script>
 
 <style lang="scss" setup>

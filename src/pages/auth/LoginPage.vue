@@ -61,7 +61,7 @@
                     </div>
                     <div class="text-wrapper mt-4">
                         <p class="text">
-                            <a href="#"> Не помню пароль </a>
+                            <a href="for-got-password"> Не помню пароль </a>
                         </p>
                     </div>
                 </div>

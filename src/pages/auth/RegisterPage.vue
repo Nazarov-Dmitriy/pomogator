@@ -372,11 +372,6 @@ watch(
     { deep: true }
 )
 
-/**
- * 
-    логика для отображения трех иконок
- */
-
 const passwordVisible = ref(false)
 const confirmPasswordVisible = ref(false)
 const isFocusedPassword = ref(false)
