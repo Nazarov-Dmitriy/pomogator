@@ -5,6 +5,13 @@
             :src="getUrl(article?.file)"
             alt="atricle image"
             class="article__img"
+            :class="{ 'image-error': imageFailed }"
+            @error="imageError"
+        />
+        <img
+            v-if="imageFailed"
+            src="/public/image/plug.png"
+            class="aspect-[3/1] object-cover w-full"
         />
         <VideoComponent :src="article?.video" class-name="video-player" />
         <div class="article-layout">
@@ -183,6 +190,12 @@ const props = defineProps({
     }
 })
 
+const imageFailed = ref(false)
+
+const imageError = () => {
+    imageFailed.value = true
+}
+
 const favorites = reactive({
     active: props.isFavorite ? props.isFavorite : false,
     disabled: false
@@ -300,6 +313,9 @@ watch(
 )
 </script>
 <style lang="scss">
+.image-error {
+    display: none;
+}
 .article {
     display: flex;
     flex-direction: column;
@@ -348,7 +364,7 @@ watch(
     align-items: flex-start;
     z-index: 1;
 
-    @media(max-width: $lg){
+    @media (max-width: $lg) {
         flex-direction: column;
     }
 }

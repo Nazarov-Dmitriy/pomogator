@@ -59,14 +59,17 @@
                         </p>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <label class="file-dropdown field__label" :class="{ error: getErrors?.tags }">Теги</label>
+                        <label
+                            class="file-dropdown field__label"
+                            :class="{ error: getErrors?.tags }"
+                            >Теги</label
+                        >
                         <DropdownComponent
                             v-model:modelValue="dataNews.tags"
                             :options="getTags"
                             :multi="true"
                             :placeholder="'Выбирите теги'"
                             :error="!!getErrors?.tags"
-                            
                         />
                         <p v-if="getErrors?.tags" class="error-text">
                             {{ getErrors?.tags }}
@@ -164,9 +167,12 @@
                     >
                 </p>
             </div>
-            <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
-                {{ pageType ? 'Сохранить' : 'Отправить' }}
-            </BtnBackgroud>
+            <div class="flex justify-between items-center">
+                <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
+                    {{ pageType ? 'Сохранить' : 'Отправить' }}
+                </BtnBackgroud>
+                <BtnComponent emit-name="action" @action="$router.go(-1)">Отменить</BtnComponent>
+            </div>
             <div v-if="getIsSuccses" style="color: green">
                 {{ pageType ? 'Статья успешно сохранена' : 'Статья успешно добавлена' }}
             </div>

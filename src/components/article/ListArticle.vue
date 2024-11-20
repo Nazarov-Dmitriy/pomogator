@@ -8,13 +8,29 @@
                 class="card"
                 @click="linkArticle(item.id)"
             >
-                <img v-if="item.file" :src="getUrl(item.file)" alt="img-card" class="card-img" />
+                <template v-if="!imageErrors[item.id]">
+                    <img
+                        v-if="item.file"
+                        :src="getUrl(item.file)"
+                        alt="img-card"
+                        class="card-img"
+                        @error="imageError(item.id)"
+                    />
+                    <img
+                        v-else-if="item.preview_img"
+                        :src="getUrl(item.preview_img)"
+                        alt="img-card"
+                        class="card-img"
+                        @error="imageError(item.id)"
+                    />
+                </template>
                 <img
-                    v-if="item.preview_img"
-                    :src="getUrl(item.preview_img)"
-                    alt="img-card"
-                    class="card-img"
+                    v-else
+                    src="/public/image/plug.png"
+                    alt="fallback"
+                    class="aspect-[3/1] object-cover w-full"
                 />
+
                 <VideoComponent
                     v-if="item.video && !item.preview_img"
                     :src="item?.video"
@@ -75,7 +91,7 @@ import OfferMaterial from '@/components/article/OfferMaterial.vue'
 import PaginationComponent from '../pagination/PaginationComponent.vue'
 import { useNewsStore } from '@/stores/newsStore'
 import { useRoute, useRouter } from 'vue-router'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import VideoComponent from '../video/VideoComponent.vue'
 
 const props = defineProps({
@@ -107,10 +123,6 @@ const props = defineProps({
         type: String,
         default: null
     },
-    customText: {
-        type: String,
-        default: null
-    },
     webinar: {
         type: Boolean,
         default: false
@@ -127,6 +139,8 @@ const getTags = computed(() => {
 
 const renderList = ref([])
 
+const imageErrors = ref({})
+
 function getUrl(url) {
     return import.meta.env.VITE_SERVER_URL + url
 }
@@ -136,7 +150,7 @@ function getRenderList(list) {
 }
 
 function getTag(tag) {
-    return getTags.value.filter((el) => el.id === tag)[0].name
+    return getTags.value.find((el) => el.id === tag)?.name || ''
 }
 
 function linkArticle(id) {
@@ -154,11 +168,11 @@ function linkArticle(id) {
     }
 }
 
-watch(
-    () => props.data,
-    () => {}
-)
+function imageError(id) {
+    imageErrors.value = { ...imageErrors.value, [id]: true }
+}
 </script>
+
 <style lang="scss">
 .list-article__container {
     display: flex;
