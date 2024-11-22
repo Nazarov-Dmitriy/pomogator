@@ -38,7 +38,7 @@
                 </div>
                 <div class="webinar__card-text">
                     <h2 class="webinar__card-title">
-                        Зарегестрируйтесь на вебинар, чтобы стать участником.
+                        Зарегистрируйтесь на вебинар, чтобы стать участником.
                     </h2>
                     <p class="webinar__card-subtitle">Вам придет напоминание о вебинаре</p>
                 </div>
@@ -50,7 +50,7 @@
                         >Войти</BtnBackgroud
                     >
                     <BtnBackgroud v-else emit-name="submit" @submit="setSubscribe()"
-                        >Зарегестрироваться на вебинар</BtnBackgroud
+                        >Зарегистрироваться на вебинар</BtnBackgroud
                     >
                 </div>
             </div>

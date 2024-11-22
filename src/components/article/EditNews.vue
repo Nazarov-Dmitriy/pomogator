@@ -167,9 +167,12 @@
                     >
                 </p>
             </div>
-            <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
-                {{ pageType ? 'Сохранить' : 'Отправить' }}
-            </BtnBackgroud>
+            <div class="flex justify-between items-center">
+                <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
+                    {{ pageType ? 'Сохранить' : 'Отправить' }}
+                </BtnBackgroud>
+                <BtnComponent emit-name="action" @action="$router.go(-1)">Отменить</BtnComponent>
+            </div>
             <div v-if="getIsSuccses" style="color: green">
                 {{ pageType ? 'Статья успешно сохранена' : 'Статья успешно добавлена' }}
             </div>

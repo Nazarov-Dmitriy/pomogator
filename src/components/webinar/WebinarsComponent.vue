@@ -13,7 +13,7 @@
                     />
                 </div>
                 <p class="webinars__subtitle">
-                    Чтобы участвовать в вебинаре нужно зарегестрироваться
+                    Чтобы участвовать в вебинаре нужно зарегистрироваться
                 </p>
                 <div v-if="!userStore.getUser"class="webinars__btn-wrapper">
                     <BtnBackgroud

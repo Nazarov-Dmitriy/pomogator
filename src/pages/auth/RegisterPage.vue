@@ -39,18 +39,21 @@
                             <input
                                 id="password"
                                 ref="inputPassword"
+                                @mouseenter="isHoveredPassword = true"
+                                @mouseleave="isHoveredPassword = false"
+                                @focus="focusInputPassword"
                                 v-model="registerForm.password"
                                 :type="passwordVisible ? 'text' : 'password'"
                                 placeholder="Введите пароль"
                                 class="input__password w-full p-2 rounded-md"
                                 :class="{ error: registerFormError.password }"
-                                @focus="isFocusedPassword = true"
                             />
                             <span
                                 class="toggle-password-icons"
                                 @mousedown.stop="togglePasswordVisibility('password')"
                             >
                                 <img
+                                    v-if="!isHoveredPassword"
                                     ref="toggleImg"
                                     :src="
                                         isFocusedPassword
@@ -61,6 +64,11 @@
                                     "
                                     alt="toggle visibility"
                                     class="icon"
+                                />
+                                <img
+                                    v-else
+                                    src="/public/image/register/hover-lock.svg "
+                                    alt="hovered lock"
                                 />
                             </span>
                         </div>
@@ -80,18 +88,21 @@
                             <input
                                 id="confirmPassword"
                                 ref="inputConfirmPassword"
+                                @mouseenter="isHoveredConfirm = true"
+                                @mouseleave="isHoveredConfirm = false"
                                 v-model="registerForm.confirmPassword"
                                 :type="confirmPasswordVisible ? 'text' : 'password'"
                                 placeholder="Повторите пароль"
                                 class="input__password w-full p-2 rounded-md"
                                 :class="{ error: registerFormError.confirm }"
-                                @focus="isFocusedConfirmPassword = true"
+                                @focus="focusInputConfirm"
                             />
                             <span
                                 class="toggle-password-icons"
                                 @mousedown.stop="togglePasswordVisibility('confirm')"
                             >
                                 <img
+                                    v-if="!isHoveredConfirm"
                                     ref="toggleImg"
                                     :src="
                                         isFocusedConfirmPassword
@@ -102,6 +113,11 @@
                                     "
                                     alt="toggle visibility"
                                     class="icon"
+                                />
+                                <img
+                                    v-else
+                                    src="/public/image/register/hover-lock.svg "
+                                    alt="hovered lock"
                                 />
                             </span>
                         </div>
@@ -286,6 +302,9 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const userStore = useUserStore()
 
+const isHoveredPassword = ref(false)
+const isHoveredConfirm = ref(false)
+
 const initialRegisterForm = {
     email: '',
     password: '',
@@ -379,6 +398,15 @@ const isFocusedConfirmPassword = ref(false)
 const inputPassword = ref(null)
 const inputConfirmPassword = ref(null)
 const toggleImg = ref(null)
+
+function focusInputPassword() {
+    isFocusedPassword.value = true
+    isHoveredPassword.value = false
+}
+function focusInputConfirm() {
+    isFocusedConfirmPassword.value = true
+    isHoveredConfirm.value = false
+}
 
 function togglePasswordVisibility(type) {
     if (type === 'password') {

@@ -30,12 +30,14 @@
                         <input
                             id="password"
                             ref="inputPassword"
+                            @mouseenter="isHovered = true"
+                            @mouseleave="isHovered = false"
                             v-model="loginForm.password"
                             placeholder="Введите пароль"
                             :type="passwordVisible ? 'text' : 'password'"
                             class="input__password input--password w-full p-2 rounded-md"
                             :class="{ error: getError?.password }"
-                            @focus="isFocused = true"
+                            @focus="focusInput"
                         />
                         <p class="error-text">
                             {{ getError?.password }}
@@ -46,6 +48,7 @@
                             @click.stop="togglePasswordVisibility"
                         >
                             <img
+                                v-if="!isHovered"
                                 :src="
                                     isFocused
                                         ? passwordVisible
@@ -57,6 +60,7 @@
                                 class="icon"
                                 :class="{ error: getError?.password }"
                             />
+                            <img v-else src="/public/image/register/hover-lock.svg " alt="hovered lock" />
                         </span>
                     </div>
                     <div class="text-wrapper mt-4">
@@ -93,6 +97,7 @@ const router = useRouter()
 const userStore = useUserStore()
 const toggleImg = ref(null)
 const inputPassword = ref(null)
+const isHovered = ref(false)
 
 const loginForm = reactive({
     email: '',
@@ -115,6 +120,10 @@ watch(user, () => {
 
 function togglePasswordVisibility() {
     passwordVisible.value = !passwordVisible.value
+}
+function focusInput() {
+    isFocused.value = true
+    isHovered.value = false
 }
 function clickOutside(event) {
     if (
@@ -162,6 +171,10 @@ onUnmounted(() => {
 .input {
     &.error {
         border: 2px solid $primary-red;
+    }
+
+    &:hover {
+        background-image: url('../../assets/icons/main/news/mail-hover.svg');
     }
 }
 

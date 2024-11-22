@@ -61,6 +61,7 @@ const props = defineProps({
     position: relative;
     background: $gradient-background;
     overflow: hidden;
+    min-height: 530px;
 
     @media (max-width: $lg) {
         padding: 40px;
