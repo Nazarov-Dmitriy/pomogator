@@ -39,6 +39,11 @@
                         <li class="header__item">
                             <router-link to="/webinars" class="header__link"> Вебинар </router-link>
                         </li>
+                        <li v-if="getUser?.role === 'ROLE_ADMIN'" class="header__item">
+                            <router-link to="/administrator" class="header__link">
+                                Администрирование
+                            </router-link>
+                        </li>
                     </ul>
                 </div>
                 <div v-if="getUserInfo" class="header__user-info">
@@ -233,8 +238,6 @@ watch(getSuccessRes, () => {
 
 .header {
     display: grid;
-    // grid-template-columns: 1fr auto auto;
-    // grid-template-rows: 40px auto auto;
     align-items: center;
     justify-content: space-between;
     grid-template-areas:
@@ -262,14 +265,9 @@ watch(getSuccessRes, () => {
 
     @media (max-width: $lg) {
         display: none;
-        // grid-template-rows: auto auto auto;
-        // grid-template-columns: auto auto auto;
         grid-template-columns: auto auto;
         align-items: center;
         justify-content: space-between;
-        // grid-template-areas:
-        //     'menu menu menu'
-        //     'trend trend trend';
         grid-template-areas:
             'menu block'
             'trend trend';
@@ -428,12 +426,13 @@ watch(getSuccessRes, () => {
 .header__nav {
     grid-area: menu;
     display: grid;
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(4, auto);
     gap: 32px;
 
     @media (max-width: $lg) {
         justify-content: center;
         grid-column: span 3;
+        gap: 24px;
     }
 
     @media (max-width: $sm) {

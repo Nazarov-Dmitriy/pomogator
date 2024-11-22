@@ -59,14 +59,17 @@
                         </p>
                     </div>
                     <div class="flex flex-col gap-2 w-full">
-                        <label class="file-dropdown field__label" :class="{ error: getErrors?.tags }">Теги</label>
+                        <label
+                            class="file-dropdown field__label"
+                            :class="{ error: getErrors?.tags }"
+                            >Теги</label
+                        >
                         <DropdownComponent
                             v-model:modelValue="dataNews.tags"
                             :options="getTags"
                             :multi="true"
                             :placeholder="'Выбирите теги'"
                             :error="!!getErrors?.tags"
-                            
                         />
                         <p v-if="getErrors?.tags" class="error-text">
                             {{ getErrors?.tags }}
@@ -651,8 +654,6 @@ watch(isArticleImage, (newVal) => {
     }
 }
 
-.text-base {
-}
 .link {
     border: 2px solid #a0b1ed;
     border-radius: 32px;

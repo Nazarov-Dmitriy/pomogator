@@ -77,6 +77,10 @@ const props = defineProps({
     error: {
         type: Boolean,
         default: false
+    },
+    contnentClass: {
+        type: String,
+        default: null
     }
 })
 const emit = defineEmits(['update:modelValue', 'select'])
@@ -121,6 +125,11 @@ const mappedSelectedOption = computed(() => {
 onMounted(() => {
     window.addEventListener('click', closeDropDown)
     selectedOption.value = props.modelValue
+    if (selectedOption.value) {
+        console.log(44444)
+
+        toggleMultiOptionSelect()
+    }
 })
 
 onBeforeUnmount(() => {

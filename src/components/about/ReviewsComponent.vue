@@ -1,102 +1,62 @@
 <template>
     <section class="reviews">
         <div class="reviews__container">
-            <h2 class="reviews__title">
-                Отзывы
-            </h2>
+            <h2 class="reviews__title">Отзывы</h2>
             <div class="reviews__cards">
-                <div
-                    v-for="(card, index) in cards"
-                    :key="index"
-                    class="reviews__card"
-                >
+                <div v-for="card in getReviewsList" :key="card.id" class="reviews__card">
                     <div class="reviews__card-header">
                         <div class="reviews__card-header-person">
                             <div class="reviews__card-header-person-img-wrapper">
-                                <img
-                                    :src="getPath(card.img)"
-                                    alt=""
-                                >
+                                <img :src="getPath(card.filePath)" alt="img" />
                             </div>
                             <div class="reviews__header-info">
                                 <p class="reviews__header-person-text">
-                                    {{ card.name }} <span>{{ card.lastName }}</span>
+                                    {{ card.author }}
                                 </p>
                                 <div class="reviews__card-header-date">
                                     <span>{{ card.date }}</span>
-                                    <span>{{ card.dateSm }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="reviews__card-footer">
                         <p class="reviews__card-footer-text">
-                            {{ card.text }}
+                            {{ card.description }}
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <Teleport to="body">
+        <Loader v-if="!isLoad" />
+    </Teleport>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useReviewsStore } from '@/stores/reviewsStore'
+import Loader from '@/components/loader/Loader.vue'
 
-const cards = ref([
-    {
-        img: 'reviews-hero1.png',
-        name: 'Иванов ',
-        lastName: 'Михаил Дмитриевич',
-        date: '12.04.2024',
-        dateSm: '12.04.24',
-        text: 'Курс IT для химиков был очень полезен и информативен. Он позволил мне лучше понять, как использовать информационные технологии в преподавании химии. Особенно полезными были занятия по работе с программами для создания интерактивных уроков и презентаций. Я уверен, что эти навыки помогут мне сделать процесс обучения более интересным и эффективным'
-    },
-    {
-        img: 'reviews-hero2.png',
-        name: 'Иванова',
-        lastName: 'Ирина Анатольевна',
-        date: '12.04.2024',
-        dateSm: '12.04.24',
-        text: 'Курс IT для физиков дал мне необходимые знания и навыки для использования информационных технологий в преподавании физики. Я научился создавать интерактивные уроки, использовать программы для моделирования физических процессов и проводить виртуальные эксперименты. Это поможет мне сделать процесс обучения более наглядным и увлекательным'
-    },
-    {
-        img: 'reviews-hero3.png',
-        name: 'Смирнов',
-        lastName: 'Владимир Дмитриевич',
-        date: '12.04.2024',
-        dateSm: '12.04.24',
-        text: 'Курс IT для физиков дал мне возможность освоить новые технологии и инструменты, которые я могу использовать в своей работе. Особенно ценными были занятия по созданию виртуальных лабораторий и использованию программ для моделирования физических процессов. Эти навыки помогут мне сделать процесс обучения физике более наглядным и увлекательным'
-    },
-    {
-        img: 'reviews-hero1.png',
-        name: 'Иванов ',
-        lastName: 'Михаил Дмитриевич',
-        date: '12.04.2024',
-        dateSm: '12.04.24',
-        text: 'Курс IT для химиков был очень полезен и информативен. Он позволил мне лучше понять, как использовать информационные технологии в преподавании химии. Особенно полезными были занятия по работе с программами для создания интерактивных уроков и презентаций. Я уверен, что эти навыки помогут мне сделать процесс обучения более интересным и эффективным'
-    },
-    {
-        img: 'reviews-hero2.png',
-        name: 'Иванова',
-        lastName: 'Ирина Анатольевна',
-        date: '12.04.2024',
-        dateSm: '12.04.24',
-        text: 'Курс IT для физиков дал мне необходимые знания и навыки для использования информационных технологий в преподавании физики. Я научился создавать интерактивные уроки, использовать программы для моделирования физических процессов и проводить виртуальные эксперименты. Это поможет мне сделать процесс обучения более наглядным и увлекательным'
-    },
-    {
-        img: 'reviews-hero3.png',
-        name: 'Смирнов',
-        lastName: 'Владимир Дмитриевич',
-        date: '12.04.2024',
-        dateSm: '12.04.24',
-        text: 'Курс IT для физиков дал мне возможность освоить новые технологии и инструменты, которые я могу использовать в своей работе. Особенно ценными были занятия по созданию виртуальных лабораторий и использованию программ для моделирования физических процессов. Эти навыки помогут мне сделать процесс обучения физике более наглядным и увлекательным'
-    }
-])
+import { computed, onMounted, ref, watch } from 'vue'
+const isLoad = ref(false)
 
-function getPath (img) {
-    return new URL('/image/reviews/' + img, import.meta.url).href
+const reviewsStore = useReviewsStore()
+
+const getReviewsList = computed(() => {
+    return reviewsStore.getReviewsList
+})
+
+onMounted(() => {
+    reviewsStore.getListDb()
+})
+
+function getPath(path) {
+    return import.meta.env.VITE_SERVER_URL + path
 }
+
+watch(getReviewsList, () => {
+    isLoad.value = true
+})
 </script>
 
 <style scoped lang="scss">
@@ -168,6 +128,19 @@ function getPath (img) {
     display: flex;
     gap: 16px;
 }
+
+.reviews__card-header-person-img-wrapper {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    overflow: hidden;
+
+    & img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
 .reviews__header-person-text {
     font-weight: 400;
     font-size: 16px;
