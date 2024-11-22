@@ -181,8 +181,6 @@ router.beforeEach((to, from, next) => {
         }
         next('/')
     } else if (to.matched.some((route) => route.meta.protected)) {
-        console.log(user.getUser)
-
         if (localStorage.getItem('token')) {
             next()
             return

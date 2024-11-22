@@ -155,9 +155,6 @@ function validatePassword(password) {
 }
 
 function checkPasswordEqual() {
-    console.log(newPassword.value)
-    console.log(repeatNewPassword.value)
-
     if (newPassword.value === repeatNewPassword.value) {
         isPasswordEqual.value = true
     } else {

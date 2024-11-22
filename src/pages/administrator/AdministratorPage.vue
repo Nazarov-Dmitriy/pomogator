@@ -19,8 +19,6 @@ const componentsMap = {
 const selectedComponent = ref(null)
 
 const updateSelectedComponent = (selection) => {
-    console.log(componentsMap[selection])
-
     selectedComponent.value = componentsMap[selection] || null
 }
 </script>

@@ -126,8 +126,6 @@ onMounted(() => {
     window.addEventListener('click', closeDropDown)
     selectedOption.value = props.modelValue
     if (selectedOption.value) {
-        console.log(44444)
-
         toggleMultiOptionSelect()
     }
 })
