@@ -484,7 +484,7 @@ watch(getWebinar, () => {
         font-weight: 400;
         font-size: 16px;
         line-height: 150%;
-        color: #a0b1ed;
+        color: $black;
         position: absolute;
         top: 50%;
         transform: translate(0, -50%);

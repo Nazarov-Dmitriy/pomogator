@@ -72,7 +72,7 @@ const props = defineProps({
     },
     placeholder: {
         type: String,
-        default: 'Выбирите'
+        default: 'Выберите'
     },
     error: {
         type: Boolean,

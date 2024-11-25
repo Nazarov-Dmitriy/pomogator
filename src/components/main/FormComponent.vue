@@ -429,6 +429,7 @@ function validateForm() {
     color: $secondary;
     font-size: 16px;
     line-height: 1.5;
+    color: $black;
 
     @media (max-width: $sm) {
         width: 100%;
@@ -495,7 +496,7 @@ function validateForm() {
     border-radius: 32px;
     border: 2px solid $secondary;
     padding: 12px 56px 12px 16px;
-    color: $secondary;
+    color: $black;
     font-size: 16px;
     line-height: 1.5;
     outline: none;
