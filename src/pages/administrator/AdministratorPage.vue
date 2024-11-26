@@ -9,11 +9,13 @@
 <script setup>
 import MyData from '@/components/administarator/MyData.vue'
 import ReviewsComponent from '@/components/administarator/reviews/ReviewsComponent.vue'
+import UsersComponent from '@/components/administarator/users/UsersComponent.vue'
 import MainLayots from '@/layouts/MainLayots.vue'
 import { ref } from 'vue'
 
 const componentsMap = {
-    reviews: ReviewsComponent
+    reviews: ReviewsComponent,
+    users: UsersComponent
 }
 
 const selectedComponent = ref(null)

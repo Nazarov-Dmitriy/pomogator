@@ -40,7 +40,9 @@
                             />
                         </div>
                         <div class="reviews__header-info">
-                            <div class="card-top gap-4 !justify-end">
+                            <div
+                                class="card-top gap-4 justify-start flex-wrap !p-0 sm:!p-4 sm:!justify-end"
+                            >
                                 <button
                                     class="card-top__edit p-2 px-4 bg-white rounded-xl"
                                     @click="card.id !== edit ? editReviews(card) : saveReviews()"

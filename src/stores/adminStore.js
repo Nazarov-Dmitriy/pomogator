@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 import axiosR from '@/api/http'
 
-export const useReviewsStore = defineStore('reviewsStore', {
+export const useAdminStore = defineStore('adminStore', {
     state: () => ({
         list: null,
         errors: null,
         success: false
     }),
     getters: {
-        getReviewsList(state) {
+        getUserList(state) {
             return state.list
         },
         getErrors(state) {
@@ -19,26 +19,12 @@ export const useReviewsStore = defineStore('reviewsStore', {
         }
     },
     actions: {
-        addReviews(data) {
-            this.success = false
+        changeRole(data) {
             this.errors = null
+            this.success = false
 
             axiosR
-                .post('/reviews/add', data)
-                .then((res) => {
-                    if (res.status === 200) {
-                        this.success = true
-                    }
-                })
-                .catch((err) => {
-                    this.errors = err.data
-                })
-        },
-        ediReviews(data) {
-            this.success = false
-            this.errors = null
-            axiosR
-                .put('/reviews/edit', data)
+                .put('/admin/change-role', data)
                 .then((res) => {
                     if (res.status === 200) {
                         this.success = true
@@ -51,7 +37,7 @@ export const useReviewsStore = defineStore('reviewsStore', {
         getListDb() {
             this.errors = null
             axiosR
-                .get('/reviews/list')
+                .get('/admin/user-list')
                 .then((res) => {
                     if (res.status === 200) {
                         this.list = res.data
@@ -61,12 +47,13 @@ export const useReviewsStore = defineStore('reviewsStore', {
                     this.errors = err.data
                 })
         },
-        removeReviews(id) {
+        //
+        removeUser(id) {
             this.errors = null
             this.success = false
 
             axiosR
-                .get('/reviews/remove/' + id)
+                .get('/admin/user-remove/' + id)
                 .then((res) => {
                     if (res.status === 200) {
                         this.success = true

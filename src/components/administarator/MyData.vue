@@ -1,9 +1,9 @@
 <template>
     <div class="my-data__wrapper" :class="{ 'active-favorite': isFavoriteComponent }">
         <DropdownComponent
+            v-model:modelValue="selectedOption"
             :options="options"
-            contnent-class="flex gap-2"
-            :model-value="selectedOption"
+            contnent-class="flex gap-2 items-center"
             @select="handleSelect"
         />
     </div>
@@ -11,7 +11,8 @@
 
 <script setup>
 import DropdownComponent from '@/components/dropdown/DropdownComponent.vue'
-import { onMounted, ref, watch } from 'vue'
+import { useUserStore } from '@/stores/userStore'
+import { computed, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
     defaultSelect: {
@@ -20,7 +21,19 @@ const props = defineProps({
     }
 })
 
-const options = ref([{ id: 1, name: 'Отзывы', value: 'reviews' }])
+const optionsAdmin = [
+    { id: 1, name: 'Отзывы', value: 'reviews' },
+    { id: 2, name: 'Пользователи', value: 'users' }
+]
+const optionsModerator = [{ id: 1, name: 'Отзывы', value: 'reviews' }]
+
+const userStore = useUserStore()
+
+const getUser = computed(() => {
+    return userStore.getUser
+})
+
+const options = ref([])
 
 const selectedOption = ref(null)
 
@@ -31,18 +44,36 @@ function handleSelect(option) {
     emit('select', option.value)
 }
 
-watch(selectedOption, () => {})
-
 onMounted(() => {
+    if (getUser.value) {
+        console.log(getUser.value.role)
+
+        getUser.value.role === 'ROLE_ADMIN'
+            ? (options.value = optionsAdmin)
+            : (options.value = optionsModerator)
+    }
+
     if (props.defaultSelect) {
         selectedOption.value = props.defaultSelect
-        options.value.forEach((el) => {
+        options?.value.forEach((el) => {
             if (el.id === props.defaultSelect) {
                 emit('select', el.value)
             }
         })
     }
 })
+
+watch(selectedOption, () => {})
+
+watch(
+    getUser,
+    () => {
+        getUser.value.role === 'ROLE_ADMIN'
+            ? (options.value = optionsAdmin)
+            : (options.value = optionsModerator)
+    },
+    { deep: true }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -58,7 +89,6 @@ onMounted(() => {
     @media (max-width: $sm) {
         padding: 16px;
         flex-direction: column;
-        align-items: center;
         gap: 10px;
     }
 
@@ -89,7 +119,8 @@ onMounted(() => {
     }
 
     :deep(.dropdown-icon) {
-        margin-top: -6px;
+        margin-top: 2px;
+        position: unset;
     }
     :deep(.option-wrapper) {
         border-radius: 16px;
@@ -102,8 +133,7 @@ onMounted(() => {
 
         @media (max-width: $sm) {
             width: auto;
-            left: 50%;
-            transform: translate(-50%, 0);
+            left: 0%;
         }
     }
 
