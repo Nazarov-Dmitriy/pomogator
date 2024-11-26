@@ -7,7 +7,7 @@
                 </h2>
                 <div class="webinars__img-wrapper webinars__img-wrapper--mobile">
                     <img
-                        src="/image/webinar/webinars/webinar-screen.png"
+                        src="/image/webinar/webinars/webinar.png"
                         alt="screen img"
                         class="webinars__img"
                     />
@@ -15,7 +15,7 @@
                 <p class="webinars__subtitle">
                     Чтобы участвовать в вебинаре нужно зарегистрироваться
                 </p>
-                <div v-if="!userStore.getUser"class="webinars__btn-wrapper">
+                <div v-if="!userStore.getUser" class="webinars__btn-wrapper">
                     <BtnBackgroud
                         class="webinars__btn -my-2"
                         emit-name="form-submit"
@@ -27,7 +27,7 @@
             </div>
             <div class="webinars__img-wrapper">
                 <img
-                    src="/image/webinar/webinars/webinar-screen.png"
+                    src="/image/webinar/webinars/webinar.png"
                     alt="screen img"
                     class="webinars__img"
                 />

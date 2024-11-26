@@ -167,11 +167,11 @@
                     </span>
                 </p>
             </div>
-            <div class="flex items-center justify-between">
+            <div class="btns-wrapper">
                 <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
                     {{ pageType ? 'Сохранить' : 'Отправить' }}
                 </BtnBackgroud>
-                <BtnComponent emit-name="action" @action="$router.go(-1)">Отменить</BtnComponent>
+                <BtnComponent class="cancel-btn" emit-name="action" @action="$router.go(-1)">Отменить</BtnComponent>
             </div>
 
             <div v-if="getIsSuccses" style="color: green">
@@ -663,6 +663,21 @@ watch(getWebinar, () => {
     :deep(.dp__input_wrap) {
         border: 2px solid #a0b1ed;
         border-radius: 32px;
+    }
+}
+.btns-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (max-width: $sm) {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+.cancel-btn {
+    @media (max-width: $sm) {
+        width: 100%;
     }
 }
 </style>
