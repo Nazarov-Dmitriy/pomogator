@@ -17,6 +17,8 @@ import NotFound from '@/pages/not-found/NotFound.vue'
 import EditMaterialPage from '@/pages/edit-material/EditMaterialPage.vue'
 import ErrorPage from '@/pages/error/ErrorPage.vue'
 import ForgotPassword from '@/pages/auth/ForgotPassword.vue'
+import AdministratorPage from '@/pages/administrator/AdministratorPage.vue'
+import { useUserStore } from '@/stores/userStore'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -150,6 +152,12 @@ const router = createRouter({
             name: 'error',
             component: ErrorPage
         },
+        {
+            path: '/administrator',
+            name: 'administrator',
+            component: AdministratorPage,
+            meta: { protected: true, admin: true }
+        },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
     ],
     scrollBehavior(to, from, savedPosition) {
@@ -165,7 +173,14 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some((route) => route.meta.protected)) {
+    const user = useUserStore()
+    if (to.matched.some((route) => route.meta.protected && route.meta.admin)) {
+        if (localStorage.getItem('token') && user.getUser?.role === 'ROLE_ADMIN') {
+            next()
+            return
+        }
+        next('/')
+    } else if (to.matched.some((route) => route.meta.protected)) {
         if (localStorage.getItem('token')) {
             next()
             return

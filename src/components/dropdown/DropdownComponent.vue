@@ -1,6 +1,6 @@
 <template>
     <div v-if="!multi" ref="dropDown" class="dashboard__dropdown-wrapper" :class="{ error: error }">
-        <div @click="isDropDownVisible = !isDropDownVisible">
+        <div :class="contnentClass" @click="isDropDownVisible = !isDropDownVisible">
             <p :class="['dropdown-selected-text']">
                 {{ mappedSelectedOption }}
             </p>
@@ -77,6 +77,10 @@ const props = defineProps({
     error: {
         type: Boolean,
         default: false
+    },
+    contnentClass: {
+        type: String,
+        default: null
     }
 })
 const emit = defineEmits(['update:modelValue', 'select'])
@@ -121,6 +125,9 @@ const mappedSelectedOption = computed(() => {
 onMounted(() => {
     window.addEventListener('click', closeDropDown)
     selectedOption.value = props.modelValue
+    if (selectedOption.value) {
+        toggleMultiOptionSelect()
+    }
 })
 
 onBeforeUnmount(() => {
@@ -146,7 +153,7 @@ watch(
     height: 56px;
     background: $white;
     border-radius: 12px;
-
+    width: 100%;
     &.error {
         border-color: $primary-red !important;
     }
@@ -166,9 +173,9 @@ watch(
     font-size: 16px;
     font-weight: 400;
     outline: none;
-    -webkit-line-clamp: 1;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
 }
 
