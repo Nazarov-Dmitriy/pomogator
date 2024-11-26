@@ -2,15 +2,54 @@
     <div class="section-trend-about">
         <div class="trend-about__container">
             <div class="trend-about__content">
-                <h2 class="trend-about__title">
+                <h2 v-if="$route.path.includes('/trend/khimiya')" class="trend-about__title">
                     IT-технологии в преподавании химии, касается использования информационных
                     технологий для улучшения образовательного процесса и стимуляции интереса
                     учащихся к предмету.
                 </h2>
+
                 <img
+                    v-if="$route.path.includes('/trend/khimiya')"
                     src="@/assets/images/trend/description/img.svg"
                     alt="about-image"
                     class="trend-about__image"
+                />
+
+                <h2 v-if="$route.path.includes('/trend/fizika')" class="trend-about__title">
+                    IT-технологии в преподавании физики, касается использования информационных
+                    технологий для улучшения образовательного процесса и стимуляции интереса
+                    учащихся к предмету.
+                </h2>
+
+                <img
+                    v-if="$route.path.includes('/trend/fizika')"
+                    src="@/assets/images/trend/description/physics.png"
+                    alt="about-image"
+                    class="trend-about__image-png"
+                />
+                <h2 v-if="$route.path.includes('/trend/biologiya')" class="trend-about__title">
+                    IT-технологии в преподавании биологии, касается использования информационных
+                    технологий для улучшения образовательного процесса и стимуляции интереса
+                    учащихся к предмету.
+                </h2>
+
+                <img
+                    v-if="$route.path.includes('/trend/biologiya')"
+                    src="@/assets/images/trend/description/biology.png"
+                    alt="about-image"
+                    class="trend-about__image-png"
+                />
+                <h2 v-if="$route.path.includes('/trend/robototekhnika')" class="trend-about__title">
+                    IT-технологии в преподавании робототехники, касается использования
+                    информационных технологий для улучшения образовательного процесса и стимуляции
+                    интереса учащихся к предмету.
+                </h2>
+
+                <img
+                    v-if="$route.path.includes('/trend/robototekhnika')"
+                    src="@/assets/images/trend/description/robot.png"
+                    alt="about-image"
+                    class="trend-about__image-png"
                 />
                 <div class="trend-about__block">
                     <p class="trend-about__text" :class="props.user && '!text-transparent'">
@@ -125,6 +164,22 @@ const props = defineProps({
     @media (max-width: $sm) {
         position: unset;
         width: 100%;
+    }
+}
+.trend-about__image-png {
+    position: absolute;
+    top: 26px;
+    right: 55px;
+    aspect-ratio: 1 / 1;
+    width: 30%;
+    z-index: 1;
+    object-fit: contain;
+
+    @media (max-width: $sm) {
+        position: relative;
+        width: 100%;
+        top: 0;
+        right: 0;
     }
 }
 

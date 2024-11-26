@@ -288,7 +288,7 @@ const isFormValid = computed(() => {
     width: 307px;
     height: 48px;
     background-color: $white;
-    color: $secondary;
+    color: $black;
     position: relative;
 
     @media (max-width: $lg) {

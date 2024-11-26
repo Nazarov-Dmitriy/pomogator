@@ -265,6 +265,7 @@ watch(getErrors, () => {
     color: $blue-primary;
     margin-bottom: 32px;
     padding: 0 80px;
+    font-family: "Kreadon-Demi";
 
     @media (max-width: 992px) {
         font-size: 32px;

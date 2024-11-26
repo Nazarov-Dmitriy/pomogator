@@ -51,7 +51,7 @@
                         <DropdownComponent
                             v-model:modelValue="dataNews.category"
                             :options="getCategory"
-                            :placeholder="'Выбирите категорию'"
+                            :placeholder="'Выберите категорию'"
                             :error="getErrors?.category"
                         />
                         <p v-if="getErrors?.category" class="error-text">
@@ -595,7 +595,7 @@ watch(isArticleImage, (newVal) => {
         font-weight: 400;
         font-size: 16px;
         line-height: 150%;
-        color: #a0b1ed;
+        color: $black;
         position: absolute;
         top: 50%;
         transform: translate(0, -50%);
@@ -603,6 +603,10 @@ watch(isArticleImage, (newVal) => {
         height: 100%;
         display: flex;
         align-items: center;
+
+        &.dropdown-selected-text--selected {
+            color: $black;
+        }
 
         &:hover,
         &:active,
@@ -657,6 +661,13 @@ watch(isArticleImage, (newVal) => {
     }
 }
 
+.text-base {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: $black;
+    font-weight: 500;
+}
 .link {
     border: 2px solid #a0b1ed;
     border-radius: 32px;
@@ -665,10 +676,10 @@ watch(isArticleImage, (newVal) => {
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
-    color: #a0b1ed;
+    color: $black;
 
     &::placeholder {
-        color: $blue;
+        color: #a0b1ed;
         font-weight: 400;
         font-size: 16px;
         line-height: 150%;
@@ -681,7 +692,7 @@ watch(isArticleImage, (newVal) => {
         color: $black;
 
         &::placeholder {
-            color: $blue-primary;
+            // color: $blue-primary;
         }
     }
 }
@@ -730,7 +741,7 @@ watch(isArticleImage, (newVal) => {
         font-weight: 400;
         font-size: 16px;
         line-height: 150%;
-        color: #a0b1ed;
+        color: $black;
         position: absolute;
         top: 50%;
         transform: translate(0, -50%);
