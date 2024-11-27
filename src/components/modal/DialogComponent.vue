@@ -9,7 +9,7 @@
                 class="dialog-container flex flex-col md:gap-16 gap-4 bg-white w-[500px] md:p-20 py-10 px-10 shadow-lg relative rounded-[32px]"
             >
                 <div class="absolute top-3 right-3">
-                    <button @click="handleClose">X</button>
+                    <button class="p-2" @click="handleClose">X</button>
                 </div>
                 <div class="dialog-modal">
                     <p class="text-xxl text-center">Вы точно хотите удалить материал?</p>
