@@ -8,8 +8,8 @@
                         <img src="@/assets/images/cabinet/cabinetProfile/edit.svg" alt="edit" />
                         <p>редактировать</p>
                     </div>
-                    <div class="card-top__delete">
-                        <p @click="toggleDialog(item)">удалить</p>
+                    <div class="card-top__delete" @click="toggleDialog(item)">
+                        <p>удалить</p>
                         <img
                             src="@/assets/images/cabinet/cabinetProfile/bucket.png"
                             alt="delete"
@@ -168,12 +168,14 @@ async function removeArticle(id, type) {
         if (resNews) {
             emit('remove-article')
         }
+        modalShow.value = false
         dialogShow.value = false
     } else {
         const resWebinar = await webinarStore.removeWebinar(id)
         if (resWebinar) {
             emit('remove-article')
         }
+        modalShow.value = false
         dialogShow.value = false
     }
 }

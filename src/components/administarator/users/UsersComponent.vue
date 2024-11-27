@@ -20,12 +20,11 @@
                                 @click="changeEditUser(user)"
                             />
                         </button>
-                        <button>
+                        <button @click="toggleDialog(user.id)">
                             <img
                                 src="@/assets/images/cabinet/cabinetProfile/bucket.png"
                                 alt="icon"
                                 class="w-5 h-5"
-                                @click="removeUser(user.id)"
                             />
                         </button>
                     </div>
@@ -92,6 +91,11 @@
         </div>
     </section>
     <Teleport to="body">
+        <ModalConfirm :show="modalShow" @remove="removeUser" @close="toggleDialog(null)">
+            <template #body> <p class="text-xl font-medium">Удалить пользователя ?</p> </template>
+        </ModalConfirm>
+    </Teleport>
+    <Teleport to="body">
         <Loader v-if="!isLoad" />
     </Teleport>
 </template>
@@ -102,13 +106,16 @@ import Loader from '@/components/loader/Loader.vue'
 import PaginationComponent from '@/components/pagination/PaginationComponent.vue'
 import { useAdminStore } from '@/stores/adminStore'
 import { computed, onMounted, ref, watch } from 'vue'
+import ModalConfirm from '../reviews/ModalConfirm.vue'
 const adminStore = useAdminStore()
 
 const isLoad = ref(false)
 const editUser = ref(null)
+const modalShow = ref(false)
 const activeUser = ref(null)
 const role = ref(null)
 const renderList = ref([])
+const removeId = ref(null)
 
 const options = [
     { id: 1, name: 'Пользователь', role: 'ROLE_USER' },
@@ -156,9 +163,15 @@ function changeRole() {
     isLoad.value = false
 }
 
-function removeUser(id) {
-    adminStore.removeUser(id)
-    // isLoad.value = false
+function toggleDialog(id) {
+    modalShow.value = !modalShow.value
+    id ? (removeId.value = id) : (removeId.value = null)
+}
+
+function removeUser() {
+    adminStore.removeUser(removeId.value)
+    isLoad.value = false
+    modalShow.value = !modalShow.value
 }
 
 onMounted(() => {

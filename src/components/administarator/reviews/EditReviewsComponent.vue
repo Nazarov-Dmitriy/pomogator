@@ -130,7 +130,9 @@
             @change="onFileChange"
         />
         <Teleport to="body">
-            <ModalConfirm :show="modalShow" @remove="removeReviews" @close="toggleDialog(null)" />
+            <ModalConfirm :show="modalShow" @remove="removeReviews" @close="toggleDialog(null)">
+                <template #body> <p class="text-xl font-medium">Удалить отзыв ?</p> </template>
+            </ModalConfirm>
         </Teleport>
         <Teleport to="body">
             <Loader v-if="!isLoad" />

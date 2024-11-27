@@ -23,9 +23,15 @@ const props = defineProps({
 
 const optionsAdmin = [
     { id: 1, name: 'Отзывы', value: 'reviews' },
-    { id: 2, name: 'Пользователи', value: 'users' }
+    { id: 2, name: 'Пользователи', value: 'users' },
+    { id: 3, name: 'Статьи', value: 'article' },
+    { id: 4, name: 'Вебинары', value: 'webinar' }
 ]
-const optionsModerator = [{ id: 1, name: 'Отзывы', value: 'reviews' }]
+const optionsModerator = [
+    { id: 1, name: 'Отзывы', value: 'reviews' },
+    { id: 2, name: 'Статьи', value: 'article' },
+    { id: 3, name: 'Вебинары', value: 'webinar' }
+]
 
 const userStore = useUserStore()
 

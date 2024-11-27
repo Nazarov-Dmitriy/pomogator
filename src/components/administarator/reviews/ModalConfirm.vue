@@ -3,7 +3,7 @@
         <div v-if="props.show" class="modal-mask">
             <div v-esc="() => $emit('close')" class="modal-container">
                 <div class="flex flex-col gap-8">
-                    <p class="text-xl font-medium">Удалить отзыв ?</p>
+                    <slot name="body" />
                     <div class="flex gap-2 justify-end">
                         <button
                             class="card-top__delete p-2 px-4 bg-white rounded-xl border border-[#F84343]"
@@ -13,9 +13,9 @@
                         </button>
                         <button
                             class="card-top__delete p-2 px-4 bg-white rounded-xl border border-[#F84343]"
-                            @click="1"
+                            @click="() => $emit('remove')"
                         >
-                            <p @click="() => $emit('remove')">Yдалить</p>
+                            <p>Yдалить</p>
                             <img
                                 src="@/assets/images/cabinet/cabinetProfile/bucket.png"
                                 alt="delete"
