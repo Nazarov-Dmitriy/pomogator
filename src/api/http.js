@@ -28,9 +28,9 @@ axiosR.interceptors.response.use(
         return response
     },
     (error) => {
-        if (error.code === 'ERR_NETWORK' && window.location.pathname !== '/error') {
-            window.location.href = '/error'
-        }
+        // if (error.code === 'ERR_NETWORK' && window.location.pathname !== '/error') {
+        //     window.location.href = '/error'
+        // }
 
         return Promise.reject(error.response)
     }

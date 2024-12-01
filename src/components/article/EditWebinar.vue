@@ -1,9 +1,9 @@
 <template>
     <div class="edit flex flex-col p-10 w-full gap-4">
-        <template v-if="!isLoad">
-            <Loader />
-        </template>
-        <template v-else-if="getUser?.completed_profile">
+        {{ dataWebinar }}
+        <br />
+        {{ getWebinar }}
+        <template v-if="getArticleAccess === 'success'">
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать вебинар' : 'Добавить вебинар' }}
             </h1>
@@ -171,39 +171,34 @@
                 <BtnBackgroud class="w-fit" emit-name="action" @action="submit()">
                     {{ pageType ? 'Сохранить' : 'Отправить' }}
                 </BtnBackgroud>
-                <BtnComponent class="cancel-btn" emit-name="action" @action="$router.go(-1)">Отменить</BtnComponent>
+                <BtnComponent class="cancel-btn" emit-name="action" @action="$router.go(-1)"
+                    >Отменить</BtnComponent
+                >
             </div>
 
             <div v-if="getIsSuccses" style="color: green">
                 {{ pageType ? 'Вебинар успешно сохранен' : 'Вебинар успешно добавлен' }}
             </div>
         </template>
-        <template v-else>
-            <template v-if="getUser">
-                <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавления вебинара заполните профиль</h2>
-                </div>
-                <BtnComponent
-                    emit-name="action"
-                    class="w-fit"
-                    @action="$router.push('/lk/profile')"
-                >
-                    Перейти в профиль
-                </BtnComponent>
-            </template>
-            <template v-else>
-                <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавления вебинара авторизуйтесь</h2>
-                </div>
-                <BtnComponent
-                    emit-name="action"
-                    class="w-fit"
-                    @action="$router.push('/auth/login')"
-                >
-                    Авторизоваться
-                </BtnComponent>
-            </template>
+        <template v-if="getArticleAccess === 'completed_profile'">
+            <div class="flex flex-col gap-4">
+                <h2 class="edit__empty-profile">Для добавления вебинара заполните профиль</h2>
+            </div>
+            <BtnComponent emit-name="action" class="w-fit" @action="$router.push('/lk/profile')">
+                Перейти в профиль
+            </BtnComponent>
         </template>
+        <template v-if="getArticleAccess === 'login'">
+            <div class="flex flex-col gap-4">
+                <h2 class="edit__empty-profile">Для добавления вебинара авторизуйтесь</h2>
+            </div>
+            <BtnComponent emit-name="action" class="w-fit" @action="$router.push('/auth/login')">
+                Авторизоваться
+            </BtnComponent>
+        </template>
+        <Teleport to="body">
+            <Loader v-if="!isLoad" />
+        </Teleport>
     </div>
 </template>
 <script setup>
@@ -280,7 +275,13 @@ const getDateMoscow = computed(() => {
 
 onMounted(() => {
     newsStore.getTagsDb()
-    dataWebinar.author = getUser.value?.id
+
+    if (getUser.value?.id == getWebinar.value?.author?.id) {
+        dataWebinar.author = getUser.value?.id
+    } else {
+        dataWebinar.author = getWebinar.value?.author?.id
+    }
+
     if (route.name === 'edit-webinar') {
         pageType.value = 'edit'
         getWebinarDb(route.params.id)
@@ -311,6 +312,35 @@ function onFileChange(e) {
         previewImage.value = null
     }
 }
+
+const getArticleAccess = computed(() => {
+    if (pageType.value) {
+        if (getUser.value && getWebinar.value) {
+            if (
+                (getUser.value.id === getWebinar.value.author?.id ||
+                    getUser.value.role === 'ROLE_ADMIN' ||
+                    getUser.value.role === 'ROLE_MODERATOR') &&
+                getUser.value?.completed_profile
+            ) {
+                return 'success'
+            } else {
+                return 'completed_profile'
+            }
+        } else {
+            return 'login'
+        }
+    } else {
+        if (getUser.value) {
+            if (getUser.value?.completed_profile) {
+                return 'success'
+            } else {
+                return 'completed_profile'
+            }
+        } else {
+            return 'login'
+        }
+    }
+})
 
 const getPreviewPath = computed(() => {
     if (previewImage.value.includes('base64')) {
@@ -355,7 +385,11 @@ function getMscTz() {
 }
 
 watch(getUser, () => {
-    dataWebinar.author = getUser.value?.id
+    if (getUser.value?.id == getWebinar.value?.author?.id) {
+        dataWebinar.author = getUser.value?.id
+    } else {
+        dataWebinar.author = getWebinar.value?.author?.id
+    }
 })
 
 watch(getTags, () => {

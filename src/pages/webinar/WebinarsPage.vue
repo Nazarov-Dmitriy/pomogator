@@ -81,18 +81,22 @@ watch(
     (newVal) => {
         isLoad.value = false
         if (activeTags.value.length > 0) {
-            newsStore.getLisParamstDb({ tags: newVal.toString() })
+            webinarStore.getLisParamstDb({ tags: newVal.toString() })
         } else {
-            newsStore.getLisParamstDb()
+            webinarStore.getLisParamstDb()
         }
     },
     { deep: true }
 )
 
-watch([getWebinarList, getTags], () => {
-    isLoad.value = true
-    data.value = getWebinarList.value
-})
+watch(
+    [getWebinarList, getTags],
+    () => {
+        isLoad.value = true
+        data.value = getWebinarList.value
+    },
+    { deep: true }
+)
 </script>
 
 <style scoped lang="scss">

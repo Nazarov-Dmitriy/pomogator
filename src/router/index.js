@@ -175,7 +175,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const user = useUserStore()
     if (to.matched.some((route) => route.meta.protected && route.meta.admin)) {
-        if (localStorage.getItem('token') && user.getUser?.role === 'ROLE_ADMIN') {
+        if (
+            localStorage.getItem('token') &&
+            (user.getUser?.role === 'ROLE_ADMIN' || user.getUser?.role === 'ROLE_MODERATOR')
+        ) {
             next()
             return
         }

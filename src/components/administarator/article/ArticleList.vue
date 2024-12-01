@@ -5,8 +5,10 @@
             :is-search-visible="true"
             class="trend__search-panel"
             :active-tags="activeTags"
+            :show-published="true"
             @search="search()"
             @active-tags="setTags"
+            @published="setPublished"
         />
         <CabinetListArticle
             class="cabinet-trend__article-header"
@@ -29,6 +31,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 const newsStore = useNewsStore()
 const isLoad = ref(false)
+const published = ref('all')
 
 const getNewsList = computed(() => {
     return newsStore.getNewsList
@@ -66,8 +69,20 @@ function removeArticle() {
     newsStore.getNewsListDb()
 }
 
+function setPublished(value) {
+    published.value = value
+    if (activeTags.value.length > 0) {
+        newsStore.getLisParamstDb({
+            tags: activeTags.value.toString(),
+            published: value
+        })
+    } else {
+        newsStore.getLisParamstDb({ published: value })
+    }
+}
+
 onMounted(() => {
-    newsStore.getNewsListDb()
+    newsStore.getLisParamstDb({ published: published.value })
     newsStore.getTagsDb()
     newsStore.getCategoryDb()
 })
@@ -83,9 +98,9 @@ watch(
     (newVal) => {
         isLoad.value = false
         if (activeTags.value.length > 0) {
-            newsStore.getLisParamstDb({ tags: newVal.toString() })
+            newsStore.getLisParamstDb({ tags: newVal.toString(), published: published.value })
         } else {
-            newsStore.getNewsListDb()
+            newsStore.getLisParamstDb({ published: published.value })
         }
     },
     { deep: true }

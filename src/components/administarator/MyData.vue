@@ -52,8 +52,6 @@ function handleSelect(option) {
 
 onMounted(() => {
     if (getUser.value) {
-        console.log(getUser.value.role)
-
         getUser.value.role === 'ROLE_ADMIN'
             ? (options.value = optionsAdmin)
             : (options.value = optionsModerator)

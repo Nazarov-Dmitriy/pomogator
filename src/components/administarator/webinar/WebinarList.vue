@@ -5,8 +5,10 @@
             :is-search-visible="true"
             class="trend__search-panel"
             :active-tags="activeTags"
+            :show-published="true"
             @search="search()"
             @active-tags="setTags"
+            @published="setPublished"
         />
         <CabinetListArticle
             :data="data"
@@ -35,6 +37,7 @@ const webinarStore = useWebinarStore()
 const activeTags = ref([])
 const searchValue = ref('')
 const data = ref([])
+const published = ref('all')
 
 const getWebinarList = computed(() => {
     return webinarStore.getWebinarList
@@ -58,9 +61,21 @@ async function setTags(id) {
     }
 }
 
+function setPublished(value) {
+    published.value = value
+    if (activeTags.value.length > 0) {
+        webinarStore.getLisParamstDb({
+            tags: activeTags.value.toString(),
+            published: value
+        })
+    } else {
+        webinarStore.getLisParamstDb({ published: value })
+    }
+}
+
 onMounted(async () => {
     newsStore.getTagsDb()
-    webinarStore.getLisParamstDb()
+    webinarStore.getLisParamstDb({ published: published.value })
 })
 
 watch(searchValue, (newVal) => {
@@ -72,20 +87,24 @@ watch(searchValue, (newVal) => {
 watch(
     activeTags,
     (newVal) => {
-        isLoad.value = false
+        isLoad.value = true
         if (activeTags.value.length > 0) {
-            newsStore.getLisParamstDb({ tags: newVal.toString() })
+            webinarStore.getLisParamstDb({ tags: newVal.toString(), published: published.value })
         } else {
-            newsStore.getLisParamstDb()
+            webinarStore.getLisParamstDb({ published: published.value })
         }
     },
     { deep: true }
 )
 
-watch([getWebinarList, getTags], () => {
-    isLoad.value = true
-    data.value = getWebinarList.value
-})
+watch(
+    [getWebinarList, getTags],
+    () => {
+        isLoad.value = true
+        data.value = getWebinarList.value
+    },
+    { deep: true }
+)
 </script>
 
 <style lang="scss">

@@ -3,7 +3,9 @@
         class="cabinet-trend__search-panel"
         :tags="getTags"
         :active-tags="activeTags"
+        :show-published="true"
         @active-tags="setTags"
+        @published="setPublished"
     />
     <CabinetListArticle
         class="cabinet-trend__article-header"
@@ -26,6 +28,7 @@ import Loader from '@/components/loader/Loader.vue'
 
 const userStore = useUserStore()
 const newsStore = useNewsStore()
+const published = ref('all')
 
 const isLoad = ref(false)
 const activeTags = ref([])
@@ -51,13 +54,26 @@ function setTags(id) {
 }
 
 function removeArticle() {
-    userStore.getMyMaterialDb({ id: getUser.value?.id })
+    userStore.getMyMaterialDb({ id: getUser.value?.id, published: published.value })
+}
+
+function setPublished(value) {
+    published.value = value
+    if (activeTags.value.length > 0) {
+        userStore.getMyMaterialDb({
+            id: getUser.value?.id,
+            tags: activeTags.value.toString(),
+            published: value
+        })
+    } else {
+        userStore.getMyMaterialDb({ id: getUser.value?.id, published: value })
+    }
 }
 
 onMounted(() => {
     newsStore.getTagsDb()
     if (getUser.value) {
-        userStore.getMyMaterialDb({ id: getUser.value?.id })
+        userStore.getMyMaterialDb({ id: getUser.value?.id, published: published.value })
     }
 })
 
@@ -72,16 +88,20 @@ watch(
     (newVal) => {
         isLoad.value = false
         if (activeTags.value.length > 0) {
-            userStore.getMyMaterialDb({ id: getUser.value?.id, tags: newVal.toString() })
+            userStore.getMyMaterialDb({
+                id: getUser.value?.id,
+                tags: newVal.toString(),
+                published: published.value
+            })
         } else {
-            userStore.getMyMaterialDb({ id: getUser.value?.id })
+            userStore.getMyMaterialDb({ id: getUser.value?.id, published: published.value })
         }
     },
     { deep: true }
 )
 
 watch(getUser, () => {
-    userStore.getMyMaterialDb({ id: getUser.value?.id })
+    userStore.getMyMaterialDb({ id: getUser.value?.id, published: published.value })
 })
 </script>
 <style scoped lang="scss">

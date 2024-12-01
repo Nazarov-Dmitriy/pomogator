@@ -12,7 +12,6 @@
                     @keypress.enter="$emit('search')"
                 />
             </div>
-
             <div class="search-panel__block">
                 <div v-if="isSearchVisible">
                     <button
@@ -68,6 +67,41 @@
                     </div>
                 </div>
             </div>
+            <div v-if="showPublished" class="published flex gap-2 flex-wrap">
+                <div class="flex gap-2 items-center">
+                    <input
+                        id="all"
+                        v-model="published"
+                        type="radio"
+                        value="all"
+                        class="w-4 h-4"
+                        @change="setPublished"
+                    />
+                    <label for="all">Все</label>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <input
+                        id="published"
+                        v-model="published"
+                        type="radio"
+                        value="true"
+                        class="w-4 h-4"
+                        @change="setPublished"
+                    />
+                    <label for="published">Опубликовано</label>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <input
+                        id="not_published"
+                        v-model="published"
+                        type="radio"
+                        value="false"
+                        class="w-4 h-4"
+                        @change="setPublished"
+                    />
+                    <label for="not_published">Не опубликовано</label>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -87,6 +121,10 @@ defineProps({
     activeTags: {
         type: Array,
         default: () => []
+    },
+    showPublished: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -95,7 +133,9 @@ const getTags = computed(() => {
     return newsStore.getTags
 })
 
-const emit = defineEmits(['update:modelValue', 'search', 'active-tags'])
+const published = ref('all')
+
+const emit = defineEmits(['update:modelValue', 'search', 'active-tags', 'published'])
 
 const searchActive = ref(false)
 
@@ -103,22 +143,26 @@ const showSearchPanel = computed(() => {
     return searchActive.value
 })
 
+function setPublished() {
+    emit('published', published.value)
+}
+
 onMounted(() => {
-    newsStore.getTagsDb();
+    newsStore.getTagsDb()
     window.addEventListener('resize', resizeHandler)
 })
 
-function resizeHandler () {
+function resizeHandler() {
     if (window.innerWidth < 576) {
         searchActive.value = true
     }
 }
 
-function setActiveTags (id) {
+function setActiveTags(id) {
     emit('active-tags', id)
 }
 
-function showSearch () {
+function showSearch() {
     searchActive.value = true
     emit('update:modelValue', '')
 }
@@ -131,12 +175,10 @@ function showSearch () {
     flex-wrap: wrap;
     border-bottom: 2px solid $blue-primary;
 
-
     @media (max-width: $sm) {
         padding: 0 16px;
         gap: 16px;
         border-bottom: none;
-
     }
 }
 

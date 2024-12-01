@@ -16,10 +16,47 @@
                     </p>
                 </div>
             </div>
+            <div v-if="showPublished" class="published flex gap-2 flex-wrap">
+                <div class="flex gap-2 items-center">
+                    <input
+                        id="all"
+                        v-model="published"
+                        type="radio"
+                        value="all"
+                        class="w-4 h-4"
+                        @change="setPublished"
+                    />
+                    <label for="all">Все</label>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <input
+                        id="published"
+                        v-model="published"
+                        type="radio"
+                        value="true"
+                        class="w-4 h-4"
+                        @change="setPublished"
+                    />
+                    <label for="published">Опубликовано</label>
+                </div>
+                <div class="flex gap-2 items-center">
+                    <input
+                        id="not_published"
+                        v-model="published"
+                        type="radio"
+                        value="false"
+                        class="w-4 h-4"
+                        @change="setPublished"
+                    />
+                    <label for="not_published">Не опубликовано</label>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
+import { ref } from 'vue'
+
 defineProps({
     tags: {
         type: Array,
@@ -28,13 +65,22 @@ defineProps({
     activeTags: {
         type: Array,
         default: () => []
+    },
+    showPublished: {
+        type: Boolean,
+        default: false
     }
 })
 
-const emit = defineEmits(['active-tags'])
+const emit = defineEmits(['active-tags', 'published'])
+const published = ref('all')
 
 function setActiveTags(id) {
     emit('active-tags', id)
+}
+
+function setPublished() {
+    emit('published', published.value)
 }
 </script>
 <style lang="scss">
@@ -64,6 +110,14 @@ function setActiveTags(id) {
 
     @media (max-width: $sm) {
         justify-content: flex-start;
+    }
+}
+
+.published {
+    color: $blue-primary;
+
+    & input {
+        accent-color: $blue-primary;
     }
 }
 

@@ -1,9 +1,6 @@
 <template>
     <div class="edit flex flex-col w-full gap-4">
-        <template v-if="!isLoad">
-            <Loader />
-        </template>
-        <template v-else-if="getUser?.completed_profile">
+        <template v-if="getArticleAccess === 'success'">
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать новость' : 'Добавить новость' }}
             </h1>
@@ -179,38 +176,32 @@
                 {{ pageType ? 'Статья успешно сохранена' : 'Статья успешно добавлена' }}
             </div>
         </template>
-        <template v-else>
-            <template v-if="getUser">
-                <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавления статьи заполните профиль</h2>
-                </div>
-                <BtnComponent
-                    emit-name="action"
-                    class="w-fit"
-                    @action="$router.push('/lk/profile')"
-                >
-                    Перейти в профиль
-                </BtnComponent>
-            </template>
-            <template v-else>
-                <div class="flex flex-col gap-4">
-                    <h2 class="edit__empty-profile">Для добавления статьи авторизуйтесь</h2>
-                </div>
-                <BtnComponent
-                    emit-name="action"
-                    class="w-fit"
-                    @action="$router.push('/auth/login')"
-                >
-                    Авторизоваться
-                </BtnComponent>
-            </template>
+        <template v-if="getArticleAccess === 'completed_profile'">
+            <div class="flex flex-col gap-4">
+                <h2 class="edit__empty-profile">Для добавления статьи заполните профиль</h2>
+            </div>
+            <BtnComponent emit-name="action" class="w-fit" @action="$router.push('/lk/profile')">
+                Перейти в профиль
+            </BtnComponent>
         </template>
+        <template v-if="getArticleAccess === 'login'">
+            <div class="flex flex-col gap-4">
+                <h2 class="edit__empty-profile">Для добавления статьи авторизуйтесь</h2>
+            </div>
+            <BtnComponent emit-name="action" class="w-fit" @action="$router.push('/auth/login')">
+                Авторизоваться
+            </BtnComponent>
+        </template>
+        <Teleport to="body">
+            <Loader v-if="!isLoad" />
+        </Teleport>
     </div>
 </template>
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import DropdownComponent from '../dropdown/DropdownComponent.vue'
+import Loader from '@/components/loader/Loader.vue'
 import coreTranslations from 'ckeditor5/translations/ru.js'
 import {
     ClassicEditor,
@@ -225,12 +216,24 @@ import {
     Heading,
     FontBackgroundColor,
     List,
-    ListProperties
+    ListProperties,
+    Image,
+    PictureEditing,
+    ImageUpload,
+    CKBox,
+    CKBoxImageEdit,
+    CKBoxEditing,
+    LinkEditing,
+    CloudServices,
+    Base64UploadAdapter,
+    ImageTextAlternative,
+    ImageToolbar,
+    ImageResize,
+    ImageStyle
 } from 'ckeditor5'
 import 'ckeditor5/ckeditor5.css'
 import { useNewsStore } from '@/stores/newsStore'
 import { useUserStore } from '@/stores/userStore'
-import Loader from '@/components/loader/Loader.vue'
 import { useRoute } from 'vue-router'
 import BtnComponent from '../btns/BtnComponent.vue'
 
@@ -244,7 +247,18 @@ const editorConfig = {
             classes: 'article-text'
         }
     },
-
+    image: {
+        toolbar: [
+            'imageTextAlternative',
+            'imageResize',
+            'imageCaption',
+            'imageStyle',
+            '|',
+            'imageStyle:block',
+            'imageStyle:inline',
+            'imageStyle:side'
+        ]
+    },
     heading: {
         options: [
             { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
@@ -280,7 +294,20 @@ const editorConfig = {
         Heading,
         FontBackgroundColor,
         List,
-        ListProperties
+        ListProperties,
+        Image,
+        PictureEditing,
+        ImageUpload,
+        CKBox,
+        CKBoxImageEdit,
+        CKBoxEditing,
+        LinkEditing,
+        CloudServices,
+        Base64UploadAdapter,
+        ImageTextAlternative,
+        ImageToolbar,
+        ImageResize,
+        ImageStyle
     ],
     toolbar: {
         items: [
@@ -296,7 +323,9 @@ const editorConfig = {
             'fontBackgroundColor',
             '|',
             'bulletedList',
-            'numberedList'
+            'numberedList',
+            'imageUpload',
+            'ckbox'
         ],
         shouldNotGroupWhenFull: true
     },
@@ -330,6 +359,35 @@ const getArticle = computed(() => {
 
 const getErrors = computed(() => {
     return newsStore.getErrors
+})
+
+const getArticleAccess = computed(() => {
+    if (pageType.value) {
+        if (getUser.value && getArticle.value) {
+            if (
+                (getUser.value.id === getArticle.value.author?.id ||
+                    getUser.value.role === 'ROLE_ADMIN' ||
+                    getUser.value.role === 'ROLE_MODERATOR') &&
+                getUser.value?.completed_profile
+            ) {
+                return 'success'
+            } else {
+                return 'completed_profile'
+            }
+        } else {
+            return 'login'
+        }
+    } else {
+        if (getUser.value) {
+            if (getUser.value?.completed_profile) {
+                return 'success'
+            } else {
+                return 'completed_profile'
+            }
+        } else {
+            return 'login'
+        }
+    }
 })
 
 const isLoad = ref(false)
@@ -368,8 +426,12 @@ onMounted(() => {
     } else {
         isLoad.value = true
     }
+    if (getUser.value?.id == getArticle.value?.author?.id) {
+        dataNews.author = getUser.value?.id
+    } else {
+        dataNews.author = getArticle.value?.author?.id
+    }
 
-    dataNews.author = getUser.value?.id
     if (route.name === 'edit-article') {
         pageType.value = 'edit'
         getArticleDb(route.params.id)
@@ -442,7 +504,11 @@ watch(getArticle, () => {
 })
 
 watch(getUser, () => {
-    dataNews.author = getUser.value?.id
+    if (getUser.value?.id == getArticle.value?.author?.id) {
+        dataNews.author = getUser.value?.id
+    } else {
+        dataNews.author = getArticle.value?.author?.id
+    }
 })
 
 watch(isArticleImage, (newVal) => {

@@ -39,7 +39,12 @@
                         <li class="header__item">
                             <router-link to="/webinars" class="header__link"> Вебинар </router-link>
                         </li>
-                        <li v-if="getUser?.role === 'ROLE_ADMIN'" class="header__item">
+                        <li
+                            v-if="
+                                getUser?.role === 'ROLE_ADMIN' || getUser?.role === 'ROLE_MODERATOR'
+                            "
+                            class="header__item"
+                        >
                             <router-link to="/administrator" class="header__link">
                                 Администрирование
                             </router-link>
