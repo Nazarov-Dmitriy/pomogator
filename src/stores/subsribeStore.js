@@ -17,8 +17,6 @@ export const useSubsribeStore = defineStore('subsribeStore', {
                 .post('/subscribe', { email })
                 .then((res) => {
                     if (res.status === 200) {
-                        console.log(res)
-
                         this.subscribe = res.data
                     }
                 })

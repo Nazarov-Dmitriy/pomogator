@@ -4,7 +4,7 @@
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать вебинар' : 'Добавить вебинар' }}
             </h1>
-            <div class="flex gap-2 items-center">
+            <div v-if="getShowPublishedBtn" class="flex gap-2 items-center">
                 <input
                     id="published"
                     v-model="published"
@@ -279,6 +279,17 @@ const getIsSuccses = computed(() => {
     return webinarStore.getIsSuccsesWebinar
 })
 
+const getShowPublishedBtn = computed(() => {
+    if (
+        pageType.value &&
+        (getUser.value.role === 'ROLE_ADMIN' || getUser.value.role === 'ROLE_MODERATOR')
+    ) {
+        return true
+    } else {
+        return false
+    }
+})
+
 const getDateMoscow = computed(() => {
     let new_date = new TZDate(new Date(dataWebinar.date_translation), activeTz.value.tz)
     return format(new_date, ' HH:mm')
@@ -287,10 +298,14 @@ const getDateMoscow = computed(() => {
 onMounted(() => {
     newsStore.getTagsDb()
 
-    if (getUser.value?.id == getWebinar.value?.author?.id) {
-        dataWebinar.author = getUser.value?.id
+    if (pageType.value) {
+        if (getUser.value?.id == getWebinar.value?.author?.id) {
+            dataWebinar.author = getUser.value?.id
+        } else {
+            dataWebinar.author = getWebinar.value?.author?.id
+        }
     } else {
-        dataWebinar.author = getWebinar.value?.author?.id
+        dataWebinar.author = getUser.value?.id
     }
 
     if (route.name === 'edit-webinar') {
@@ -402,10 +417,14 @@ function getMscTz() {
 }
 
 watch(getUser, () => {
-    if (getUser.value?.id == getWebinar.value?.author?.id) {
-        dataWebinar.author = getUser.value?.id
+    if (pageType.value) {
+        if (getUser.value?.id == getWebinar.value?.author?.id) {
+            dataWebinar.author = getUser.value?.id
+        } else {
+            dataWebinar.author = getWebinar.value?.author?.id
+        }
     } else {
-        dataWebinar.author = getWebinar.value?.author?.id
+        dataWebinar.author = getUser.value?.id
     }
 })
 

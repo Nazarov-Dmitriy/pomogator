@@ -53,7 +53,7 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                         this.list = [...res.data]
                     })
             } catch (err) {
-                console.log(err)
+                console.dir(err)
             }
         },
         getWebinarDb(params) {
@@ -75,7 +75,7 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                 .get('/webinar/show/' + id)
                 .then(() => {})
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         },
         setLike(params) {
@@ -131,7 +131,7 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         },
         editWebinarDb(data) {
@@ -208,7 +208,7 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         }
     }

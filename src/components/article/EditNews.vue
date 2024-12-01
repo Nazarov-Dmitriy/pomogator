@@ -4,7 +4,7 @@
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать новость' : 'Добавить новость' }}
             </h1>
-            <div class="flex gap-2 items-center">
+            <div v-if="getShowPublishedBtn" class="flex gap-2 items-center">
                 <input
                     id="published"
                     v-model="published"
@@ -375,6 +375,17 @@ const getErrors = computed(() => {
     return newsStore.getErrors
 })
 
+const getShowPublishedBtn = computed(() => {
+    if (
+        pageType.value &&
+        (getUser.value.role === 'ROLE_ADMIN' || getUser.value.role === 'ROLE_MODERATOR')
+    ) {
+        return true
+    } else {
+        return false
+    }
+})
+
 const getArticleAccess = computed(() => {
     if (pageType.value) {
         if (getUser.value && getArticle.value) {
@@ -440,10 +451,15 @@ onMounted(() => {
     } else {
         isLoad.value = true
     }
-    if (getUser.value?.id == getArticle.value?.author?.id) {
-        dataNews.author = getUser.value?.id
+
+    if (pageType.value) {
+        if (getUser.value?.id == getArticle.value?.author?.id) {
+            dataNews.author = getUser.value?.id
+        } else {
+            dataNews.author = getArticle.value?.author?.id
+        }
     } else {
-        dataNews.author = getArticle.value?.author?.id
+        dataNews.author = getUser.value?.id
     }
 
     if (route.name === 'edit-article') {
@@ -525,10 +541,14 @@ watch(getArticle, () => {
 })
 
 watch(getUser, () => {
-    if (getUser.value?.id == getArticle.value?.author?.id) {
-        dataNews.author = getUser.value?.id
+    if (pageType.value) {
+        if (getUser.value?.id == getArticle.value?.author?.id) {
+            dataNews.author = getUser.value?.id
+        } else {
+            dataNews.author = getArticle.value?.author?.id
+        }
     } else {
-        dataNews.author = getArticle.value?.author?.id
+        dataNews.author = getUser.value?.id
     }
 })
 
