@@ -2,7 +2,7 @@
     <div class="offer-material">
         <p class="offer-material__subtile">Не нашли нужный материал? Оставьте свои предложения.</p>
         <BtnBackgroud class="offer-material__btn" emit-name="offer" @offer="checkPage">
-            Предложить материал
+            {{ btnText }}
         </BtnBackgroud>
     </div>
     <Teleport to="body">
@@ -10,7 +10,7 @@
     </Teleport>
 </template>
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import ModalComponent from '../modal/ModalComponentFaq.vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -18,6 +18,10 @@ import { useRoute, useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 const modalShow = ref(false)
+
+const btnText = computed(() => {
+    return route.path.includes('/lk/profile') ? 'Предложить материал' : 'Предложить тему материала'
+})
 
 function checkPage() {
     if (route.path.includes('/lk/profile')) {
