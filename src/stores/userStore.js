@@ -135,7 +135,7 @@ export const useUserStore = defineStore('userStore', {
                     }
                 })
                 .catch((error) => {
-                    console.log('error', error)
+                    console.dir(error)
                 })
         },
         resetSuccessRes() {
@@ -191,7 +191,7 @@ export const useUserStore = defineStore('userStore', {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         }
     }

@@ -198,6 +198,18 @@ export const useWebinarStore = defineStore('webinarStore.js', {
                 .catch((err) => {
                     this.errors = err.data
                 })
+        },
+        async setNewsPublished(id) {
+            return await axiosR
+                .put('/webinar/published/' + id)
+                .then((res) => {
+                    if (res.status == 200) {
+                        return true
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         }
     }
 })

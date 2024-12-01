@@ -4,6 +4,18 @@
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать новость' : 'Добавить новость' }}
             </h1>
+            <div class="flex gap-2 items-center">
+                <input
+                    id="published"
+                    v-model="published"
+                    type="checkbox"
+                    value="false"
+                    class="w-5 h-5"
+                    :disabled="publishedDisabled"
+                    @change="setPublished"
+                />
+                <label for="published">Опубликовать</label>
+            </div>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <label for="title" class="field__label" :class="{ error: getErrors?.title }"
@@ -336,6 +348,8 @@ const newsStore = useNewsStore()
 const userStore = useUserStore()
 const route = useRoute()
 const pageType = ref(null)
+const published = ref(false)
+const publishedDisabled = ref(false)
 
 const getTags = computed(() => {
     return newsStore.getTags
@@ -456,6 +470,12 @@ function addImg() {
     addInputImg.value.click()
 }
 
+async function setPublished() {
+    publishedDisabled.value = true
+    await newsStore.setNewsPublished(dataNews.id)
+    publishedDisabled.value = false
+}
+
 function submit() {
     const data = new FormData()
     for (const key in dataNews) {
@@ -484,6 +504,7 @@ watch([getTags, getCategory], () => {
 
 watch(getArticle, () => {
     isLoad.value = true
+    published.value = getArticle.value.published
     dataNews.id = getArticle.value.id
     dataNews.title = getArticle.value.title
     dataNews.annotation = getArticle.value.annotation

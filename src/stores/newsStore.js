@@ -31,6 +31,7 @@ export const useNewsStore = defineStore('newsStore', {
         getIsSuccses(state) {
             return state.isSuccess
         },
+
         getErrors(state) {
             return state.errors
         }
@@ -230,6 +231,18 @@ export const useNewsStore = defineStore('newsStore', {
                     if (res.status == 200) {
                         this.newsList = []
                         this.newsList = [...res.data]
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        },
+        async setNewsPublished(id) {
+            return await axiosR
+                .put('/news/published/' + id)
+                .then((res) => {
+                    if (res.status == 200) {
+                        return true
                     }
                 })
                 .catch((err) => {

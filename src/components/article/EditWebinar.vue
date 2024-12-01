@@ -1,12 +1,21 @@
 <template>
     <div class="edit flex flex-col p-10 w-full gap-4">
-        {{ dataWebinar }}
-        <br />
-        {{ getWebinar }}
         <template v-if="getArticleAccess === 'success'">
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать вебинар' : 'Добавить вебинар' }}
             </h1>
+            <div class="flex gap-2 items-center">
+                <input
+                    id="published"
+                    v-model="published"
+                    type="checkbox"
+                    value="false"
+                    class="w-5 h-5"
+                    :disabled="publishedDisabled"
+                    @change="setPublished"
+                />
+                <label for="published">Опубликовать</label>
+            </div>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <label for="title" class="field__label" :class="{ error: getErrors?.title }"
@@ -229,6 +238,8 @@ const pageType = ref(null)
 const isMscTz = ref(false)
 const selectedTz = ref(1)
 const date = ref('')
+const published = ref(false)
+const publishedDisabled = ref(false)
 
 const dataWebinar = reactive({
     id: null,
@@ -292,6 +303,12 @@ onMounted(() => {
 function getWebinarDb(id) {
     isLoad.value = false
     webinarStore.getWebinarDb(id)
+}
+
+async function setPublished() {
+    publishedDisabled.value = true
+    await webinarStore.setNewsPublished(dataWebinar.id)
+    publishedDisabled.value = false
 }
 
 function addImg() {
@@ -403,6 +420,7 @@ watch(date, () => {
 
 watch(getWebinar, () => {
     isLoad.value = true
+    published.value = getWebinar.value.published
     dataWebinar.id = getWebinar.value.id
     dataWebinar.title = getWebinar.value.title
     dataWebinar.annotation = getWebinar.value.annotation
