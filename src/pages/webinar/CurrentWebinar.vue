@@ -1,11 +1,20 @@
 <template>
     <MainLayots>
-        <WebinarHeader :webinar="webinar" :user="getUser" :subscribe="isSubscribes" />
+        <WebinarHeader
+            :webinar="webinar"
+            :user="getUser"
+            :subscribe="isSubscribes"
+            :show-btn-certificate="showBtnCertificate"
+            :is-user-certificat="getWebinarUserCertificat"
+        />
         <WebinarVideo
             :webinar="webinar"
             :is-favorite="isFavorite"
             :user="getUser"
+            :subscribe="isSubscribes"
+            :is-user-certificat="getWebinarUserCertificat"
             @set-status="setComplitedStatus()"
+            @show-btn-certificat="setShowBtnCertificat"
         />
         <WebinarCertificate :webinar="webinar" :user="getUser" />
         <div class="webinar-subscribe">
@@ -26,6 +35,7 @@ import WebinarCertificate from '@/components/webinar/WebinarCertificate.vue'
 import WebinarHeader from '@/components/webinar/WebinarHeader.vue'
 import WebinarVideo from '@/components/webinar/WebinarVideo.vue'
 import MainLayots from '@/layouts/MainLayots.vue'
+import { useCertificatetore } from '@/stores/certificateStore'
 import { useNewsStore } from '@/stores/newsStore'
 import { useUserStore } from '@/stores/userStore'
 import { useWebinarStore } from '@/stores/webinarStore'
@@ -42,6 +52,8 @@ const webinar = ref(null)
 const router = useRouter()
 const isFavorite = ref(false)
 const isSubscribes = ref(false)
+const showBtnCertificate = ref(false)
+const certificateStore = useCertificatetore()
 
 const getTags = computed(() => {
     return newsStore.getTags
@@ -55,6 +67,10 @@ const getUser = computed(() => {
     return userStore.getUser
 })
 
+const getWebinarUserCertificat = computed(() => {
+    return certificateStore.getWebinarUserCertificat
+})
+
 const getErrors = computed(() => {
     return newsStore.getErrors
 })
@@ -62,9 +78,16 @@ const getErrors = computed(() => {
 const isSuccessComplited = computed(() => {
     return webinarStore.getIsSuccsesWebinar
 })
+const getIsSuccsesCertificat = computed(() => {
+    return certificateStore.getIsSuccsesCertificat
+})
 
 function setComplitedStatus() {
     webinarStore.setComplitedStatusWebinar({ webinar_id: webinar.value.id })
+}
+
+function setShowBtnCertificat() {
+    showBtnCertificate.value = true
 }
 
 onMounted(async () => {
@@ -77,6 +100,10 @@ onMounted(async () => {
         isFavorite.value = await webinarStore.getFaforite({
             webinar_id: webinarId.value,
             user_id: getUser.value.id
+        })
+        certificateStore.getCertificatUser({
+            user_id: getUser.value.id,
+            webinar_id: webinarId.value
         })
         webinarStore
             .getSubsribeWebinar({
@@ -110,6 +137,10 @@ watch(getUser, async () => {
         user_id: getUser.value.id
     })
 
+    certificateStore.getCertificatUser({
+        user_id: getUser.value.id,
+        webinar_id: webinarId.value
+    })
     webinarStore
         .getSubsribeWebinar({
             webinar_id: webinarId.value,
@@ -126,6 +157,17 @@ watch(getErrors, () => {
 
 watch(isSuccessComplited, () => {
     webinarStore.getWebinarDb(webinarId.value)
+})
+
+watch(getWebinarUserCertificat, () => {})
+
+watch(getIsSuccsesCertificat, (newVal) => {
+    if (newVal) {
+        certificateStore.getCertificatUser({
+            user_id: getUser.value.id,
+            webinar_id: webinarId.value
+        })
+    }
 })
 </script>
 
@@ -144,6 +186,5 @@ watch(isSuccessComplited, () => {
             margin-left: 16px;
         }
     }
-    
 }
 </style>

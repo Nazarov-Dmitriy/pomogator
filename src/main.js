@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import './assets/styles/style.scss'
-// import { esc } from './common/directive/v-esc.js'
 import { createYmaps } from 'vue-yandex-maps'
 import router from './router'
 import App from './App.vue'
@@ -18,5 +17,4 @@ app.use(
     })
 )
 directives(app)
-// app.directive('esc', { ...esc })
 app.mount('#app')

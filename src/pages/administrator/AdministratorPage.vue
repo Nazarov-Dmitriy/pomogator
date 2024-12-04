@@ -1,6 +1,6 @@
 <template>
     <MainLayots>
-        <MyData :default-select="1" @select="updateSelectedComponent" />
+        <MyData :default-select="3" @select="updateSelectedComponent" />
         <div v-if="selectedComponent">
             <component :is="selectedComponent" />
         </div>

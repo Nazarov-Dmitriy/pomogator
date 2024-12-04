@@ -1,7 +1,10 @@
 <template>
     <section class="webinar">
         <p class="article__back" @click="$router.go(-1)">&#8592; Вернуться в "Вебинар"</p>
-        <div class="webinar__wrapper" :class="isSubsribe ? 'full' : ''">
+        <div
+            class="webinar__wrapper"
+            :class="isSubsribe || props.webinar?.status == 'completed' ? 'full' : ''"
+        >
             <div class="webinar__info">
                 <h2 class="webinar__title">
                     {{ props.webinar?.title }}
@@ -29,7 +32,7 @@
                     {{ props.webinar?.annotation }}
                 </p>
             </div>
-            <div v-if="!isSubsribe" class="webinar__card">
+            <div v-if="!isSubsribe && props.webinar?.status !== 'completed'" class="webinar__card">
                 <div class="webinar__card-bg webinar__card-bg--tablet">
                     <img src="/image/webinar/currentWebinar/webinar-bg-tablet.svg" alt="lines" />
                 </div>
@@ -55,7 +58,16 @@
                 </div>
             </div>
         </div>
-        <div class="webinar__line-bg" />
+
+        <div class="webinar__line-bg mt-10" />
+        <BtnBackgroud
+            v-if="showBtnCertificate && !isUserCertificat && webinar.status == 'completed'"
+            emit-name="action"
+            class="w-fit mt-5"
+            @action="setUserSertificat"
+        >
+            Получить сертификат</BtnBackgroud
+        >
     </section>
 </template>
 
@@ -67,7 +79,7 @@ import { useWebinarStore } from '@/stores/webinarStore'
 import { timezones } from '@/utils/timeZone'
 import { TZDate } from '@date-fns/tz'
 import { format } from 'date-fns'
-import { ru } from 'date-fns/locale'
+import { useCertificatetore } from '@/stores/certificateStore'
 
 const props = defineProps({
     webinar: {
@@ -80,11 +92,19 @@ const props = defineProps({
     },
     subscribe: {
         type: Boolean
+    },
+    showBtnCertificate: {
+        type: Boolean
+    },
+    isUserCertificat: {
+        type: Boolean,
+        default: null
     }
 })
 
 const newsStore = useNewsStore()
 const webinarStore = useWebinarStore()
+const certificateStore = useCertificatetore()
 const isSubsribe = ref(null)
 const selectedTz = ref(1)
 
@@ -93,6 +113,13 @@ const activeTz = computed(() => timezones[selectedTz.value])
 const getTags = computed(() => {
     return newsStore.getTags
 })
+
+function setUserSertificat() {
+    certificateStore.setCertificatUser({
+        user_id: props.user.id,
+        webinar_id: props.webinar.id
+    })
+}
 
 const getDateTranslation = computed(() => {
     if (props.webinar?.date_translation) {

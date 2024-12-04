@@ -47,7 +47,7 @@ export const useNewsStore = defineStore('newsStore', {
                     this.newsList = [...res.data]
                 })
             } catch (err) {
-                console.log(err)
+                console.dir(err)
             }
         },
         getTagsDb() {
@@ -58,7 +58,7 @@ export const useNewsStore = defineStore('newsStore', {
                     })
                 }
             } catch (err) {
-                console.log(err)
+                console.dir(err)
             }
         },
         getCategoryDb() {
@@ -69,7 +69,7 @@ export const useNewsStore = defineStore('newsStore', {
                     })
                 }
             } catch (err) {
-                console.log(err)
+                console.dir(err)
             }
         },
         getNewsDb(params) {
@@ -84,7 +84,6 @@ export const useNewsStore = defineStore('newsStore', {
                 .catch((err) => {
                     if (err.status === 404) {
                         this.errors = 'not found'
-                        console.log(this.errors)
                     }
                 })
         },
@@ -99,7 +98,7 @@ export const useNewsStore = defineStore('newsStore', {
                         this.newsList = [...res.data]
                     })
             } catch (err) {
-                console.log(err)
+                console.dir(err)
             }
         },
         getListActualDb() {
@@ -162,7 +161,7 @@ export const useNewsStore = defineStore('newsStore', {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         },
         addShow(id) {
@@ -170,7 +169,7 @@ export const useNewsStore = defineStore('newsStore', {
                 .get('/news/show/' + id)
                 .then(() => {})
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         },
         setLike(params) {
@@ -234,7 +233,7 @@ export const useNewsStore = defineStore('newsStore', {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         },
         async setNewsPublished(id) {
@@ -246,7 +245,7 @@ export const useNewsStore = defineStore('newsStore', {
                     }
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.dir(err)
                 })
         }
     }

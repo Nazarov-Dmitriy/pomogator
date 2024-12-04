@@ -2,7 +2,11 @@
     <div v-if="isValidateUrl" class="video-container">
         <VideoWebinarComponent
             :src="props.webinar?.video"
+            :user="props.user"
+            :subscribe="props.subscribe"
             class-name="video-player"
+            :is-user-certificat="props.isUserCertificat"
+            @certificat="setCertificat"
         ></VideoWebinarComponent>
 
         <div class="article__btns article__btns--webinar">
@@ -92,13 +96,20 @@ const props = defineProps({
     },
     isFavorite: {
         type: Boolean
+    },
+    subscribe: {
+        type: Boolean
+    },
+    isUserCertificat: {
+        type: Boolean,
+        default: null
     }
 })
 
 const webinarStore = useWebinarStore()
 const activeLike = ref(false)
 
-defineEmits(['setStatus'])
+const emit = defineEmits(['setStatus', 'showBtnCertificat'])
 
 const isValidateUrl = computed(() => {
     try {
@@ -126,6 +137,10 @@ const favorites = reactive({
     active: props.isFavorite ? props.isFavorite : false,
     disabled: false
 })
+
+function setCertificat() {
+    emit('showBtnCertificat')
+}
 
 function setLike(param) {
     if (param === 'add') {
@@ -193,7 +208,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-
 .video-container {
     padding: 40px 80px;
     box-sizing: border-box;
@@ -301,7 +315,7 @@ watch(
     width: 100%;
     height: 1px;
 }
-.article__favorites.active{
+.article__favorites.active {
     flex: 0 0 auto;
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
     <div class="edit flex flex-col p-10 w-full gap-4">
+        {{ link }}
         <template v-if="getArticleAccess === 'success'">
             <h1 class="font-medium text-2xl">
                 {{ pageType ? 'Редактировать вебинар' : 'Добавить вебинар' }}
@@ -381,6 +382,10 @@ const getPreviewPath = computed(() => {
     return import.meta.env.VITE_SERVER_URL + previewImage.value
 })
 
+function trimLinkWebinar(link) {
+    return link.split('"')[1]
+}
+
 function submit() {
     const data = new FormData()
     for (const key in dataWebinar) {
@@ -431,6 +436,15 @@ watch(getUser, () => {
 watch(getTags, () => {
     isLoad.value = true
 })
+
+watch(
+    () => dataWebinar.video,
+    (newVal) => {
+        if (newVal.includes('iframe ')) {
+            dataWebinar.video = trimLinkWebinar(newVal)
+        }
+    }
+)
 
 watch(date, () => {
     let new_date = new TZDate(new Date(date.value), activeTz.value.tz)

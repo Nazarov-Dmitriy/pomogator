@@ -63,11 +63,6 @@ const typeLink = ref()
 const videoId = ref()
 const videoRutube = ref('videoRutube')
 const videoVkRef = ref('videoVkRef')
-// const playerVkRef = ref(null)
-
-// const player = videoVk.value.VideoPlayer;
-
-// const player = VK.VideoPlayer(videoVk.value);
 
 const getLink = computed(() => {
     if (typeLink.value === 'rutube') {
