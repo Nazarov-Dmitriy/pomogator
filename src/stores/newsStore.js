@@ -127,7 +127,7 @@ export const useNewsStore = defineStore('newsStore', {
                     }
                 })
                 .catch((err) => {
-                    this.errors = err.response.data
+                    this.errors = err.data
                 })
         },
         editNewstDb(data) {
@@ -145,7 +145,7 @@ export const useNewsStore = defineStore('newsStore', {
                     }
                 })
                 .catch((err) => {
-                    this.errors = err.response.data
+                    this.errors = err.data
                 })
         },
         getMyNewstDb(param) {

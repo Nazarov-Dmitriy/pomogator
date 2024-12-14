@@ -131,13 +131,12 @@
                         class="text-base py-2 px-4 rounded-md border-solid border-2 border-indigo-600 hidden"
                         @change="onFileChange"
                     />
-
-                    <p v-if="getErrors?.file" class="error-text">
-                        {{ getErrors?.file }}
-                    </p>
                 </div>
                 <div v-if="isArticleImage === 2" class="video-input flex flex-col gap-2 w-full">
-                    <label for="video" class="field__label" :class="{ error: getErrors?.file }"
+                    <label
+                        for="video"
+                        class="field__label"
+                        :class="{ 'error-text': getErrors?.file }"
                         >Ссылка на видеоматериал</label
                     >
                     <input
@@ -148,9 +147,6 @@
                         placeholder="видео_материал.ру"
                         :class="{ error: getErrors?.file }"
                     />
-                    <p v-if="getErrors?.file" class="error-text">
-                        {{ getErrors?.file }}
-                    </p>
                 </div>
             </div>
             <div
@@ -158,10 +154,13 @@
                 class="file-input flex gap-2 items-center"
                 @click="addImg"
             >
-                <span>Прикрепить файл</span>
-                <img src="/image/edit-news/file.svg" alt="" />
+                <span :class="{ 'error-text': getErrors?.file }">Прикрепить файл</span>
+                <img v-if="!getErrors?.file" src="/image/edit-news/file.svg" alt="" />
+                <img v-else class="color-red" src="/image/edit-news/file-error.svg" alt="error" />
             </div>
-
+            <p v-if="getErrors?.file" class="error-text">
+                {{ getErrors?.file }}
+            </p>
             <div class="policy">
                 <p class="policy__text">
                     Нажимая на кнопку «Отправить», я соглашаюсь с

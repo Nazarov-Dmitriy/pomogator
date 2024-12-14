@@ -15,6 +15,7 @@
             :is-offer-visible="false"
             :search="searchValue"
             :webinar="true"
+            @remove-article="remove()"
         />
         <Teleport to="body">
             <template v-if="!isLoad">
@@ -51,6 +52,9 @@ function search() {
     data.value = getWebinarList.value.filter((el) => {
         return el.title.toLocaleLowerCase().includes(searchValue.value.toLocaleLowerCase())
     })
+}
+function remove() {
+    webinarStore.getLisParamstDb({ published: published.value })
 }
 
 async function setTags(id) {

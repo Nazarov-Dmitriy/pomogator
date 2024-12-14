@@ -214,7 +214,7 @@
 <script setup>
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import BtnComponent from '../btns/BtnComponent.vue'
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import DropdownComponent from '../dropdown/DropdownComponent.vue'
 import { useUserStore } from '@/stores/userStore'
 import Loader from '@/components/loader/Loader.vue'
@@ -297,6 +297,7 @@ const getDateMoscow = computed(() => {
 })
 
 onMounted(() => {
+    webinarStore.setSuccsesWebinar(false)
     newsStore.getTagsDb()
 
     if (pageType.value) {
@@ -314,6 +315,10 @@ onMounted(() => {
         getWebinarDb(route.params.id)
     }
     getMscTz()
+})
+
+onUnmounted(() => {
+    webinarStore.setSuccsesWebinar(false)
 })
 
 function getWebinarDb(id) {
@@ -436,6 +441,8 @@ watch(getUser, () => {
 watch(getTags, () => {
     isLoad.value = true
 })
+
+watch(getIsSuccses, () => {})
 
 watch(
     () => dataWebinar.video,

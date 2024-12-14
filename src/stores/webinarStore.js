@@ -24,6 +24,9 @@ export const useWebinarStore = defineStore('webinarStore.js', {
         }
     },
     actions: {
+        setSuccsesWebinar(val) {
+            this.isSuccess = val
+        },
         addWebinarDb(data) {
             this.isSuccess = false
             this.errors = null
