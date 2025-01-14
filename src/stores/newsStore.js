@@ -31,7 +31,6 @@ export const useNewsStore = defineStore('newsStore', {
         getIsSuccses(state) {
             return state.isSuccess
         },
-
         getErrors(state) {
             return state.errors
         }
@@ -89,11 +88,14 @@ export const useNewsStore = defineStore('newsStore', {
         },
         getLisParamstDb(param) {
             try {
+                this.isSuccess = false
+
                 axiosR
                     .get(`/news/list`, {
                         params: param
                     })
                     .then((res) => {
+                        this.isSuccess = true
                         this.newsList = []
                         this.newsList = [...res.data]
                     })

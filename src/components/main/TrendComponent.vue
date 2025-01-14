@@ -17,7 +17,7 @@
                         <BtnBackgroud
                             class="btn__trends-card"
                             emit-name="link"
-                            @link="$router.push('/trend/khimiya/')"
+                            @link="linkTrend(1)"
                         >
                             Подробнее
                         </BtnBackgroud>
@@ -39,7 +39,7 @@
                         <BtnBackgroud
                             class="btn__trends-card"
                             emit-name="link"
-                            @link="$router.push('/trend/fizika')"
+                            @link="linkTrend(2)"
                         >
                             Подробнее
                         </BtnBackgroud>
@@ -59,7 +59,7 @@
                         <BtnBackgroud
                             class="btn__trends-card"
                             emit-name="link"
-                            @link="$router.push('/trend/biologiya')"
+                            @link="linkTrend(3)"
                         >
                             Подробнее
                         </BtnBackgroud>
@@ -79,7 +79,7 @@
                         <BtnBackgroud
                             class="btn__trends-card"
                             emit-name="link"
-                            @link="$router.push('/trend/robototekhnika')"
+                            @link="linkTrend(4)"
                         >
                             Подробнее
                         </BtnBackgroud>
@@ -104,14 +104,33 @@
 </template>
 
 <script setup>
+import { useNewsStore } from '@/stores/newsStore'
 import BtnBackgroud from '../btns/BtnBackgroud.vue'
 import BtnGradient from '../btns/BtnComponent.vue'
 import ModalComponent from '../modal/ModalComponentFaq.vue'
 import { ref } from 'vue'
+import router from '@/router'
+const newsStore = useNewsStore()
+
+function linkTrend(id) {
+    newsStore.setCategoryId(id)
+    if (id === 1) {
+        router.push('/trend/khimiya/')
+        newsStore.setCategoryId(id)
+    } else if (id === 2) {
+        router.push('/trend/fizika')
+        newsStore.setCategoryId(id)
+    } else if (id === 3) {
+        router.push('/trend/biologiya')
+        newsStore.setCategoryId(id)
+    } else if (id === 4) {
+        router.push('/trend/robototekhnika')
+        newsStore.setCategoryId(id)
+    }
+}
 
 const modalShow = ref(false)
 </script>
-<script></script>
 
 <style lang="scss">
 .trend-container {

@@ -30,13 +30,13 @@
                         <input
                             id="password"
                             ref="inputPassword"
-                            @mouseenter="isHovered = true"
-                            @mouseleave="isHovered = false"
                             v-model="loginForm.password"
                             placeholder="Введите пароль"
                             :type="passwordVisible ? 'text' : 'password'"
                             class="input__password input--password w-full p-2 rounded-md"
                             :class="{ error: getError?.password }"
+                            @mouseenter="isHovered = true"
+                            @mouseleave="isHovered = false"
                             @focus="focusInput"
                         />
                         <p class="error-text">
@@ -60,7 +60,11 @@
                                 class="icon"
                                 :class="{ error: getError?.password }"
                             />
-                            <img v-else src="/public/image/register/hover-lock.svg " alt="hovered lock" />
+                            <img
+                                v-else
+                                src="/public/image/register/hover-lock.svg "
+                                alt="hovered lock"
+                            />
                         </span>
                     </div>
                     <div class="text-wrapper mt-4">

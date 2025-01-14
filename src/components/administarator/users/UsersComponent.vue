@@ -56,7 +56,7 @@
                         </div>
                         <div class="flex gap-2">
                             <p class="font-medium">Звание:</p>
-                            <p>{{ user.rank || 'нет данных' }}</p>
+                            <p>{{ user.rank_user || 'нет данных' }}</p>
                         </div>
                         <div class="flex gap-2">
                             <p class="font-medium">Роль:</p>

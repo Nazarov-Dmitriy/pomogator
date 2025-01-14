@@ -54,6 +54,9 @@ const getUser = computed(() => {
 const getNewsList = computed(() => {
     return newsStore.getNewsList
 })
+const getIsSuccses = computed(() => {
+    return newsStore.getIsSuccses
+})
 
 const getTags = computed(() => {
     return newsStore.getTags
@@ -82,8 +85,11 @@ function setTags(id) {
 }
 
 onMounted(() => {
+    if (getTags.value.length === 0) {
+        newsStore.getTagsDb()
+    }
     data.value = dataTrend.value
-    newsStore.getTagsDb()
+
     if (getCategoryId.value) {
         newsStore.getLisParamstDb({ category: getCategoryId.value })
     }
@@ -115,9 +121,16 @@ watch(getCategory, () => {
     newsStore.getLisParamstDb({ category: categoryId })
 })
 
-watch([getNewsList, getTags], () => {
+watch(
+    [getNewsList, getTags],
+    () => {
+        isLoad.value = true
+        data.value = getNewsList.value
+    },
+    { deep: true }
+)
+watch(getIsSuccses, () => {
     isLoad.value = true
-    data.value = getNewsList.value
 })
 
 watch(

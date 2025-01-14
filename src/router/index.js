@@ -19,6 +19,8 @@ import ErrorPage from '@/pages/error/ErrorPage.vue'
 import ForgotPassword from '@/pages/auth/ForgotPassword.vue'
 import AdministratorPage from '@/pages/administrator/AdministratorPage.vue'
 import { useUserStore } from '@/stores/userStore'
+import TrendRoute from '@/pages/trend/TrendRoute.vue'
+import MaterialPage from '@/pages/MaterialPage.vue'
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +33,7 @@ const router = createRouter({
         {
             path: '/trend',
             name: 'trend',
+            component: TrendRoute,
             children: [
                 {
                     path: ':name/:id',
@@ -52,38 +55,27 @@ const router = createRouter({
         {
             path: '/blog',
             name: 'blog',
-            children: [
-                {
-                    path: '',
-                    name: 'blog-page',
-                    component: BlogPage
-                },
-                {
-                    path: 'article/:id',
-                    name: 'blog-article',
-                    component: ArticlePage
-                }
-            ]
+            component: BlogPage
         },
         {
-            path: '/auth',
-            children: [
-                {
-                    path: 'login',
-                    name: 'login',
-                    component: LoginPage
-                },
-                {
-                    path: 'register',
-                    name: 'register',
-                    component: RegisterPage
-                },
-                {
-                    path: 'for-got-password',
-                    name: 'for-got-password',
-                    component: ForgotPassword
-                }
-            ]
+            path: '/blog/article/:id',
+            name: 'blog-article',
+            component: ArticlePage
+        },
+        {
+            path: '/auth/login',
+            name: 'login',
+            component: LoginPage
+        },
+        {
+            path: '/auth/register',
+            name: 'register',
+            component: RegisterPage
+        },
+        {
+            path: '/auth/for-got-password',
+            name: 'for-got-password',
+            component: ForgotPassword
         },
         {
             path: '/lk',
@@ -118,6 +110,7 @@ const router = createRouter({
         },
         {
             path: '/material',
+            component: MaterialPage,
             children: [
                 {
                     path: 'add',
@@ -160,7 +153,7 @@ const router = createRouter({
         },
         { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
     ],
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(to, _, savedPosition) {
         if (savedPosition) {
             return savedPosition
         } else {
@@ -172,7 +165,7 @@ const router = createRouter({
     }
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
     const user = useUserStore()
     if (to.matched.some((route) => route.meta.protected && route.meta.admin)) {
         if (

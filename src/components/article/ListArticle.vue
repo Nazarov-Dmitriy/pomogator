@@ -30,7 +30,6 @@
                     alt="fallback"
                     class="aspect-[3/1] object-cover w-full"
                 />
-
                 <VideoComponent
                     v-if="item.video && !item.preview_img"
                     :src="item?.video"
@@ -161,8 +160,8 @@ function linkArticle(id) {
 
     if (route.name === 'trend-page') {
         router.push(`/trend/${route.params.name}/${id}`)
-    } else if (route.name === 'blog-page') {
-        router.push(`blog/article/${id}`)
+    } else if (route.name === 'blog-article') {
+        router.push(`/blog/article/${id}`)
     } else {
         router.push(`/blog/article/${id}`)
     }

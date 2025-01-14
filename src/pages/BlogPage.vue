@@ -13,6 +13,7 @@
         <ListArticle class="trend__article-header" :data="data" :search="searchValue" />
         <SubscrideComponent />
         <FooterComponent />
+        <router-view />
     </div>
     <Teleport to="body">
         <template v-if="!isLoad">

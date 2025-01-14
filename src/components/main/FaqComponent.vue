@@ -51,9 +51,9 @@
                                         {{ item.answer }}
                                         <BtnBackgroud
                                             emit-name="link"
-                                            @link="$router.push('/auth/register')"
                                             class="webinar__info-button"
                                             style="margin-top: 10px"
+                                            @link="$router.push('/auth/register')"
                                         >
                                             Регистрация
                                         </BtnBackgroud>
@@ -66,8 +66,8 @@
                                     <BtnComponent
                                         class="btn__proposal"
                                         emit-name="action"
-                                        @action="$router.push('/material/add')"
                                         style="margin-top: 10px"
+                                        @action="$router.push('/material/add')"
                                     >
                                         Предложить материал
                                     </BtnComponent>
@@ -122,7 +122,7 @@ const data = ref([
 ])
 
 function getCount(ind) {
-    return ind < 10 ? '0' + (ind + 1) : ind + 1
+    return ind < 10 ? '0' + ind : ind
 }
 </script>
 <style lang="scss">

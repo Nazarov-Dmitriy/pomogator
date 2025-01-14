@@ -39,14 +39,14 @@
                             <input
                                 id="password"
                                 ref="inputPassword"
-                                @mouseenter="isHoveredPassword = true"
-                                @mouseleave="isHoveredPassword = false"
-                                @focus="focusInputPassword"
                                 v-model="registerForm.password"
                                 :type="passwordVisible ? 'text' : 'password'"
                                 placeholder="Введите пароль"
                                 class="input__password w-full p-2 rounded-md"
                                 :class="{ error: registerFormError.password }"
+                                @mouseenter="isHoveredPassword = true"
+                                @mouseleave="isHoveredPassword = false"
+                                @focus="focusInputPassword"
                             />
                             <span
                                 class="toggle-password-icons"
@@ -88,13 +88,13 @@
                             <input
                                 id="confirmPassword"
                                 ref="inputConfirmPassword"
-                                @mouseenter="isHoveredConfirm = true"
-                                @mouseleave="isHoveredConfirm = false"
                                 v-model="registerForm.confirmPassword"
                                 :type="confirmPasswordVisible ? 'text' : 'password'"
                                 placeholder="Повторите пароль"
                                 class="input__password w-full p-2 rounded-md"
                                 :class="{ error: registerFormError.confirm }"
+                                @mouseenter="isHoveredConfirm = true"
+                                @mouseleave="isHoveredConfirm = false"
                                 @focus="focusInputConfirm"
                             />
                             <span
@@ -253,7 +253,7 @@
                         <label for="rank">Звание</label>
                         <input
                             id="rank"
-                            v-model="registerFormInfo.rank"
+                            v-model="registerFormInfo.rank_user"
                             type="text"
                             class="input !bg-none w-full p-2 rounded-md"
                         />
@@ -325,7 +325,7 @@ const initialRegisterFormInfo = {
     date_birth: '',
     position: '',
     place_work: '',
-    rank: '',
+    rank_user: '',
     phone: '',
     completed_profile: true
 }

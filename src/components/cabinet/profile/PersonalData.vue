@@ -30,7 +30,7 @@
                         <label for="rank" class="personal-data__label">Звание</label>
                         <input
                             id="rank"
-                            v-model.trim="formField.rank"
+                            v-model.trim="formField.rank_user"
                             type="text"
                             class="personal-data__input"
                             placeholder="Звание"
@@ -157,7 +157,7 @@ const formField = reactive({
     birthDate: getUser.value?.birthDate,
     position: getUser.value?.position,
     place_work: getUser.value?.place_work,
-    rank: getUser.value?.rank,
+    rank_user: getUser.value?.rank_user,
     phone: getUser.value?.phone,
     email: getUser.value?.email,
     nameError: false,
@@ -178,7 +178,7 @@ function saveUserInfo() {
             birthDate: formField.birthDate,
             position: formField.position,
             place_work: formField.place_work,
-            rank: formField.rank,
+            rank_user: formField.rank_user,
             phone: formField.phone,
             email: formField.email,
             current_email: getUser.value.email
@@ -272,7 +272,7 @@ watch(
             birthDate: getUser.value?.birthDate,
             position: getUser.value?.position,
             place_work: getUser.value?.place_work,
-            rank: getUser.value?.rank,
+            rank_user: getUser.value?.rank_user,
             phone: getUser.value?.phone,
             email: getUser.value?.email
         }

@@ -99,7 +99,7 @@
                     <div class="form-materia-item__group">
                         <input
                             id="position"
-                            :value="userStore.personalData.rank"
+                            :value="userStore.personalData.rank_user"
                             type="text"
                             placeholder="Преподаватель"
                             class="form-materia-item-input"

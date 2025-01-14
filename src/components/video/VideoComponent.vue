@@ -12,7 +12,6 @@
             allowFullScreen
             :class="props.className"
         ></iframe>
-
         <iframe
             v-if="typeLink === 'vk' && !preview"
             id="vk"
@@ -28,12 +27,12 @@
             id="vk"
             ref="videoVkRef"
             :src="getLink"
-            class="video__preview"
+            class="video__preview-vk video__preview"
             allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
             frameborder="0"
             allowfullscreen
+            contenteditable="false"
         ></iframe>
-
         <img
             v-if="typeLink === 'rutube' && preview"
             class="video__preview"
@@ -43,7 +42,7 @@
     </div>
 </template>
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const props = defineProps({
     src: {
@@ -84,22 +83,17 @@ function getTypeLink() {
     if (new RegExp(/^https:\/\/rutube/).test(props.src)) {
         videoId.value = props.src.split('video/')[1].split('/')[0]
         typeLink.value = 'rutube'
-    } else if (new RegExp(/^https:\/\/vk.com/).test(props.src)) {
+    } else if (
+        new RegExp(/^https:\/\/vk.com/).test(props.src) ||
+        new RegExp(/^https:\/\/vkvideo.ru/).test(props.src)
+    ) {
         typeLink.value = 'vk'
         videoId.value = props.src.split('video-')[1]?.split('%')[0]
     }
 }
 
-async function playerVk() {
-    // const player = VK.VideoPlayer(document.getElementById('vk'))
-}
-
 onMounted(() => {
     getTypeLink()
-})
-
-watch(videoVkRef, () => {
-    playerVk()
 })
 </script>
 <style lang="scss">
@@ -115,5 +109,13 @@ watch(videoVkRef, () => {
 .video__preview {
     width: 100%;
     aspect-ratio: 2.9/ 1;
+}
+
+.video__preview-vk :deep(.page_wrap) {
+    display: none;
+}
+
+.videoplayer_controls {
+    display: none;
 }
 </style>

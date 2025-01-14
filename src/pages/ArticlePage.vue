@@ -15,7 +15,6 @@
             :other-atricle="otherAtriclePage"
         />
         <FooterComponent />
-        <router-view />
     </div>
 
     <Teleport to="body">
