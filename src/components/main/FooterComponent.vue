@@ -19,24 +19,16 @@
                         <p class="footer__list-header">Направления</p>
                         <ul class="footer__list">
                             <li class="footer__list-item">
-                                <router-link to="/trend/robototekhnika" class="footer__link">
-                                    Робототехника
-                                </router-link>
+                                <a class="footer__link" @click="linkTrend(4)"> Робототехника </a>
                             </li>
                             <li class="footer__list-item">
-                                <router-link to="/trend/khimiya/" class="footer__link">
-                                    Химия
-                                </router-link>
+                                <a class="footer__link" @click="linkTrend(1)"> Химия </a>
                             </li>
                             <li class="footer__list-item">
-                                <router-link to="/trend/fizika" class="footer__link">
-                                    Физика
-                                </router-link>
+                                <a class="footer__link" @click="linkTrend(2)"> Физика </a>
                             </li>
                             <li class="footer__list-item">
-                                <router-link to="/trend/biologiya" class="footer__link">
-                                    Биология
-                                </router-link>
+                                <a class="footer__link" @click="linkTrend(3)"> Биология </a>
                             </li>
                         </ul>
                     </div>
@@ -183,7 +175,28 @@
         <img src="../../assets/images/footer/bg.svg" alt="bg-line" class="footer-bg" />
     </section>
 </template>
-<script setup></script>
+<script setup>
+import router from '@/router'
+import { useNewsStore } from '@/stores/newsStore'
+const newsStore = useNewsStore()
+
+function linkTrend(id) {
+    newsStore.setCategoryId(id)
+    if (id === 1) {
+        router.push('/trend/khimiya/')
+        newsStore.setCategoryId(id)
+    } else if (id === 2) {
+        router.push('/trend/fizika')
+        newsStore.setCategoryId(id)
+    } else if (id === 3) {
+        router.push('/trend/biologiya')
+        newsStore.setCategoryId(id)
+    } else if (id === 4) {
+        router.push('/trend/robototekhnika')
+        newsStore.setCategoryId(id)
+    }
+}
+</script>
 <style lang="scss">
 .footer__contaner {
     width: 100%;
